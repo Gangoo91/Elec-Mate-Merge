@@ -11,7 +11,14 @@ async function test() {
   const { data, error, count } = await supabase
     .from('marketplace_products')
     .select('name, category', { count: 'exact' })
-    .in('category', ['cables', 'consumer-units', 'circuit-protection', 'wiring-accessories', 'lighting', 'containment'])
+    .in('category', [
+      'cables',
+      'consumer-units',
+      'circuit-protection',
+      'wiring-accessories',
+      'lighting',
+      'containment',
+    ])
     .limit(5);
 
   if (error) {
@@ -19,7 +26,7 @@ async function test() {
   } else {
     console.log('Total materials in DB:', count);
     console.log('Sample products:');
-    data?.forEach(p => console.log(' -', p.name, '|', p.category));
+    data?.forEach((p) => console.log(' -', p.name, '|', p.category));
   }
 }
 

@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, LucideIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, LucideIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface BusinessPageLayoutProps {
   title: string;
@@ -32,7 +32,7 @@ const BusinessPageLayout = ({
   };
 
   return (
-    <div className={cn("min-h-screen bg-[#1a1a1a]", className)}>
+    <div className={cn('min-h-screen bg-[#1a1a1a]', className)}>
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 pt-safe">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
@@ -61,9 +61,7 @@ const BusinessPageLayout = ({
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{title}</h2>
-              {subtitle && (
-                <p className="text-sm sm:text-base text-white mt-1">{subtitle}</p>
-              )}
+              {subtitle && <p className="text-sm sm:text-base text-white mt-1">{subtitle}</p>}
             </div>
           </div>
         </div>

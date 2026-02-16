@@ -1,5 +1,5 @@
-import React from "react";
-import { CheckCircle, Info, XCircle, Lightbulb, MessageSquare } from "lucide-react";
+import React from 'react';
+import { CheckCircle, Info, XCircle, Lightbulb, MessageSquare } from 'lucide-react';
 
 interface ScenarioOptionProps {
   optionId: string;
@@ -27,23 +27,21 @@ const ScenarioOption = ({
   const getOptionStyles = () => {
     if (!showFeedback) {
       return isSelected
-        ? "border-elec-yellow bg-elec-yellow/10"
-        : "border-white/10 hover:border-white/20 bg-white/10";
+        ? 'border-elec-yellow bg-elec-yellow/10'
+        : 'border-white/10 hover:border-white/20 bg-white/10';
     }
-    if (isCorrect) return "border-green-500/50 bg-green-500/10";
-    if (isSelected && !isCorrect) return "border-red-500/50 bg-red-500/10";
-    return "border-white/10 bg-white/10 opacity-50";
+    if (isCorrect) return 'border-green-500/50 bg-green-500/10';
+    if (isSelected && !isCorrect) return 'border-red-500/50 bg-red-500/10';
+    return 'border-white/10 bg-white/10 opacity-50';
   };
 
   const getIndicatorStyles = () => {
     if (!showFeedback) {
-      return isSelected
-        ? "bg-elec-yellow text-black"
-        : "bg-white/10 text-white";
+      return isSelected ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white';
     }
-    if (isCorrect) return "bg-green-500 text-white";
-    if (isSelected && !isCorrect) return "bg-red-500 text-white";
-    return "bg-white/10 text-white";
+    if (isCorrect) return 'bg-green-500 text-white';
+    if (isSelected && !isCorrect) return 'bg-red-500 text-white';
+    return 'bg-white/10 text-white';
   };
 
   return (
@@ -51,7 +49,7 @@ const ScenarioOption = ({
       onClick={!showFeedback ? onClick : undefined}
       className={`
         p-4 rounded-xl border transition-all
-        ${!showFeedback ? "cursor-pointer touch-manipulation active:scale-[0.98]" : "cursor-default"}
+        ${!showFeedback ? 'cursor-pointer touch-manipulation active:scale-[0.98]' : 'cursor-default'}
         ${getOptionStyles()}
       `}
     >
@@ -71,7 +69,7 @@ const ScenarioOption = ({
           )}
         </div>
         <p
-          className={`text-sm ${showFeedback && !isCorrect && !isSelected ? "text-white opacity-50" : "text-white"}`}
+          className={`text-sm ${showFeedback && !isCorrect && !isSelected ? 'text-white opacity-50' : 'text-white'}`}
         >
           {text}
         </p>
@@ -82,13 +80,13 @@ const ScenarioOption = ({
           {/* Feedback */}
           <div
             className={`p-3 rounded-lg bg-white/5 border-l-4 ${
-              isCorrect ? "border-l-green-500" : "border-l-orange-500"
+              isCorrect ? 'border-l-green-500' : 'border-l-orange-500'
             } border border-white/10`}
           >
             <div className="flex items-start gap-2">
               <MessageSquare
                 className={`h-3.5 w-3.5 flex-shrink-0 mt-0.5 ${
-                  isCorrect ? "text-green-400" : "text-orange-400"
+                  isCorrect ? 'text-green-400' : 'text-orange-400'
                 }`}
               />
               <p className="text-sm text-white">{feedback}</p>
@@ -110,9 +108,7 @@ const ScenarioOption = ({
             <div className="flex items-start gap-2">
               <Lightbulb className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs text-white font-medium mb-0.5">
-                  Outcome
-                </p>
+                <p className="text-xs text-white font-medium mb-0.5">Outcome</p>
                 <p className="text-sm text-white">{outcome}</p>
               </div>
             </div>

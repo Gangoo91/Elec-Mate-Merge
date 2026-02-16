@@ -1,45 +1,45 @@
-import { ArrowLeft, HardHat, DoorOpen, MapPin, Users } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, HardHat, DoorOpen, MapPin, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The Fire Marshal Role",
+    title: 'The Fire Marshal Role',
     icon: HardHat,
     description:
-      "Appointment, responsibilities, authority, relationship with the responsible person, and the difference between fire marshals and fire wardens",
+      'Appointment, responsibilities, authority, relationship with the responsible person, and the difference between fire marshals and fire wardens',
   },
   {
     id: 2,
-    title: "Evacuation Procedures",
+    title: 'Evacuation Procedures',
     icon: DoorOpen,
     description:
-      "Simultaneous, phased, progressive horizontal, and defend-in-place strategies, alarm response, sweep procedures",
+      'Simultaneous, phased, progressive horizontal, and defend-in-place strategies, alarm response, sweep procedures',
   },
   {
     id: 3,
-    title: "Assembly Points & Roll Call",
+    title: 'Assembly Points & Roll Call',
     icon: MapPin,
     description:
-      "Selecting assembly points, conducting roll calls, accounting for visitors and contractors, reporting to emergency services",
+      'Selecting assembly points, conducting roll calls, accounting for visitors and contractors, reporting to emergency services',
   },
   {
     id: 4,
-    title: "Personal Emergency Evacuation Plans",
+    title: 'Personal Emergency Evacuation Plans',
     icon: Users,
     description:
-      "PEEPs for persons with disabilities, buddy systems, refuges, evacuation chairs, communication during evacuation",
+      'PEEPs for persons with disabilities, buddy systems, refuges, evacuation chairs, communication during evacuation',
   },
 ];
 
 export default function FireSafetyModule4() {
   useSEO({
-    title: "Module 4: Fire Marshal Duties & Evacuation | Fire Safety & Fire Marshal",
+    title: 'Module 4: Fire Marshal Duties & Evacuation | Fire Safety & Fire Marshal',
     description:
-      "Learn about fire marshal roles and responsibilities, evacuation procedures, assembly points, and personal emergency evacuation plans.",
+      'Learn about fire marshal roles and responsibilities, evacuation procedures, assembly points, and personal emergency evacuation plans.',
   });
 
   return (

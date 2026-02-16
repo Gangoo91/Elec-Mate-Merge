@@ -12,16 +12,16 @@ serve(async (req) => {
   try {
     const requestId = generateRequestId();
     const logger = createLogger(requestId);
-    
+
     logger.info('🚀 Materials cache updater function invoked');
-    
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    
+
     if (!supabaseUrl || !supabaseServiceKey) {
       throw new ValidationError('Supabase credentials not configured');
     }
-    
+
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Check if cache was recently updated (within last 6 days) with timeout
@@ -39,19 +39,19 @@ serve(async (req) => {
     if (!cacheError && existingCache) {
       const cacheAge = Date.now() - new Date(existingCache.created_at).getTime();
       const sixDaysInMs = 6 * 24 * 60 * 60 * 1000;
-      
+
       if (cacheAge < sixDaysInMs) {
         logger.info('⏰ Cache is still fresh, skipping update', {
           cacheAgeDays: Math.floor(cacheAge / (24 * 60 * 60 * 1000)),
-          nextUpdateDue: existingCache.expires_at
+          nextUpdateDue: existingCache.expires_at,
         });
-        
+
         return new Response(
-          JSON.stringify({ 
-            success: true, 
+          JSON.stringify({
+            success: true,
             message: 'Cache is still fresh',
             cacheAge: Math.floor(cacheAge / (24 * 60 * 60 * 1000)),
-            nextUpdateDue: existingCache.expires_at
+            nextUpdateDue: existingCache.expires_at,
           }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
@@ -78,13 +78,14 @@ serve(async (req) => {
 
     // Call the comprehensive materials scraper with retry and timeout
     logger.info('📞 Calling comprehensive-materials-scraper');
-    
+
     const { data: scraperResponse, error: scraperError } = await withRetry(
-      () => withTimeout(
-        supabase.functions.invoke('comprehensive-materials-scraper', { body: {} }),
-        Timeouts.CRITICAL, // 2 minutes for scraping
-        'comprehensive materials scraper'
-      ),
+      () =>
+        withTimeout(
+          supabase.functions.invoke('comprehensive-materials-scraper', { body: {} }),
+          Timeouts.CRITICAL, // 2 minutes for scraping
+          'comprehensive materials scraper'
+        ),
       RetryPresets.STANDARD
     );
 
@@ -97,7 +98,7 @@ serve(async (req) => {
 
     // Extract the actual data from the scraper response
     let scrapedData;
-    
+
     // Handle different response formats - check for materials property first
     if (scraperResponse && scraperResponse.materials && Array.isArray(scraperResponse.materials)) {
       scrapedData = scraperResponse.materials;
@@ -110,11 +111,13 @@ serve(async (req) => {
     }
 
     if (!scrapedData || !Array.isArray(scrapedData) || scrapedData.length === 0) {
-      logger.error('Scraper returned no usable data', { 
-        responseType: typeof scraperResponse, 
-        isArray: Array.isArray(scraperResponse) 
+      logger.error('Scraper returned no usable data', {
+        responseType: typeof scraperResponse,
+        isArray: Array.isArray(scraperResponse),
       });
-      throw new Error(`No data returned from scraper. Response type: ${typeof scraperResponse}, Array: ${Array.isArray(scraperResponse)}`);
+      throw new Error(
+        `No data returned from scraper. Response type: ${typeof scraperResponse}, Array: ${Array.isArray(scraperResponse)}`
+      );
     }
 
     logger.info(`📊 Got ${scrapedData.length} materials from scraper`);
@@ -138,14 +141,12 @@ serve(async (req) => {
       materials_data: materials,
       total_products: materials.length,
       expires_at: expiresAt.toISOString(),
-      update_status: 'completed'
+      update_status: 'completed',
     }));
 
     // Insert new cache entries with timeout
     const { error: insertError } = await withTimeout(
-      supabase
-        .from('materials_weekly_cache')
-        .insert(cacheEntries),
+      supabase.from('materials_weekly_cache').insert(cacheEntries),
       Timeouts.STANDARD,
       'cache entries insertion'
     );
@@ -155,7 +156,9 @@ serve(async (req) => {
       throw new Error(`Cache storage error: ${insertError.message}`);
     }
 
-    logger.info(`✅ Successfully cached ${cacheEntries.length} categories with ${scrapedData.length} total materials`);
+    logger.info(
+      `✅ Successfully cached ${cacheEntries.length} categories with ${scrapedData.length} total materials`
+    );
 
     return new Response(
       JSON.stringify({
@@ -163,11 +166,10 @@ serve(async (req) => {
         message: `Cache updated with ${scrapedData.length} materials across ${cacheEntries.length} categories`,
         categoriesUpdated: Object.keys(categoryData),
         totalMaterials: scrapedData.length,
-        expiresAt: expiresAt.toISOString()
+        expiresAt: expiresAt.toISOString(),
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     return handleError(error);
   }

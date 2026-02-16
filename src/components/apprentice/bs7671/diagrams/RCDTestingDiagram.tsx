@@ -1,6 +1,5 @@
-
-import { Shield, Timer, Zap, CheckCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Shield, Timer, Zap, CheckCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface RCDTestingDiagramProps {
   systemType?: string;
@@ -9,9 +8,7 @@ interface RCDTestingDiagramProps {
 const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
   return (
     <div className="space-y-4">
-      <div className="text-sm text-indigo-200 mb-4">
-        RCD testing procedure and requirements
-      </div>
+      <div className="text-sm text-indigo-200 mb-4">RCD testing procedure and requirements</div>
 
       {/* Test Button Check */}
       <div className="bg-green-600/20 p-4 rounded border border-green-500/30">
@@ -161,15 +158,21 @@ const RCDTestingDiagram = ({ systemType }: RCDTestingDiagramProps) => {
         <div className="space-y-2 text-xs text-red-200">
           <div className="flex items-center justify-between">
             <span>Line test lead:</span>
-            <Badge variant="outline" className="text-red-300 border-red-400/30">Downstream of RCD</Badge>
+            <Badge variant="outline" className="text-red-300 border-red-400/30">
+              Downstream of RCD
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span>Neutral test lead:</span>
-            <Badge variant="outline" className="text-red-300 border-red-400/30">Downstream of RCD</Badge>
+            <Badge variant="outline" className="text-red-300 border-red-400/30">
+              Downstream of RCD
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span>Earth reference:</span>
-            <Badge variant="outline" className="text-red-300 border-red-400/30">Installation earth</Badge>
+            <Badge variant="outline" className="text-red-300 border-red-400/30">
+              Installation earth
+            </Badge>
           </div>
         </div>
       </div>

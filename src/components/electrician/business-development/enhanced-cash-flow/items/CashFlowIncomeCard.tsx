@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { ChevronDown, Trash2, Wallet } from "lucide-react";
-import { IncomeStream } from "@/hooks/use-cash-flow";
-import { CalculatorInput, CalculatorSelect } from "@/components/calculators/shared";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { ChevronDown, Trash2, Wallet } from 'lucide-react';
+import { IncomeStream } from '@/hooks/use-cash-flow';
+import { CalculatorInput, CalculatorSelect } from '@/components/calculators/shared';
 
 interface CashFlowIncomeCardProps {
   stream: IncomeStream;
@@ -11,25 +11,21 @@ interface CashFlowIncomeCardProps {
 }
 
 const frequencyOptions = [
-  { value: "monthly", label: "Monthly" },
-  { value: "quarterly", label: "Quarterly" },
-  { value: "seasonal", label: "Seasonal" },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'quarterly', label: 'Quarterly' },
+  { value: 'seasonal', label: 'Seasonal' },
 ];
 
 const formatCurrency = (n: number) => {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(n);
 };
 
-export const CashFlowIncomeCard = ({
-  stream,
-  onUpdate,
-  onRemove,
-}: CashFlowIncomeCardProps) => {
+export const CashFlowIncomeCard = ({ stream, onUpdate, onRemove }: CashFlowIncomeCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -54,8 +50,8 @@ export const CashFlowIncomeCard = ({
           </span>
           <ChevronDown
             className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
-              isExpanded && "rotate-180"
+              'h-4 w-4 text-white/40 transition-transform duration-200',
+              isExpanded && 'rotate-180'
             )}
           />
         </div>
@@ -85,9 +81,7 @@ export const CashFlowIncomeCard = ({
               type="text"
               inputMode="numeric"
               value={stream.paymentDelayDays.toString()}
-              onChange={(val) =>
-                onUpdate(stream.id, { paymentDelayDays: parseInt(val) || 0 })
-              }
+              onChange={(val) => onUpdate(stream.id, { paymentDelayDays: parseInt(val) || 0 })}
             />
             <CalculatorInput
               label="Annual Growth"
@@ -95,9 +89,7 @@ export const CashFlowIncomeCard = ({
               type="text"
               inputMode="decimal"
               value={(stream.growth * 100).toString()}
-              onChange={(val) =>
-                onUpdate(stream.id, { growth: (parseFloat(val) || 0) / 100 })
-              }
+              onChange={(val) => onUpdate(stream.id, { growth: (parseFloat(val) || 0) / 100 })}
             />
           </div>
           <button

@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { startOfMonth, subMonths, endOfMonth, isAfter, isBefore } from "date-fns";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { startOfMonth, subMonths, endOfMonth, isAfter, isBefore } from 'date-fns';
 
 // Types
 export interface BusinessMetrics {
@@ -74,25 +74,32 @@ export function useBusinessMetrics() {
 
       // Calculate current month revenue (paid invoices this month)
       const currentMonthPaid = (invoices || [])
-        .filter(inv => {
+        .filter((inv) => {
           if (!inv.paid_date) return false;
           const paidDate = new Date(inv.paid_date);
-          return isAfter(paidDate, currentMonthStart) || paidDate.getTime() === currentMonthStart.getTime();
+          return (
+            isAfter(paidDate, currentMonthStart) ||
+            paidDate.getTime() === currentMonthStart.getTime()
+          );
         })
         .reduce((sum, inv) => sum + Number(inv.amount), 0);
 
       // Calculate previous month revenue
       const previousMonthPaid = (invoices || [])
-        .filter(inv => {
+        .filter((inv) => {
           if (!inv.paid_date) return false;
           const paidDate = new Date(inv.paid_date);
-          return (isAfter(paidDate, previousMonthStart) || paidDate.getTime() === previousMonthStart.getTime()) &&
-                 (isBefore(paidDate, previousMonthEnd) || paidDate.getTime() === previousMonthEnd.getTime());
+          return (
+            (isAfter(paidDate, previousMonthStart) ||
+              paidDate.getTime() === previousMonthStart.getTime()) &&
+            (isBefore(paidDate, previousMonthEnd) ||
+              paidDate.getTime() === previousMonthEnd.getTime())
+          );
         })
         .reduce((sum, inv) => sum + Number(inv.amount), 0);
 
       // Estimate profit as 30% of revenue (can be refined later)
-      const profitMargin = 0.30;
+      const profitMargin = 0.3;
       const currentProfit = currentMonthPaid * profitMargin;
       const previousProfit = previousMonthPaid * profitMargin;
 
@@ -117,13 +124,23 @@ export function useBusinessMetrics() {
         cancelled: 0,
       };
 
-      (jobs || []).forEach(job => {
+      (jobs || []).forEach((job) => {
         switch (job.status) {
-          case 'Active': jobCounts.active++; break;
-          case 'Completed': jobCounts.completed++; break;
-          case 'Pending': jobCounts.pending++; break;
-          case 'On Hold': jobCounts.onHold++; break;
-          case 'Cancelled': jobCounts.cancelled++; break;
+          case 'Active':
+            jobCounts.active++;
+            break;
+          case 'Completed':
+            jobCounts.completed++;
+            break;
+          case 'Pending':
+            jobCounts.pending++;
+            break;
+          case 'On Hold':
+            jobCounts.onHold++;
+            break;
+          case 'Cancelled':
+            jobCounts.cancelled++;
+            break;
         }
       });
 
@@ -149,7 +166,7 @@ export function useBusinessMetrics() {
       let expiringSoon = 0;
       let expired = 0;
 
-      (certifications || []).forEach(cert => {
+      (certifications || []).forEach((cert) => {
         if (cert.status === 'Expired' || (cert.expiry_date && new Date(cert.expiry_date) < now)) {
           expired++;
         } else if (cert.expiry_date && new Date(cert.expiry_date) < thirtyDaysFromNow) {
@@ -209,7 +226,7 @@ export function useInvoiceSummaries() {
 
       if (error) throw error;
 
-      return (data || []).map(inv => ({
+      return (data || []).map((inv) => ({
         id: inv.invoice_number || inv.id,
         client: inv.client,
         project: inv.project,
@@ -228,7 +245,20 @@ export function useMonthlyRevenue() {
     queryKey: ['monthly-revenue'],
     queryFn: async (): Promise<MonthlyRevenue[]> => {
       const now = new Date();
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
 
       // Get invoices from the last 6 months
       const sixMonthsAgo = subMonths(now, 6);
@@ -250,7 +280,7 @@ export function useMonthlyRevenue() {
       }
 
       // Aggregate invoice amounts by month
-      (invoices || []).forEach(inv => {
+      (invoices || []).forEach((inv) => {
         if (inv.paid_date) {
           const paidDate = new Date(inv.paid_date);
           const monthKey = `${paidDate.getFullYear()}-${String(paidDate.getMonth() + 1).padStart(2, '0')}`;
@@ -291,20 +321,20 @@ export function useJobsByStatus() {
       if (error) throw error;
 
       const statusCounts: Record<string, number> = {
-        'Completed': 0,
-        'Active': 0,
-        'Pending': 0,
+        Completed: 0,
+        Active: 0,
+        Pending: 0,
         'On Hold': 0,
       };
 
       const statusColors: Record<string, string> = {
-        'Completed': 'hsl(var(--success))',
-        'Active': 'hsl(var(--primary))',
-        'Pending': 'hsl(var(--muted-foreground))',
+        Completed: 'hsl(var(--success))',
+        Active: 'hsl(var(--primary))',
+        Pending: 'hsl(var(--muted-foreground))',
         'On Hold': 'hsl(var(--warning))',
       };
 
-      (jobs || []).forEach(job => {
+      (jobs || []).forEach((job) => {
         if (job.status in statusCounts) {
           statusCounts[job.status]++;
         }
@@ -343,7 +373,7 @@ export function useComplianceData() {
       let expiring = 0;
       let expired = 0;
 
-      (certifications || []).forEach(cert => {
+      (certifications || []).forEach((cert) => {
         if (cert.status === 'Expired' || (cert.expiry_date && new Date(cert.expiry_date) < now)) {
           expired++;
         } else if (cert.expiry_date && new Date(cert.expiry_date) < thirtyDaysFromNow) {
@@ -356,9 +386,21 @@ export function useComplianceData() {
       const total = valid + expiring + expired;
 
       return [
-        { name: 'Valid', value: total > 0 ? Math.round((valid / total) * 100) : 100, color: 'hsl(var(--success))' },
-        { name: 'Expiring', value: total > 0 ? Math.round((expiring / total) * 100) : 0, color: 'hsl(var(--warning))' },
-        { name: 'Expired', value: total > 0 ? Math.round((expired / total) * 100) : 0, color: 'hsl(var(--destructive))' },
+        {
+          name: 'Valid',
+          value: total > 0 ? Math.round((valid / total) * 100) : 100,
+          color: 'hsl(var(--success))',
+        },
+        {
+          name: 'Expiring',
+          value: total > 0 ? Math.round((expiring / total) * 100) : 0,
+          color: 'hsl(var(--warning))',
+        },
+        {
+          name: 'Expired',
+          value: total > 0 ? Math.round((expired / total) * 100) : 0,
+          color: 'hsl(var(--destructive))',
+        },
       ];
     },
   });
@@ -372,12 +414,14 @@ export function useTopPerformers() {
       // Get job assignments with employee names and job values
       const { data: assignments, error: assignError } = await supabase
         .from('employer_job_assignments')
-        .select(`
+        .select(
+          `
           employee_id,
           job_id,
           employer_employees (name),
           employer_jobs (value)
-        `)
+        `
+        )
         .eq('status', 'assigned');
 
       if (assignError) throw assignError;
@@ -413,7 +457,7 @@ export function useTopPerformers() {
           .eq('status', 'Active')
           .limit(4);
 
-        return (employees || []).map(emp => ({
+        return (employees || []).map((emp) => ({
           name: emp.name,
           jobs: 0,
           revenue: 0,
@@ -444,12 +488,15 @@ export function usePaymentSummary() {
       let pending = 0;
       let overdue = 0;
 
-      (invoices || []).forEach(inv => {
+      (invoices || []).forEach((inv) => {
         if (inv.status === 'Paid') {
           if (inv.paid_date && new Date(inv.paid_date) >= thirtyDaysAgo) {
             paidLast30Days += Number(inv.amount);
           }
-        } else if (inv.status === 'Overdue' || (inv.due_date && new Date(inv.due_date) < now && inv.status !== 'Paid')) {
+        } else if (
+          inv.status === 'Overdue' ||
+          (inv.due_date && new Date(inv.due_date) < now && inv.status !== 'Paid')
+        ) {
           overdue += Number(inv.amount);
         } else if (inv.status === 'Pending' || inv.status === 'Sent') {
           pending += Number(inv.amount);

@@ -30,7 +30,7 @@ import {
 import { useRAMS } from './rams/RAMSContext';
 import { generateRAMSPDF } from '@/utils/rams-pdf';
 import { SignaturePad } from './common/SignaturePad';
-import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
+
 import { HazardSelect } from './common/HazardSelect';
 import { RiskSelect } from './common/RiskSelect';
 import { RiskMatrix } from './common/RiskMatrix';
@@ -104,9 +104,6 @@ const IntegratedRAMSGenerator: React.FC = () => {
     reviewer: { name: '', date: '', signatureDataUrl: '' },
     approver: { name: '', date: '', signatureDataUrl: '' },
   });
-
-  // Evidence photos
-  const [photos, setPhotos] = useState<string[]>([]);
 
   const steps = [
     { id: 'project', title: 'Project Details', icon: Building },
@@ -224,7 +221,6 @@ const IntegratedRAMSGenerator: React.FC = () => {
           reviewedBy: signatures.reviewer,
           approvedBy: signatures.approver,
         },
-        photos,
       });
 
       toast({
@@ -631,13 +627,6 @@ const IntegratedRAMSGenerator: React.FC = () => {
         </div>
       )}
 
-      {/* Evidence Photos */}
-      <SafetyPhotoCapture
-        photos={photos}
-        onPhotosChange={setPhotos}
-        maxPhotos={10}
-        label="Site Evidence Photos"
-      />
     </div>
   );
 

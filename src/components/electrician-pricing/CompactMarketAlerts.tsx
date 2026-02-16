@@ -1,14 +1,13 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, Info, AlertTriangle } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Bell, Info, AlertTriangle } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface Alert {
   id: number;
   message: string;
   date: string;
-  type: "warning" | "info";
+  type: 'warning' | 'info';
 }
 
 interface CompactMarketAlertsProps {
@@ -30,13 +29,15 @@ const CompactMarketAlerts = ({ alerts }: CompactMarketAlertsProps) => {
       <CardContent className="pt-0">
         <div className="space-y-2">
           {displayAlerts.map((alert) => (
-            <div 
-              key={alert.id} 
+            <div
+              key={alert.id}
               className={`flex items-start gap-3 p-3 rounded-md text-sm ${
-                alert.type === "warning" ? "bg-amber-500/10 border border-amber-500/20" : "bg-blue-500/10 border border-blue-500/20"
+                alert.type === 'warning'
+                  ? 'bg-amber-500/10 border border-amber-500/20'
+                  : 'bg-blue-500/10 border border-blue-500/20'
               }`}
             >
-              {alert.type === "warning" ? (
+              {alert.type === 'warning' ? (
                 <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
               ) : (
                 <Info className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
@@ -48,7 +49,7 @@ const CompactMarketAlerts = ({ alerts }: CompactMarketAlertsProps) => {
             </div>
           ))}
         </div>
-        
+
         {alerts.length > 2 && (
           <Button
             variant="ghost"

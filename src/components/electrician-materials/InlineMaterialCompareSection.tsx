@@ -1,15 +1,8 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Scale,
-  ChevronDown,
-  ChevronUp,
-  X,
-  Check,
-  ExternalLink,
-} from "lucide-react";
-import { MaterialItem } from "@/hooks/useToolsForMaterials";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Scale, ChevronDown, ChevronUp, X, Check, ExternalLink } from 'lucide-react';
+import { MaterialItem } from '@/hooks/useToolsForMaterials';
 
 interface InlineMaterialCompareSectionProps {
   items: MaterialItem[];
@@ -28,15 +21,13 @@ const InlineMaterialCompareSection = ({
 
   // Get product URL
   const getProductUrl = (item: MaterialItem) => {
-    const supplier = (item.supplier || "").toLowerCase();
+    const supplier = (item.supplier || '').toLowerCase();
     const term = encodeURIComponent(item.name);
-    if (supplier.includes("screwfix"))
-      return `https://www.screwfix.com/search?search=${term}`;
-    if (supplier.includes("toolstation"))
-      return `https://www.toolstation.com/search?q=${term}`;
-    if (supplier.includes("city") || supplier.includes("cef"))
+    if (supplier.includes('screwfix')) return `https://www.screwfix.com/search?search=${term}`;
+    if (supplier.includes('toolstation')) return `https://www.toolstation.com/search?q=${term}`;
+    if (supplier.includes('city') || supplier.includes('cef'))
       return `https://www.cef.co.uk/search?q=${term}`;
-    return item.productUrl || "#";
+    return item.productUrl || '#';
   };
 
   return (
@@ -55,9 +46,7 @@ const InlineMaterialCompareSection = ({
           </div>
           <div className="text-left">
             <h2 className="text-lg font-bold text-white">Compare Materials</h2>
-            <p className="text-sm text-muted-foreground">
-              {items.length}/4 materials selected
-            </p>
+            <p className="text-sm text-muted-foreground">{items.length}/4 materials selected</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -97,9 +86,7 @@ const InlineMaterialCompareSection = ({
             <div className="flex items-center justify-center min-h-[200px] rounded-xl border-2 border-dashed border-white/20 bg-white/5">
               <div className="text-center p-4">
                 <Scale className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">
-                  Add more materials to compare
-                </p>
+                <p className="text-sm text-muted-foreground">Add more materials to compare</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Click the + button on any product card
                 </p>
@@ -123,8 +110,8 @@ const CompareCard = ({ item, onRemove, productUrl }: CompareCardProps) => {
   // Normalize image
   const imageSrc = (() => {
     const src = item.image;
-    if (!src) return "/placeholder.svg";
-    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) return `/${src}`;
+    if (!src) return '/placeholder.svg';
+    if (!/^https?:\/\//i.test(src) && !src.startsWith('/')) return `/${src}`;
     return src;
   })();
 
@@ -145,7 +132,7 @@ const CompareCard = ({ item, onRemove, productUrl }: CompareCardProps) => {
           alt={item.name}
           className="max-h-full max-w-full object-contain"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = "/placeholder.svg";
+            (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
           }}
         />
       </div>
@@ -153,27 +140,18 @@ const CompareCard = ({ item, onRemove, productUrl }: CompareCardProps) => {
       {/* Content */}
       <div className="p-4 space-y-3">
         {/* Supplier */}
-        <Badge
-          variant="outline"
-          className="bg-white/5 border-white/10 text-xs"
-        >
-          {item.supplier || "Unknown"}
+        <Badge variant="outline" className="bg-white/5 border-white/10 text-xs">
+          {item.supplier || 'Unknown'}
         </Badge>
 
         {/* Title */}
-        <h3 className="text-sm font-semibold text-white line-clamp-2">
-          {item.name}
-        </h3>
+        <h3 className="text-sm font-semibold text-white line-clamp-2">{item.name}</h3>
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
-          <span className="text-xl font-bold text-primary">
-            {item.salePrice || item.price}
-          </span>
+          <span className="text-xl font-bold text-primary">{item.salePrice || item.price}</span>
           {item.isOnSale && item.salePrice && (
-            <span className="text-xs text-muted-foreground line-through">
-              {item.price}
-            </span>
+            <span className="text-xs text-muted-foreground line-through">{item.price}</span>
           )}
         </div>
 
@@ -193,10 +171,10 @@ const CompareCard = ({ item, onRemove, productUrl }: CompareCardProps) => {
         <Button
           size="sm"
           className="w-full rounded-lg"
-          onClick={() => window.open(productUrl, "_blank")}
+          onClick={() => window.open(productUrl, '_blank')}
         >
           <ExternalLink className="h-4 w-4 mr-2" />
-          View at {item.supplier?.split(" ")[0] || "Supplier"}
+          View at {item.supplier?.split(' ')[0] || 'Supplier'}
         </Button>
       </div>
     </div>

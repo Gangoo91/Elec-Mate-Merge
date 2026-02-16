@@ -1,5 +1,5 @@
-import { Check, LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Check, LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface InfoItem {
   title: string;
@@ -10,27 +10,27 @@ interface InfoItem {
 
 interface InfoListProps {
   items: InfoItem[];
-  variant?: "default" | "checklist" | "numbered";
+  variant?: 'default' | 'checklist' | 'numbered';
   className?: string;
 }
 
-const InfoList = ({ items, variant = "default", className }: InfoListProps) => {
+const InfoList = ({ items, variant = 'default', className }: InfoListProps) => {
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn('space-y-3', className)}>
       {items.map((item, index) => {
-        const Icon = item.icon || (variant === "checklist" ? Check : undefined);
+        const Icon = item.icon || (variant === 'checklist' ? Check : undefined);
 
         return (
           <div
             key={index}
             className={cn(
-              "flex items-start gap-4 p-4 rounded-xl",
-              "bg-white/[0.03] border border-white/10",
-              "hover:bg-white/[0.05] transition-colors"
+              'flex items-start gap-4 p-4 rounded-xl',
+              'bg-white/[0.03] border border-white/10',
+              'hover:bg-white/[0.05] transition-colors'
             )}
           >
             {/* Icon/Number */}
-            {variant === "numbered" ? (
+            {variant === 'numbered' ? (
               <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
                 <span className="text-sm font-bold text-yellow-400">{index + 1}</span>
               </div>

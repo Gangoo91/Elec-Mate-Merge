@@ -10,7 +10,7 @@ const SafetyStatistics = () => {
       description: 'Reduction through proper safety protocols',
       icon: TrendingDown,
       color: 'text-green-400',
-      bgColor: 'bg-green-400/10 border-green-400/20'
+      bgColor: 'bg-green-400/10 border-green-400/20',
     },
     {
       title: 'Safety Compliance',
@@ -18,7 +18,7 @@ const SafetyStatistics = () => {
       description: 'Industry standard achievement rate',
       icon: Shield,
       color: 'text-blue-400',
-      bgColor: 'bg-blue-400/10 border-blue-400/20'
+      bgColor: 'bg-blue-400/10 border-blue-400/20',
     },
     {
       title: 'Critical Incidents',
@@ -26,7 +26,7 @@ const SafetyStatistics = () => {
       description: 'When proper isolation is followed',
       icon: AlertTriangle,
       color: 'text-orange-400',
-      bgColor: 'bg-orange-400/10 border-orange-400/20'
+      bgColor: 'bg-orange-400/10 border-orange-400/20',
     },
     {
       title: 'Trained Personnel',
@@ -34,8 +34,8 @@ const SafetyStatistics = () => {
       description: 'Meet BS 7671 safety requirements',
       icon: Users,
       color: 'text-purple-400',
-      bgColor: 'bg-purple-400/10 border-purple-400/20'
-    }
+      bgColor: 'bg-purple-400/10 border-purple-400/20',
+    },
   ];
 
   return (

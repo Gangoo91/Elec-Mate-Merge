@@ -1,8 +1,7 @@
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search, Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface SearchFormProps {
   postcode: string;
@@ -17,9 +16,9 @@ export const SearchForm = ({ postcode, setPostcode, handleSearch, isLoading }: S
   const onSubmit = () => {
     if (!postcode.trim()) {
       toast({
-        title: "Postcode required",
-        description: "Please enter a valid UK postcode to search",
-        variant: "destructive"
+        title: 'Postcode required',
+        description: 'Please enter a valid UK postcode to search',
+        variant: 'destructive',
       });
       return;
     }
@@ -28,8 +27,8 @@ export const SearchForm = ({ postcode, setPostcode, handleSearch, isLoading }: S
 
   return (
     <div className="flex flex-col sm:flex-row gap-2">
-      <Input 
-        placeholder="Enter your UK postcode" 
+      <Input
+        placeholder="Enter your UK postcode"
         value={postcode}
         onChange={(e) => setPostcode(e.target.value)}
         className="flex-1"
@@ -39,8 +38,8 @@ export const SearchForm = ({ postcode, setPostcode, handleSearch, isLoading }: S
           }
         }}
       />
-      <Button 
-        onClick={onSubmit} 
+      <Button
+        onClick={onSubmit}
         disabled={isLoading}
         className="flex items-center gap-1 sm:w-auto w-full"
       >

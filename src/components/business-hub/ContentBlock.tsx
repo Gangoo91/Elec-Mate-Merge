@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import { LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ReactNode } from 'react';
+import { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ContentBlockProps {
   title: string;
@@ -23,8 +23,8 @@ const ContentBlock = ({
     <div
       id={id}
       className={cn(
-        "rounded-2xl overflow-hidden scroll-mt-24",
-        "bg-white/[0.03] border border-white/10",
+        'rounded-2xl overflow-hidden scroll-mt-24',
+        'bg-white/[0.03] border border-white/10',
         className
       )}
     >
@@ -43,17 +43,11 @@ const ContentBlock = ({
       {/* Content - Always fully visible */}
       <div className="p-6 space-y-5">
         {/* Summary */}
-        {summary && (
-          <div className="text-base text-white leading-relaxed">
-            {summary}
-          </div>
-        )}
+        {summary && <div className="text-base text-white leading-relaxed">{summary}</div>}
 
         {/* Full Content - Always visible, no accordion */}
         {children && (
-          <div className={cn(summary && "pt-5 border-t border-white/10")}>
-            {children}
-          </div>
+          <div className={cn(summary && 'pt-5 border-t border-white/10')}>{children}</div>
         )}
       </div>
     </div>

@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS public.apprenticeship_ksbs (
   -- Assessment
   assessment_method TEXT[] DEFAULT ARRAY['portfolio'],  -- 'portfolio', 'observation', 'discussion', 'test'
 
+  -- Route (core applies to all, installation/maintenance are route-specific)
+  route TEXT DEFAULT 'core' CHECK (route IN ('core', 'installation', 'maintenance')),
+
   -- Ordering
   sort_order INTEGER DEFAULT 0,
 

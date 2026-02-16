@@ -1,7 +1,7 @@
-import { ReactNode, useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+import { ReactNode, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 
 interface CollapsibleFormSectionProps {
   title: string;
@@ -22,7 +22,7 @@ export const CollapsibleFormSection = ({
   badgeText,
   defaultOpen = false,
   children,
-  className
+  className,
 }: CollapsibleFormSectionProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -39,24 +39,27 @@ export const CollapsibleFormSection = ({
               )}
             </div>
             {badge && (
-              <span className={cn(
-                "text-xs px-2 py-1 rounded-md flex-shrink-0 hidden xs:inline-block",
-                badge === 'optional' && "bg-muted text-muted-foreground",
-                badge === 'configured' && "bg-orange-500/10 text-orange-400 border border-orange-500/20"
-              )}>
+              <span
+                className={cn(
+                  'text-xs px-2 py-1 rounded-md flex-shrink-0 hidden xs:inline-block',
+                  badge === 'optional' && 'bg-muted text-muted-foreground',
+                  badge === 'configured' &&
+                    'bg-orange-500/10 text-orange-400 border border-orange-500/20'
+                )}
+              >
                 {badgeText || (badge === 'optional' ? 'Optional' : '✓ Active')}
               </span>
             )}
           </div>
-          <ChevronDown className={cn(
-            "h-5 w-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ml-2",
-            isOpen && "rotate-180"
-          )} />
+          <ChevronDown
+            className={cn(
+              'h-5 w-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ml-2',
+              isOpen && 'rotate-180'
+            )}
+          />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="pb-3 sm:pb-4 pt-1 px-1">
-            {children}
-          </div>
+          <div className="pb-3 sm:pb-4 pt-1 px-1">{children}</div>
         </CollapsibleContent>
       </div>
     </Collapsible>

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
-import { Switch } from "@/components/ui/switch";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
+import { Switch } from '@/components/ui/switch';
 import {
   ChevronLeft,
   RotateCcw,
@@ -18,10 +18,10 @@ import {
   CheckCircle2,
   XCircle,
   ArrowRight,
-  Percent
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+  Percent,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DebtInputs {
   totalOutstanding: number;
@@ -40,11 +40,11 @@ interface DebtInputs {
   collectionAgencyRate: number;
 }
 
-type TabType = "overview" | "recovery" | "prevention";
+type TabType = 'overview' | 'recovery' | 'prevention';
 
 const DebtRecoveryCalculator = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabType>("overview");
+  const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [inputs, setInputs] = useState<DebtInputs>({
     totalOutstanding: 25000,
     numberOfDebtors: 8,
@@ -59,11 +59,11 @@ const DebtRecoveryCalculator = () => {
     badDebtProvision: 2.5,
     earlySettlementDiscount: 10,
     paymentPlanOption: true,
-    collectionAgencyRate: 15
+    collectionAgencyRate: 15,
   });
 
   const updateInput = (field: keyof DebtInputs, value: number | boolean) => {
-    setInputs(prev => ({ ...prev, [field]: value }));
+    setInputs((prev) => ({ ...prev, [field]: value }));
   };
 
   const resetCalculator = () => {
@@ -81,47 +81,56 @@ const DebtRecoveryCalculator = () => {
       badDebtProvision: 2.5,
       earlySettlementDiscount: 10,
       paymentPlanOption: true,
-      collectionAgencyRate: 15
+      collectionAgencyRate: 15,
     });
   };
 
   // Calculations
-  const averageDebtSize = inputs.numberOfDebtors > 0 ? inputs.totalOutstanding / inputs.numberOfDebtors : 0;
-  const debtToRevenueRatio = inputs.monthlyRevenue > 0 ? (inputs.totalOutstanding / (inputs.monthlyRevenue * 12)) * 100 : 0;
-  const totalRecoveryCosts = inputs.adminCosts + inputs.legalFees + inputs.collectionAgencyFees + inputs.courtCosts;
+  const averageDebtSize =
+    inputs.numberOfDebtors > 0 ? inputs.totalOutstanding / inputs.numberOfDebtors : 0;
+  const debtToRevenueRatio =
+    inputs.monthlyRevenue > 0 ? (inputs.totalOutstanding / (inputs.monthlyRevenue * 12)) * 100 : 0;
+  const totalRecoveryCosts =
+    inputs.adminCosts + inputs.legalFees + inputs.collectionAgencyFees + inputs.courtCosts;
 
   // Recovery scenarios
-  const earlySettlementAmount = inputs.totalOutstanding * (1 - inputs.earlySettlementDiscount / 100);
-  const collectionAgencyRecovery = inputs.totalOutstanding * (1 - inputs.collectionAgencyRate / 100);
-  const expectedRecoveryRate = inputs.averageDebtAge > 90 ? 0.4 : inputs.averageDebtAge > 60 ? 0.6 : 0.8;
+  const earlySettlementAmount =
+    inputs.totalOutstanding * (1 - inputs.earlySettlementDiscount / 100);
+  const collectionAgencyRecovery =
+    inputs.totalOutstanding * (1 - inputs.collectionAgencyRate / 100);
+  const expectedRecoveryRate =
+    inputs.averageDebtAge > 90 ? 0.4 : inputs.averageDebtAge > 60 ? 0.6 : 0.8;
   const likelyRecoveryAmount = inputs.totalOutstanding * expectedRecoveryRate;
 
   // Net calculations
   const netRecoveryAfterCosts = likelyRecoveryAmount - totalRecoveryCosts;
-  const cashFlowImpact = inputs.monthlyRevenue > 0 ? (inputs.totalOutstanding / inputs.monthlyRevenue) * 30 : 0;
-  const annualBadDebtWriteOff = (inputs.monthlyRevenue * 12) * (inputs.badDebtProvision / 100);
+  const cashFlowImpact =
+    inputs.monthlyRevenue > 0 ? (inputs.totalOutstanding / inputs.monthlyRevenue) * 30 : 0;
+  const annualBadDebtWriteOff = inputs.monthlyRevenue * 12 * (inputs.badDebtProvision / 100);
 
   // Status
   const getStatus = () => {
-    if (debtToRevenueRatio > 15) return { color: "red", icon: XCircle, text: "Critical debt level" };
-    if (debtToRevenueRatio > 10) return { color: "amber", icon: AlertTriangle, text: "High debt exposure" };
-    return { color: "green", icon: CheckCircle2, text: "Manageable debt" };
+    if (debtToRevenueRatio > 15)
+      return { color: 'red', icon: XCircle, text: 'Critical debt level' };
+    if (debtToRevenueRatio > 10)
+      return { color: 'amber', icon: AlertTriangle, text: 'High debt exposure' };
+    return { color: 'green', icon: CheckCircle2, text: 'Manageable debt' };
   };
   const status = getStatus();
 
   // Recovery timeline stages
   const recoveryStages = [
-    { days: 7, label: "Reminder", icon: Mail, action: "Friendly reminder call/email" },
-    { days: 14, label: "Formal", icon: FileText, action: "Formal demand letter" },
-    { days: 30, label: "Escalate", icon: AlertTriangle, action: "Final warning before action" },
-    { days: 45, label: "Legal", icon: Gavel, action: "Letter before action" },
-    { days: 60, label: "Court", icon: Shield, action: "Court proceedings" }
+    { days: 7, label: 'Reminder', icon: Mail, action: 'Friendly reminder call/email' },
+    { days: 14, label: 'Formal', icon: FileText, action: 'Formal demand letter' },
+    { days: 30, label: 'Escalate', icon: AlertTriangle, action: 'Final warning before action' },
+    { days: 45, label: 'Legal', icon: Gavel, action: 'Letter before action' },
+    { days: 60, label: 'Court', icon: Shield, action: 'Court proceedings' },
   ];
 
   const tabs = [
-    { id: "overview" as TabType, label: "Overview" },
-    { id: "recovery" as TabType, label: "Recovery" },
-    { id: "prevention" as TabType, label: "Prevention" }
+    { id: 'overview' as TabType, label: 'Overview' },
+    { id: 'recovery' as TabType, label: 'Recovery' },
+    { id: 'prevention' as TabType, label: 'Prevention' },
   ];
 
   return (
@@ -161,20 +170,27 @@ const DebtRecoveryCalculator = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Outstanding Debt</p>
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  Outstanding Debt
+                </p>
                 <p className="text-3xl sm:text-4xl font-bold text-white mt-1 tabular-nums">
                   £{inputs.totalOutstanding.toLocaleString()}
                 </p>
               </div>
-              <div className={`p-3 rounded-2xl bg-${status.color}-500/20 border border-${status.color}-500/30`}>
+              <div
+                className={`p-3 rounded-2xl bg-${status.color}-500/20 border border-${status.color}-500/30`}
+              >
                 <status.icon className={`h-6 w-6 text-${status.color}-400`} />
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className={`text-ios-footnote ${
-                netRecoveryAfterCosts >= 0 ? "text-green-400" : "text-red-400"
-              }`}>
-                Expected recovery: £{netRecoveryAfterCosts.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+              <span
+                className={`text-ios-footnote ${
+                  netRecoveryAfterCosts >= 0 ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
+                Expected recovery: £
+                {netRecoveryAfterCosts.toLocaleString(undefined, { maximumFractionDigits: 0 })}
               </span>
             </div>
           </div>
@@ -184,22 +200,35 @@ const DebtRecoveryCalculator = () => {
         <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
             <p className="text-ios-caption-1 text-white/50">Debtors</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">{inputs.numberOfDebtors}</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              {inputs.numberOfDebtors}
+            </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
             <p className="text-ios-caption-1 text-white/50">Avg Age</p>
-            <p className={`text-ios-title-3 font-semibold mt-1 ${
-              inputs.averageDebtAge > 90 ? "text-red-400" :
-              inputs.averageDebtAge > 60 ? "text-amber-400" : "text-white"
-            }`}>{inputs.averageDebtAge}d</p>
+            <p
+              className={`text-ios-title-3 font-semibold mt-1 ${
+                inputs.averageDebtAge > 90
+                  ? 'text-red-400'
+                  : inputs.averageDebtAge > 60
+                    ? 'text-amber-400'
+                    : 'text-white'
+              }`}
+            >
+              {inputs.averageDebtAge}d
+            </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
             <p className="text-ios-caption-1 text-white/50">Recovery</p>
-            <p className="text-ios-title-3 font-semibold text-green-400 mt-1">{(expectedRecoveryRate * 100).toFixed(0)}%</p>
+            <p className="text-ios-title-3 font-semibold text-green-400 mt-1">
+              {(expectedRecoveryRate * 100).toFixed(0)}%
+            </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
             <p className="text-ios-caption-1 text-white/50">Cash Impact</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">{cashFlowImpact.toFixed(0)}d</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              {cashFlowImpact.toFixed(0)}d
+            </p>
           </div>
         </div>
 
@@ -209,17 +238,22 @@ const DebtRecoveryCalculator = () => {
             className="absolute top-1 bottom-1 bg-elec-yellow rounded-lg"
             initial={false}
             animate={{
-              left: activeTab === "overview" ? "4px" : activeTab === "recovery" ? "calc(33.33% + 2px)" : "calc(66.66% + 2px)",
-              width: "calc(33.33% - 4px)"
+              left:
+                activeTab === 'overview'
+                  ? '4px'
+                  : activeTab === 'recovery'
+                    ? 'calc(33.33% + 2px)'
+                    : 'calc(66.66% + 2px)',
+              width: 'calc(33.33% - 4px)',
             }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
           />
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`relative z-10 flex-1 py-2.5 text-ios-subhead font-medium transition-colors touch-manipulation ${
-                activeTab === tab.id ? "text-black" : "text-white/70"
+                activeTab === tab.id ? 'text-black' : 'text-white/70'
               }`}
             >
               {tab.label}
@@ -229,7 +263,7 @@ const DebtRecoveryCalculator = () => {
 
         {/* Tab Content */}
         <AnimatePresence mode="wait">
-          {activeTab === "overview" && (
+          {activeTab === 'overview' && (
             <motion.div
               key="overview"
               initial={{ opacity: 0, x: -20 }}
@@ -248,32 +282,38 @@ const DebtRecoveryCalculator = () => {
                     label="Total Outstanding"
                     icon={<PoundSterling className="h-5 w-5" />}
                     type="number"
-                    value={inputs.totalOutstanding || ""}
-                    onChange={(e) => updateInput("totalOutstanding", parseFloat(e.target.value) || 0)}
+                    value={inputs.totalOutstanding || ''}
+                    onChange={(e) =>
+                      updateInput('totalOutstanding', parseFloat(e.target.value) || 0)
+                    }
                     hint="Total owed"
                   />
                   <IOSInput
                     label="Number of Debtors"
                     icon={<Users className="h-5 w-5" />}
                     type="number"
-                    value={inputs.numberOfDebtors || ""}
-                    onChange={(e) => updateInput("numberOfDebtors", parseFloat(e.target.value) || 0)}
+                    value={inputs.numberOfDebtors || ''}
+                    onChange={(e) =>
+                      updateInput('numberOfDebtors', parseFloat(e.target.value) || 0)
+                    }
                     hint="How many owe"
                   />
                   <IOSInput
                     label="Average Debt Age"
                     icon={<Clock className="h-5 w-5" />}
                     type="number"
-                    value={inputs.averageDebtAge || ""}
-                    onChange={(e) => updateInput("averageDebtAge", parseFloat(e.target.value) || 0)}
+                    value={inputs.averageDebtAge || ''}
+                    onChange={(e) => updateInput('averageDebtAge', parseFloat(e.target.value) || 0)}
                     hint="Days overdue"
                   />
                   <IOSInput
                     label="Largest Single Debt"
                     icon={<TrendingDown className="h-5 w-5" />}
                     type="number"
-                    value={inputs.largestSingleDebt || ""}
-                    onChange={(e) => updateInput("largestSingleDebt", parseFloat(e.target.value) || 0)}
+                    value={inputs.largestSingleDebt || ''}
+                    onChange={(e) =>
+                      updateInput('largestSingleDebt', parseFloat(e.target.value) || 0)
+                    }
                     hint="Biggest debtor"
                   />
                 </div>
@@ -289,24 +329,26 @@ const DebtRecoveryCalculator = () => {
                     label="Monthly Revenue"
                     icon={<PoundSterling className="h-5 w-5" />}
                     type="number"
-                    value={inputs.monthlyRevenue || ""}
-                    onChange={(e) => updateInput("monthlyRevenue", parseFloat(e.target.value) || 0)}
+                    value={inputs.monthlyRevenue || ''}
+                    onChange={(e) => updateInput('monthlyRevenue', parseFloat(e.target.value) || 0)}
                     hint="Average monthly"
                   />
                   <IOSInput
                     label="Credit Terms"
                     icon={<Clock className="h-5 w-5" />}
                     type="number"
-                    value={inputs.creditTerms || ""}
-                    onChange={(e) => updateInput("creditTerms", parseFloat(e.target.value) || 0)}
+                    value={inputs.creditTerms || ''}
+                    onChange={(e) => updateInput('creditTerms', parseFloat(e.target.value) || 0)}
                     hint="Days allowed"
                   />
                   <IOSInput
                     label="Bad Debt Provision"
                     icon={<Percent className="h-5 w-5" />}
                     type="number"
-                    value={inputs.badDebtProvision || ""}
-                    onChange={(e) => updateInput("badDebtProvision", parseFloat(e.target.value) || 0)}
+                    value={inputs.badDebtProvision || ''}
+                    onChange={(e) =>
+                      updateInput('badDebtProvision', parseFloat(e.target.value) || 0)
+                    }
                     hint="Annual %"
                   />
                 </div>
@@ -327,10 +369,15 @@ const DebtRecoveryCalculator = () => {
                   <div className="h-px bg-white/10" />
                   <div className="flex justify-between items-center">
                     <span className="text-ios-body text-white/70">Debt/Revenue Ratio</span>
-                    <span className={`text-ios-body font-medium tabular-nums ${
-                      debtToRevenueRatio > 15 ? "text-red-400" :
-                      debtToRevenueRatio > 10 ? "text-amber-400" : "text-green-400"
-                    }`}>
+                    <span
+                      className={`text-ios-body font-medium tabular-nums ${
+                        debtToRevenueRatio > 15
+                          ? 'text-red-400'
+                          : debtToRevenueRatio > 10
+                            ? 'text-amber-400'
+                            : 'text-green-400'
+                      }`}
+                    >
                       {debtToRevenueRatio.toFixed(1)}%
                     </span>
                   </div>
@@ -346,7 +393,7 @@ const DebtRecoveryCalculator = () => {
             </motion.div>
           )}
 
-          {activeTab === "recovery" && (
+          {activeTab === 'recovery' && (
             <motion.div
               key="recovery"
               initial={{ opacity: 0, x: -20 }}
@@ -372,37 +419,45 @@ const DebtRecoveryCalculator = () => {
                         transition={{ delay: index * 0.05 }}
                         className={`relative flex items-center gap-4 p-4 rounded-2xl border ${
                           isActive && !isPast
-                            ? "bg-elec-yellow/10 border-elec-yellow/30"
+                            ? 'bg-elec-yellow/10 border-elec-yellow/30'
                             : isPast
-                            ? "bg-green-500/10 border-green-500/30"
-                            : "bg-white/5 border-white/10"
+                              ? 'bg-green-500/10 border-green-500/30'
+                              : 'bg-white/5 border-white/10'
                         }`}
                       >
-                        <div className={`p-2.5 rounded-xl ${
-                          isActive && !isPast
-                            ? "bg-elec-yellow/20"
-                            : isPast
-                            ? "bg-green-500/20"
-                            : "bg-white/10"
-                        }`}>
-                          <stage.icon className={`h-5 w-5 ${
+                        <div
+                          className={`p-2.5 rounded-xl ${
                             isActive && !isPast
-                              ? "text-elec-yellow"
+                              ? 'bg-elec-yellow/20'
                               : isPast
-                              ? "text-green-400"
-                              : "text-white/50"
-                          }`} />
+                                ? 'bg-green-500/20'
+                                : 'bg-white/10'
+                          }`}
+                        >
+                          <stage.icon
+                            className={`h-5 w-5 ${
+                              isActive && !isPast
+                                ? 'text-elec-yellow'
+                                : isPast
+                                  ? 'text-green-400'
+                                  : 'text-white/50'
+                            }`}
+                          />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className={`text-ios-subhead font-medium ${
-                              isActive ? "text-white" : "text-white/50"
-                            }`}>
+                            <span
+                              className={`text-ios-subhead font-medium ${
+                                isActive ? 'text-white' : 'text-white/50'
+                              }`}
+                            >
                               {stage.label}
                             </span>
-                            <span className={`text-ios-caption-2 ${
-                              isActive && !isPast ? "text-elec-yellow" : "text-white/40"
-                            }`}>
+                            <span
+                              className={`text-ios-caption-2 ${
+                                isActive && !isPast ? 'text-elec-yellow' : 'text-white/40'
+                              }`}
+                            >
                               Day {stage.days}
                             </span>
                           </div>
@@ -432,32 +487,34 @@ const DebtRecoveryCalculator = () => {
                     label="Admin Costs"
                     icon={<FileText className="h-5 w-5" />}
                     type="number"
-                    value={inputs.adminCosts || ""}
-                    onChange={(e) => updateInput("adminCosts", parseFloat(e.target.value) || 0)}
+                    value={inputs.adminCosts || ''}
+                    onChange={(e) => updateInput('adminCosts', parseFloat(e.target.value) || 0)}
                     hint="Internal time"
                   />
                   <IOSInput
                     label="Legal Fees"
                     icon={<Gavel className="h-5 w-5" />}
                     type="number"
-                    value={inputs.legalFees || ""}
-                    onChange={(e) => updateInput("legalFees", parseFloat(e.target.value) || 0)}
+                    value={inputs.legalFees || ''}
+                    onChange={(e) => updateInput('legalFees', parseFloat(e.target.value) || 0)}
                     hint="Solicitor costs"
                   />
                   <IOSInput
                     label="Collection Agency"
                     icon={<Users className="h-5 w-5" />}
                     type="number"
-                    value={inputs.collectionAgencyFees || ""}
-                    onChange={(e) => updateInput("collectionAgencyFees", parseFloat(e.target.value) || 0)}
+                    value={inputs.collectionAgencyFees || ''}
+                    onChange={(e) =>
+                      updateInput('collectionAgencyFees', parseFloat(e.target.value) || 0)
+                    }
                     hint="Agency fees"
                   />
                   <IOSInput
                     label="Court Costs"
                     icon={<Shield className="h-5 w-5" />}
                     type="number"
-                    value={inputs.courtCosts || ""}
-                    onChange={(e) => updateInput("courtCosts", parseFloat(e.target.value) || 0)}
+                    value={inputs.courtCosts || ''}
+                    onChange={(e) => updateInput('courtCosts', parseFloat(e.target.value) || 0)}
                     hint="Filing fees"
                   />
                 </div>
@@ -481,16 +538,20 @@ const DebtRecoveryCalculator = () => {
                     label="Early Settlement Discount"
                     icon={<Percent className="h-5 w-5" />}
                     type="number"
-                    value={inputs.earlySettlementDiscount || ""}
-                    onChange={(e) => updateInput("earlySettlementDiscount", parseFloat(e.target.value) || 0)}
+                    value={inputs.earlySettlementDiscount || ''}
+                    onChange={(e) =>
+                      updateInput('earlySettlementDiscount', parseFloat(e.target.value) || 0)
+                    }
                     hint="Discount offered"
                   />
                   <IOSInput
                     label="Agency Commission"
                     icon={<Percent className="h-5 w-5" />}
                     type="number"
-                    value={inputs.collectionAgencyRate || ""}
-                    onChange={(e) => updateInput("collectionAgencyRate", parseFloat(e.target.value) || 0)}
+                    value={inputs.collectionAgencyRate || ''}
+                    onChange={(e) =>
+                      updateInput('collectionAgencyRate', parseFloat(e.target.value) || 0)
+                    }
                     hint="Collection %"
                   />
                   <div className="flex items-center justify-between px-4 py-4">
@@ -505,7 +566,7 @@ const DebtRecoveryCalculator = () => {
                     </div>
                     <Switch
                       checked={inputs.paymentPlanOption}
-                      onCheckedChange={(checked) => updateInput("paymentPlanOption", checked)}
+                      onCheckedChange={(checked) => updateInput('paymentPlanOption', checked)}
                       className="data-[state=checked]:bg-elec-yellow"
                     />
                   </div>
@@ -523,11 +584,18 @@ const DebtRecoveryCalculator = () => {
                       <div className="p-2 bg-blue-500/20 rounded-xl">
                         <Mail className="h-4 w-4 text-blue-400" />
                       </div>
-                      <span className="text-ios-subhead font-medium text-blue-300">Early Settlement</span>
+                      <span className="text-ios-subhead font-medium text-blue-300">
+                        Early Settlement
+                      </span>
                     </div>
-                    <p className="text-ios-caption-1 text-blue-200/70">{inputs.earlySettlementDiscount}% discount offered</p>
+                    <p className="text-ios-caption-1 text-blue-200/70">
+                      {inputs.earlySettlementDiscount}% discount offered
+                    </p>
                     <p className="text-xl font-bold text-white mt-1 tabular-nums">
-                      £{earlySettlementAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      £
+                      {earlySettlementAmount.toLocaleString(undefined, {
+                        maximumFractionDigits: 0,
+                      })}
                     </p>
                   </div>
 
@@ -536,11 +604,18 @@ const DebtRecoveryCalculator = () => {
                       <div className="p-2 bg-amber-500/20 rounded-xl">
                         <Users className="h-4 w-4 text-amber-400" />
                       </div>
-                      <span className="text-ios-subhead font-medium text-amber-300">Collection Agency</span>
+                      <span className="text-ios-subhead font-medium text-amber-300">
+                        Collection Agency
+                      </span>
                     </div>
-                    <p className="text-ios-caption-1 text-amber-200/70">{inputs.collectionAgencyRate}% commission</p>
+                    <p className="text-ios-caption-1 text-amber-200/70">
+                      {inputs.collectionAgencyRate}% commission
+                    </p>
                     <p className="text-xl font-bold text-white mt-1 tabular-nums">
-                      £{collectionAgencyRecovery.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      £
+                      {collectionAgencyRecovery.toLocaleString(undefined, {
+                        maximumFractionDigits: 0,
+                      })}
                     </p>
                   </div>
 
@@ -549,11 +624,18 @@ const DebtRecoveryCalculator = () => {
                       <div className="p-2 bg-green-500/20 rounded-xl">
                         <Gavel className="h-4 w-4 text-green-400" />
                       </div>
-                      <span className="text-ios-subhead font-medium text-green-300">Legal Action</span>
+                      <span className="text-ios-subhead font-medium text-green-300">
+                        Legal Action
+                      </span>
                     </div>
-                    <p className="text-ios-caption-1 text-green-200/70">Court + costs ({(expectedRecoveryRate * 100).toFixed(0)}% recovery)</p>
+                    <p className="text-ios-caption-1 text-green-200/70">
+                      Court + costs ({(expectedRecoveryRate * 100).toFixed(0)}% recovery)
+                    </p>
                     <p className="text-xl font-bold text-white mt-1 tabular-nums">
-                      £{netRecoveryAfterCosts.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      £
+                      {netRecoveryAfterCosts.toLocaleString(undefined, {
+                        maximumFractionDigits: 0,
+                      })}
                     </p>
                   </div>
                 </div>
@@ -561,7 +643,7 @@ const DebtRecoveryCalculator = () => {
             </motion.div>
           )}
 
-          {activeTab === "prevention" && (
+          {activeTab === 'prevention' && (
             <motion.div
               key="prevention"
               initial={{ opacity: 0, x: -20 }}
@@ -577,15 +659,17 @@ const DebtRecoveryCalculator = () => {
                     <div className="p-2 bg-blue-500/20 rounded-xl">
                       <Shield className="h-5 w-5 text-blue-400" />
                     </div>
-                    <span className="text-ios-headline font-semibold text-blue-300">Credit Control</span>
+                    <span className="text-ios-headline font-semibold text-blue-300">
+                      Credit Control
+                    </span>
                   </div>
                   <ul className="space-y-2">
                     {[
-                      "Credit checks for new customers",
-                      "Clear payment terms on invoices",
-                      "Regular debt aging reports",
-                      "Automated reminder systems",
-                      "Retention of title clauses"
+                      'Credit checks for new customers',
+                      'Clear payment terms on invoices',
+                      'Regular debt aging reports',
+                      'Automated reminder systems',
+                      'Retention of title clauses',
                     ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-ios-body text-blue-200/80">
                         <CheckCircle2 className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
@@ -603,17 +687,22 @@ const DebtRecoveryCalculator = () => {
                     <div className="p-2 bg-green-500/20 rounded-xl">
                       <PoundSterling className="h-5 w-5 text-green-400" />
                     </div>
-                    <span className="text-ios-headline font-semibold text-green-300">Payment Security</span>
+                    <span className="text-ios-headline font-semibold text-green-300">
+                      Payment Security
+                    </span>
                   </div>
                   <ul className="space-y-2">
                     {[
-                      "Request deposits on large jobs",
-                      "Stage payments for major projects",
-                      "Direct debit arrangements",
-                      "Personal guarantees where appropriate",
-                      "Trade credit insurance"
+                      'Request deposits on large jobs',
+                      'Stage payments for major projects',
+                      'Direct debit arrangements',
+                      'Personal guarantees where appropriate',
+                      'Trade credit insurance',
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-ios-body text-green-200/80">
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 text-ios-body text-green-200/80"
+                      >
                         <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
                         {item}
                       </li>
@@ -629,17 +718,22 @@ const DebtRecoveryCalculator = () => {
                     <div className="p-2 bg-amber-500/20 rounded-xl">
                       <AlertTriangle className="h-5 w-5 text-amber-400" />
                     </div>
-                    <span className="text-ios-headline font-semibold text-amber-300">Early Warning Signs</span>
+                    <span className="text-ios-headline font-semibold text-amber-300">
+                      Early Warning Signs
+                    </span>
                   </div>
                   <ul className="space-y-2">
                     {[
-                      "Payments becoming consistently late",
-                      "Partial payments without explanation",
-                      "Difficulty contacting customer",
-                      "Changes in payment method",
-                      "Complaints about work quality (delaying tactics)"
+                      'Payments becoming consistently late',
+                      'Partial payments without explanation',
+                      'Difficulty contacting customer',
+                      'Changes in payment method',
+                      'Complaints about work quality (delaying tactics)',
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-ios-body text-amber-200/80">
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 text-ios-body text-amber-200/80"
+                      >
                         <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
                         {item}
                       </li>
@@ -655,15 +749,17 @@ const DebtRecoveryCalculator = () => {
                     <div className="p-2 bg-red-500/20 rounded-xl">
                       <Gavel className="h-5 w-5 text-red-400" />
                     </div>
-                    <span className="text-ios-headline font-semibold text-red-300">Recovery Actions</span>
+                    <span className="text-ios-headline font-semibold text-red-300">
+                      Recovery Actions
+                    </span>
                   </div>
                   <ul className="space-y-2">
                     {[
-                      "Contact within 7 days of due date",
-                      "Formal demand after 14 days",
-                      "Consider early settlement discount",
-                      "Legal letter before action",
-                      "Court proceedings if economical"
+                      'Contact within 7 days of due date',
+                      'Formal demand after 14 days',
+                      'Consider early settlement discount',
+                      'Legal letter before action',
+                      'Court proceedings if economical',
                     ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-ios-body text-red-200/80">
                         <ArrowRight className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />

@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Zap, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Zap, Star } from 'lucide-react';
 
 const DealOfTheDay = () => {
   return (
@@ -22,9 +21,9 @@ const DealOfTheDay = () => {
               <span className="text-3xl font-bold text-elec-yellow">£129.99</span>
               <span className="text-lg line-through text-muted-foreground">£179.99</span>
             </div>
-            
+
             <div className="text-xl font-medium">Schneider Electric Distribution Board</div>
-            
+
             <ul className="space-y-2">
               <li className="flex items-center">
                 <Zap className="h-4 w-4 text-elec-yellow mr-2" />
@@ -43,14 +42,12 @@ const DealOfTheDay = () => {
                 2-Year Warranty & Free Delivery
               </li>
             </ul>
-            
+
             <div className="pt-2">
-              <Button className="w-full sm:w-auto">
-                Add to Order
-              </Button>
+              <Button className="w-full sm:w-auto">Add to Order</Button>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-center">
             <div className="w-full h-40 rounded-md flex items-center justify-center text-elec-yellow/50">
               Product Image

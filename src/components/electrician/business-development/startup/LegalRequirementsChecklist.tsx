@@ -1,157 +1,160 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertTriangle, FileText, Calendar, ExternalLink } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, AlertTriangle, FileText, Calendar, ExternalLink } from 'lucide-react';
 
 const LegalRequirementsChecklist = () => {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
 
   const requirements = [
     {
-      category: "Business Registration",
-      priority: "Critical",
+      category: 'Business Registration',
+      priority: 'Critical',
       items: [
         {
-          id: "choose_structure",
-          task: "Choose business structure (sole trader, partnership, limited company)",
-          timeframe: "Week 1",
-          cost: "£0-50",
-          description: "Decide on the legal structure that best suits your business needs and tax situation"
+          id: 'choose_structure',
+          task: 'Choose business structure (sole trader, partnership, limited company)',
+          timeframe: 'Week 1',
+          cost: '£0-50',
+          description:
+            'Decide on the legal structure that best suits your business needs and tax situation',
         },
         {
-          id: "register_company",
-          task: "Register with Companies House (if limited company)",
-          timeframe: "Week 1-2",
-          cost: "£12",
-          description: "Online registration takes 1-3 days. Required for limited companies only"
+          id: 'register_company',
+          task: 'Register with Companies House (if limited company)',
+          timeframe: 'Week 1-2',
+          cost: '£12',
+          description: 'Online registration takes 1-3 days. Required for limited companies only',
         },
         {
-          id: "register_hmrc",
-          task: "Register with HMRC for tax purposes",
-          timeframe: "Week 2",
-          cost: "Free",
-          description: "Register for Self Assessment, VAT (if applicable), and PAYE (if employing staff)"
-        }
-      ]
+          id: 'register_hmrc',
+          task: 'Register with HMRC for tax purposes',
+          timeframe: 'Week 2',
+          cost: 'Free',
+          description:
+            'Register for Self Assessment, VAT (if applicable), and PAYE (if employing staff)',
+        },
+      ],
     },
     {
-      category: "Insurance Requirements",
-      priority: "Critical",
+      category: 'Insurance Requirements',
+      priority: 'Critical',
       items: [
         {
-          id: "public_liability",
-          task: "Obtain Public Liability Insurance (minimum £2 million)",
-          timeframe: "Week 1",
-          cost: "£200-500/year",
-          description: "Essential for all electrical work. Many clients require sight of certificate"
+          id: 'public_liability',
+          task: 'Obtain Public Liability Insurance (minimum £2 million)',
+          timeframe: 'Week 1',
+          cost: '£200-500/year',
+          description:
+            'Essential for all electrical work. Many clients require sight of certificate',
         },
         {
-          id: "professional_indemnity",
-          task: "Consider Professional Indemnity Insurance",
-          timeframe: "Week 2",
-          cost: "£300-800/year",
-          description: "Protects against claims of professional negligence or advice"
+          id: 'professional_indemnity',
+          task: 'Consider Professional Indemnity Insurance',
+          timeframe: 'Week 2',
+          cost: '£300-800/year',
+          description: 'Protects against claims of professional negligence or advice',
         },
         {
-          id: "employers_liability",
+          id: 'employers_liability',
           task: "Employers' Liability Insurance (when hiring staff)",
-          timeframe: "Before hiring",
-          cost: "£100-300/year",
-          description: "Legally required when you employ anyone, including subcontractors"
-        }
-      ]
+          timeframe: 'Before hiring',
+          cost: '£100-300/year',
+          description: 'Legally required when you employ anyone, including subcontractors',
+        },
+      ],
     },
     {
-      category: "Industry Compliance",
-      priority: "High",
+      category: 'Industry Compliance',
+      priority: 'High',
       items: [
         {
-          id: "scheme_membership",
-          task: "Join electrical competent person scheme (NICEIC/NAPIT/etc.)",
-          timeframe: "Week 3-4",
-          cost: "£500-800/year",
-          description: "Essential for Part P compliance and self-certification of electrical work"
+          id: 'scheme_membership',
+          task: 'Join electrical competent person scheme (NICEIC/NAPIT/etc.)',
+          timeframe: 'Week 3-4',
+          cost: '£500-800/year',
+          description: 'Essential for Part P compliance and self-certification of electrical work',
         },
         {
-          id: "jib_membership",
-          task: "Consider JIB membership and grading",
-          timeframe: "Week 4-6",
-          cost: "£150-300/year",
-          description: "Industry recognition scheme that demonstrates your qualifications and experience"
+          id: 'jib_membership',
+          task: 'Consider JIB membership and grading',
+          timeframe: 'Week 4-6',
+          cost: '£150-300/year',
+          description:
+            'Industry recognition scheme that demonstrates your qualifications and experience',
         },
         {
-          id: "safe_contractor",
-          task: "SafeContractor or similar health & safety accreditation",
-          timeframe: "Week 6-8",
-          cost: "£200-400/year",
-          description: "Many larger clients require this before allowing you on their premises"
-        }
-      ]
+          id: 'safe_contractor',
+          task: 'SafeContractor or similar health & safety accreditation',
+          timeframe: 'Week 6-8',
+          cost: '£200-400/year',
+          description: 'Many larger clients require this before allowing you on their premises',
+        },
+      ],
     },
     {
-      category: "Health & Safety",
-      priority: "Critical",
+      category: 'Health & Safety',
+      priority: 'Critical',
       items: [
         {
-          id: "health_safety_policy",
-          task: "Create Health & Safety Policy (if employing 5+ people)",
-          timeframe: "Week 2-3",
-          cost: "£200-500",
-          description: "Legal requirement for businesses with 5 or more employees"
+          id: 'health_safety_policy',
+          task: 'Create Health & Safety Policy (if employing 5+ people)',
+          timeframe: 'Week 2-3',
+          cost: '£200-500',
+          description: 'Legal requirement for businesses with 5 or more employees',
         },
         {
-          id: "risk_assessments",
-          task: "Develop standard risk assessment templates",
-          timeframe: "Week 3-4",
-          cost: "£100-300",
-          description: "Required for all work sites and activities"
+          id: 'risk_assessments',
+          task: 'Develop standard risk assessment templates',
+          timeframe: 'Week 3-4',
+          cost: '£100-300',
+          description: 'Required for all work sites and activities',
         },
         {
-          id: "method_statements",
-          task: "Create method statements for common tasks",
-          timeframe: "Week 4-5",
-          cost: "£100-200",
-          description: "Demonstrates how work will be carried out safely"
-        }
-      ]
+          id: 'method_statements',
+          task: 'Create method statements for common tasks',
+          timeframe: 'Week 4-5',
+          cost: '£100-200',
+          description: 'Demonstrates how work will be carried out safely',
+        },
+      ],
     },
     {
-      category: "Documentation & Contracts",
-      priority: "High",
+      category: 'Documentation & Contracts',
+      priority: 'High',
       items: [
         {
-          id: "terms_conditions",
-          task: "Develop terms and conditions of service",
-          timeframe: "Week 2-3",
-          cost: "£300-800",
-          description: "Protects your business and sets clear expectations with customers"
+          id: 'terms_conditions',
+          task: 'Develop terms and conditions of service',
+          timeframe: 'Week 2-3',
+          cost: '£300-800',
+          description: 'Protects your business and sets clear expectations with customers',
         },
         {
-          id: "quote_templates",
-          task: "Create professional quote and invoice templates",
-          timeframe: "Week 2",
-          cost: "£50-200",
-          description: "Ensures consistency and professionalism in all customer communications"
+          id: 'quote_templates',
+          task: 'Create professional quote and invoice templates',
+          timeframe: 'Week 2',
+          cost: '£50-200',
+          description: 'Ensures consistency and professionalism in all customer communications',
         },
         {
-          id: "contracts",
-          task: "Standard contract templates for different job types",
-          timeframe: "Week 3-4",
-          cost: "£200-500",
-          description: "Clear contracts prevent disputes and protect your interests"
-        }
-      ]
-    }
+          id: 'contracts',
+          task: 'Standard contract templates for different job types',
+          timeframe: 'Week 3-4',
+          cost: '£200-500',
+          description: 'Clear contracts prevent disputes and protect your interests',
+        },
+      ],
+    },
   ];
 
   const handleCheckChange = (itemId: string, checked: boolean) => {
-    setCheckedItems(prev => ({
+    setCheckedItems((prev) => ({
       ...prev,
-      [itemId]: checked
+      [itemId]: checked,
     }));
   };
 
@@ -171,10 +174,14 @@ const LegalRequirementsChecklist = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'Critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'High': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'Medium': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      default: return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
+      case 'Critical':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'High':
+        return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'Medium':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      default:
+        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
     }
   };
 
@@ -187,7 +194,9 @@ const LegalRequirementsChecklist = () => {
         </CardTitle>
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span>Progress: {getCompletedItems()} of {getTotalItems()} completed</span>
+            <span>
+              Progress: {getCompletedItems()} of {getTotalItems()} completed
+            </span>
             <span>{getCompletionPercentage().toFixed(0)}%</span>
           </div>
           <Progress value={getCompletionPercentage()} className="h-2" />
@@ -198,14 +207,15 @@ const LegalRequirementsChecklist = () => {
           <div key={categoryIndex} className="border border-elec-yellow/20 rounded-lg p-4">
             <div className="flex items-center justify-between mb-4">
               <h4 className="font-semibold text-foreground">{category.category}</h4>
-              <Badge className={getPriorityColor(category.priority)}>
-                {category.priority}
-              </Badge>
+              <Badge className={getPriorityColor(category.priority)}>{category.priority}</Badge>
             </div>
-            
+
             <div className="space-y-3">
               {category.items.map((item, itemIndex) => (
-                <div key={item.id} className="bg-elec-dark p-3 rounded border border-elec-yellow/10">
+                <div
+                  key={item.id}
+                  className="bg-elec-dark p-3 rounded border border-elec-yellow/10"
+                >
                   <div className="flex items-start gap-3">
                     <Checkbox
                       id={item.id}
@@ -215,7 +225,10 @@ const LegalRequirementsChecklist = () => {
                     />
                     <div className="flex-1 space-y-2">
                       <div className="flex items-start justify-between">
-                        <label htmlFor={item.id} className="font-medium text-foreground cursor-pointer">
+                        <label
+                          htmlFor={item.id}
+                          className="font-medium text-foreground cursor-pointer"
+                        >
                           {item.task}
                         </label>
                         <div className="flex items-center gap-2 text-xs">

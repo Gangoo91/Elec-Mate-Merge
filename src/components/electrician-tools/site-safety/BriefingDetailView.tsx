@@ -20,9 +20,15 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { BriefingShareSheet } from './briefings';
 import { BriefingPDFActions } from './BriefingPDFActions';
+import { SignaturePad } from './common/SignaturePad';
+import {
+  useBriefingAttendees,
+  useSignOffAttendee,
+} from '@/hooks/useBriefingSignatures';
 
 const HAZARD_LABELS: Record<string, string> = {
   electrical: 'Electrical',
@@ -100,8 +106,28 @@ export function BriefingDetailView({
   const [showPDF, setShowPDF] = useState(false);
   const [previewPhoto, setPreviewPhoto] = useState<string | null>(null);
 
-  const attendees = Array.isArray(briefing.attendees) ? briefing.attendees : [];
-  const signedCount = attendees.filter((a: any) => a.signature).length;
+  // Sign-off state
+  const [signingAttendee, setSigningAttendee] = useState<any>(null);
+  const [signOffName, setSignOffName] = useState('');
+  const [signOffDate, setSignOffDate] = useState('');
+  const [signOffDataUrl, setSignOffDataUrl] = useState('');
+
+  // Attendee hooks
+  const { data: dbAttendees } = useBriefingAttendees(briefing.id);
+  const signOffMutation = useSignOffAttendee();
+
+  // Merge: prefer DB attendees when available, fall back to briefing.attendees
+  const embeddedAttendees = Array.isArray(briefing.attendees) ? briefing.attendees : [];
+  const attendees = dbAttendees && dbAttendees.length > 0
+    ? dbAttendees.map((a: any) => ({
+        ...a,
+        name: a.employee?.name || a.guest_name || 'Unknown',
+        role: a.guest_company || '',
+        signature: a.signature_url || a.acknowledged,
+        _dbId: a.id,
+      }))
+    : embeddedAttendees;
+  const signedCount = attendees.filter((a: any) => !!a.signature || !!a.signature_url || !!a.acknowledged).length;
   const totalAttendees = attendees.length;
   const progressPercent = totalAttendees > 0 ? (signedCount / totalAttendees) * 100 : 0;
 
@@ -318,15 +344,28 @@ export function BriefingDetailView({
           {attendees.length > 0 ? (
             <div className="space-y-1.5">
               {attendees.map((attendee: any, idx: number) => {
-                const isSigned = !!attendee.signature;
+                const isSigned = !!attendee.signature || !!attendee.signature_url || !!attendee.acknowledged;
+                const canSign = !isSigned && !!attendee._dbId;
                 return (
-                  <div
-                    key={idx}
+                  <button
+                    key={attendee._dbId || idx}
+                    type="button"
+                    disabled={!canSign}
+                    onClick={() => {
+                      if (canSign) {
+                        setSigningAttendee(attendee);
+                        setSignOffName(attendee.name || '');
+                        setSignOffDate(new Date().toISOString().split('T')[0]);
+                        setSignOffDataUrl('');
+                      }
+                    }}
                     className={cn(
-                      'flex items-center gap-3 p-2.5 rounded-xl border',
+                      'w-full flex items-center gap-3 p-2.5 rounded-xl border text-left touch-manipulation transition-all',
                       isSigned
                         ? 'bg-emerald-500/5 border-emerald-500/10'
-                        : 'bg-white/[0.02] border-white/[0.06]'
+                        : canSign
+                          ? 'bg-white/[0.02] border-white/[0.06] active:bg-white/[0.06]'
+                          : 'bg-white/[0.02] border-white/[0.06]'
                     )}
                   >
                     <div
@@ -355,12 +394,12 @@ export function BriefingDetailView({
                     <span
                       className={cn(
                         'text-xs shrink-0',
-                        isSigned ? 'text-emerald-400/50' : 'text-white'
+                        isSigned ? 'text-emerald-400/50' : canSign ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
-                      {isSigned ? 'Signed' : 'Pending'}
+                      {isSigned ? 'Signed' : canSign ? 'Tap to Sign' : 'Pending'}
                     </span>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -443,6 +482,51 @@ export function BriefingDetailView({
           />
         )}
       </AnimatePresence>
+
+      {/* Sign-off Sheet */}
+      <Sheet open={!!signingAttendee} onOpenChange={(open) => { if (!open) setSigningAttendee(null); }}>
+        <SheetContent side="bottom" className="h-[70vh] p-0 rounded-t-2xl overflow-hidden">
+          <div className="flex flex-col h-full bg-background">
+            <div className="px-4 py-3 border-b border-white/10">
+              <h2 className="text-base font-bold text-white">
+                Sign Off: {signingAttendee?.name}
+              </h2>
+              <p className="text-sm text-white mt-0.5">
+                Capture signature to confirm attendance
+              </p>
+            </div>
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+              <SignaturePad
+                label="Attendee Signature"
+                name={signOffName}
+                date={signOffDate}
+                signatureDataUrl={signOffDataUrl}
+                onSignatureChange={setSignOffDataUrl}
+                onNameChange={setSignOffName}
+                onDateChange={setSignOffDate}
+              />
+            </div>
+            <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+              <Button
+                onClick={async () => {
+                  if (!signingAttendee?._dbId || !signOffDataUrl) return;
+                  await signOffMutation.mutateAsync({
+                    id: signingAttendee._dbId,
+                    signature_url: signOffDataUrl,
+                    signed_via: 'manual',
+                  });
+                  setSigningAttendee(null);
+                  setSignOffDataUrl('');
+                }}
+                disabled={!signOffDataUrl || signOffMutation.isPending}
+                className="w-full h-12 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              >
+                {signOffMutation.isPending ? 'Saving...' : 'Confirm Sign-Off'}
+              </Button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Full-screen photo preview */}
       <AnimatePresence>

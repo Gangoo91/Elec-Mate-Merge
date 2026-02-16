@@ -1,17 +1,20 @@
-import { cn } from "@/lib/utils";
-import { FileText, Wrench, CheckCircle, BookOpen } from "lucide-react";
+import { cn } from '@/lib/utils';
+import { FileText, Wrench, CheckCircle, BookOpen } from 'lucide-react';
 
 interface SectionNavigationTabsProps {
   onNavigate: (sectionId: string) => void;
   activeSection?: string;
 }
 
-export const SectionNavigationTabs = ({ onNavigate, activeSection }: SectionNavigationTabsProps) => {
+export const SectionNavigationTabs = ({
+  onNavigate,
+  activeSection,
+}: SectionNavigationTabsProps) => {
   const sections = [
     { id: 'steps', label: 'Steps', icon: FileText },
     { id: 'materials', label: 'Materials', icon: Wrench },
     { id: 'testing', label: 'Testing', icon: CheckCircle },
-    { id: 'compliance', label: 'Compliance', icon: BookOpen }
+    { id: 'compliance', label: 'Compliance', icon: BookOpen },
   ];
 
   return (
@@ -20,17 +23,17 @@ export const SectionNavigationTabs = ({ onNavigate, activeSection }: SectionNavi
         {sections.map((section) => {
           const Icon = section.icon;
           const isActive = activeSection === section.id;
-          
+
           return (
             <button
               key={section.id}
               onClick={() => onNavigate(section.id)}
               className={cn(
-                "flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap transition-all shrink-0 min-h-[44px]",
-                "border-2 font-medium text-sm active:scale-95",
-                isActive 
-                  ? "bg-elec-yellow/20 border-elec-yellow text-elec-yellow" 
-                  : "bg-muted/50 border-border/50 text-muted-foreground hover:border-elec-yellow/50 hover:text-foreground"
+                'flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap transition-all shrink-0 min-h-[44px]',
+                'border-2 font-medium text-sm active:scale-95',
+                isActive
+                  ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
+                  : 'bg-muted/50 border-border/50 text-muted-foreground hover:border-elec-yellow/50 hover:text-foreground'
               )}
             >
               <Icon className="h-4 w-4" />

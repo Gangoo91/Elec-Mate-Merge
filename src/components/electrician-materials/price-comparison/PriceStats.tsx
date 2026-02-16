@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { TrendingDown, Download, Plus } from "lucide-react";
-import { PriceComparisonItem } from "./ProductCard";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { TrendingDown, Download, Plus } from 'lucide-react';
+import { PriceComparisonItem } from './ProductCard';
 
 export interface PriceComparisonResult {
   searchTerm: string;
@@ -20,29 +20,29 @@ interface PriceStatsProps {
   onAddMultipleToQuote?: (materials: any[]) => void;
 }
 
-export const PriceStats = ({ 
-  comparisonResult, 
+export const PriceStats = ({
+  comparisonResult,
   result,
-  onExportToPDF, 
-  onAddMultipleToQuote 
+  onExportToPDF,
+  onAddMultipleToQuote,
 }: PriceStatsProps) => {
   const data = comparisonResult || result;
-  
+
   if (!data) return null;
-  
+
   const formatPrice = (price: number): string => {
     return `£${price.toFixed(2)}`;
   };
 
   const handleAddAllToQuote = () => {
     if (onAddMultipleToQuote) {
-      const materials = data.products.map(product => ({
+      const materials = data.products.map((product) => ({
         name: product.name,
         supplier: product.supplier,
         price: product.price,
         numericPrice: product.numericPrice,
         category: product.category,
-        stockStatus: product.stockStatus
+        stockStatus: product.stockStatus,
       }));
       onAddMultipleToQuote(materials);
     }
@@ -59,8 +59,8 @@ export const PriceStats = ({
             </CardTitle>
             <div className="flex gap-2">
               {onExportToPDF && (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="sm"
                   onClick={onExportToPDF}
                   className="text-xs border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
@@ -70,7 +70,7 @@ export const PriceStats = ({
                 </Button>
               )}
               {onAddMultipleToQuote && data.products.length > 1 && (
-                <Button 
+                <Button
                   size="sm"
                   onClick={handleAddAllToQuote}
                   className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-xs font-medium"
@@ -89,20 +89,16 @@ export const PriceStats = ({
               <div className="text-2xl md:text-3xl font-bold text-elec-yellow">
                 {data.products.length}
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground mt-1">
-                Products Found
-              </div>
+              <div className="text-xs md:text-sm text-muted-foreground mt-1">Products Found</div>
             </div>
             <div className="bg-green-500/10 rounded-lg p-4 text-center border border-green-500/20">
               <div className="text-2xl md:text-3xl font-bold text-green-400">
                 {formatPrice(data.cheapestPrice)}
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground mt-1">
-                Best Price
-              </div>
+              <div className="text-xs md:text-sm text-muted-foreground mt-1">Best Price</div>
             </div>
           </div>
-          
+
           {/* Secondary stats - single row on mobile */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="flex justify-between items-center p-3 bg-blue-500/5 rounded-lg border border-blue-500/10">
@@ -113,9 +109,7 @@ export const PriceStats = ({
             </div>
             <div className="flex justify-between items-center p-3 bg-purple-500/5 rounded-lg border border-purple-500/10">
               <span className="text-sm text-muted-foreground">Price Range</span>
-              <span className="text-sm font-medium text-purple-400">
-                {data.priceRange}
-              </span>
+              <span className="text-sm font-medium text-purple-400">{data.priceRange}</span>
             </div>
           </div>
 

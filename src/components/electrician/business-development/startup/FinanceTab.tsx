@@ -1,74 +1,82 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { PoundSterling, TrendingUp, Calculator, CreditCard, Building, AlertTriangle, CheckCircle, Download } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import {
+  PoundSterling,
+  TrendingUp,
+  Calculator,
+  CreditCard,
+  Building,
+  AlertTriangle,
+  CheckCircle,
+  Download,
+} from 'lucide-react';
 
 const FinanceTab = () => {
   const startupCosts = [
     {
-      category: "Legal & Registration",
+      category: 'Legal & Registration',
       items: [
-        { name: "Company Registration", cost: "£12-50", required: true },
-        { name: "Public Liability Insurance", cost: "£200-500", required: true },
-        { name: "Professional Indemnity", cost: "£300-800", required: false },
-        { name: "Legal Documentation", cost: "£500-1500", required: true }
-      ]
+        { name: 'Company Registration', cost: '£12-50', required: true },
+        { name: 'Public Liability Insurance', cost: '£200-500', required: true },
+        { name: 'Professional Indemnity', cost: '£300-800', required: false },
+        { name: 'Legal Documentation', cost: '£500-1500', required: true },
+      ],
     },
     {
-      category: "Equipment & Tools",
+      category: 'Equipment & Tools',
       items: [
-        { name: "Basic Tool Kit", cost: "£500-1500", required: true },
-        { name: "Test Equipment (MFT)", cost: "£1000-3000", required: true },
-        { name: "Van/Vehicle", cost: "£5000-15000", required: true },
-        { name: "Ladder & Access Equipment", cost: "£200-800", required: true }
-      ]
+        { name: 'Basic Tool Kit', cost: '£500-1500', required: true },
+        { name: 'Test Equipment (MFT)', cost: '£1000-3000', required: true },
+        { name: 'Van/Vehicle', cost: '£5000-15000', required: true },
+        { name: 'Ladder & Access Equipment', cost: '£200-800', required: true },
+      ],
     },
     {
-      category: "Business Operations",
+      category: 'Business Operations',
       items: [
-        { name: "Website & Branding", cost: "£500-2000", required: false },
-        { name: "Marketing Materials", cost: "£200-500", required: false },
-        { name: "Mobile Phone & Contract", cost: "£30-60/month", required: true },
-        { name: "Accounting Software", cost: "£20-50/month", required: true }
-      ]
-    }
+        { name: 'Website & Branding', cost: '£500-2000', required: false },
+        { name: 'Marketing Materials', cost: '£200-500', required: false },
+        { name: 'Mobile Phone & Contract', cost: '£30-60/month', required: true },
+        { name: 'Accounting Software', cost: '£20-50/month', required: true },
+      ],
+    },
   ];
 
   const fundingOptions = [
     {
-      type: "Start Up Loans",
-      description: "Government-backed loans up to £25,000",
-      rate: "6% fixed",
-      term: "1-5 years",
-      pros: ["Low interest rate", "Government backing", "Mentoring support"],
-      cons: ["Personal guarantee required", "Strict eligibility criteria"]
+      type: 'Start Up Loans',
+      description: 'Government-backed loans up to £25,000',
+      rate: '6% fixed',
+      term: '1-5 years',
+      pros: ['Low interest rate', 'Government backing', 'Mentoring support'],
+      cons: ['Personal guarantee required', 'Strict eligibility criteria'],
     },
     {
-      type: "Business Bank Loan",
-      description: "Traditional bank financing",
-      rate: "4-12%",
-      term: "1-10 years",
-      pros: ["Flexible amounts", "Established process", "Relationship building"],
-      cons: ["Requires good credit", "Collateral often needed"]
+      type: 'Business Bank Loan',
+      description: 'Traditional bank financing',
+      rate: '4-12%',
+      term: '1-10 years',
+      pros: ['Flexible amounts', 'Established process', 'Relationship building'],
+      cons: ['Requires good credit', 'Collateral often needed'],
     },
     {
-      type: "Asset Finance",
-      description: "Financing for equipment and vehicles",
-      rate: "3-8%",
-      term: "2-7 years",
-      pros: ["Equipment as security", "Preserve cash flow", "Tax benefits"],
-      cons: ["Limited to asset value", "Higher rates than secured loans"]
-    }
+      type: 'Asset Finance',
+      description: 'Financing for equipment and vehicles',
+      rate: '3-8%',
+      term: '2-7 years',
+      pros: ['Equipment as security', 'Preserve cash flow', 'Tax benefits'],
+      cons: ['Limited to asset value', 'Higher rates than secured loans'],
+    },
   ];
 
   const cashFlowProjection = [
-    { month: "Month 1", income: 2000, expenses: 4500, net: -2500 },
-    { month: "Month 2", income: 3500, expenses: 3200, net: 300 },
-    { month: "Month 3", income: 5000, expenses: 3500, net: 1500 },
-    { month: "Month 6", income: 8000, expenses: 4000, net: 4000 },
-    { month: "Month 12", income: 12000, expenses: 5000, net: 7000 }
+    { month: 'Month 1', income: 2000, expenses: 4500, net: -2500 },
+    { month: 'Month 2', income: 3500, expenses: 3200, net: 300 },
+    { month: 'Month 3', income: 5000, expenses: 3500, net: 1500 },
+    { month: 'Month 6', income: 8000, expenses: 4000, net: 4000 },
+    { month: 'Month 12', income: 12000, expenses: 5000, net: 7000 },
   ];
 
   return (
@@ -116,11 +124,20 @@ const FinanceTab = () => {
                 <h4 className="font-semibold text-elec-yellow mb-3">{category.category}</h4>
                 <div className="space-y-2">
                   {category.items.map((item, itemIndex) => (
-                    <div key={itemIndex} className="flex justify-between items-center p-2 border border-elec-yellow/10 rounded">
+                    <div
+                      key={itemIndex}
+                      className="flex justify-between items-center p-2 border border-elec-yellow/10 rounded"
+                    >
                       <div className="flex items-center gap-2">
                         <span className="text-sm">{item.name}</span>
-                        <Badge className={item.required ? "bg-red-500/20 text-red-400" : "bg-green-500/20 text-green-400"}>
-                          {item.required ? "Required" : "Optional"}
+                        <Badge
+                          className={
+                            item.required
+                              ? 'bg-red-500/20 text-red-400'
+                              : 'bg-green-500/20 text-green-400'
+                          }
+                        >
+                          {item.required ? 'Required' : 'Optional'}
                         </Badge>
                       </div>
                       <span className="text-green-400 font-medium">{item.cost}</span>
@@ -148,7 +165,7 @@ const FinanceTab = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">{option.description}</p>
                 <div className="text-xs text-blue-400 mb-2">Term: {option.term}</div>
-                
+
                 <div className="grid grid-cols-2 gap-3 mt-3">
                   <div>
                     <div className="text-xs font-medium text-green-400 mb-1">Pros:</div>
@@ -190,7 +207,10 @@ const FinanceTab = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               {cashFlowProjection.map((period, index) => (
-                <div key={index} className="bg-elec-dark p-4 rounded-lg border border-elec-yellow/10">
+                <div
+                  key={index}
+                  className="bg-elec-dark p-4 rounded-lg border border-elec-yellow/10"
+                >
                   <div className="text-sm font-medium text-elec-yellow mb-2">{period.month}</div>
                   <div className="space-y-1 text-xs">
                     <div className="flex justify-between">
@@ -203,7 +223,7 @@ const FinanceTab = () => {
                     </div>
                     <div className="border-t border-elec-yellow/20 pt-1 flex justify-between font-medium">
                       <span>Net:</span>
-                      <span className={period.net >= 0 ? "text-green-400" : "text-red-400"}>
+                      <span className={period.net >= 0 ? 'text-green-400' : 'text-red-400'}>
                         £{period.net}
                       </span>
                     </div>
@@ -211,7 +231,7 @@ const FinanceTab = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <h4 className="font-medium text-blue-400 mb-2">Break-even Analysis</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -263,7 +283,7 @@ const FinanceTab = () => {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-green-300 mb-3">Key Financial Metrics</h4>
               <ul className="space-y-2 text-sm">
@@ -286,7 +306,7 @@ const FinanceTab = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="mt-6 pt-4 border-t border-green-500/20">
             <Button className="bg-green-500 text-green-900 hover:bg-green-400">
               <Download className="h-4 w-4 mr-2" />

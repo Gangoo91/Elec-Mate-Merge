@@ -1,10 +1,14 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, Users, Calendar, BarChart4, CircleDollarSign } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, FileText, Users, Calendar, BarChart4, CircleDollarSign } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 const BusinessManagement = () => {
   // Remove the handleAction function that triggers toasts
@@ -32,7 +36,10 @@ const BusinessManagement = () => {
 
       <div className="space-y-4">
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="invoices" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+          <AccordionItem
+            value="invoices"
+            className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4"
+          >
             <AccordionTrigger className="px-4 py-3 hover:no-underline">
               <div className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-elec-yellow" />
@@ -47,10 +54,7 @@ const BusinessManagement = () => {
                     <CardDescription>Generate a new invoice for a client.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Create Invoice")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Create Invoice')}>
                       Create Invoice
                     </Button>
                   </CardContent>
@@ -61,10 +65,7 @@ const BusinessManagement = () => {
                     <CardDescription>View and manage recent invoices.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("View Invoices")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('View Invoices')}>
                       View Invoices
                     </Button>
                   </CardContent>
@@ -75,10 +76,7 @@ const BusinessManagement = () => {
                     <CardDescription>Customise your invoice templates.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Customise Templates")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Customise Templates')}>
                       Customise Templates
                     </Button>
                   </CardContent>
@@ -87,7 +85,10 @@ const BusinessManagement = () => {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="clients" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+          <AccordionItem
+            value="clients"
+            className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4"
+          >
             <AccordionTrigger className="px-4 py-3 hover:no-underline">
               <div className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-elec-yellow" />
@@ -102,10 +103,7 @@ const BusinessManagement = () => {
                     <CardDescription>Add a new client to your database.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Add Client")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Add Client')}>
                       Add Client
                     </Button>
                   </CardContent>
@@ -116,10 +114,7 @@ const BusinessManagement = () => {
                     <CardDescription>View and manage all your clients.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("View Clients")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('View Clients')}>
                       View Clients
                     </Button>
                   </CardContent>
@@ -130,10 +125,7 @@ const BusinessManagement = () => {
                     <CardDescription>Send updates and notifications to clients.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Send Communications")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Send Communications')}>
                       Send Communications
                     </Button>
                   </CardContent>
@@ -142,7 +134,10 @@ const BusinessManagement = () => {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="appointments" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+          <AccordionItem
+            value="appointments"
+            className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4"
+          >
             <AccordionTrigger className="px-4 py-3 hover:no-underline">
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5 text-elec-yellow" />
@@ -157,10 +152,7 @@ const BusinessManagement = () => {
                     <CardDescription>Create a new appointment.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Schedule Appointment")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Schedule Appointment')}>
                       Schedule
                     </Button>
                   </CardContent>
@@ -171,10 +163,7 @@ const BusinessManagement = () => {
                     <CardDescription>View your schedule in a calendar format.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("View Calendar")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('View Calendar')}>
                       Open Calendar
                     </Button>
                   </CardContent>
@@ -182,13 +171,12 @@ const BusinessManagement = () => {
                 <Card className="border-elec-yellow/20 bg-elec-dark">
                   <CardHeader>
                     <CardTitle>Appointment Settings</CardTitle>
-                    <CardDescription>Configure appointment reminders and notifications.</CardDescription>
+                    <CardDescription>
+                      Configure appointment reminders and notifications.
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Configure Settings")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Configure Settings')}>
                       Configure
                     </Button>
                   </CardContent>
@@ -197,7 +185,10 @@ const BusinessManagement = () => {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="finances" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+          <AccordionItem
+            value="finances"
+            className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4"
+          >
             <AccordionTrigger className="px-4 py-3 hover:no-underline">
               <div className="flex items-center gap-2">
                 <CircleDollarSign className="h-5 w-5 text-elec-yellow" />
@@ -212,10 +203,7 @@ const BusinessManagement = () => {
                     <CardDescription>Record and categorise business expenses.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Track Expenses")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Track Expenses')}>
                       Track Expenses
                     </Button>
                   </CardContent>
@@ -226,10 +214,7 @@ const BusinessManagement = () => {
                     <CardDescription>View summaries of business income.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("View Income")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('View Income')}>
                       View Income
                     </Button>
                   </CardContent>
@@ -240,10 +225,7 @@ const BusinessManagement = () => {
                     <CardDescription>Generate detailed financial reports.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Generate Reports")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Generate Reports')}>
                       Generate Reports
                     </Button>
                   </CardContent>
@@ -252,7 +234,10 @@ const BusinessManagement = () => {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="reports" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+          <AccordionItem
+            value="reports"
+            className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4"
+          >
             <AccordionTrigger className="px-4 py-3 hover:no-underline">
               <div className="flex items-center gap-2">
                 <BarChart4 className="h-5 w-5 text-elec-yellow" />
@@ -267,10 +252,7 @@ const BusinessManagement = () => {
                     <CardDescription>View overall business performance metrics.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("View Performance")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('View Performance')}>
                       View Metrics
                     </Button>
                   </CardContent>
@@ -281,10 +263,7 @@ const BusinessManagement = () => {
                     <CardDescription>Analyse client data and relationships.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Analyse Clients")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Analyse Clients')}>
                       Analyse
                     </Button>
                   </CardContent>
@@ -295,10 +274,7 @@ const BusinessManagement = () => {
                     <CardDescription>Export business data for accounting purposes.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => handleAction("Export Data")}
-                    >
+                    <Button className="w-full" onClick={() => handleAction('Export Data')}>
                       Export
                     </Button>
                   </CardContent>

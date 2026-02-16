@@ -1,7 +1,7 @@
-import { Helmet } from "react-helmet";
-import EnhancedIndustryNewsCard from "@/components/electrician/safety-shares/EnhancedIndustryNewsCard";
-import { Newspaper } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Helmet } from 'react-helmet';
+import EnhancedIndustryNewsCard from '@/components/electrician/safety-shares/EnhancedIndustryNewsCard';
+import { Newspaper } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const IndustryNewsEnhanced = () => {
   return (

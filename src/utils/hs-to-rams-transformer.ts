@@ -96,7 +96,7 @@ export function transformHealthSafetyOutputToRAMS(
   acopCitations: string[];
   methodStatementSteps: string[];
 } {
-  const risks: RAMSRisk[] = hsOutput.riskAssessment.hazards.map(hazard => ({
+  const risks: RAMSRisk[] = hsOutput.riskAssessment.hazards.map((hazard) => ({
     id: uuidv4(),
     hazard: hazard.hazard,
     risk: generateRiskDescription(hazard.hazard, hazard.severity),
@@ -131,15 +131,15 @@ function generateRiskDescription(hazard: string, severity: number): string {
     4: 'Major injury with long-term effects',
     5: 'Fatal or life-changing injury',
   };
-  
-  const baseRisk = hazard.toLowerCase().includes('electric') 
+
+  const baseRisk = hazard.toLowerCase().includes('electric')
     ? 'Electric shock or burn'
     : hazard.toLowerCase().includes('fall')
-    ? 'Fall from height'
-    : hazard.toLowerCase().includes('manual')
-    ? 'Musculoskeletal injury'
-    : 'Personal injury';
-  
+      ? 'Fall from height'
+      : hazard.toLowerCase().includes('manual')
+        ? 'Musculoskeletal injury'
+        : 'Personal injury';
+
   return `${baseRisk} - ${severityDescriptions[severity] || 'Injury'}`;
 }
 
@@ -156,7 +156,7 @@ export function mapToEnhancedHazards(
   linked_tasks: string[];
   risk_level: 'low' | 'medium' | 'high';
 }> {
-  return hsOutput.riskAssessment.hazards.map(hazard => ({
+  return hsOutput.riskAssessment.hazards.map((hazard) => ({
     hazard_name: hazard.hazard,
     category: categorizeHazard(hazard.hazard),
     custom_controls: hazard.controls,
@@ -167,7 +167,7 @@ export function mapToEnhancedHazards(
 
 function categorizeHazard(hazard: string): string {
   const hazardLower = hazard.toLowerCase();
-  
+
   if (hazardLower.includes('electric') || hazardLower.includes('voltage')) {
     return 'Electrical';
   }
@@ -183,7 +183,7 @@ function categorizeHazard(hazard: string): string {
   if (hazardLower.includes('dust') || hazardLower.includes('fume')) {
     return 'Dust & Fumes';
   }
-  
+
   return 'General';
 }
 
@@ -213,33 +213,35 @@ export function transformHealthSafetyOutputToMethodStatement(
     ...(projectDetails?.location && { location: projectDetails.location }),
     ...(projectDetails?.contractor && { contractor: projectDetails.contractor }),
     ...(projectDetails?.supervisor && { supervisor: projectDetails.supervisor }),
-    
+
     // Full risk assessment with all details
-    riskAssessment: hsOutput.riskAssessmentDetailed ? {
-      hazards: hsOutput.riskAssessmentDetailed.hazards,
-      controls: hsOutput.riskAssessmentDetailed.controls,
-      riskMatrix: hsOutput.riskAssessmentDetailed.riskMatrix,
-    } : undefined,
-    
+    riskAssessment: hsOutput.riskAssessmentDetailed
+      ? {
+          hazards: hsOutput.riskAssessmentDetailed.hazards,
+          controls: hsOutput.riskAssessmentDetailed.controls,
+          riskMatrix: hsOutput.riskAssessmentDetailed.riskMatrix,
+        }
+      : undefined,
+
     // Enhanced PPE with standards
     ppeDetails: hsOutput.ppeDetails,
-    
+
     // Site logistics
     siteLogistics: hsOutput.siteLogistics,
-    
+
     // Competency requirements
     competencyMatrix: hsOutput.competencyMatrix,
-    
+
     // Conditional procedures
     conditionalProcedures: hsOutput.conditionalProcedures,
-    
+
     // RAG citations from H&S agent
-    ragCitations: hsOutput.ragCitations?.map(citation => ({
+    ragCitations: hsOutput.ragCitations?.map((citation) => ({
       source: 'health-safety' as const,
       regulation: citation.regulation,
       content: citation.content,
     })),
-    
+
     // Compliance
     complianceRegulations: hsOutput.compliance?.regulations,
     complianceWarnings: hsOutput.compliance?.warnings,

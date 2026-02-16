@@ -1,10 +1,19 @@
-
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Clock, Eye, AlertTriangle, CheckCircle, Skull, Zap, Flame, Settings } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  BookOpen,
+  Clock,
+  Eye,
+  AlertTriangle,
+  CheckCircle,
+  Skull,
+  Zap,
+  Flame,
+  Settings,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
 
 interface LFEReport {
   id: string;
@@ -46,23 +55,35 @@ const LearningFromExperienceCard = () => {
 
   const getIncidentTypeColor = (type: string) => {
     switch (type.toLowerCase()) {
-      case 'fatal accident': return 'bg-red-600 text-foreground';
-      case 'serious injury': return 'bg-red-500 text-foreground';
-      case 'near miss': return 'bg-yellow-500 text-black';
-      case 'equipment failure': return 'bg-orange-500 text-foreground';
-      case 'fire': return 'bg-red-700 text-foreground';
-      default: return 'bg-gray-500 text-foreground';
+      case 'fatal accident':
+        return 'bg-red-600 text-foreground';
+      case 'serious injury':
+        return 'bg-red-500 text-foreground';
+      case 'near miss':
+        return 'bg-yellow-500 text-black';
+      case 'equipment failure':
+        return 'bg-orange-500 text-foreground';
+      case 'fire':
+        return 'bg-red-700 text-foreground';
+      default:
+        return 'bg-gray-500 text-foreground';
     }
   };
 
   const getIncidentIcon = (type: string) => {
     switch (type.toLowerCase()) {
-      case 'fatal accident': return <Skull className="h-4 w-4" />;
-      case 'serious injury': return <AlertTriangle className="h-4 w-4" />;
-      case 'near miss': return <AlertTriangle className="h-4 w-4" />;
-      case 'equipment failure': return <Settings className="h-4 w-4" />;
-      case 'fire': return <Flame className="h-4 w-4" />;
-      default: return <BookOpen className="h-4 w-4" />;
+      case 'fatal accident':
+        return <Skull className="h-4 w-4" />;
+      case 'serious injury':
+        return <AlertTriangle className="h-4 w-4" />;
+      case 'near miss':
+        return <AlertTriangle className="h-4 w-4" />;
+      case 'equipment failure':
+        return <Settings className="h-4 w-4" />;
+      case 'fire':
+        return <Flame className="h-4 w-4" />;
+      default:
+        return <BookOpen className="h-4 w-4" />;
     }
   };
 
@@ -78,7 +99,7 @@ const LearningFromExperienceCard = () => {
         </CardContent>
       </Card>
     );
-  };
+  }
 
   if (selectedReport) {
     return (
@@ -86,10 +107,14 @@ const LearningFromExperienceCard = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-full ${getIncidentTypeColor(selectedReport.incident_type)}`}>
+              <div
+                className={`p-2 rounded-full ${getIncidentTypeColor(selectedReport.incident_type)}`}
+              >
                 {getIncidentIcon(selectedReport.incident_type)}
               </div>
-              <Badge className={`${getIncidentTypeColor(selectedReport.incident_type)} font-medium`}>
+              <Badge
+                className={`${getIncidentTypeColor(selectedReport.incident_type)} font-medium`}
+              >
                 {selectedReport.incident_type.toUpperCase()}
               </Badge>
             </div>
@@ -150,7 +175,9 @@ const LearningFromExperienceCard = () => {
             <BookOpen className="h-6 w-6 text-foreground" />
           </div>
           <div>
-            <CardTitle className="text-xl text-foreground">Learning From Experience Reports</CardTitle>
+            <CardTitle className="text-xl text-foreground">
+              Learning From Experience Reports
+            </CardTitle>
             <p className="text-gray-300 text-sm">
               Real incidents and lessons learned from the electrical industry
             </p>
@@ -175,7 +202,9 @@ const LearningFromExperienceCard = () => {
                   <div className={`p-1 rounded-full ${getIncidentTypeColor(report.incident_type)}`}>
                     {getIncidentIcon(report.incident_type)}
                   </div>
-                  <Badge className={`${getIncidentTypeColor(report.incident_type)} text-xs font-medium`}>
+                  <Badge
+                    className={`${getIncidentTypeColor(report.incident_type)} text-xs font-medium`}
+                  >
                     {report.incident_type.toUpperCase()}
                   </Badge>
                 </div>
@@ -184,10 +213,10 @@ const LearningFromExperienceCard = () => {
                   {report.view_count}
                 </div>
               </div>
-              
+
               <h3 className="font-semibold text-foreground mb-2">{report.title}</h3>
               <p className="text-sm text-gray-400 mb-3 line-clamp-2">{report.summary}</p>
-              
+
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span>{new Date(report.date_published).toLocaleDateString('en-GB')}</span>
                 <span className="flex items-center gap-1">

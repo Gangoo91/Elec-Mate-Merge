@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Calculator,
   TrendingUp,
@@ -13,104 +13,107 @@ import {
   Scale,
   Users,
   ClipboardList,
-  Percent
-} from "lucide-react";
-import { Helmet } from "react-helmet";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+  Percent,
+} from 'lucide-react';
+import { Helmet } from 'react-helmet';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const BusinessCalculators = () => {
   const calculators = [
     {
-      id: "job-profitability",
-      title: "Job Profitability Calculator",
+      id: 'job-profitability',
+      title: 'Job Profitability Calculator',
       icon: <Calculator className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "business-cost",
-      title: "Business Cost Calculator", 
+      id: 'business-cost',
+      title: 'Business Cost Calculator',
       icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "cash-flow",
-      title: "Cash Flow Planner",
+      id: 'cash-flow',
+      title: 'Cash Flow Planner',
       icon: <TrendingUp className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "pricing-strategy", 
-      title: "Pricing Strategy Calculator",
+      id: 'pricing-strategy',
+      title: 'Pricing Strategy Calculator',
       icon: <Target className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "roi-calculator",
-      title: "Equipment ROI Calculator",
+      id: 'roi-calculator',
+      title: 'Equipment ROI Calculator',
       icon: <BarChart3 className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "hourly-rate",
-      title: "Hourly Rate Calculator",
+      id: 'hourly-rate',
+      title: 'Hourly Rate Calculator',
       icon: <Clock className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "capacity-planner",
-      title: "Capacity Planning Tool",
+      id: 'capacity-planner',
+      title: 'Capacity Planning Tool',
       icon: <Building className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "tax-estimator",
-      title: "Tax & NI Estimator",
+      id: 'tax-estimator',
+      title: 'Tax & NI Estimator',
       icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "break-even",
-      title: "Break-even & Margin Guard",
+      id: 'break-even',
+      title: 'Break-even & Margin Guard',
       icon: <Scale className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "staff-cost",
-      title: "Fully Loaded Staff Cost",
+      id: 'staff-cost',
+      title: 'Fully Loaded Staff Cost',
       icon: <Users className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "quote-variance",
-      title: "Quote vs Actual Tracker",
+      id: 'quote-variance',
+      title: 'Quote vs Actual Tracker',
       icon: <ClipboardList className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "minimum-charge",
-      title: "Minimum Charge & First Hour",
+      id: 'minimum-charge',
+      title: 'Minimum Charge & First Hour',
       icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "vat-scheme",
-      title: "VAT Scheme Comparison",
+      id: 'vat-scheme',
+      title: 'VAT Scheme Comparison',
       icon: <Percent className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
+      status: 'available',
     },
     {
-      id: "cis-drc",
-      title: "CIS & DRC Helper (UK)",
+      id: 'cis-drc',
+      title: 'CIS & DRC Helper (UK)',
       icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: "available"
-    }
+      status: 'available',
+    },
   ];
 
   return (
     <div className="bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark ">
       <Helmet>
         <title>Electrician Business Calculators UK | Pricing, ROI, Tax</title>
-        <meta name="description" content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate." />
+        <meta
+          name="description"
+          content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate."
+        />
         <link rel="canonical" href="/electrician/business-development/tools" />
       </Helmet>
 
@@ -133,13 +136,14 @@ const BusinessCalculators = () => {
 
         {/* Subtitle */}
         <p className="text-white text-center max-w-2xl mx-auto">
-          Professional calculators and tools to help you make informed business decisions and plan for success.
+          Professional calculators and tools to help you make informed business decisions and plan
+          for success.
         </p>
 
         {/* Calculator Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {calculators.map((calculator) => (
-            calculator.status === "available" ? (
+          {calculators.map((calculator) =>
+            calculator.status === 'available' ? (
               <Link
                 key={calculator.id}
                 to={`/electrician/business-development/tools/${calculator.id}`}
@@ -170,7 +174,7 @@ const BusinessCalculators = () => {
                 </Card>
               </div>
             )
-          ))}
+          )}
         </div>
       </main>
     </div>

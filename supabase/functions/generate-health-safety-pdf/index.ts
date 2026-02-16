@@ -1,10 +1,11 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // PDF Monkey template ID for Health & Safety documents (same as RAMS)
@@ -23,13 +24,16 @@ serve(async (req) => {
 
     if (!pdfMonkeyApiKey) {
       console.log('PDF_MONKEY_API_KEY not configured, using fallback');
-      return new Response(JSON.stringify({ 
-        success: false,
-        useFallback: true,
-        message: 'PDF Monkey not configured'
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          useFallback: true,
+          message: 'PDF Monkey not configured',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Check for custom user template (optional override)
@@ -47,7 +51,7 @@ serve(async (req) => {
 
     // Use custom template if available, otherwise use default
     const templateId = template?.pdf_monkey_template_id || HEALTH_SAFETY_TEMPLATE_ID;
-    const payload = template?.field_mapping 
+    const payload = template?.field_mapping
       ? applyFieldMapping(healthSafetyData, template.field_mapping)
       : {
           projectName: healthSafetyData.projectName || 'Untitled Project',
@@ -60,44 +64,51 @@ serve(async (req) => {
           siteAddress: healthSafetyData.location || 'Not specified',
           principalContractor: healthSafetyData.clientName || 'Not specified',
           assessmentDate: healthSafetyData.assessmentDate || new Date().toISOString().split('T')[0],
-          reviewDate: healthSafetyData.reviewDate || new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          reviewDate:
+            healthSafetyData.reviewDate ||
+            new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           // Sort hazards by risk score (highest first), then assign sequential IDs
-          hazards: [...(healthSafetyData.hazards || [])].sort((a: any, b: any) => (b.riskScore || 0) - (a.riskScore || 0)).map((hazard: any, index: number) => {
-            const rawControlMeasures = hazard.controlMeasures || hazard.controlMeasure || 'Control measures to be determined on site';
-            const parsedControls = parseControlMeasures(rawControlMeasures);
-            
-            return {
-              id: `H${String(index + 1).padStart(2, '0')}`, // Sequential ID after sorting: H01 = highest risk
-              hazard: hazard.hazard,
-              likelihood: hazard.likelihood,
-              severity: hazard.severity,
-              riskScore: hazard.riskScore,
-              riskLevel: hazard.riskLevel || getRiskLevel(hazard.riskScore),
-              // Structured control measures for better PDF formatting
-              controlMeasures: {
-                primary: parsedControls.primaryAction,
-                eliminate: parsedControls.eliminate,
-                substitute: parsedControls.substitute,
-                engineer: parsedControls.engineerControls,
-                administrative: parsedControls.administrativeControls,
-                verification: parsedControls.verification,
-                competency: parsedControls.competency,
-                equipment: parsedControls.equipmentStandards,
-                regulation: parsedControls.regulation,
-                additional: parsedControls.other.join(' | ')
-              },
-              // Keep raw for backward compatibility
-              controlMeasuresRaw: rawControlMeasures,
-              residualRisk: hazard.residualRisk,
-              regulation: hazard.regulation || 'BS 7671:2018+A3:2024'
-            };
-          }),
+          hazards: [...(healthSafetyData.hazards || [])]
+            .sort((a: any, b: any) => (b.riskScore || 0) - (a.riskScore || 0))
+            .map((hazard: any, index: number) => {
+              const rawControlMeasures =
+                hazard.controlMeasures ||
+                hazard.controlMeasure ||
+                'Control measures to be determined on site';
+              const parsedControls = parseControlMeasures(rawControlMeasures);
+
+              return {
+                id: `H${String(index + 1).padStart(2, '0')}`, // Sequential ID after sorting: H01 = highest risk
+                hazard: hazard.hazard,
+                likelihood: hazard.likelihood,
+                severity: hazard.severity,
+                riskScore: hazard.riskScore,
+                riskLevel: hazard.riskLevel || getRiskLevel(hazard.riskScore),
+                // Structured control measures for better PDF formatting
+                controlMeasures: {
+                  primary: parsedControls.primaryAction,
+                  eliminate: parsedControls.eliminate,
+                  substitute: parsedControls.substitute,
+                  engineer: parsedControls.engineerControls,
+                  administrative: parsedControls.administrativeControls,
+                  verification: parsedControls.verification,
+                  competency: parsedControls.competency,
+                  equipment: parsedControls.equipmentStandards,
+                  regulation: parsedControls.regulation,
+                  additional: parsedControls.other.join(' | '),
+                },
+                // Keep raw for backward compatibility
+                controlMeasuresRaw: rawControlMeasures,
+                residualRisk: hazard.residualRisk,
+                regulation: hazard.regulation || 'BS 7671:2018+A3:2024',
+              };
+            }),
           // PPE requirements
           ppe: (healthSafetyData.ppe || []).map((p: any) => ({
             ppeType: p.ppeType,
             standard: p.standard,
             mandatory: p.mandatory,
-            purpose: p.purpose
+            purpose: p.purpose,
           })),
           // Emergency procedures
           emergencyProcedures: healthSafetyData.emergencyProcedures || [],
@@ -111,25 +122,25 @@ serve(async (req) => {
             firstAiderPhone: healthSafetyData.firstAiderPhone,
             safetyOfficer: healthSafetyData.safetyOfficerName,
             safetyOfficerPhone: healthSafetyData.safetyOfficerPhone,
-            assemblyPoint: healthSafetyData.assemblyPoint
-          }
+            assemblyPoint: healthSafetyData.assemblyPoint,
+          },
         };
 
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${pdfMonkeyApiKey}`,
+        Authorization: `Bearer ${pdfMonkeyApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         document: {
           document_template_id: templateId,
-          status: "pending",
+          status: 'pending',
           payload: payload,
           meta: {
-            _filename: `Health-Safety-${healthSafetyData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
-          }
-        }
+            _filename: `Health-Safety-${healthSafetyData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`,
+          },
+        },
       }),
     });
 
@@ -143,28 +154,28 @@ serve(async (req) => {
     const documentId = pdfResponse.document.id;
     let downloadUrl = pdfResponse.document.download_url;
     let status = pdfResponse.document.status;
-    
+
     // Poll for completion if still generating
     if (status === 'draft' || status === 'pending' || status === 'generating') {
       const maxAttempts = 60;
       for (let i = 0; i < maxAttempts; i++) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         console.log(`Polling attempt ${i + 1}/${maxAttempts}, current status: ${status}`);
-        
+
         const statusResponse = await fetch(
           `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
           {
             headers: {
-              'Authorization': `Bearer ${pdfMonkeyApiKey}`,
-            }
+              Authorization: `Bearer ${pdfMonkeyApiKey}`,
+            },
           }
         );
-        
+
         const statusData = await statusResponse.json();
         status = statusData.document.status;
         downloadUrl = statusData.document.download_url;
-        
+
         if (status === 'success') {
           console.log('PDF generation completed successfully');
           break;
@@ -177,35 +188,47 @@ serve(async (req) => {
     // Check if PDF generation completed successfully
     if (!downloadUrl || status !== 'success') {
       console.log('PDF generation timed out or incomplete', { status, downloadUrl });
-      return new Response(JSON.stringify({
-        success: false,
-        useFallback: true,
-        message: 'PDF generation timed out'
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          useFallback: true,
+          message: 'PDF generation timed out',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
-    return new Response(JSON.stringify({
-      success: true,
-      documentId: documentId,
-      downloadUrl: downloadUrl,
-      status: status
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        documentId: documentId,
+        downloadUrl: downloadUrl,
+        status: status,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in generate-health-safety-pdf function:', error);
-    await captureException(error, { functionName: 'generate-health-safety-pdf', requestUrl: req.url, requestMethod: req.method });
-    return new Response(JSON.stringify({
-      success: false,
-      useFallback: true,
-      error: error instanceof Error ? error.message : 'Failed to generate PDF'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    await captureException(error, {
+      functionName: 'generate-health-safety-pdf',
+      requestUrl: req.url,
+      requestMethod: req.method,
     });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        useFallback: true,
+        error: error instanceof Error ? error.message : 'Failed to generate PDF',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
@@ -220,16 +243,18 @@ function parseControlMeasures(controlMeasureText: string) {
     competency: '',
     equipmentStandards: '',
     regulation: '',
-    other: [] as string[]
+    other: [] as string[],
   };
-  
+
   // Split by section headers
-  const parts = controlMeasureText.split(/(?=PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER CONTROLS:|ADMINISTRATIVE CONTROLS:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS:|REGULATION:)/i);
-  
-  parts.forEach(part => {
+  const parts = controlMeasureText.split(
+    /(?=PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER CONTROLS:|ADMINISTRATIVE CONTROLS:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS:|REGULATION:)/i
+  );
+
+  parts.forEach((part) => {
     const trimmed = part.trim();
     if (!trimmed) return;
-    
+
     if (trimmed.match(/^PRIMARY ACTION:/i)) {
       sections.primaryAction = trimmed.replace(/^PRIMARY ACTION:/i, '').trim();
     } else if (trimmed.match(/^ELIMINATE:/i)) {
@@ -252,7 +277,7 @@ function parseControlMeasures(controlMeasureText: string) {
       sections.other.push(trimmed);
     }
   });
-  
+
   return sections;
 }
 
@@ -269,7 +294,7 @@ function applyFieldMapping(data: any, fieldMapping: Record<string, string>): any
   }
 
   const mapped: any = {};
-  
+
   for (const [templateField, dataPath] of Object.entries(fieldMapping)) {
     const value = getNestedValue(data, dataPath);
     setNestedValue(mapped, templateField, value);

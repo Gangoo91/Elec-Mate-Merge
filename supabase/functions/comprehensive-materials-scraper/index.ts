@@ -1,98 +1,99 @@
 import { serve } from '../_shared/deps.ts';
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 // Category configuration with specific category listing pages
 const BATCH_1_CATEGORIES = [
   {
-    name: "Cables & Wiring",
+    name: 'Cables & Wiring',
     urls: [
-      "https://www.screwfix.com/c/electrical-lighting/cable/cat8960001?page_size=100",
-      "https://www.toolstation.com/electrical-supplies-accessories/cables-flexes/c1118",
-      "https://www.toolstation.com/electrical-supplies-accessories/cables-flexes/c1118?page=2",
-      "https://www.toolstation.com/electrical-supplies-accessories/cables-flexes/c1118?page=3",
+      'https://www.screwfix.com/c/electrical-lighting/cable/cat8960001?page_size=100',
+      'https://www.toolstation.com/electrical-supplies-accessories/cables-flexes/c1118',
+      'https://www.toolstation.com/electrical-supplies-accessories/cables-flexes/c1118?page=2',
+      'https://www.toolstation.com/electrical-supplies-accessories/cables-flexes/c1118?page=3',
     ],
   },
 ];
 
 const BATCH_2_CATEGORIES = [
   {
-    name: "Fixings & Consumables",
+    name: 'Fixings & Consumables',
     urls: [
-      "https://www.toolstation.com/search?q=Fixings+&+Consumables=null",
-      "https://www.screwfix.com/c/electrical-lighting/consumer-unit-accessories/cat8030002?page_size=100",
+      'https://www.toolstation.com/search?q=Fixings+&+Consumables=null',
+      'https://www.screwfix.com/c/electrical-lighting/consumer-unit-accessories/cat8030002?page_size=100',
     ],
   },
 ];
 
 const BATCH_3_CATEGORIES = [
   {
-    name: "Electrical Components",
+    name: 'Electrical Components',
     urls: [
-      "https://www.screwfix.com/c/electrical-lighting/consumer-units/cat7230028?page_size=100",
-      "https://www.screwfix.com/c/electrical-lighting/mcbs/cat7230022?page_size=100",
-      "https://www.screwfix.com/c/electrical-lighting/rcds-rccbs/cat7230026?page_size=100",
-      "https://www.screwfix.com/c/electrical-lighting/isolation-switches/cat1930006?page_size=100",
-      "https://www.toolstation.com/electrical-supplies-accessories/power-distribution/c662",
-      "https://www.toolstation.com/electrical-supplies-accessories/power-distribution/c662?page=2",
+      'https://www.screwfix.com/c/electrical-lighting/consumer-units/cat7230028?page_size=100',
+      'https://www.screwfix.com/c/electrical-lighting/mcbs/cat7230022?page_size=100',
+      'https://www.screwfix.com/c/electrical-lighting/rcds-rccbs/cat7230026?page_size=100',
+      'https://www.screwfix.com/c/electrical-lighting/isolation-switches/cat1930006?page_size=100',
+      'https://www.toolstation.com/electrical-supplies-accessories/power-distribution/c662',
+      'https://www.toolstation.com/electrical-supplies-accessories/power-distribution/c662?page=2',
     ],
   },
 ];
 
 const BATCH_4_CATEGORIES = [
   {
-    name: "Installation Accessories",
+    name: 'Installation Accessories',
     urls: [
-      "https://www.screwfix.com/c/electrical-lighting/junction-boxes/cat830522?page_size=100",
-      "https://www.screwfix.com/c/electrical-lighting/glands-grommets/cat830484?page_size=100",
-      "https://www.screwfix.com/c/electrical-lighting/cable-trunking/cat1910006?page_size=100",
-      "https://www.toolstation.com/electrical-supplies-accessories/junction-boxes/c338",
-      "https://www.toolstation.com/electrical-supplies-accessories/mini-trunking/c974",
-      "https://www.toolstation.com/search?q=glands",
+      'https://www.screwfix.com/c/electrical-lighting/junction-boxes/cat830522?page_size=100',
+      'https://www.screwfix.com/c/electrical-lighting/glands-grommets/cat830484?page_size=100',
+      'https://www.screwfix.com/c/electrical-lighting/cable-trunking/cat1910006?page_size=100',
+      'https://www.toolstation.com/electrical-supplies-accessories/junction-boxes/c338',
+      'https://www.toolstation.com/electrical-supplies-accessories/mini-trunking/c974',
+      'https://www.toolstation.com/search?q=glands',
     ],
   },
 ];
 
 const BATCH_5_CATEGORIES = [
   {
-    name: "Cable Management & Conduit",
+    name: 'Cable Management & Conduit',
     urls: [
-      "https://www.screwfix.com/search?search=Trunking%2C+conduit%2C+cable+trays+and+management+systems&page_size=100",
-      "https://www.toolstation.com/search?q=Trunking%2C+conduit%2C+cable+trays+and+management+systems",
+      'https://www.screwfix.com/search?search=Trunking%2C+conduit%2C+cable+trays+and+management+systems&page_size=100',
+      'https://www.toolstation.com/search?q=Trunking%2C+conduit%2C+cable+trays+and+management+systems',
     ],
   },
 ];
 
 const BATCH_6_CATEGORIES = [
   {
-    name: "Protection Equipment",
+    name: 'Protection Equipment',
     urls: [
-      "https://www.screwfix.com/search?search=Earth+rods%2C+surge+protectors+and+circuit+breakers&page_size=100",
-      "https://www.toolstation.com/search?q=Earth+rods%2C+surge+protectors+and+circuit+breakers",
+      'https://www.screwfix.com/search?search=Earth+rods%2C+surge+protectors+and+circuit+breakers&page_size=100',
+      'https://www.toolstation.com/search?q=Earth+rods%2C+surge+protectors+and+circuit+breakers',
     ],
   },
 ];
 
 const BATCH_7_CATEGORIES = [
   {
-    name: "Lighting Solutions",
+    name: 'Lighting Solutions',
     urls: [
-      "https://www.screwfix.com/search?search=LED+downlights%2C+battens+and+emergency+lighting&page_size=100",
-      "https://www.toolstation.com/search?q=LED+downlights%2C+battens+and+emergency+lighting",
+      'https://www.screwfix.com/search?search=LED+downlights%2C+battens+and+emergency+lighting&page_size=100',
+      'https://www.toolstation.com/search?q=LED+downlights%2C+battens+and+emergency+lighting',
     ],
   },
 ];
 
 const BATCH_8_CATEGORIES = [
   {
-    name: "Smart Home & Controls",
+    name: 'Smart Home & Controls',
     urls: [
-      "https://www.toolstation.com/search?q=Smart+switches%2C+dimmers%2C+automation+and+control+systems",
-      "https://www.screwfix.com/search?search=Smart+switches%2C+dimmers%2C+automation+and+control+systems&page_size=100",
+      'https://www.toolstation.com/search?q=Smart+switches%2C+dimmers%2C+automation+and+control+systems',
+      'https://www.screwfix.com/search?search=Smart+switches%2C+dimmers%2C+automation+and+control+systems&page_size=100',
     ],
   },
 ];
@@ -101,50 +102,52 @@ const BATCH_8_CATEGORIES = [
 
 // Schema for product details (for Firecrawl batch)
 const productDetailSchema = {
-  type: "object",
+  type: 'object',
   properties: {
     name: {
-      type: "string",
+      type: 'string',
     },
     brand: {
-      type: "string",
-      description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
+      type: 'string',
+      description:
+        'Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)',
     },
     price: {
-      type: "string",
-      description: "Current price in GBP",
+      type: 'string',
+      description: 'Current price in GBP',
     },
     description: {
-      type: "string",
+      type: 'string',
     },
     category: {
-      type: "string",
-      description: "Product category (e.g., Hand Tools, Power Tools, PPE etc...)",
+      type: 'string',
+      description: 'Product category (e.g., Hand Tools, Power Tools, PPE etc...)',
     },
     supplier: {
-      type: "string",
-      description: "Supplier name (Screwfix or Toolstation)",
+      type: 'string',
+      description: 'Supplier name (Screwfix or Toolstation)',
     },
     productType: {
-      type: "string",
+      type: 'string',
     },
     image: {
-      type: "string",
-      description: "URL of the product image - prefer high resolution (400px+ wide). Look for data-src, data-zoom, srcset attributes for larger versions. Avoid thumbnails.",
+      type: 'string',
+      description:
+        'URL of the product image - prefer high resolution (400px+ wide). Look for data-src, data-zoom, srcset attributes for larger versions. Avoid thumbnails.',
     },
     view_product_url: {
-      type: "string",
-      description: "Direct URL to the product page",
+      type: 'string',
+      description: 'Direct URL to the product page',
     },
     highlights: {
-      type: "array",
-      items: { type: "string" },
-      description: "Key features or highlights",
+      type: 'array',
+      items: { type: 'string' },
+      description: 'Key features or highlights',
     },
     stockStatus: {
-      type: "string",
-      enum: ["In Stock", "Low Stock", "Out of Stock"],
-      description: "Stock availability status",
+      type: 'string',
+      enum: ['In Stock', 'Low Stock', 'Out of Stock'],
+      description: 'Stock availability status',
     },
   },
 };
@@ -173,7 +176,11 @@ const getBatchCategories = (batchNumber: number) => {
 };
 
 // Batch scrape products from category listing URLs
-async function batchScrapeProducts(categoryUrls: string[], category: string, firecrawlApiKey: string): Promise<any[]> {
+async function batchScrapeProducts(
+  categoryUrls: string[],
+  category: string,
+  firecrawlApiKey: string
+): Promise<any[]> {
   if (!categoryUrls || categoryUrls.length === 0) {
     console.log(`⚠️ No category URLs to scrape for ${category}`);
     return [];
@@ -182,19 +189,19 @@ async function batchScrapeProducts(categoryUrls: string[], category: string, fir
   console.log(`🚀 Starting batch scrape for ${category} from ${categoryUrls.length} listing URLs`);
 
   try {
-    const batchResponse = await fetch("https://api.firecrawl.dev/v2/batch/scrape", {
-      method: "POST",
+    const batchResponse = await fetch('https://api.firecrawl.dev/v2/batch/scrape', {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${firecrawlApiKey}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         urls: categoryUrls,
-        onlyMainContent: true,  // Reduces processing - focus on product content
-        maxAge: 86400000,       // 24hr cache - reduces API costs by ~5x for unchanged pages
+        onlyMainContent: true, // Reduces processing - focus on product content
+        maxAge: 86400000, // 24hr cache - reduces API costs by ~5x for unchanged pages
         formats: [
           {
-            type: "json",
+            type: 'json',
             prompt: `Extract ALL electrical materials and supplies from this wholesaler product page.
 For each product extract:
 - Product name (exact title with brand and specifications)
@@ -220,10 +227,10 @@ Focus on electrical installation materials:
 
 Skip unrelated products. Extract accurate prices in GBP.`,
             schema: {
-              type: "object",
+              type: 'object',
               properties: {
                 products: {
-                  type: "array",
+                  type: 'array',
                   items: productDetailSchema,
                 },
               },
@@ -236,7 +243,7 @@ Skip unrelated products. Extract accurate prices in GBP.`,
     const batchData = await batchResponse.json();
 
     if (!batchData.success || !batchData.id) {
-      console.error("❌ Failed to start batch job:", batchData);
+      console.error('❌ Failed to start batch job:', batchData);
       return [];
     }
 
@@ -254,24 +261,27 @@ Skip unrelated products. Extract accurate prices in GBP.`,
       });
       const statusData = await statusResponse.json();
 
-      console.log(`📈 Batch status: ${statusData.status} (${statusData.completed || 0}/${statusData.total || 0})`);
+      console.log(
+        `📈 Batch status: ${statusData.status} (${statusData.completed || 0}/${statusData.total || 0})`
+      );
 
-      if (statusData.status === "completed") {
+      if (statusData.status === 'completed') {
         console.log(`✅ Batch scrape completed for ${category}`);
 
         // Extract products from v2 API response format
-        const allProducts = statusData.data?.map((item: any) => item.json?.products || []).flat() || [];
+        const allProducts =
+          statusData.data?.map((item: any) => item.json?.products || []).flat() || [];
 
         // Transform products to match expected format
         const transformedProducts = allProducts.map((product: any, index: number) => ({
           id: Date.now() + index,
-          name: product.name || "Unknown Product",
+          name: product.name || 'Unknown Product',
           brand: product.brand,
           category: category, // Always use configured category (e.g., "Hand Tools") not scraped subcategory
-          price: product.price || "£0.00",
-          supplier: product.supplier || "Unknown",
-          image: product.image || "/placeholder.svg",
-          stockStatus: product.stockStatus || "In Stock",
+          price: product.price || '£0.00',
+          supplier: product.supplier || 'Unknown',
+          image: product.image || '/placeholder.svg',
+          stockStatus: product.stockStatus || 'In Stock',
           highlights: product.highlights || [],
           productUrl: product.view_product_url,
           view_product_url: product.view_product_url,
@@ -283,7 +293,7 @@ Skip unrelated products. Extract accurate prices in GBP.`,
         return transformedProducts;
       }
 
-      if (statusData.status === "failed") {
+      if (statusData.status === 'failed') {
         console.error(`❌ Batch job failed for ${category}`);
         return [];
       }
@@ -294,7 +304,7 @@ Skip unrelated products. Extract accurate prices in GBP.`,
     console.log(`⏱️ Batch job timed out for ${category}`);
     return [];
   } catch (error) {
-    console.error("❌ Error in batch scrape:", error);
+    console.error('❌ Error in batch scrape:', error);
     return [];
   }
 }
@@ -302,12 +312,16 @@ Skip unrelated products. Extract accurate prices in GBP.`,
 // Scrape one category
 async function scrapeCategory(
   categoryConfig: { name: string; urls: string[] },
-  firecrawlApiKey: string,
+  firecrawlApiKey: string
 ): Promise<{ category: string; products: any[]; success: boolean }> {
   console.log(`\n🎯 Starting category: ${categoryConfig.name}`);
   console.log(`🔗 Using ${categoryConfig.urls.length} listing URLs`);
 
-  const products = await batchScrapeProducts(categoryConfig.urls, categoryConfig.name, firecrawlApiKey);
+  const products = await batchScrapeProducts(
+    categoryConfig.urls,
+    categoryConfig.name,
+    firecrawlApiKey
+  );
 
   console.log(`✅ ${categoryConfig.name}: ${products.length} products scraped`);
   return { category: categoryConfig.name, products: products || [], success: products.length > 0 };
@@ -315,11 +329,11 @@ async function scrapeCategory(
 
 const checkExistingBatch = async (supabase: any, batchNumber: number) => {
   const { data, error } = await supabase
-    .from("tools_weekly_cache")
-    .select("*")
-    .eq("category", `batch_${batchNumber}`)
-    .gt("expires_at", new Date().toISOString())
-    .order("created_at", { ascending: false })
+    .from('tools_weekly_cache')
+    .select('*')
+    .eq('category', `batch_${batchNumber}`)
+    .gt('expires_at', new Date().toISOString())
+    .order('created_at', { ascending: false })
     .limit(1)
     .single();
 
@@ -332,7 +346,7 @@ const checkExistingBatch = async (supabase: any, batchNumber: number) => {
 };
 
 const mergeAllBatches = async (supabase: any) => {
-  console.log("🔄 [MERGE] Starting merge of all category batches...");
+  console.log('🔄 [MERGE] Starting merge of all category batches...');
 
   const allCategoryNames = [
     ...BATCH_1_CATEGORIES.map((c) => c.name),
@@ -353,11 +367,11 @@ const mergeAllBatches = async (supabase: any) => {
 
   for (const categoryName of allCategoryNames) {
     const { data, error } = await supabase
-      .from("tools_weekly_cache")
-      .select("*")
-      .eq("category", categoryName)
-      .gt("expires_at", new Date().toISOString())
-      .order("created_at", { ascending: false })
+      .from('tools_weekly_cache')
+      .select('*')
+      .eq('category', categoryName)
+      .gt('expires_at', new Date().toISOString())
+      .order('created_at', { ascending: false })
       .limit(1)
       .single();
 
@@ -374,7 +388,7 @@ const mergeAllBatches = async (supabase: any) => {
 
   const totalProducts = allTools.length;
   console.log(
-    `📊 [MERGE] Complete: ${totalProducts} total products from ${successfulCategories.length}/${allCategoryNames.length} categories`,
+    `📊 [MERGE] Complete: ${totalProducts} total products from ${successfulCategories.length}/${allCategoryNames.length} categories`
   );
 
   if (failedCategories.length > 0) {
@@ -394,9 +408,9 @@ const mergeAllBatches = async (supabase: any) => {
 };
 
 serve(async (req) => {
-  console.log("🔧 [BATCH-SCRAPER] Request received");
+  console.log('🔧 [BATCH-SCRAPER] Request received');
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
@@ -404,18 +418,18 @@ serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const { batch, forceRefresh, mergeAll } = body;
 
-    const firecrawlApiKey = Deno.env.get("FIRECRAWL_API_KEY");
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
     if (!firecrawlApiKey) {
-      throw new Error("FIRECRAWL_API_KEY missing");
+      throw new Error('FIRECRAWL_API_KEY missing');
     }
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Handle merge request
     if (mergeAll) {
-      console.log("📦 [MERGE-REQUEST] Combining all category batches...");
+      console.log('📦 [MERGE-REQUEST] Combining all category batches...');
       const merged = await mergeAllBatches(supabase);
 
       return new Response(
@@ -430,19 +444,19 @@ serve(async (req) => {
           allCategoriesComplete: merged.allCategoriesComplete,
           message: merged.success
             ? `Merged ${merged.categoriesFound}/${merged.totalCategories} categories (${merged.totalProducts} total products)`
-            : "No categories found - data may not be scraped yet",
-          mode: "merge",
+            : 'No categories found - data may not be scraped yet',
+          mode: 'merge',
         }),
         {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
       );
     }
 
     // Validate batch number
     const batchNumber = batch || 1;
     if (![1, 2, 3, 4, 5, 6, 7, 8].includes(batchNumber)) {
-      throw new Error("Batch must be 1, 2, 3, 4, 5, 6, 7 or 8");
+      throw new Error('Batch must be 1, 2, 3, 4, 5, 6, 7 or 8');
     }
 
     console.log(`📊 Processing Batch ${batchNumber}`);
@@ -462,8 +476,8 @@ serve(async (req) => {
             expiresAt: cachedBatch.expires_at,
           }),
           {
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          },
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
         );
       }
     }
@@ -471,14 +485,18 @@ serve(async (req) => {
     // Scrape batch using two-phase batch approach
     const batchCategories = getBatchCategories(batchNumber);
 
-    console.log(`🚀 Scraping ${Object.keys(batchCategories).length} categories using batch scrape...`);
+    console.log(
+      `🚀 Scraping ${Object.keys(batchCategories).length} categories using batch scrape...`
+    );
     const startTime = Date.now();
 
     // Process all categories in parallel for faster execution
     const allProducts = [];
     const categoryStats = {};
 
-    const results = await Promise.all(batchCategories.map((config) => scrapeCategory(config, firecrawlApiKey)));
+    const results = await Promise.all(
+      batchCategories.map((config) => scrapeCategory(config, firecrawlApiKey))
+    );
 
     results.forEach((result) => {
       if (result.success && result.products.length > 0) {
@@ -511,8 +529,8 @@ serve(async (req) => {
         }),
         {
           status: 200,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        },
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
       );
     }
 
@@ -543,23 +561,23 @@ serve(async (req) => {
       }
 
       // Delete old category data
-      await supabase.from("materials_weekly_cache").delete().eq("category", categoryName);
+      await supabase.from('materials_weekly_cache').delete().eq('category', categoryName);
 
       // Insert new category data
-      const { error: storeError } = await supabase.from("materials_weekly_cache").insert({
+      const { error: storeError } = await supabase.from('materials_weekly_cache').insert({
         materials_data: categoryProducts,
         total_products: categoryProducts.length,
         category: categoryName,
-        source: "comprehensive-scraper",
+        source: 'comprehensive-scraper',
         expires_at: expiresAt.toISOString(),
-        update_status: "completed",
+        update_status: 'completed',
       });
 
       if (storeError) {
         console.error(`❌ [BATCH-${batchNumber}] Storage error for ${categoryName}:`, storeError);
       } else {
         console.log(
-          `✅ [BATCH-${batchNumber}] Stored ${categoryProducts.length} products in category: ${categoryName}`,
+          `✅ [BATCH-${batchNumber}] Stored ${categoryProducts.length} products in category: ${categoryName}`
         );
       }
     }
@@ -578,21 +596,21 @@ serve(async (req) => {
         cached: false,
       }),
       {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
     );
   } catch (error) {
-    console.error("❌ Fatal error:", error);
+    console.error('❌ Fatal error:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
         tools: [],
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
     );
   }
 });

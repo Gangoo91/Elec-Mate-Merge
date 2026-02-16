@@ -1,10 +1,9 @@
-
-import { Button } from "@/components/ui/button";
-import { RefreshCw, Clock, AlertCircle } from "lucide-react";
-import { useState, useEffect } from "react";
-import { updateMaterialsCache, getCacheStatus } from "@/utils/materialsCache";
-import { useToast } from "@/hooks/use-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { Button } from '@/components/ui/button';
+import { RefreshCw, Clock, AlertCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { updateMaterialsCache, getCacheStatus } from '@/utils/materialsCache';
+import { useToast } from '@/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface RefreshButtonProps {
   isFetching: boolean;
@@ -14,7 +13,13 @@ interface RefreshButtonProps {
   className?: string;
 }
 
-const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, className }: RefreshButtonProps) => {
+const RefreshButton = ({
+  isFetching,
+  lastFetchTime,
+  onRefresh,
+  categoryId,
+  className,
+}: RefreshButtonProps) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [canRefresh, setCanRefresh] = useState(true);
   const [cacheAge, setCacheAge] = useState<number | null>(null);
@@ -37,14 +42,14 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
 
   const handleRefresh = async () => {
     if (!canRefresh && !isUpdating) {
-      const daysUntilRefresh = nextRefreshDate 
+      const daysUntilRefresh = nextRefreshDate
         ? Math.ceil((nextRefreshDate.getTime() - Date.now()) / (24 * 60 * 60 * 1000))
         : 0;
-      
+
       toast({
-        title: "Refresh Not Available",
+        title: 'Refresh Not Available',
         description: `Data was recently updated. Next refresh available in ${daysUntilRefresh} day${daysUntilRefresh !== 1 ? 's' : ''}.`,
-        variant: "destructive",
+        variant: 'destructive',
       });
       return;
     }
@@ -52,19 +57,19 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
     setIsUpdating(true);
     try {
       const result = await updateMaterialsCache();
-      
+
       if (result.success) {
         toast({
-          title: "Cache Updated",
-          description: "Materials data has been refreshed successfully.",
+          title: 'Cache Updated',
+          description: 'Materials data has been refreshed successfully.',
         });
-        
+
         // Invalidate React Query cache to trigger refetch
         queryClient.invalidateQueries({ queryKey: ['comprehensive-materials'] });
-        
+
         // Refresh the data on the page
         onRefresh();
-        
+
         // Update cache status
         await checkCacheStatus();
       } else {
@@ -73,9 +78,9 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
     } catch (error) {
       console.error('Error updating cache:', error);
       toast({
-        title: "Update Failed",
-        description: "Failed to update materials cache. Please try again later.",
-        variant: "destructive",
+        title: 'Update Failed',
+        description: 'Failed to update materials cache. Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setIsUpdating(false);
@@ -86,7 +91,7 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
     if (!timestamp) return '';
     const now = Date.now();
     const diff = now - timestamp;
-    
+
     if (diff < 60000) return 'Just now';
     if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
     if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
@@ -97,9 +102,9 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
     if (!nextRefreshDate) return '';
     const now = Date.now();
     const diff = nextRefreshDate.getTime() - now;
-    
+
     if (diff <= 0) return 'Available now';
-    
+
     const days = Math.ceil(diff / (24 * 60 * 60 * 1000));
     return `${days} day${days !== 1 ? 's' : ''}`;
   };
@@ -108,32 +113,39 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={handleRefresh} 
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={handleRefresh}
         disabled={isDisabled}
         className="flex items-center gap-1.5 text-xs sm:text-sm bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 shrink-0"
       >
         {!canRefresh && cacheAge !== null ? (
           <AlertCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
         ) : (
-          <RefreshCw className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${(isFetching || isUpdating) ? 'animate-spin' : ''}`} />
+          <RefreshCw
+            className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isFetching || isUpdating ? 'animate-spin' : ''}`}
+          />
         )}
         <span className="hidden xs:inline">
-          {isUpdating ? 'Updating Cache…' : 
-           isFetching ? 'Refreshing…' : 
-           !canRefresh ? `Available in ${formatNextRefresh()}` : 
-           'Update Cache'}
+          {isUpdating
+            ? 'Updating Cache…'
+            : isFetching
+              ? 'Refreshing…'
+              : !canRefresh
+                ? `Available in ${formatNextRefresh()}`
+                : 'Update Cache'}
         </span>
         <span className="xs:hidden">
-          {isUpdating ? 'Updating…' : 
-           isFetching ? 'Loading…' : 
-           !canRefresh ? formatNextRefresh() : 
-           'Update'}
+          {isUpdating
+            ? 'Updating…'
+            : isFetching
+              ? 'Loading…'
+              : !canRefresh
+                ? formatNextRefresh()
+                : 'Update'}
         </span>
       </Button>
-      
     </div>
   );
 };

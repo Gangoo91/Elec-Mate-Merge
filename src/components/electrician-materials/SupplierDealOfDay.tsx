@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Star, ExternalLink } from "lucide-react";
-import { SupplierInfo } from "@/data/electrician/supplierData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Star, ExternalLink } from 'lucide-react';
+import { SupplierInfo } from '@/data/electrician/supplierData';
 
 interface SupplierDealOfDayProps {
   supplierInfo: SupplierInfo;
@@ -14,16 +13,16 @@ const SupplierDealOfDay = ({ supplierInfo }: SupplierDealOfDayProps) => {
   // Get a URL for the deal of the day
   const getDealUrl = () => {
     switch (supplierInfo.name.toLowerCase()) {
-      case "screwfix":
-        return "https://www.screwfix.com/deals-of-the-day";
-      case "city electrical factors":
-        return "https://www.cef.co.uk/offers";
-      case "electricaldirect":
-        return "https://www.electricaldirect.co.uk/offers";
-      case "toolstation":
-        return "https://www.toolstation.com/offers";
+      case 'screwfix':
+        return 'https://www.screwfix.com/deals-of-the-day';
+      case 'city electrical factors':
+        return 'https://www.cef.co.uk/offers';
+      case 'electricaldirect':
+        return 'https://www.electricaldirect.co.uk/offers';
+      case 'toolstation':
+        return 'https://www.toolstation.com/offers';
       default:
-        return "#";
+        return '#';
     }
   };
 
@@ -42,12 +41,16 @@ const SupplierDealOfDay = ({ supplierInfo }: SupplierDealOfDayProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-elec-yellow">{supplierInfo.dealOfTheDay.price}</span>
-              <span className="text-lg line-through text-muted-foreground">{supplierInfo.dealOfTheDay.regularPrice}</span>
+              <span className="text-3xl font-bold text-elec-yellow">
+                {supplierInfo.dealOfTheDay.price}
+              </span>
+              <span className="text-lg line-through text-muted-foreground">
+                {supplierInfo.dealOfTheDay.regularPrice}
+              </span>
             </div>
-            
+
             <div className="text-xl font-medium">{supplierInfo.dealOfTheDay.name}</div>
-            
+
             <ul className="space-y-2">
               {supplierInfo.dealOfTheDay.features.map((feature, index) => (
                 <li key={index} className="flex items-center">
@@ -56,7 +59,7 @@ const SupplierDealOfDay = ({ supplierInfo }: SupplierDealOfDayProps) => {
                 </li>
               ))}
             </ul>
-            
+
             <div className="pt-2">
               <a href={getDealUrl()} target="_blank" rel="noopener noreferrer">
                 <Button className="flex items-center gap-2">
@@ -65,7 +68,7 @@ const SupplierDealOfDay = ({ supplierInfo }: SupplierDealOfDayProps) => {
               </a>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-center">
             <div className="w-full h-40 rounded-md flex items-center justify-center text-elec-yellow/50">
               Product Image

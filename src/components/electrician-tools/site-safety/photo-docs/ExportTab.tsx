@@ -116,8 +116,13 @@ export default function ExportTab() {
         const xPos = margin + col * (photoWidth + 10);
 
         try {
-          // Fetch and embed image
-          const response = await fetch(photo.file_url);
+          // Use annotated version if available, otherwise original
+          const annotatedEntry = (photo.annotations || []).find(
+            (a: Record<string, unknown>) => !!(a as Record<string, unknown>).__annotated_url
+          ) as Record<string, unknown> | undefined;
+          const imageUrl = (annotatedEntry?.__annotated_url as string) || photo.file_url;
+
+          const response = await fetch(imageUrl);
           const blob = await response.blob();
           const base64 = await new Promise<string>((resolve) => {
             const reader = new FileReader();

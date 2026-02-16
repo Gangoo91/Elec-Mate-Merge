@@ -1,29 +1,29 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { FeatureTile } from "@/components/employer/FeatureTile";
-import { QuickStats } from "@/components/employer/QuickStats";
-import { HubSkeleton } from "@/components/employer/skeletons";
-import { ErrorState } from "@/components/employer/ErrorState";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { FeatureTile } from '@/components/employer/FeatureTile';
+import { QuickStats } from '@/components/employer/QuickStats';
+import { HubSkeleton } from '@/components/employer/skeletons';
+import { ErrorState } from '@/components/employer/ErrorState';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet";
+} from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
   FileText,
   Sparkles,
@@ -40,7 +40,7 @@ import {
   AlertTriangle,
   Download,
   Copy,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   useRAMSDocuments,
   useRAMSDocumentStats,
@@ -49,19 +49,19 @@ import {
   useDeleteRAMSDocument,
   type RAMSDocument,
   type RAMSStatus,
-} from "@/hooks/useRAMSDocuments";
-import { format } from "date-fns";
-import type { Section } from "@/pages/employer/EmployerDashboard";
+} from '@/hooks/useRAMSDocuments';
+import { format } from 'date-fns';
+import type { Section } from '@/pages/employer/EmployerDashboard';
 
 interface RAMSSectionProps {
   onNavigate?: (section: Section) => void;
 }
 
 const STATUS_OPTIONS: { value: RAMSStatus; label: string; color: string }[] = [
-  { value: "draft", label: "Draft", color: "bg-muted/50 text-muted-foreground" },
-  { value: "submitted", label: "Submitted", color: "bg-warning/20 text-warning" },
-  { value: "approved", label: "Approved", color: "bg-success/20 text-success" },
-  { value: "rejected", label: "Rejected", color: "bg-destructive/20 text-destructive" },
+  { value: 'draft', label: 'Draft', color: 'bg-muted/50 text-muted-foreground' },
+  { value: 'submitted', label: 'Submitted', color: 'bg-warning/20 text-warning' },
+  { value: 'approved', label: 'Approved', color: 'bg-success/20 text-success' },
+  { value: 'rejected', label: 'Rejected', color: 'bg-destructive/20 text-destructive' },
 ];
 
 export function RAMSSection({ onNavigate }: RAMSSectionProps) {
@@ -74,28 +74,35 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showDetailSheet, setShowDetailSheet] = useState(false);
   const [selectedRAMS, setSelectedRAMS] = useState<RAMSDocument | null>(null);
-  const [filterStatus, setFilterStatus] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Form state
   const [formData, setFormData] = useState({
-    project_name: "",
-    location: "",
-    date: new Date().toISOString().split("T")[0],
-    assessor: "",
-    contractor: "",
-    supervisor: "",
+    project_name: '',
+    location: '',
+    date: new Date().toISOString().split('T')[0],
+    assessor: '',
+    contractor: '',
+    supervisor: '',
     activities: [] as string[],
-    risks: [] as { id: string; hazard: string; risk_level: "low" | "medium" | "high"; control_measures: string[]; residual_risk: "low" | "medium" | "high" }[],
+    risks: [] as {
+      id: string;
+      hazard: string;
+      risk_level: 'low' | 'medium' | 'high';
+      control_measures: string[];
+      residual_risk: 'low' | 'medium' | 'high';
+    }[],
     required_ppe: [] as string[],
-    job_scale: "",
+    job_scale: '',
   });
-  const [activityInput, setActivityInput] = useState("");
+  const [activityInput, setActivityInput] = useState('');
 
   // Filter documents
-  const filteredDocuments = ramsDocuments.filter(doc => {
-    const matchesStatus = filterStatus === "all" || doc.status === filterStatus;
-    const matchesSearch = searchQuery === "" ||
+  const filteredDocuments = ramsDocuments.filter((doc) => {
+    const matchesStatus = filterStatus === 'all' || doc.status === filterStatus;
+    const matchesSearch =
+      searchQuery === '' ||
       doc.project_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.assessor.toLowerCase().includes(searchQuery.toLowerCase());
@@ -105,7 +112,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const handleCreateRAMS = async () => {
     await createRAMS.mutateAsync({
       ...formData,
-      status: "draft",
+      status: 'draft',
     });
     setShowCreateSheet(false);
     resetForm();
@@ -113,18 +120,18 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
   const resetForm = () => {
     setFormData({
-      project_name: "",
-      location: "",
-      date: new Date().toISOString().split("T")[0],
-      assessor: "",
-      contractor: "",
-      supervisor: "",
+      project_name: '',
+      location: '',
+      date: new Date().toISOString().split('T')[0],
+      assessor: '',
+      contractor: '',
+      supervisor: '',
       activities: [],
       risks: [],
       required_ppe: [],
-      job_scale: "",
+      job_scale: '',
     });
-    setActivityInput("");
+    setActivityInput('');
   };
 
   const handleStatusChange = async (id: string, status: RAMSStatus) => {
@@ -138,23 +145,25 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
   const addActivity = () => {
     if (activityInput.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        activities: [...prev.activities, activityInput.trim()]
+        activities: [...prev.activities, activityInput.trim()],
       }));
-      setActivityInput("");
+      setActivityInput('');
     }
   };
 
   const removeActivity = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      activities: prev.activities.filter((_, i) => i !== index)
+      activities: prev.activities.filter((_, i) => i !== index),
     }));
   };
 
   const getStatusColor = (status: RAMSStatus) => {
-    return STATUS_OPTIONS.find(s => s.value === status)?.color || "bg-muted/50 text-muted-foreground";
+    return (
+      STATUS_OPTIONS.find((s) => s.value === status)?.color || 'bg-muted/50 text-muted-foreground'
+    );
   };
 
   if (isLoading) {
@@ -173,21 +182,25 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
           {
             icon: CheckCircle2,
             value: stats?.approved || 0,
-            label: "Approved",
-            color: "green",
+            label: 'Approved',
+            color: 'green',
           },
-          ...(stats?.submitted ? [{
-            icon: Clock,
-            value: stats.submitted,
-            label: "Pending",
-            color: "yellow" as const,
-            pulse: true,
-          }] : []),
+          ...(stats?.submitted
+            ? [
+                {
+                  icon: Clock,
+                  value: stats.submitted,
+                  label: 'Pending',
+                  color: 'yellow' as const,
+                  pulse: true,
+                },
+              ]
+            : []),
           {
             icon: FileText,
             value: stats?.total || 0,
-            label: "Total RAMS",
-            color: "blue",
+            label: 'Total RAMS',
+            color: 'blue',
           },
         ]}
       />
@@ -207,11 +220,12 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
               <div className="flex-1">
                 <h3 className="font-semibold text-foreground mb-1">AI RAMS Generator</h3>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Generate comprehensive risk assessments with AI. Describe your job and get a complete RAMS document in seconds.
+                  Generate comprehensive risk assessments with AI. Describe your job and get a
+                  complete RAMS document in seconds.
                 </p>
                 <Button
                   className="w-full md:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-                  onClick={() => onNavigate?.("airams")}
+                  onClick={() => onNavigate?.('airams')}
                 >
                   <Sparkles className="h-4 w-4 mr-2" />
                   Generate with AI
@@ -240,14 +254,14 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
             icon={FolderOpen}
             title="All RAMS"
             description={`${ramsDocuments.length} documents`}
-            onClick={() => setFilterStatus("all")}
+            onClick={() => setFilterStatus('all')}
             compact
           />
           <FeatureTile
             icon={Clock}
             title="Pending"
             description={`${stats?.submitted || 0} awaiting`}
-            onClick={() => setFilterStatus("submitted")}
+            onClick={() => setFilterStatus('submitted')}
             badge={stats?.submitted ? `${stats.submitted}` : undefined}
             badgeVariant="warning"
             compact
@@ -256,7 +270,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
             icon={CheckCircle2}
             title="Approved"
             description={`${stats?.approved || 0} active`}
-            onClick={() => setFilterStatus("approved")}
+            onClick={() => setFilterStatus('approved')}
             compact
           />
         </div>
@@ -272,7 +286,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
             placeholder="Search RAMS..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("h-11", !searchQuery && "pl-9")}
+            className={cn('h-11', !searchQuery && 'pl-9')}
           />
         </div>
         <Select value={filterStatus} onValueChange={setFilterStatus}>
@@ -282,7 +296,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Status</SelectItem>
-            {STATUS_OPTIONS.map(option => (
+            {STATUS_OPTIONS.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
@@ -295,8 +309,12 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
       <div>
         <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
           <span className="w-1 h-5 bg-info rounded-full"></span>
-          {filterStatus === "all" ? "All RAMS Documents" : `${STATUS_OPTIONS.find(s => s.value === filterStatus)?.label} RAMS`}
-          <Badge variant="secondary" className="ml-auto">{filteredDocuments.length}</Badge>
+          {filterStatus === 'all'
+            ? 'All RAMS Documents'
+            : `${STATUS_OPTIONS.find((s) => s.value === filterStatus)?.label} RAMS`}
+          <Badge variant="secondary" className="ml-auto">
+            {filteredDocuments.length}
+          </Badge>
         </h2>
 
         {filteredDocuments.length === 0 ? (
@@ -304,11 +322,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
             <CardContent className="p-8 text-center">
               <FileText className="h-12 w-12 text-muted-foreground/40 mx-auto mb-4" />
               <p className="text-muted-foreground">No RAMS documents found</p>
-              <Button
-                variant="outline"
-                className="mt-4"
-                onClick={() => setShowCreateSheet(true)}
-              >
+              <Button variant="outline" className="mt-4" onClick={() => setShowCreateSheet(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Create First RAMS
               </Button>
@@ -337,7 +351,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                         </p>
                         <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
                           <Calendar className="h-3 w-3" />
-                          {format(new Date(doc.updated_at), "dd MMM yyyy")}
+                          {format(new Date(doc.updated_at), 'dd MMM yyyy')}
                           <span className="mx-1">•</span>
                           <User className="h-3 w-3" />
                           {doc.assessor}
@@ -363,9 +377,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
         <SheetContent side="bottom" className="h-[85vh] overflow-y-auto">
           <SheetHeader>
             <SheetTitle>Create RAMS Document</SheetTitle>
-            <SheetDescription>
-              Create a new risk assessment and method statement
-            </SheetDescription>
+            <SheetDescription>Create a new risk assessment and method statement</SheetDescription>
           </SheetHeader>
 
           <div className="space-y-4 mt-6">
@@ -373,7 +385,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
               <Label>Project Name</Label>
               <Input
                 value={formData.project_name}
-                onChange={(e) => setFormData(prev => ({ ...prev, project_name: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, project_name: e.target.value }))}
                 placeholder="e.g., Office Rewire - ABC Corp"
                 className="h-11"
               />
@@ -386,7 +398,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     value={formData.location}
-                    onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
                     placeholder="Site address"
                     className="pl-9 h-11"
                   />
@@ -397,7 +409,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <Input
                   type="date"
                   value={formData.date}
-                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
                   className="h-11"
                 />
               </div>
@@ -408,7 +420,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <Label>Assessor</Label>
                 <Input
                   value={formData.assessor}
-                  onChange={(e) => setFormData(prev => ({ ...prev, assessor: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, assessor: e.target.value }))}
                   placeholder="Your name"
                   className="h-11"
                 />
@@ -417,7 +429,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <Label>Job Scale</Label>
                 <Select
                   value={formData.job_scale}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, job_scale: v }))}
+                  onValueChange={(v) => setFormData((prev) => ({ ...prev, job_scale: v }))}
                 >
                   <SelectTrigger className="h-11">
                     <SelectValue placeholder="Select scale" />
@@ -437,7 +449,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <Label>Contractor (Optional)</Label>
                 <Input
                   value={formData.contractor}
-                  onChange={(e) => setFormData(prev => ({ ...prev, contractor: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, contractor: e.target.value }))}
                   placeholder="Main contractor"
                   className="h-11"
                 />
@@ -446,7 +458,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <Label>Supervisor (Optional)</Label>
                 <Input
                   value={formData.supervisor}
-                  onChange={(e) => setFormData(prev => ({ ...prev, supervisor: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, supervisor: e.target.value }))}
                   placeholder="Site supervisor"
                   className="h-11"
                 />
@@ -462,7 +474,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                   onChange={(e) => setActivityInput(e.target.value)}
                   placeholder="Add activity"
                   className="h-11"
-                  onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addActivity())}
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addActivity())}
                 />
                 <Button type="button" onClick={addActivity} variant="outline" className="h-11">
                   <Plus className="h-4 w-4" />
@@ -498,9 +510,14 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
               <Button
                 className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
                 onClick={handleCreateRAMS}
-                disabled={!formData.project_name || !formData.location || !formData.assessor || createRAMS.isPending}
+                disabled={
+                  !formData.project_name ||
+                  !formData.location ||
+                  !formData.assessor ||
+                  createRAMS.isPending
+                }
               >
-                {createRAMS.isPending ? "Creating..." : "Create RAMS"}
+                {createRAMS.isPending ? 'Creating...' : 'Create RAMS'}
               </Button>
             </div>
           </div>
@@ -565,7 +582,9 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                     <Label className="text-muted-foreground">Work Activities</Label>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {selectedRAMS.activities.map((activity, index) => (
-                        <Badge key={index} variant="secondary">{activity}</Badge>
+                        <Badge key={index} variant="secondary">
+                          {activity}
+                        </Badge>
                       ))}
                     </div>
                   </div>
@@ -573,17 +592,23 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
 
                 {selectedRAMS.risks && selectedRAMS.risks.length > 0 && (
                   <div>
-                    <Label className="text-muted-foreground">Risk Assessment ({selectedRAMS.risks.length} hazards)</Label>
+                    <Label className="text-muted-foreground">
+                      Risk Assessment ({selectedRAMS.risks.length} hazards)
+                    </Label>
                     <div className="mt-2 space-y-2">
                       {selectedRAMS.risks.slice(0, 3).map((risk, index) => (
                         <div key={index} className="p-3 rounded-lg bg-muted/50">
                           <div className="flex items-center justify-between">
                             <span className="font-medium">{risk.hazard}</span>
-                            <Badge className={
-                              risk.risk_level === "high" ? "bg-destructive/20 text-destructive" :
-                              risk.risk_level === "medium" ? "bg-warning/20 text-warning" :
-                              "bg-success/20 text-success"
-                            }>
+                            <Badge
+                              className={
+                                risk.risk_level === 'high'
+                                  ? 'bg-destructive/20 text-destructive'
+                                  : risk.risk_level === 'medium'
+                                    ? 'bg-warning/20 text-warning'
+                                    : 'bg-success/20 text-success'
+                              }
+                            >
                               {risk.risk_level}
                             </Badge>
                           </div>
@@ -603,7 +628,9 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                     <Label className="text-muted-foreground">Required PPE</Label>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {selectedRAMS.required_ppe.map((ppe, index) => (
-                        <Badge key={index} variant="outline">{ppe}</Badge>
+                        <Badge key={index} variant="outline">
+                          {ppe}
+                        </Badge>
                       ))}
                     </div>
                   </div>
@@ -635,7 +662,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                 <div className="border-t pt-4">
                   <Label className="text-muted-foreground mb-2 block">Update Status</Label>
                   <div className="flex flex-wrap gap-2">
-                    {STATUS_OPTIONS.filter(s => s.value !== selectedRAMS.status).map(option => (
+                    {STATUS_OPTIONS.filter((s) => s.value !== selectedRAMS.status).map((option) => (
                       <Button
                         key={option.value}
                         variant="outline"

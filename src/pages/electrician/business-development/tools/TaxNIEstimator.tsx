@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Helmet } from "react-helmet";
+import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import {
   PoundSterling,
   TrendingUp,
@@ -14,14 +14,10 @@ import {
   Calendar,
   Percent,
   Receipt,
-} from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -30,8 +26,8 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import { useToast } from "@/hooks/use-toast";
+} from '@/components/calculators/shared';
+import { useToast } from '@/hooks/use-toast';
 
 interface TaxInputs {
   annualIncome: number;
@@ -46,7 +42,7 @@ interface TaxInputs {
 }
 
 const TaxNIEstimator = () => {
-  const config = CALCULATOR_CONFIG["business"];
+  const config = CALCULATOR_CONFIG['business'];
   const { toast } = useToast();
 
   const [inputs, setInputs] = useState<TaxInputs>({
@@ -62,7 +58,7 @@ const TaxNIEstimator = () => {
   });
 
   const [calculated, setCalculated] = useState(false);
-  const [taxYear, setTaxYear] = useState<"2025/26" | "2024/25">("2025/26");
+  const [taxYear, setTaxYear] = useState<'2025/26' | '2024/25'>('2025/26');
 
   // UI state
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -80,9 +76,9 @@ const TaxNIEstimator = () => {
   const calculateTax = () => {
     setCalculated(true);
     toast({
-      title: "Tax Estimation Complete",
-      description: "Your tax and National Insurance calculations have been updated.",
-      variant: "success",
+      title: 'Tax Estimation Complete',
+      description: 'Your tax and National Insurance calculations have been updated.',
+      variant: 'success',
     });
   };
 
@@ -100,9 +96,9 @@ const TaxNIEstimator = () => {
     });
     setCalculated(false);
     toast({
-      title: "Calculator Reset",
-      description: "All fields have been cleared.",
-      variant: "default",
+      title: 'Calculator Reset',
+      description: 'All fields have been cleared.',
+      variant: 'default',
     });
   };
 
@@ -122,8 +118,8 @@ const TaxNIEstimator = () => {
   };
 
   // UK Tax rates and thresholds
-  const getRates = (year: "2025/26" | "2024/25") => {
-    if (year === "2025/26") {
+  const getRates = (year: '2025/26' | '2024/25') => {
+    if (year === '2025/26') {
       return {
         personalAllowance: 12570,
         basicRateThreshold: 37700,
@@ -179,8 +175,7 @@ const TaxNIEstimator = () => {
         grossProfit: 0,
       };
 
-    const grossProfit =
-      inputs.annualIncome - inputs.businessExpenses - inputs.capitalAllowances;
+    const grossProfit = inputs.annualIncome - inputs.businessExpenses - inputs.capitalAllowances;
     let personalAllowance = TAX_RATES.personalAllowance;
 
     if (grossProfit > 100000) {
@@ -194,10 +189,7 @@ const TaxNIEstimator = () => {
 
     const taxableIncome = Math.max(
       0,
-      grossProfit -
-        personalAllowance -
-        inputs.pensionContributions -
-        inputs.charitableDonations
+      grossProfit - personalAllowance - inputs.pensionContributions - inputs.charitableDonations
     );
 
     let incomeTax = 0;
@@ -211,10 +203,8 @@ const TaxNIEstimator = () => {
       } else {
         incomeTax =
           TAX_RATES.basicRateThreshold * TAX_RATES.basicRate +
-          (TAX_RATES.higherRateThreshold - TAX_RATES.basicRateThreshold) *
-            TAX_RATES.higherRate +
-          (taxableIncome - TAX_RATES.higherRateThreshold) *
-            TAX_RATES.additionalRate;
+          (TAX_RATES.higherRateThreshold - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate +
+          (taxableIncome - TAX_RATES.higherRateThreshold) * TAX_RATES.additionalRate;
       }
     }
 
@@ -226,15 +216,13 @@ const TaxNIEstimator = () => {
     if (grossProfit > TAX_RATES.class4LowerProfitsLimit) {
       const class4AtLowerBand = Math.max(
         0,
-        Math.min(grossProfit, TAX_RATES.class4UpperProfitsLimit) -
-          TAX_RATES.class4LowerProfitsLimit
+        Math.min(grossProfit, TAX_RATES.class4UpperProfitsLimit) - TAX_RATES.class4LowerProfitsLimit
       );
       nationalInsurance += class4AtLowerBand * TAX_RATES.class4LowerRate;
 
       if (grossProfit > TAX_RATES.class4UpperProfitsLimit) {
         nationalInsurance +=
-          (grossProfit - TAX_RATES.class4UpperProfitsLimit) *
-          TAX_RATES.class4HigherRate;
+          (grossProfit - TAX_RATES.class4UpperProfitsLimit) * TAX_RATES.class4HigherRate;
       }
     }
 
@@ -271,24 +259,24 @@ const TaxNIEstimator = () => {
     if (!calculated) return null;
     if (estimates.effectiveRate <= 15) {
       return {
-        label: "Efficient",
-        color: "text-green-400",
-        bg: "bg-green-500/10 border-green-500/30",
-        message: "Low effective rate - good tax planning",
+        label: 'Efficient',
+        color: 'text-green-400',
+        bg: 'bg-green-500/10 border-green-500/30',
+        message: 'Low effective rate - good tax planning',
       };
     } else if (estimates.effectiveRate <= 25) {
       return {
-        label: "Moderate",
-        color: "text-amber-400",
-        bg: "bg-amber-500/10 border-amber-500/30",
-        message: "Consider additional tax planning opportunities",
+        label: 'Moderate',
+        color: 'text-amber-400',
+        bg: 'bg-amber-500/10 border-amber-500/30',
+        message: 'Consider additional tax planning opportunities',
       };
     }
     return {
-      label: "High",
-      color: "text-red-400",
-      bg: "bg-red-500/10 border-red-500/30",
-      message: "Seek professional advice for tax optimization",
+      label: 'High',
+      color: 'text-red-400',
+      bg: 'bg-red-500/10 border-red-500/30',
+      message: 'Seek professional advice for tax optimization',
     };
   };
 
@@ -296,9 +284,9 @@ const TaxNIEstimator = () => {
   const isValid = inputs.annualIncome > 0;
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(amount);
@@ -325,7 +313,10 @@ const TaxNIEstimator = () => {
                 borderColor: `${config.gradientFrom}30`,
               }}
             >
-              <PoundSterling className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+              <PoundSterling
+                className="h-6 w-6 sm:h-7 sm:w-7"
+                style={{ color: config.gradientFrom }}
+              />
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
@@ -344,8 +335,8 @@ const TaxNIEstimator = () => {
             <div>
               <span className="text-amber-300 font-medium">Important Notice</span>
               <p className="text-sm text-amber-200/80 mt-1">
-                This calculator uses {taxYear} UK rates. Always consult a qualified
-                accountant for accurate tax advice and compliance.
+                This calculator uses {taxYear} UK rates. Always consult a qualified accountant for
+                accurate tax advice and compliance.
               </p>
             </div>
           </div>
@@ -365,15 +356,15 @@ const TaxNIEstimator = () => {
 
           <div className="flex gap-2 mb-4">
             <button
-              onClick={() => setTaxYear("2025/26")}
+              onClick={() => setTaxYear('2025/26')}
               className={cn(
-                "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
-                taxYear === "2025/26"
-                  ? "text-black"
-                  : "bg-white/5 border border-white/10 text-white"
+                'flex-1 h-12 rounded-xl font-medium text-sm transition-all',
+                taxYear === '2025/26'
+                  ? 'text-black'
+                  : 'bg-white/5 border border-white/10 text-white'
               )}
               style={
-                taxYear === "2025/26"
+                taxYear === '2025/26'
                   ? {
                       background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }
@@ -383,15 +374,15 @@ const TaxNIEstimator = () => {
               2025/26
             </button>
             <button
-              onClick={() => setTaxYear("2024/25")}
+              onClick={() => setTaxYear('2024/25')}
               className={cn(
-                "flex-1 h-12 rounded-xl font-medium text-sm transition-all",
-                taxYear === "2024/25"
-                  ? "text-black"
-                  : "bg-white/5 border border-white/10 text-white"
+                'flex-1 h-12 rounded-xl font-medium text-sm transition-all',
+                taxYear === '2024/25'
+                  ? 'text-black'
+                  : 'bg-white/5 border border-white/10 text-white'
               )}
               style={
-                taxYear === "2024/25"
+                taxYear === '2024/25'
                   ? {
                       background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }
@@ -414,8 +405,8 @@ const TaxNIEstimator = () => {
               unit="£"
               type="text"
               inputMode="decimal"
-              value={inputs.annualIncome || ""}
-              onChange={(val) => updateInput("annualIncome", parseFloat(val) || 0)}
+              value={inputs.annualIncome || ''}
+              onChange={(val) => updateInput('annualIncome', parseFloat(val) || 0)}
               placeholder="e.g., 55000"
               hint="Total revenue before expenses"
             />
@@ -425,8 +416,8 @@ const TaxNIEstimator = () => {
               unit="£"
               type="text"
               inputMode="decimal"
-              value={inputs.businessExpenses || ""}
-              onChange={(val) => updateInput("businessExpenses", parseFloat(val) || 0)}
+              value={inputs.businessExpenses || ''}
+              onChange={(val) => updateInput('businessExpenses', parseFloat(val) || 0)}
               placeholder="e.g., 8500"
               hint="Deductible business costs"
             />
@@ -437,8 +428,8 @@ const TaxNIEstimator = () => {
             unit="£"
             type="text"
             inputMode="decimal"
-            value={inputs.capitalAllowances || ""}
-            onChange={(val) => updateInput("capitalAllowances", parseFloat(val) || 0)}
+            value={inputs.capitalAllowances || ''}
+            onChange={(val) => updateInput('capitalAllowances', parseFloat(val) || 0)}
             placeholder="e.g., 3000"
             hint="Equipment and vehicle allowances"
           />
@@ -448,14 +439,12 @@ const TaxNIEstimator = () => {
             <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
               <div className="flex items-center gap-2">
                 <Receipt className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-white">
-                  Additional Deductions & VAT
-                </span>
+                <span className="text-sm font-medium text-white">Additional Deductions & VAT</span>
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-white/80 transition-transform duration-200",
-                  showAdvanced && "rotate-180"
+                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  showAdvanced && 'rotate-180'
                 )}
               />
             </CollapsibleTrigger>
@@ -467,10 +456,8 @@ const TaxNIEstimator = () => {
                   unit="£"
                   type="text"
                   inputMode="decimal"
-                  value={inputs.pensionContributions || ""}
-                  onChange={(val) =>
-                    updateInput("pensionContributions", parseFloat(val) || 0)
-                  }
+                  value={inputs.pensionContributions || ''}
+                  onChange={(val) => updateInput('pensionContributions', parseFloat(val) || 0)}
                   placeholder="e.g., 4000"
                 />
 
@@ -479,10 +466,8 @@ const TaxNIEstimator = () => {
                   unit="£"
                   type="text"
                   inputMode="decimal"
-                  value={inputs.charitableDonations || ""}
-                  onChange={(val) =>
-                    updateInput("charitableDonations", parseFloat(val) || 0)
-                  }
+                  value={inputs.charitableDonations || ''}
+                  onChange={(val) => updateInput('charitableDonations', parseFloat(val) || 0)}
                   placeholder="e.g., 500"
                 />
               </div>
@@ -490,30 +475,28 @@ const TaxNIEstimator = () => {
               <div className="pt-3 border-t border-white/10">
                 <div className="flex items-center gap-2 mb-3">
                   <Percent className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm font-medium text-white">
-                    VAT Configuration
-                  </span>
+                  <span className="text-sm font-medium text-white">VAT Configuration</span>
                 </div>
 
                 <div className="flex gap-2 mb-3">
                   <button
-                    onClick={() => updateInput("vatRegistered", true)}
+                    onClick={() => updateInput('vatRegistered', true)}
                     className={cn(
-                      "flex-1 h-10 rounded-xl font-medium text-sm transition-all",
+                      'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
                       inputs.vatRegistered
-                        ? "bg-blue-500/20 border border-blue-500/30 text-blue-300"
-                        : "bg-white/5 border border-white/10 text-white"
+                        ? 'bg-blue-500/20 border border-blue-500/30 text-blue-300'
+                        : 'bg-white/5 border border-white/10 text-white'
                     )}
                   >
                     VAT Registered
                   </button>
                   <button
-                    onClick={() => updateInput("vatRegistered", false)}
+                    onClick={() => updateInput('vatRegistered', false)}
                     className={cn(
-                      "flex-1 h-10 rounded-xl font-medium text-sm transition-all",
+                      'flex-1 h-10 rounded-xl font-medium text-sm transition-all',
                       !inputs.vatRegistered
-                        ? "bg-blue-500/20 border border-blue-500/30 text-blue-300"
-                        : "bg-white/5 border border-white/10 text-white"
+                        ? 'bg-blue-500/20 border border-blue-500/30 text-blue-300'
+                        : 'bg-white/5 border border-white/10 text-white'
                     )}
                   >
                     Not Registered
@@ -526,8 +509,8 @@ const TaxNIEstimator = () => {
                     unit="£"
                     type="text"
                     inputMode="decimal"
-                    value={inputs.vatTurnover || ""}
-                    onChange={(val) => updateInput("vatTurnover", parseFloat(val) || 0)}
+                    value={inputs.vatTurnover || ''}
+                    onChange={(val) => updateInput('vatTurnover', parseFloat(val) || 0)}
                     placeholder="e.g., 65000"
                     hint="Annual VAT taxable sales"
                   />
@@ -539,16 +522,12 @@ const TaxNIEstimator = () => {
                   <input
                     type="checkbox"
                     checked={inputs.marriageAllowanceTransfer}
-                    onChange={(e) =>
-                      updateInput("marriageAllowanceTransfer", e.target.checked)
-                    }
+                    onChange={(e) => updateInput('marriageAllowanceTransfer', e.target.checked)}
                     className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
                   />
                   <div>
                     <span className="text-sm text-white/80">Marriage Allowance</span>
-                    <p className="text-xs text-white">
-                      Receiving unused allowance from spouse
-                    </p>
+                    <p className="text-xs text-white">Receiving unused allowance from spouse</p>
                   </div>
                 </label>
               </div>
@@ -561,8 +540,8 @@ const TaxNIEstimator = () => {
               onClick={calculateTax}
               disabled={!isValid}
               className={cn(
-                "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
-                isValid ? "text-black" : "bg-white/10 text-white/30 cursor-not-allowed"
+                'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
+                isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
               )}
               style={
                 isValid
@@ -595,16 +574,16 @@ const TaxNIEstimator = () => {
           <div className="space-y-4 animate-fade-in">
             {/* Tax Status */}
             {taxStatus && (
-              <div className={cn("flex items-center gap-3 p-4 rounded-xl border", taxStatus.bg)}>
+              <div className={cn('flex items-center gap-3 p-4 rounded-xl border', taxStatus.bg)}>
                 <div className={taxStatus.color}>
-                  {taxStatus.label === "Efficient" ? (
+                  {taxStatus.label === 'Efficient' ? (
                     <CheckCircle className="h-5 w-5" />
                   ) : (
                     <AlertCircle className="h-5 w-5" />
                   )}
                 </div>
                 <div>
-                  <span className={cn("font-medium", taxStatus.color)}>
+                  <span className={cn('font-medium', taxStatus.color)}>
                     {taxStatus.label} Tax Burden ({estimates.effectiveRate.toFixed(1)}%)
                   </span>
                   <p className="text-sm text-white">{taxStatus.message}</p>
@@ -685,9 +664,7 @@ const TaxNIEstimator = () => {
                   <div className="grid grid-cols-2 gap-3 text-center">
                     <div>
                       <div className="text-xs text-purple-400 mb-1">Annual VAT</div>
-                      <div className="text-white font-medium">
-                        {formatCurrency(estimates.vat)}
-                      </div>
+                      <div className="text-white font-medium">{formatCurrency(estimates.vat)}</div>
                     </div>
                     <div>
                       <div className="text-xs text-purple-400 mb-1">Quarterly VAT</div>
@@ -702,10 +679,7 @@ const TaxNIEstimator = () => {
 
             {/* Income Breakdown */}
             <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-              <div
-                className="calculator-card overflow-hidden"
-                style={{ borderColor: "#60a5fa15" }}
-              >
+              <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
                 <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                   <div className="flex items-center gap-3">
                     <Info className="h-4 w-4 text-blue-400" />
@@ -715,8 +689,8 @@ const TaxNIEstimator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 text-white/80 transition-transform duration-200",
-                      showGuidance && "rotate-180"
+                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      showGuidance && 'rotate-180'
                     )}
                   />
                 </CollapsibleTrigger>
@@ -725,9 +699,7 @@ const TaxNIEstimator = () => {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between text-white">
                       <span>Business Income:</span>
-                      <span className="text-white">
-                        {formatCurrency(inputs.annualIncome)}
-                      </span>
+                      <span className="text-white">{formatCurrency(inputs.annualIncome)}</span>
                     </div>
                     <div className="flex justify-between text-white">
                       <span>Business Expenses:</span>
@@ -743,9 +715,7 @@ const TaxNIEstimator = () => {
                     </div>
                     <div className="flex justify-between pt-2 border-t border-white/10 font-medium">
                       <span className="text-white">Gross Profit:</span>
-                      <span className="text-blue-400">
-                        {formatCurrency(estimates.grossProfit)}
-                      </span>
+                      <span className="text-blue-400">{formatCurrency(estimates.grossProfit)}</span>
                     </div>
                     <div className="flex justify-between text-white">
                       <span>Personal Allowance:</span>
@@ -756,10 +726,7 @@ const TaxNIEstimator = () => {
                     <div className="flex justify-between text-white">
                       <span>Pension & Donations:</span>
                       <span className="text-green-400">
-                        -
-                        {formatCurrency(
-                          inputs.pensionContributions + inputs.charitableDonations
-                        )}
+                        -{formatCurrency(inputs.pensionContributions + inputs.charitableDonations)}
                       </span>
                     </div>
                     <div className="flex justify-between pt-2 border-t border-white/10 font-medium">
@@ -777,10 +744,7 @@ const TaxNIEstimator = () => {
 
         {/* Quick Reference */}
         <Collapsible open={showReference} onOpenChange={setShowReference}>
-          <div
-            className="calculator-card overflow-hidden"
-            style={{ borderColor: "#fbbf2415" }}
-          >
+          <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
             <CollapsibleTrigger className="agent-collapsible-trigger w-full">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-4 w-4 text-amber-400" />
@@ -790,8 +754,8 @@ const TaxNIEstimator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 text-white/80 transition-transform duration-200",
-                  showReference && "rotate-180"
+                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  showReference && 'rotate-180'
                 )}
               />
             </CollapsibleTrigger>
@@ -818,7 +782,7 @@ const TaxNIEstimator = () => {
                     {TAX_RATES.class4UpperProfitsLimit.toLocaleString()})
                   </p>
                   <p className="text-amber-200/70">
-                    Above £{TAX_RATES.class4UpperProfitsLimit.toLocaleString()}:{" "}
+                    Above £{TAX_RATES.class4UpperProfitsLimit.toLocaleString()}:{' '}
                     {(TAX_RATES.class4HigherRate * 100).toFixed(0)}%
                   </p>
                 </div>
@@ -840,7 +804,7 @@ const TaxNIEstimator = () => {
         </Collapsible>
 
         {/* Tax Tips */}
-        <div className="calculator-card p-4" style={{ borderColor: "#22c55e20" }}>
+        <div className="calculator-card p-4" style={{ borderColor: '#22c55e20' }}>
           <div className="flex items-center gap-2 mb-3">
             <Lightbulb className="h-5 w-5 text-green-400" />
             <span className="text-sm font-medium text-green-300">Tax Planning Tips</span>

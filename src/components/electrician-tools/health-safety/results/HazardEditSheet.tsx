@@ -24,7 +24,7 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
   open,
   onOpenChange,
   onUpdate,
-  onDelete
+  onDelete,
 }) => {
   const [editedHazard, setEditedHazard] = useState(hazard.hazard || '');
   const [editedControlMeasure, setEditedControlMeasure] = useState(hazard.controlMeasure || '');
@@ -87,11 +87,13 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
         {/* Sticky Header */}
         <SheetHeader className="sticky top-0 bg-background z-10 pb-4 border-b border-primary/10">
           <SheetTitle className="text-lg font-bold text-foreground flex items-center gap-3">
-            <div className={cn(
-              "flex items-center justify-center w-11 h-11 rounded-full font-bold",
-              riskColors.bg,
-              riskColors.text
-            )}>
+            <div
+              className={cn(
+                'flex items-center justify-center w-11 h-11 rounded-full font-bold',
+                riskColors.bg,
+                riskColors.text
+              )}
+            >
               H{index + 1}
             </div>
             Edit Hazard
@@ -107,7 +109,10 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
             </label>
             <Input
               value={editedHazard}
-              onChange={(e) => { setEditedHazard(e.target.value); markChanged(); }}
+              onChange={(e) => {
+                setEditedHazard(e.target.value);
+                markChanged();
+              }}
               className="text-base min-h-[48px] touch-manipulation"
               placeholder="e.g., Electric shock from exposed terminals"
             />
@@ -121,7 +126,10 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
             </label>
             <Textarea
               value={editedControlMeasure}
-              onChange={(e) => { setEditedControlMeasure(e.target.value); markChanged(); }}
+              onChange={(e) => {
+                setEditedControlMeasure(e.target.value);
+                markChanged();
+              }}
               className="min-h-[150px] text-base touch-manipulation"
               placeholder="Describe control measures to mitigate this hazard..."
             />
@@ -136,7 +144,10 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
               </div>
               <Slider
                 value={[editedLikelihood]}
-                onValueChange={(v) => { setEditedLikelihood(v[0]); markChanged(); }}
+                onValueChange={(v) => {
+                  setEditedLikelihood(v[0]);
+                  markChanged();
+                }}
                 min={1}
                 max={5}
                 step={1}
@@ -158,7 +169,10 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
               </div>
               <Slider
                 value={[editedSeverity]}
-                onValueChange={(v) => { setEditedSeverity(v[0]); markChanged(); }}
+                onValueChange={(v) => {
+                  setEditedSeverity(v[0]);
+                  markChanged();
+                }}
                 min={1}
                 max={5}
                 step={1}
@@ -174,15 +188,23 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
             </div>
 
             {/* Risk Score Display */}
-            <div className={cn(
-              "p-4 rounded-lg border-2 text-center",
-              riskColors.border,
-              riskColors.bg
-            )}>
+            <div
+              className={cn(
+                'p-4 rounded-lg border-2 text-center',
+                riskColors.border,
+                riskColors.bg
+              )}
+            >
               <div className="text-xs font-semibold uppercase mb-1 opacity-80">Risk Score</div>
-              <div className={cn("text-3xl font-bold", riskColors.text)}>{riskScore}</div>
-              <div className={cn("text-sm font-medium mt-1", riskColors.text)}>
-                {riskScore <= 4 ? 'Low Risk' : riskScore <= 9 ? 'Medium Risk' : riskScore <= 16 ? 'High Risk' : 'Very High Risk'}
+              <div className={cn('text-3xl font-bold', riskColors.text)}>{riskScore}</div>
+              <div className={cn('text-sm font-medium mt-1', riskColors.text)}>
+                {riskScore <= 4
+                  ? 'Low Risk'
+                  : riskScore <= 9
+                    ? 'Medium Risk'
+                    : riskScore <= 16
+                      ? 'High Risk'
+                      : 'Very High Risk'}
               </div>
             </div>
           </div>
@@ -195,7 +217,10 @@ export const HazardEditSheet: React.FC<HazardEditSheetProps> = ({
             </label>
             <Input
               value={editedRegulation}
-              onChange={(e) => { setEditedRegulation(e.target.value); markChanged(); }}
+              onChange={(e) => {
+                setEditedRegulation(e.target.value);
+                markChanged();
+              }}
               className="min-h-[48px] touch-manipulation"
               placeholder="e.g., BS 7671 Section 537"
             />

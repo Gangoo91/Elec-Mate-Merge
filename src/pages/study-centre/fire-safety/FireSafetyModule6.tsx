@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by fire safety awareness assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by fire safety awareness assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Know the Regulatory Reform Order",
+    title: 'Know the Regulatory Reform Order',
     description:
-      "RRFSO 2005 structure, articles, responsible person duties, and relationship to other fire safety legislation.",
+      'RRFSO 2005 structure, articles, responsible person duties, and relationship to other fire safety legislation.',
   },
   {
-    title: "Learn the Fire Classes",
+    title: 'Learn the Fire Classes',
     description:
-      "Know all 6 classes (A-F), examples of each, and which extinguisher types are suitable (including which ones must NEVER be used on certain classes).",
+      'Know all 6 classes (A-F), examples of each, and which extinguisher types are suitable (including which ones must NEVER be used on certain classes).',
   },
   {
-    title: "Understand Detection Standards",
+    title: 'Understand Detection Standards',
     description:
-      "BS 5839 Part 1 category system (L1-L5, P1-P2), detector types, and where each is appropriate.",
+      'BS 5839 Part 1 category system (L1-L5, P1-P2), detector types, and where each is appropriate.',
   },
   {
-    title: "Master Evacuation Strategies",
+    title: 'Master Evacuation Strategies',
     description:
-      "Simultaneous, phased, progressive horizontal, and defend-in-place, PEEPs, refuges, and role of fire marshals.",
+      'Simultaneous, phased, progressive horizontal, and defend-in-place, PEEPs, refuges, and role of fire marshals.',
   },
   {
-    title: "Know Your Extinguishers",
+    title: 'Know Your Extinguishers',
     description:
-      "Colour codes (BS EN 3), operating procedures (PASS technique), placement rules, and maintenance requirements.",
+      'Colour codes (BS EN 3), operating procedures (PASS technique), placement rules, and maintenance requirements.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function FireSafetyModule6() {
   useSEO({
-    title: "Fire Safety & Fire Marshal Mock Exam | Module 6",
+    title: 'Fire Safety & Fire Marshal Mock Exam | Module 6',
     description:
-      "Test your fire safety and fire marshal knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your fire safety and fire marshal knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,12 +108,11 @@ export default function FireSafetyModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Put your fire safety and fire marshal knowledge to the test under timed exam conditions.
-              Questions are drawn from a 200-question bank covering all five content modules.
+              Put your fire safety and fire marshal knowledge to the test under timed exam
+              conditions. Questions are drawn from a 200-question bank covering all five content
+              modules.
             </p>
           </div>
 
@@ -115,7 +124,9 @@ export default function FireSafetyModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real fire safety awareness assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real fire safety awareness assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +141,7 @@ export default function FireSafetyModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +157,15 @@ export default function FireSafetyModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Understanding Fire", count: 40 },
-                  { module: "Module 2", name: "Fire Safety Legislation", count: 40 },
-                  { module: "Module 3", name: "Fire Prevention & Detection", count: 40 },
-                  { module: "Module 4", name: "Fire Marshal Duties & Evacuation", count: 40 },
-                  { module: "Module 5", name: "Firefighting Equipment & Incident Response", count: 40 },
+                  { module: 'Module 1', name: 'Understanding Fire', count: 40 },
+                  { module: 'Module 2', name: 'Fire Safety Legislation', count: 40 },
+                  { module: 'Module 3', name: 'Fire Prevention & Detection', count: 40 },
+                  { module: 'Module 4', name: 'Fire Marshal Duties & Evacuation', count: 40 },
+                  {
+                    module: 'Module 5',
+                    name: 'Firefighting Equipment & Incident Response',
+                    count: 40,
+                  },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +217,7 @@ export default function FireSafetyModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

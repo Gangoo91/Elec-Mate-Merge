@@ -1,6 +1,5 @@
-
-import React from "react";
-import { HardHat } from "lucide-react";
+import React from 'react';
+import { HardHat } from 'lucide-react';
 
 const GeneralSafetyPPE = () => {
   return (
@@ -23,7 +22,9 @@ const GeneralSafetyPPE = () => {
             </li>
             <li>
               <span className="font-medium">Face shields</span>
-              <p className="text-sm mt-1">For protection against electrical flash, flying particles</p>
+              <p className="text-sm mt-1">
+                For protection against electrical flash, flying particles
+              </p>
             </li>
           </ul>
         </div>

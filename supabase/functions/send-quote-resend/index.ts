@@ -1,11 +1,12 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
-import { captureException } from "../_shared/sentry.ts";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { Resend } from 'npm:resend@2.0.0';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface QuoteEmailRequest {
@@ -74,7 +75,7 @@ function formatDate(dateInput: any): string {
     return date.toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   } catch (e) {
     console.warn('⚠️ Date format failed:', e);
@@ -99,7 +100,7 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 1: Validate environment
     // ========================================================================
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
 
@@ -130,7 +131,10 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     const jwt = authHeader.replace('Bearer ', '').trim();
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(jwt);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
       console.error('❌ User authentication error:', userError);
@@ -192,7 +196,9 @@ const handler = async (req: Request): Promise<Response> => {
     if (!isValidEmail(clientEmail)) {
       console.error('❌ Invalid client email:', clientEmail);
       console.error('❌ Client data:', JSON.stringify(clientData).substring(0, 300));
-      throw new Error(`Invalid client email address: "${clientEmail || 'missing'}". Please update the quote with a valid email.`);
+      throw new Error(
+        `Invalid client email address: "${clientEmail || 'missing'}". Please update the quote with a valid email.`
+      );
     }
 
     console.log(`✅ Client: ${clientName} <${clientEmail}>`);
@@ -229,14 +235,12 @@ const handler = async (req: Request): Promise<Response> => {
           const expiryDate = new Date();
           expiryDate.setDate(expiryDate.getDate() + 30);
 
-          await supabaseClient
-            .from('quote_views')
-            .insert({
-              quote_id: quoteId,
-              public_token: publicToken,
-              expires_at: expiryDate.toISOString(),
-              is_active: true
-            });
+          await supabaseClient.from('quote_views').insert({
+            quote_id: quoteId,
+            public_token: publicToken,
+            expires_at: expiryDate.toISOString(),
+            is_active: true,
+          });
 
           await supabaseClient
             .from('quotes')
@@ -269,22 +273,19 @@ const handler = async (req: Request): Promise<Response> => {
     const regeneratePdf = async (): Promise<string | null> => {
       console.log('🔄 Regenerating PDF...');
       try {
-        const pdfResponse = await fetch(
-          `${supabaseUrl}/functions/v1/generate-pdf-monkey`,
-          {
-            method: 'POST',
-            headers: {
-              'Authorization': authHeader,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              quote: quote,
-              companyProfile: companyProfile,
-              invoice_mode: false,
-              force_regenerate: true,
-            }),
-          }
-        );
+        const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
+          method: 'POST',
+          headers: {
+            Authorization: authHeader,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            quote: quote,
+            companyProfile: companyProfile,
+            invoice_mode: false,
+            force_regenerate: true,
+          }),
+        });
 
         if (pdfResponse.ok) {
           const pdfData = await pdfResponse.json();
@@ -449,7 +450,9 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
 
           <!-- PDF Attachment Notice -->
-          ${pdfAttachmentSuccess ? `
+          ${
+            pdfAttachmentSuccess
+              ? `
           <tr>
             <td style="padding: 0 24px 24px;">
               <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;">
@@ -460,7 +463,9 @@ const handler = async (req: Request): Promise<Response> => {
               </p>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
 
           <!-- Accept/Reject Buttons -->
           <tr>
@@ -488,7 +493,9 @@ const handler = async (req: Request): Promise<Response> => {
             </td>
           </tr>
 
-          ${jobDescription ? `
+          ${
+            jobDescription
+              ? `
           <!-- Job Description -->
           <tr>
             <td style="padding: 0 24px 24px;">
@@ -502,7 +509,9 @@ const handler = async (req: Request): Promise<Response> => {
               </table>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
 
           <!-- Footer -->
           <tr>
@@ -562,10 +571,12 @@ const handler = async (req: Request): Promise<Response> => {
     };
 
     if (pdfAttachmentSuccess && pdfBase64) {
-      emailOptions.attachments = [{
-        filename: `Quote_${quoteNumber}.pdf`,
-        content: pdfBase64,
-      }];
+      emailOptions.attachments = [
+        {
+          filename: `Quote_${quoteNumber}.pdf`,
+          content: pdfBase64,
+        },
+      ];
       console.log('📎 PDF attached');
     }
 
@@ -587,7 +598,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const quoteUpdateData: any = {
       status: 'sent',
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
 
     // Set first_sent_at only on first send (for automated follow-up tracking)
@@ -596,33 +607,28 @@ const handler = async (req: Request): Promise<Response> => {
       console.log('📅 First send - setting first_sent_at for follow-up tracking');
     }
 
-    await supabaseClient
-      .from('quotes')
-      .update(quoteUpdateData)
-      .eq('id', quoteId);
+    await supabaseClient.from('quotes').update(quoteUpdateData).eq('id', quoteId);
 
     // Update quote_views with email_sent_at for tracking
     await supabaseClient
       .from('quote_views')
       .update({
-        email_sent_at: new Date().toISOString()
+        email_sent_at: new Date().toISOString(),
       })
       .eq('quote_id', quoteId)
       .eq('public_token', publicToken);
 
     // Record email sent event for analytics
     try {
-      await supabaseClient
-        .from('quote_email_events')
-        .insert({
-          quote_id: quoteId,
-          event_type: 'sent',
-          event_data: {
-            type: 'initial',
-            pdf_attached: pdfAttachmentSuccess,
-            email_id: emailData?.id,
-          },
-        });
+      await supabaseClient.from('quote_email_events').insert({
+        quote_id: quoteId,
+        event_type: 'sent',
+        event_data: {
+          type: 'initial',
+          pdf_attached: pdfAttachmentSuccess,
+          email_id: emailData?.id,
+        },
+      });
     } catch (eventError) {
       console.warn('⚠️ Failed to record email event (non-blocking):', eventError);
     }
@@ -640,7 +646,6 @@ const handler = async (req: Request): Promise<Response> => {
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);
@@ -650,7 +655,7 @@ const handler = async (req: Request): Promise<Response> => {
       functionName: 'send-quote-resend',
       requestUrl: req.url,
       requestMethod: req.method,
-      extra: { duration, hasResendKey: !!Deno.env.get("RESEND_API_KEY") }
+      extra: { duration, hasResendKey: !!Deno.env.get('RESEND_API_KEY') },
     });
 
     return new Response(

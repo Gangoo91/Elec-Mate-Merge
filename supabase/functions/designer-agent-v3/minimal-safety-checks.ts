@@ -42,7 +42,7 @@ export class MinimalSafetyChecks {
   private enforceRingFinal32A(circuit: DesignedCircuit, index: number): DesignedCircuit {
     const isRingFinal = this.detectRingFinal(circuit);
     const isRadial32A = this.detectRadial32A(circuit);
-    
+
     if (isRingFinal) {
       const needsFix = circuit.protectionDevice.rating !== 32 || circuit.cableSize !== 2.5;
 
@@ -53,8 +53,8 @@ export class MinimalSafetyChecks {
         const cpcSize = isTwinEarth ? 1.5 : 2.5; // T&E reduced, singles equal
 
         // Fix cable type string to show consistent 2.5mm² for ring finals
-        const correctedCableType = circuit.cableType?.replace(/\d+(\.\d+)?mm²/, '2.5mm²') 
-          || '2.5mm² twin and earth';
+        const correctedCableType =
+          circuit.cableType?.replace(/\d+(\.\d+)?mm²/, '2.5mm²') || '2.5mm² twin and earth';
 
         this.logger.info('Ring final safety check applied', {
           circuit: circuit.name,
@@ -64,13 +64,13 @@ export class MinimalSafetyChecks {
           before: {
             rating: circuit.protectionDevice.rating,
             cable: circuit.cableSize,
-            cpc: circuit.cpcSize
+            cpc: circuit.cpcSize,
           },
           after: {
             rating: 32,
             cable: 2.5,
-            cpc: cpcSize
-          }
+            cpc: cpcSize,
+          },
         });
 
         return {
@@ -78,7 +78,7 @@ export class MinimalSafetyChecks {
           protectionDevice: {
             ...circuit.protectionDevice,
             rating: 32,
-            type: 'RCBO' // Sockets need RCD
+            type: 'RCBO', // Sockets need RCD
           },
           cableSize: 2.5,
           cpcSize: cpcSize,
@@ -87,27 +87,27 @@ export class MinimalSafetyChecks {
           justifications: {
             ...circuit.justifications,
             safetyCheckApplied: `Ring final: 32A + 2.5mm² live + ${cpcSize}mm² CPC per BS 7671 Appendix 15`,
-            cableSize: `Ring final circuit: 2.5mm² cable per BS 7671 Appendix 15 (${correctedCableType})`
-          }
+            cableSize: `Ring final circuit: 2.5mm² cable per BS 7671 Appendix 15 (${correctedCableType})`,
+          },
         };
       }
     }
-    
+
     if (isRadial32A) {
       const needsFix = circuit.cableSize < 4.0;
-      
+
       if (needsFix) {
         this.logger.info('Radial 32A safety check applied', {
           circuit: circuit.name,
           index,
           before: {
             rating: circuit.protectionDevice.rating,
-            cable: circuit.cableSize
+            cable: circuit.cableSize,
           },
           after: {
             rating: 32,
-            cable: 4.0
-          }
+            cable: 4.0,
+          },
         });
 
         return {
@@ -116,8 +116,8 @@ export class MinimalSafetyChecks {
           cpcSize: 4.0, // Equal for SWA/singles, or 2.5 for T&E
           justifications: {
             ...circuit.justifications,
-            safetyCheckApplied: 'Radial 32A: 4mm² minimum per BS 7671 Table 4D1A'
-          }
+            safetyCheckApplied: 'Radial 32A: 4mm² minimum per BS 7671 Table 4D1A',
+          },
         };
       }
     }
@@ -129,32 +129,33 @@ export class MinimalSafetyChecks {
    * Socket circuits MUST have RCD/RCBO protection
    */
   private enforceSocketRCD(circuit: DesignedCircuit, index: number): DesignedCircuit {
-    const isSocket = circuit.loadType?.toLowerCase().includes('socket') ||
-                     circuit.name?.toLowerCase().includes('socket');
+    const isSocket =
+      circuit.loadType?.toLowerCase().includes('socket') ||
+      circuit.name?.toLowerCase().includes('socket');
 
     if (!isSocket) return circuit;
 
-    const hasRCD = circuit.protectionDevice.type === 'RCBO' || 
-                   circuit.protectionDevice.type === 'RCD+MCB';
+    const hasRCD =
+      circuit.protectionDevice.type === 'RCBO' || circuit.protectionDevice.type === 'RCD+MCB';
 
     if (!hasRCD) {
       this.logger.info('Socket RCD protection enforced', {
         circuit: circuit.name,
         index,
         before: circuit.protectionDevice.type,
-        after: 'RCBO'
+        after: 'RCBO',
       });
 
       return {
         ...circuit,
         protectionDevice: {
           ...circuit.protectionDevice,
-          type: 'RCBO'
+          type: 'RCBO',
         },
         justifications: {
           ...circuit.justifications,
-          safetyCheckApplied: 'Socket circuit: RCBO protection per BS 7671 Reg 411.3.3'
-        }
+          safetyCheckApplied: 'Socket circuit: RCBO protection per BS 7671 Reg 411.3.3',
+        },
       };
     }
 
@@ -169,46 +170,66 @@ export class MinimalSafetyChecks {
     if (circuit.circuitTopology === 'ring') {
       return true;
     }
-    
+
     // PRIORITY 0: HIGH-POWER LOADS (>32A/7.36kW) ARE NEVER RING CIRCUITS
     // Ring circuits have 32A max protection - anything above MUST be radial
     const loadPower = circuit.loadPower || 0;
-    const Ib = circuit.calculations?.Ib || (loadPower / 230);
+    const Ib = circuit.calculations?.Ib || loadPower / 230;
     if (loadPower > 7360 || Ib > 32) {
       this.logger.info('High-power load - NOT a ring circuit', {
         circuit: circuit.name,
         loadPower,
         Ib: Ib.toFixed(1),
-        reason: 'Exceeds 32A ring circuit design limit'
+        reason: 'Exceeds 32A ring circuit design limit',
       });
       return false;
     }
-    
+
     // PRIORITY 0.5: DEDICATED INDUSTRIAL EQUIPMENT - NEVER RING
     const name = circuit.name?.toLowerCase() || '';
     const loadType = circuit.loadType?.toLowerCase() || '';
     const industrialKeywords = [
-      'welding', 'welder', 'weld', 'motor', 'machine', 'machinery',
-      'compressor', 'pump', 'fan', 'hvac', 'chiller', 'conveyor',
-      'lathe', 'drill', 'press', 'oven', 'kiln', 'furnace',
-      'charger', 'ev', 'steam', 'generator', 'autoclave'
+      'welding',
+      'welder',
+      'weld',
+      'motor',
+      'machine',
+      'machinery',
+      'compressor',
+      'pump',
+      'fan',
+      'hvac',
+      'chiller',
+      'conveyor',
+      'lathe',
+      'drill',
+      'press',
+      'oven',
+      'kiln',
+      'furnace',
+      'charger',
+      'ev',
+      'steam',
+      'generator',
+      'autoclave',
     ];
-    
-    if (industrialKeywords.some(kw => name.includes(kw) || loadType.includes(kw))) {
+
+    if (industrialKeywords.some((kw) => name.includes(kw) || loadType.includes(kw))) {
       this.logger.info('Industrial equipment detected - NOT a ring circuit', {
         circuit: circuit.name,
-        reason: 'Dedicated industrial equipment must be radial'
+        reason: 'Dedicated industrial equipment must be radial',
       });
       return false;
     }
-    
+
     // Priority 2: Check justifications for ring markers
-    const hasRingJustification = circuit.justifications?.cableSize?.toLowerCase().includes('ring') ||
-                                  circuit.justifications?.protection?.toLowerCase().includes('ring');
-    
+    const hasRingJustification =
+      circuit.justifications?.cableSize?.toLowerCase().includes('ring') ||
+      circuit.justifications?.protection?.toLowerCase().includes('ring');
+
     // Priority 3: Check circuit name/load type for explicit "ring" keyword
     const byKeyword = name.includes('ring') || loadType.includes('ring');
-    
+
     return hasRingJustification || byKeyword;
   }
 
@@ -216,13 +237,14 @@ export class MinimalSafetyChecks {
    * Detect radial 32A circuits that need 4mm² minimum
    */
   private detectRadial32A(circuit: DesignedCircuit): boolean {
-    const isSocket = circuit.loadType?.toLowerCase().includes('socket') ||
-                     circuit.name?.toLowerCase().includes('socket');
-    
+    const isSocket =
+      circuit.loadType?.toLowerCase().includes('socket') ||
+      circuit.name?.toLowerCase().includes('socket');
+
     const is32A = circuit.protectionDevice.rating === 32;
-    
+
     const isNotRing = !this.detectRingFinal(circuit);
-    
+
     return isSocket && is32A && isNotRing;
   }
 
@@ -232,10 +254,7 @@ export class MinimalSafetyChecks {
    */
   private enforceFireCircuitCables(circuit: DesignedCircuit, index: number): DesignedCircuit {
     // Detect if this is a fire/emergency circuit
-    const circuitType = detectFireEmergencyCircuit(
-      circuit.loadType || '',
-      circuit.name || ''
-    );
+    const circuitType = detectFireEmergencyCircuit(circuit.loadType || '', circuit.name || '');
 
     if (!circuitType) {
       return circuit; // Not a fire circuit, no enforcement needed
@@ -243,9 +262,8 @@ export class MinimalSafetyChecks {
 
     // Check if current cable is NOT fire-rated
     const cableType = circuit.cableType?.toLowerCase() || '';
-    const isFireRated = cableType.includes('fp200') || 
-                        cableType.includes('fp400') || 
-                        cableType.includes('micc');
+    const isFireRated =
+      cableType.includes('fp200') || cableType.includes('fp400') || cableType.includes('micc');
 
     if (isFireRated) {
       return circuit; // Already using fire-rated cable, all good
@@ -260,11 +278,16 @@ export class MinimalSafetyChecks {
     const cpcSize = cableSize >= 2.5 ? cableSize : 1.5;
 
     // Map circuit type to BS reference
-    const bsReference = circuitType === 'emergency-lighting' ? 'BS 5266-1' :
-                        circuitType === 'fire-alarm' ? 'BS 5839-1' :
-                        circuitType === 'smoke-detection' ? 'BS 5839-1' :
-                        circuitType === 'sprinkler-system' ? 'BS EN 12845' :
-                        'BS 7671 Reg 560.8';
+    const bsReference =
+      circuitType === 'emergency-lighting'
+        ? 'BS 5266-1'
+        : circuitType === 'fire-alarm'
+          ? 'BS 5839-1'
+          : circuitType === 'smoke-detection'
+            ? 'BS 5839-1'
+            : circuitType === 'sprinkler-system'
+              ? 'BS EN 12845'
+              : 'BS 7671 Reg 560.8';
 
     this.logger.info('Fire circuit cable enforcement applied', {
       circuit: circuit.name,
@@ -273,14 +296,14 @@ export class MinimalSafetyChecks {
       before: {
         cableType: circuit.cableType,
         cable: circuit.cableSize,
-        cpc: circuit.cpcSize
+        cpc: circuit.cpcSize,
       },
       after: {
         cableType: correctedCableType,
         cable: cableSize,
-        cpc: cpcSize
+        cpc: cpcSize,
       },
-      standard: bsReference
+      standard: bsReference,
     });
 
     return {
@@ -292,8 +315,8 @@ export class MinimalSafetyChecks {
       justifications: {
         ...circuit.justifications,
         safetyCheckApplied: `Fire/emergency circuit: ${correctedCableType} per ${bsReference} - fire-rated cable mandatory for circuit integrity during fire conditions`,
-        cableType: `${correctedCableType} - MANDATORY for ${circuitType.replace(/-/g, ' ')} circuits to maintain function during fire (${bsReference})`
-      }
+        cableType: `${correctedCableType} - MANDATORY for ${circuitType.replace(/-/g, ' ')} circuits to maintain function during fire (${bsReference})`,
+      },
     };
   }
 }

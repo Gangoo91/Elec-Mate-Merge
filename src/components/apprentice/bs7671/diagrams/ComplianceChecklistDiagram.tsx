@@ -1,5 +1,4 @@
-
-import { CheckSquare, AlertCircle, FileCheck, Users } from "lucide-react";
+import { CheckSquare, AlertCircle, FileCheck, Users } from 'lucide-react';
 
 interface ComplianceChecklistDiagramProps {
   installationType?: string;
@@ -9,53 +8,53 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
   const getComplianceCategories = () => {
     return [
       {
-        category: "Design Compliance",
+        category: 'Design Compliance',
         items: [
-          "Installation method selection appropriate for environment",
-          "Cable sizing calculations verified against load requirements",
-          "Protective device discrimination and selectivity confirmed",
-          "Voltage drop calculations within permitted limits",
-          "Short circuit and earth fault calculations completed"
+          'Installation method selection appropriate for environment',
+          'Cable sizing calculations verified against load requirements',
+          'Protective device discrimination and selectivity confirmed',
+          'Voltage drop calculations within permitted limits',
+          'Short circuit and earth fault calculations completed',
         ],
-        regulation: "BS 7671 Chapter 43 & 52",
-        icon: "📐"
+        regulation: 'BS 7671 Chapter 43 & 52',
+        icon: '📐',
       },
       {
-        category: "Protection Requirements",
+        category: 'Protection Requirements',
         items: [
-          "Automatic disconnection of supply provisions verified",
-          "Additional protection by RCD where required",
-          "Protection against overcurrent correctly applied",
-          "Protection against overvoltage where necessary",
-          "Isolation and switching arrangements adequate"
+          'Automatic disconnection of supply provisions verified',
+          'Additional protection by RCD where required',
+          'Protection against overcurrent correctly applied',
+          'Protection against overvoltage where necessary',
+          'Isolation and switching arrangements adequate',
         ],
-        regulation: "BS 7671 Chapter 41 & 46",
-        icon: "🛡️"
+        regulation: 'BS 7671 Chapter 41 & 46',
+        icon: '🛡️',
       },
       {
-        category: "Special Location Requirements",
+        category: 'Special Location Requirements',
         items: [
-          "Bathroom zones and protection requirements",
-          "Kitchen and wet area considerations",
-          "Swimming pool and fountain installations",
-          "Caravan, motor caravan and marina installations",
-          "Medical location requirements where applicable"
+          'Bathroom zones and protection requirements',
+          'Kitchen and wet area considerations',
+          'Swimming pool and fountain installations',
+          'Caravan, motor caravan and marina installations',
+          'Medical location requirements where applicable',
         ],
-        regulation: "BS 7671 Part 7",
-        icon: "⚠️"
+        regulation: 'BS 7671 Part 7',
+        icon: '⚠️',
       },
       {
-        category: "Installation Methods",
+        category: 'Installation Methods',
         items: [
-          "Cable installation methods comply with manufacturer instructions",
-          "Supports and fixings at correct intervals",
-          "Protection against mechanical damage adequate",
-          "Segregation of circuits where required",
-          "Accessibility for inspection and maintenance"
+          'Cable installation methods comply with manufacturer instructions',
+          'Supports and fixings at correct intervals',
+          'Protection against mechanical damage adequate',
+          'Segregation of circuits where required',
+          'Accessibility for inspection and maintenance',
         ],
-        regulation: "BS 7671 Chapter 52",
-        icon: "🔧"
-      }
+        regulation: 'BS 7671 Chapter 52',
+        icon: '🔧',
+      },
     ];
   };
 
@@ -63,9 +62,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
 
   return (
     <div className="space-y-6">
-      <div className="text-sm text-indigo-200 mb-4">
-        BS 7671 Compliance Verification Checklist
-      </div>
+      <div className="text-sm text-indigo-200 mb-4">BS 7671 Compliance Verification Checklist</div>
 
       {/* Compliance Overview */}
       <div className="bg-green-600/20 p-4 rounded border border-green-500/30">
@@ -74,8 +71,9 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
           <h4 className="font-medium text-green-200">Regulation 610.3 - Inspection Requirements</h4>
         </div>
         <p className="text-xs text-green-100">
-          "The inspection shall be made to verify that the installed electrical equipment is in accordance with BS 7671, 
-          is not visibly damaged or defective so as to impair safety, and is correctly selected and erected."
+          "The inspection shall be made to verify that the installed electrical equipment is in
+          accordance with BS 7671, is not visibly damaged or defective so as to impair safety, and
+          is correctly selected and erected."
         </p>
       </div>
 

@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface SafetyResource {
   id: string;
@@ -22,16 +22,16 @@ export interface SafetyResource {
 
 export function useSafetyResources(category?: string) {
   return useQuery({
-    queryKey: ["safety-resources", category],
+    queryKey: ['safety-resources', category],
     queryFn: async (): Promise<SafetyResource[]> => {
       let query = supabase
-        .from("safety_resources")
-        .select("*")
-        .eq("is_active", true)
-        .order("date_published", { ascending: false });
+        .from('safety_resources')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_published', { ascending: false });
 
       if (category) {
-        query = query.eq("category", category);
+        query = query.eq('category', category);
       }
 
       const { data, error } = await query;

@@ -13,7 +13,7 @@ export const FireSafetyIntegrationQuiz = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <SingleQuestionQuiz 
+        <SingleQuestionQuiz
           questions={emergencyLightingModule6Section2QuizData}
           title="Test your knowledge of fire safety regulations and emergency lighting integration"
         />

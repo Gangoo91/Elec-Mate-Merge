@@ -26,18 +26,27 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'health-safety-agent' });
 
   try {
-    const { messages, currentDesign, context, jobScale = 'commercial', incomingContext, conversationSummary, previousAgentOutputs, requestSuggestions } = await req.json() as HealthSafetyAgentRequest;
+    const {
+      messages,
+      currentDesign,
+      context,
+      jobScale = 'commercial',
+      incomingContext,
+      conversationSummary,
+      previousAgentOutputs,
+      requestSuggestions,
+    } = (await req.json()) as HealthSafetyAgentRequest;
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
     if (!lovableApiKey) {
       throw new ValidationError('LOVABLE_API_KEY not configured');
     }
 
-    logger.info('Health & Safety Agent analyzing work', { 
-      jobScale, 
+    logger.info('Health & Safety Agent analyzing work', {
+      jobScale,
       messageCount: messages?.length,
       hasIncomingContext: !!incomingContext,
-      requestSuggestions
+      requestSuggestions,
     });
 
     // Use incoming context or start fresh
@@ -55,11 +64,11 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     // Extract context from previous agents
     const agentOutputs = previousAgentOutputs || context?.previousAgentOutputs || [];
     const designerOutput = agentOutputs.find((a: any) => a.agent === 'designer');
-    
+
     // Prepend conversation context if available
     let contextPrefix = '';
     if (conversationSummary) {
@@ -69,78 +78,83 @@ serve(async (req) => {
       }
     }
     if (agentOutputs.length > 0) {
-      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs.map((a: any) => 
-        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
-      ).join('\n\n')}\n`;
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs
+        .map((a: any) => `[${a.agent}]: ${a.response?.substring(0, 200)}...`)
+        .join('\n\n')}\n`;
     }
-    const hasDesignerCircuitData = designerOutput && (
-      designerOutput.response?.includes('Cable:') || 
-      designerOutput.response?.includes('Protection:') ||
-      designerOutput.response?.includes('circuits')
-    );
-    
+    const hasDesignerCircuitData =
+      designerOutput &&
+      (designerOutput.response?.includes('Cable:') ||
+        designerOutput.response?.includes('Protection:') ||
+        designerOutput.response?.includes('circuits'));
+
     // Detect scale for filtering
     const scaleMap: { [key: string]: string } = {
-      'domestic': 'domestic',
-      'commercial': 'commercial',
-      'industrial': 'industrial'
+      domestic: 'domestic',
+      commercial: 'commercial',
+      industrial: 'industrial',
     };
     const scaleFilter = scaleMap[jobScale] || 'domestic';
-    
+
     let ragContext = ''; // Initialize empty for graceful degradation
-    
+
     // Skip RAG if Designer provided complete circuit specification
     if (hasDesignerCircuitData) {
-      logger.info('⏭️ Skipping H&S RAG - using Designer circuit data', { 
-        reason: 'Complete circuit spec available from Designer'
+      logger.info('⏭️ Skipping H&S RAG - using Designer circuit data', {
+        reason: 'Complete circuit spec available from Designer',
       });
       console.log('⚡ Fast-track: Using Designer circuit data (no H&S RAG needed)');
     } else {
       const ragQuery = `${workType} electrical work hazards safety risks controls PPE ACOP CDM EWR HASAWA`;
       console.log(`🔍 RAG: Searching H&S knowledge (scale: ${scaleFilter}) for: ${ragQuery}`);
-      
+
       // Check if embedding is already cached
-      const cachedEmbedding = agentContext?.embeddingCache?.query === ragQuery ? agentContext.embeddingCache.embedding : null;
-      
+      const cachedEmbedding =
+        agentContext?.embeddingCache?.query === ragQuery
+          ? agentContext.embeddingCache.embedding
+          : null;
+
       let queryEmbedding: number[];
-      
+
       if (cachedEmbedding) {
         queryEmbedding = cachedEmbedding;
-        logger.info('⚡ Using cached embedding', { cacheAge: Date.now() - (agentContext?.embeddingCache?.generatedAt || 0) });
+        logger.info('⚡ Using cached embedding', {
+          cacheAge: Date.now() - (agentContext?.embeddingCache?.generatedAt || 0),
+        });
       } else {
         // Generate embedding for RAG query using Lovable AI with retry + timeout
-        const embeddingResponse = await logger.time(
-        'Lovable AI embedding generation',
-        () => withRetry(
-          () => withTimeout(
-            fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${lovableApiKey}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                model: 'text-embedding-3-small',
-                input: ragQuery,
-              }),
-            }),
-            Timeouts.STANDARD,
-            'Lovable AI embedding generation'
-          ),
-          RetryPresets.STANDARD
-        )
-      );
+        const embeddingResponse = await logger.time('Lovable AI embedding generation', () =>
+          withRetry(
+            () =>
+              withTimeout(
+                fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+                  method: 'POST',
+                  headers: {
+                    Authorization: `Bearer ${lovableApiKey}`,
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    model: 'text-embedding-3-small',
+                    input: ragQuery,
+                  }),
+                }),
+                Timeouts.STANDARD,
+                'Lovable AI embedding generation'
+              ),
+            RetryPresets.STANDARD
+          )
+        );
 
         if (embeddingResponse.ok) {
           const embeddingData = await embeddingResponse.json();
           queryEmbedding = embeddingData.data[0].embedding;
-          
+
           // Cache for next agent
           if (agentContext) {
             agentContext.embeddingCache = {
               query: ragQuery,
               embedding: queryEmbedding,
-              generatedAt: Date.now()
+              generatedAt: Date.now(),
             };
           }
           logger.debug('Embedding generated and cached');
@@ -153,31 +167,33 @@ serve(async (req) => {
 
       // Only use RAG if we have an embedding
       if (queryEmbedding && queryEmbedding.length > 0) {
-
         // OPTIMIZED: Query RAG with scale filter and reduced count
         const { data: ragResults, error: ragError } = await logger.time(
           'Health & Safety vector search',
-          () => withTimeout(
-            supabase.rpc('search_health_safety', {
-              query_embedding: queryEmbedding,
-              scale_filter: scaleFilter, // NEW: Filter by scale
-              match_threshold: 0.75,
-              match_count: 3 // Reduced from 5
-            }),
-            Timeouts.STANDARD,
-            'Health & Safety vector search'
-          )
+          () =>
+            withTimeout(
+              supabase.rpc('search_health_safety', {
+                query_embedding: queryEmbedding,
+                scale_filter: scaleFilter, // NEW: Filter by scale
+                match_threshold: 0.75,
+                match_count: 3, // Reduced from 5
+              }),
+              Timeouts.STANDARD,
+              'Health & Safety vector search'
+            )
         );
 
         if (!ragError && ragResults && ragResults.length > 0) {
           ragContext = ragResults
-            .map((item: any, idx: number) => 
-              `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
-            ).join('\n\n');
-          logger.info('📚 H&S RAG Performance', { 
+            .map(
+              (item: any, idx: number) =>
+                `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
+            )
+            .join('\n\n');
+          logger.info('📚 H&S RAG Performance', {
             chunks: ragResults.length,
             sizeKB: Math.round(ragContext.length / 1024),
-            scale: scaleFilter
+            scale: scaleFilter,
           });
         } else {
           logger.warn('No relevant H&S knowledge found in database');
@@ -187,11 +203,12 @@ serve(async (req) => {
     }
 
     // Use previousAgentOutputs already extracted at line 47
-    const previousContext = previousAgentOutputs.length > 0
-      ? `\n\n**PREVIOUS AGENT RESPONSES:**\n${previousAgentOutputs.map((a: any) => 
-          `[${a.agent}]: ${a.response.substring(0, 300)}...`
-        ).join('\n\n')}`
-      : '';
+    const previousContext =
+      previousAgentOutputs.length > 0
+        ? `\n\n**PREVIOUS AGENT RESPONSES:**\n${previousAgentOutputs
+            .map((a: any) => `[${a.agent}]: ${a.response.substring(0, 300)}...`)
+            .join('\n\n')}`
+        : '';
 
     const getScaleSpecificPrompt = (scale: 'domestic' | 'commercial' | 'industrial') => {
       const basePrompt = `You are a Level 3 Health & Safety Officer conducting a thorough risk assessment.
@@ -257,7 +274,9 @@ MANDATORY COVERAGE:
 ✅ Access control and signage requirements`;
 
       if (scale === 'domestic') {
-        return basePrompt + `
+        return (
+          basePrompt +
+          `
 
 🏠 DOMESTIC SCALE - FOCUS ON:
 - Occupied premises considerations (homeowner present, children, pets)
@@ -293,11 +312,14 @@ Electric Shock: ${emergencyProcedures.electricShock.slice(0, 3).join(' → ')}
 Arc Flash: ${emergencyProcedures.arcFlash.slice(0, 3).join(' → ')}
 
 CURRENT WORK:
-${circuitDetails}`;
+${circuitDetails}`
+        );
       }
 
       if (scale === 'commercial') {
-        return basePrompt + `
+        return (
+          basePrompt +
+          `
 
 🏢 COMMERCIAL SCALE - FOCUS ON:
 - Business continuity (out-of-hours work, phased isolation)
@@ -330,11 +352,14 @@ Electric Shock: ${emergencyProcedures.electricShock.slice(0, 3).join(' → ')}
 Arc Flash: ${emergencyProcedures.arcFlash.slice(0, 3).join(' → ')}
 
 CURRENT WORK:
-${circuitDetails}`;
+${circuitDetails}`
+        );
       }
 
       if (scale === 'industrial') {
-        return basePrompt + `
+        return (
+          basePrompt +
+          `
 
 🏭 INDUSTRIAL SCALE - FOCUS ON:
 - High-voltage systems (HV switching, arc flash PPE)
@@ -370,13 +395,16 @@ Electric Shock: ${emergencyProcedures.electricShock.slice(0, 3).join(' → ')}
 Arc Flash: ${emergencyProcedures.arcFlash.slice(0, 3).join(' → ')}
 
 CURRENT WORK:
-${circuitDetails}`;
+${circuitDetails}`
+        );
       }
 
       return basePrompt;
     };
 
-    const systemPrompt = getScaleSpecificPrompt(jobScale) + `${previousContext}
+    const systemPrompt =
+      getScaleSpecificPrompt(jobScale) +
+      `${previousContext}
 
 OUTPUT FORMAT:
 {
@@ -412,98 +440,118 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
 
     // Use structured tool calling for consistent JSON output with retry + timeout (60s for complex risk assessments)
     logger.debug('Calling Lovable AI with structured tool calling');
-    
+
     const requestBody = {
       model: 'google/gemini-2.5-flash',
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: latestMessage }
+        { role: 'user', content: latestMessage },
       ],
-      tools: [{
-        type: "function",
-        function: {
-          name: "create_risk_assessment",
-          description: "Create a comprehensive risk assessment for electrical work",
-          parameters: {
-            type: "object",
-            properties: {
-              response: {
-                type: "string",
-                description: "Natural language safety guidance in UK electrician tone"
-              },
-              riskAssessment: {
-                type: "object",
-                properties: {
-                  hazards: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        hazard: { type: "string" },
-                        likelihood: { type: "number", minimum: 1, maximum: 5 },
-                        severity: { type: "number", minimum: 1, maximum: 5 },
-                        riskRating: { type: "number" },
-                        controls: { type: "array", items: { type: "string" } },
-                        residualRisk: { type: "number" }
-                      },
-                      required: ["hazard", "likelihood", "severity", "riskRating", "controls", "residualRisk"]
-                    }
-                  }
+      tools: [
+        {
+          type: 'function',
+          function: {
+            name: 'create_risk_assessment',
+            description: 'Create a comprehensive risk assessment for electrical work',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description: 'Natural language safety guidance in UK electrician tone',
                 },
-                required: ["hazards"]
+                riskAssessment: {
+                  type: 'object',
+                  properties: {
+                    hazards: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          hazard: { type: 'string' },
+                          likelihood: { type: 'number', minimum: 1, maximum: 5 },
+                          severity: { type: 'number', minimum: 1, maximum: 5 },
+                          riskRating: { type: 'number' },
+                          controls: { type: 'array', items: { type: 'string' } },
+                          residualRisk: { type: 'number' },
+                        },
+                        required: [
+                          'hazard',
+                          'likelihood',
+                          'severity',
+                          'riskRating',
+                          'controls',
+                          'residualRisk',
+                        ],
+                      },
+                    },
+                  },
+                  required: ['hazards'],
+                },
+                requiredPPE: {
+                  type: 'array',
+                  items: { type: 'string' },
+                },
+                methodStatement: {
+                  type: 'array',
+                  items: { type: 'string' },
+                },
+                emergencyProcedures: {
+                  type: 'array',
+                  items: { type: 'string' },
+                },
+                citations: {
+                  type: 'array',
+                  items: { type: 'string' },
+                },
+                acopCitations: {
+                  type: 'array',
+                  items: { type: 'string' },
+                },
+                confidence: {
+                  type: 'number',
+                  minimum: 0,
+                  maximum: 1,
+                },
               },
-              requiredPPE: {
-                type: "array",
-                items: { type: "string" }
-              },
-              methodStatement: {
-                type: "array",
-                items: { type: "string" }
-              },
-              emergencyProcedures: {
-                type: "array",
-                items: { type: "string" }
-              },
-              citations: {
-                type: "array",
-                items: { type: "string" }
-              },
-              acopCitations: {
-                type: "array",
-                items: { type: "string" }
-              },
-              confidence: {
-                type: "number",
-                minimum: 0,
-                maximum: 1
-              }
+              required: [
+                'response',
+                'riskAssessment',
+                'requiredPPE',
+                'methodStatement',
+                'emergencyProcedures',
+                'citations',
+                'confidence',
+              ],
+              additionalProperties: false,
             },
-            required: ["response", "riskAssessment", "requiredPPE", "methodStatement", "emergencyProcedures", "citations", "confidence"],
-            additionalProperties: false
-          }
-        }
-      }],
-      tool_choice: { type: "function", function: { name: "create_risk_assessment" } },
-      max_completion_tokens: calculateTokenLimit(extractCircuitCount(latestMessage))
+          },
+        },
+      ],
+      tool_choice: { type: 'function', function: { name: 'create_risk_assessment' } },
+      max_completion_tokens: calculateTokenLimit(extractCircuitCount(latestMessage)),
     };
-    
-    logger.debug('Lovable AI Request', { model: requestBody.model, messageCount: requestBody.messages.length });
-    
-    const response = await logger.time(
-      'Lovable AI risk assessment generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-          }),
-          Timeouts.LONG,
-          'Lovable AI risk assessment generation'
-        ),
+
+    logger.debug('Lovable AI Request', {
+      model: requestBody.model,
+      messageCount: requestBody.messages.length,
+    });
+
+    const response = await logger.time('Lovable AI risk assessment generation', () =>
+      withRetry(
+        () =>
+          withTimeout(
+            fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${lovableApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestBody),
+            }),
+            Timeouts.LONG,
+            'Lovable AI risk assessment generation'
+          ),
         RetryPresets.STANDARD
       )
     );
@@ -515,54 +563,68 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     }
 
     const data = await response.json();
-    
+
     // Extract structured data from tool call
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
-    
+
     // GRACEFUL FALLBACK if tool call missing
     if (!toolCall) {
       console.warn('⚠️ H&S agent: No tool call returned - generating fallback assessment');
-      
+
       const textResponse = data.choices?.[0]?.message?.content || '';
       const minimumHazardCount = jobScale === 'domestic' ? 5 : jobScale === 'commercial' ? 7 : 10;
-      
+
       // Generate minimum viable hazard set
       const fallbackHazards = generateFallbackHazards(workType, jobScale, minimumHazardCount);
-      
+
       logger.warn('Using fallback H&S assessment', { hazardCount: fallbackHazards.length });
-      
-      return new Response(JSON.stringify({
-        response: textResponse || generateDefaultSafetyGuidance(workType, jobScale),
-        structuredData: {
-          riskAssessment: { hazards: fallbackHazards },
-          requiredPPE: generateDefaultPPE(),
-          methodStatement: generateDefaultMethodSteps(jobScale),
-          emergencyProcedures: emergencyProcedures.electricShock.slice(0, 3),
-          citations: ['EWR 1989 Reg 4(3)', 'CDM 2015 Reg 13', 'BS 7671:2018 Reg 537.2']
-        },
-        confidence: 0.7
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+
+      return new Response(
+        JSON.stringify({
+          response: textResponse || generateDefaultSafetyGuidance(workType, jobScale),
+          structuredData: {
+            riskAssessment: { hazards: fallbackHazards },
+            requiredPPE: generateDefaultPPE(),
+            methodStatement: generateDefaultMethodSteps(jobScale),
+            emergencyProcedures: emergencyProcedures.electricShock.slice(0, 3),
+            citations: ['EWR 1989 Reg 4(3)', 'CDM 2015 Reg 13', 'BS 7671:2018 Reg 537.2'],
+          },
+          confidence: 0.7,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     let parsedResponse = JSON.parse(toolCall.function.arguments);
-    logger.info('Successfully parsed structured output', { hazards: parsedResponse.riskAssessment.hazards.length, requestId });
+    logger.info('Successfully parsed structured output', {
+      hazards: parsedResponse.riskAssessment.hazards.length,
+      requestId,
+    });
 
     // UK English enforcement function
     const enforceUKEnglish = (text: string): string => {
       if (!text) return text;
       const americanToUK: Record<string, string> = {
-        'analyzing': 'analysing', 'analyze': 'analyse',
-        'minimizing': 'minimising', 'minimize': 'minimise',
-        'organizing': 'organising', 'organize': 'organise',
-        'realizing': 'realising', 'realize': 'realise',
-        'meter': 'metre', 'meters': 'metres',
-        'liter': 'litre', 'liters': 'litres',
-        'color': 'colour', 'labor': 'labour',
-        'while': 'whilst', 'among': 'amongst'
+        analyzing: 'analysing',
+        analyze: 'analyse',
+        minimizing: 'minimising',
+        minimize: 'minimise',
+        organizing: 'organising',
+        organize: 'organise',
+        realizing: 'realising',
+        realize: 'realise',
+        meter: 'metre',
+        meters: 'metres',
+        liter: 'litre',
+        liters: 'litres',
+        color: 'colour',
+        labor: 'labour',
+        while: 'whilst',
+        among: 'amongst',
       };
-      
+
       let ukText = text;
       Object.entries(americanToUK).forEach(([us, uk]) => {
         ukText = ukText.replace(new RegExp(`\\b${us}\\b`, 'gi'), (match) => {
@@ -579,7 +641,7 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     parsedResponse.riskAssessment.hazards = parsedResponse.riskAssessment.hazards.map((h: any) => ({
       ...h,
       hazard: enforceUKEnglish(h.hazard),
-      controls: h.controls.map(enforceUKEnglish)
+      controls: h.controls.map(enforceUKEnglish),
     }));
     parsedResponse.requiredPPE = parsedResponse.requiredPPE.map(enforceUKEnglish);
     parsedResponse.methodStatement = parsedResponse.methodStatement.map(enforceUKEnglish);
@@ -590,52 +652,112 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     const minSteps = minHazards;
 
     if (parsedResponse.riskAssessment.hazards.length < minHazards) {
-      console.warn(`⚠️ Only ${parsedResponse.riskAssessment.hazards.length} hazards generated, expected ${minHazards}. Padding with generic hazards.`);
-      
+      console.warn(
+        `⚠️ Only ${parsedResponse.riskAssessment.hazards.length} hazards generated, expected ${minHazards}. Padding with generic hazards.`
+      );
+
       const genericHazards = [
-        { hazard: "Electric shock from live conductors", likelihood: 3, severity: 5, riskRating: 15, controls: ["Safe isolation to BS 7671", "Voltage testing to GS38", "Lock-off devices"], residualRisk: 6 },
-        { hazard: "Manual handling injuries from cable drums and equipment", likelihood: 2, severity: 3, riskRating: 6, controls: ["Lifting assessment before moving items", "Two-person lift for heavy equipment", "Use trolleys and mechanical aids"], residualRisk: 3 },
-        { hazard: "Falls from height during installation work", likelihood: 2, severity: 5, riskRating: 10, controls: ["Platform stepladder for work below 2m", "Harness and anchor if above 2m", "Clear area below work zone"], residualRisk: 4 },
-        { hazard: "Contact with hidden services when drilling or chasing", likelihood: 2, severity: 4, riskRating: 8, controls: ["Cable detector scan before drilling", "Consult building drawings if available", "Drill at safe angles and depths"], residualRisk: 3 },
-        { hazard: "Dust and debris inhalation during cutting operations", likelihood: 3, severity: 2, riskRating: 6, controls: ["Dust extraction equipment", "FFP3 respirator mask", "Dampen surfaces before cutting"], residualRisk: 2 }
+        {
+          hazard: 'Electric shock from live conductors',
+          likelihood: 3,
+          severity: 5,
+          riskRating: 15,
+          controls: ['Safe isolation to BS 7671', 'Voltage testing to GS38', 'Lock-off devices'],
+          residualRisk: 6,
+        },
+        {
+          hazard: 'Manual handling injuries from cable drums and equipment',
+          likelihood: 2,
+          severity: 3,
+          riskRating: 6,
+          controls: [
+            'Lifting assessment before moving items',
+            'Two-person lift for heavy equipment',
+            'Use trolleys and mechanical aids',
+          ],
+          residualRisk: 3,
+        },
+        {
+          hazard: 'Falls from height during installation work',
+          likelihood: 2,
+          severity: 5,
+          riskRating: 10,
+          controls: [
+            'Platform stepladder for work below 2m',
+            'Harness and anchor if above 2m',
+            'Clear area below work zone',
+          ],
+          residualRisk: 4,
+        },
+        {
+          hazard: 'Contact with hidden services when drilling or chasing',
+          likelihood: 2,
+          severity: 4,
+          riskRating: 8,
+          controls: [
+            'Cable detector scan before drilling',
+            'Consult building drawings if available',
+            'Drill at safe angles and depths',
+          ],
+          residualRisk: 3,
+        },
+        {
+          hazard: 'Dust and debris inhalation during cutting operations',
+          likelihood: 3,
+          severity: 2,
+          riskRating: 6,
+          controls: [
+            'Dust extraction equipment',
+            'FFP3 respirator mask',
+            'Dampen surfaces before cutting',
+          ],
+          residualRisk: 2,
+        },
       ];
-      
+
       while (parsedResponse.riskAssessment.hazards.length < minHazards) {
-        parsedResponse.riskAssessment.hazards.push(genericHazards[parsedResponse.riskAssessment.hazards.length % genericHazards.length]);
+        parsedResponse.riskAssessment.hazards.push(
+          genericHazards[parsedResponse.riskAssessment.hazards.length % genericHazards.length]
+        );
       }
     }
 
     if (parsedResponse.methodStatement.length < minSteps) {
-      console.warn(`⚠️ Only ${parsedResponse.methodStatement.length} method steps generated, expected ${minSteps}. Padding with generic steps.`);
-      
+      console.warn(
+        `⚠️ Only ${parsedResponse.methodStatement.length} method steps generated, expected ${minSteps}. Padding with generic steps.`
+      );
+
       const genericSteps = [
-        "Obtain necessary permits and notify building management or homeowner of work schedule",
-        "Establish safe working area with barriers, signage, and dust protection",
-        "Test for dead using approved voltage indicator and apply lock-off devices",
-        "Install circuit protection and cable runs according to BS 7671 requirements",
-        "Complete testing, inspection, and certification to BS 7671 standards"
+        'Obtain necessary permits and notify building management or homeowner of work schedule',
+        'Establish safe working area with barriers, signage, and dust protection',
+        'Test for dead using approved voltage indicator and apply lock-off devices',
+        'Install circuit protection and cable runs according to BS 7671 requirements',
+        'Complete testing, inspection, and certification to BS 7671 standards',
       ];
-      
+
       while (parsedResponse.methodStatement.length < minSteps) {
-        parsedResponse.methodStatement.push(genericSteps[parsedResponse.methodStatement.length % genericSteps.length]);
+        parsedResponse.methodStatement.push(
+          genericSteps[parsedResponse.methodStatement.length % genericSteps.length]
+        );
       }
     }
 
     // Ensure structured output with ACOP citations
     const structuredResponse = {
       agent: 'health-safety',
-      response: parsedResponse.response || "Safety assessment complete. Refer to risk assessment below.",
+      response:
+        parsedResponse.response || 'Safety assessment complete. Refer to risk assessment below.',
       structuredData: {
         riskAssessment: parsedResponse.riskAssessment || { hazards: [] },
         requiredPPE: parsedResponse.requiredPPE || [],
         methodStatement: parsedResponse.methodStatement || [],
-        emergencyProcedures: parsedResponse.emergencyProcedures || []
+        emergencyProcedures: parsedResponse.emergencyProcedures || [],
       },
       reasoning: parsedResponse.reasoning || [],
       citations: parsedResponse.citations || [],
       acopCitations: parsedResponse.acopCitations || [],
       confidence: parsedResponse.confidence || 0.85,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // PHASE 2: Build H&S reasoning steps
@@ -647,33 +769,37 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
       {
         step: 'Work type identification',
         reasoning: `Identified as ${workType} electrical work requiring ${hsJobScale} risk assessment`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       },
       {
         step: 'Hazard identification',
-        reasoning: 'Systematically reviewed electrical, physical, environmental, and site-specific hazards for this work scope',
-        timestamp: new Date().toISOString()
-      }
+        reasoning:
+          'Systematically reviewed electrical, physical, environmental, and site-specific hazards for this work scope',
+        timestamp: new Date().toISOString(),
+      },
     ];
 
     if (hasDesignerCircuitDataPhase2) {
       reasoningSteps.push({
         step: 'Circuit-specific risks',
-        reasoning: 'Assessed hazards based on circuit specifications from Designer (voltage, current, installation method)',
-        timestamp: new Date().toISOString()
+        reasoning:
+          'Assessed hazards based on circuit specifications from Designer (voltage, current, installation method)',
+        timestamp: new Date().toISOString(),
       });
     }
 
     reasoningSteps.push(
       {
         step: 'Risk rating calibration',
-        reasoning: 'Applied 5×5 risk matrix (Likelihood × Severity) with industry-standard ratings for electrical work',
-        timestamp: new Date().toISOString()
+        reasoning:
+          'Applied 5×5 risk matrix (Likelihood × Severity) with industry-standard ratings for electrical work',
+        timestamp: new Date().toISOString(),
       },
       {
         step: 'Control measures',
-        reasoning: 'Specified hierarchy of controls: elimination → substitution → engineering → administrative → PPE',
-        timestamp: new Date().toISOString()
+        reasoning:
+          'Specified hierarchy of controls: elimination → substitution → engineering → administrative → PPE',
+        timestamp: new Date().toISOString(),
       }
     );
 
@@ -683,20 +809,20 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
         section: 'Regulation 3',
         title: 'Risk assessment requirements',
         relevance: 'Framework for identifying and controlling risks',
-        source: 'Management of Health and Safety at Work Regulations 1999'
+        source: 'Management of Health and Safety at Work Regulations 1999',
       },
       {
         section: 'Regulation 4',
         title: 'Competence and instruction',
         relevance: 'Ensures workers are competent for electrical work',
-        source: 'Electricity at Work Regulations 1989'
+        source: 'Electricity at Work Regulations 1989',
       },
       {
         section: 'Section 2',
         title: 'General duties of employers',
         relevance: 'Safe systems of work and adequate supervision',
-        source: 'Health and Safety at Work etc. Act 1974'
-      }
+        source: 'Health and Safety at Work etc. Act 1974',
+      },
     ];
 
     if (jobScale === 'commercial' || jobScale === 'industrial') {
@@ -704,34 +830,37 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
         section: 'Regulation 5',
         title: 'Principles of prevention',
         relevance: 'CDM requirements for commercial/industrial projects',
-        source: 'Construction (Design and Management) Regulations 2015'
+        source: 'Construction (Design and Management) Regulations 2015',
       });
     }
 
     // Assumptions
     const assumptionsMade = [];
-    
+
     if (!hasDesignerCircuitDataPhase2) {
       assumptionsMade.push({
         parameter: 'Circuit specifications',
         assumed: 'General electrical circuit work',
         reason: 'Designer circuit details not yet available',
-        impact: 'Generic electrical hazards assessed; will refine when circuit data provided'
+        impact: 'Generic electrical hazards assessed; will refine when circuit data provided',
       });
     }
 
     assumptionsMade.push({
       parameter: 'Work environment',
-      assumed: jobScale === 'domestic' ? 'Occupied domestic premises' : 'Commercial premises with public access',
+      assumed:
+        jobScale === 'domestic'
+          ? 'Occupied domestic premises'
+          : 'Commercial premises with public access',
       reason: `Based on detected ${jobScale} work scale`,
-      impact: 'Affects site-specific hazards and control measures'
+      impact: 'Affects site-specific hazards and control measures',
     });
 
     assumptionsMade.push({
       parameter: 'Competent person',
       assumed: 'Qualified electrician with BS 7671 competence',
       reason: 'Regulatory requirement for electrical installation work',
-      impact: 'Influences supervision requirements and permit-to-work needs'
+      impact: 'Influences supervision requirements and permit-to-work needs',
     });
 
     // Build citations from RAG
@@ -746,64 +875,98 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     }
 
     // Generate suggestions for next agents
-    const suggestedNextAgents: Array<{agent: string; reason: string; priority?: string}> = [];
-    
+    const suggestedNextAgents: Array<{ agent: string; reason: string; priority?: string }> = [];
+
     if (requestSuggestions) {
       const agentOutputsList = agentOutputs.map((a: any) => a.agent);
       if (!agentOutputsList.includes('commissioning')) {
         suggestedNextAgents.push({
           agent: 'commissioning',
           reason: 'Get testing procedures that comply with safety requirements',
-          priority: 'high'
+          priority: 'high',
         });
       }
       if (!agentOutputsList.includes('project-manager')) {
         suggestedNextAgents.push({
           agent: 'project-manager',
           reason: 'Coordinate safety documentation and compliance records',
-          priority: 'medium'
+          priority: 'medium',
         });
       }
     }
-    
+
     structuredResponse.suggestedNextAgents = suggestedNextAgents;
-    
-    console.log('✅ H&S Agent: Generated risk assessment with', structuredResponse.structuredData.riskAssessment.hazards.length, 'hazards');
+
+    console.log(
+      '✅ H&S Agent: Generated risk assessment with',
+      structuredResponse.structuredData.riskAssessment.hazards.length,
+      'hazards'
+    );
 
     // Add export flags
     structuredResponse.isComplete = true;
     structuredResponse.exportReady = true;
-    
+
     return new Response(JSON.stringify(structuredResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('❌ Error in health-safety-agent:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Health & Safety agent failed',
-      agent: 'health-safety',
-      response: "I couldn't complete the safety assessment mate. Standard electrical safety precautions apply - isolate, test, lock-off.",
-      confidence: 0.3
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Health & Safety agent failed',
+        agent: 'health-safety',
+        response:
+          "I couldn't complete the safety assessment mate. Standard electrical safety precautions apply - isolate, test, lock-off.",
+        confidence: 0.3,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
 function extractWorkType(message: string, currentDesign: any): string {
   const lowerMessage = message.toLowerCase();
-  
+
   if (lowerMessage.includes('shower') || lowerMessage.includes('bathroom')) return 'shower';
   if (lowerMessage.includes('outdoor') || lowerMessage.includes('garden')) return 'outdoor';
-  if (lowerMessage.includes('commercial') || lowerMessage.includes('factory') || lowerMessage.includes('industrial')) return 'commercial';
-  if (lowerMessage.includes('excavat') || lowerMessage.includes('dig') || lowerMessage.includes('underground')) return 'excavation';
-  if (lowerMessage.includes('consumer unit') || lowerMessage.includes('distribution board')) return 'consumer-unit';
-  if (lowerMessage.includes('height') || lowerMessage.includes('ladder') || lowerMessage.includes('scaffold')) return 'height';
-  if (lowerMessage.includes('confined') || lowerMessage.includes('duct') || lowerMessage.includes('void') || lowerMessage.includes('loft')) return 'confined';
-  if (lowerMessage.includes('refurb') || lowerMessage.includes('demolit') || lowerMessage.includes('strip out')) return 'refurbishment';
-  
+  if (
+    lowerMessage.includes('commercial') ||
+    lowerMessage.includes('factory') ||
+    lowerMessage.includes('industrial')
+  )
+    return 'commercial';
+  if (
+    lowerMessage.includes('excavat') ||
+    lowerMessage.includes('dig') ||
+    lowerMessage.includes('underground')
+  )
+    return 'excavation';
+  if (lowerMessage.includes('consumer unit') || lowerMessage.includes('distribution board'))
+    return 'consumer-unit';
+  if (
+    lowerMessage.includes('height') ||
+    lowerMessage.includes('ladder') ||
+    lowerMessage.includes('scaffold')
+  )
+    return 'height';
+  if (
+    lowerMessage.includes('confined') ||
+    lowerMessage.includes('duct') ||
+    lowerMessage.includes('void') ||
+    lowerMessage.includes('loft')
+  )
+    return 'confined';
+  if (
+    lowerMessage.includes('refurb') ||
+    lowerMessage.includes('demolit') ||
+    lowerMessage.includes('strip out')
+  )
+    return 'refurbishment';
+
   return 'general';
 }
 
@@ -811,16 +974,16 @@ function extractWorkType(message: string, currentDesign: any): string {
 function calculateTokenLimit(circuitCount: number): number {
   const baseTokens = 2000;
   const perCircuitTokens = 350;
-  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 10000);
+  return Math.min(baseTokens + circuitCount * perCircuitTokens, 10000);
 }
 
 function extractCircuitCount(message: string): number {
   const wayMatch = message.match(/(\d+)[\s-]?way/i);
   if (wayMatch) return parseInt(wayMatch[1]);
-  
+
   const circuitMatch = message.match(/(\d+)\s+circuits?/i);
   if (circuitMatch) return parseInt(circuitMatch[1]);
-  
+
   return 6;
 }
 
@@ -860,27 +1023,69 @@ function enforceUKEnglish(text: string): string {
 // Fallback hazard generation for when AI doesn't return tool call
 function generateFallbackHazards(workType: string, scale: string, count: number): any[] {
   const baseHazards = [
-    { hazard: 'Electric shock from existing circuits', likelihood: 2, severity: 4, riskRating: 8, 
-      controls: ['Safe isolation to EWR 1989', 'Voltage indicator testing', 'Lock-off devices'], residualRisk: 4 },
-    { hazard: 'Manual handling of cable drums and equipment', likelihood: 3, severity: 2, riskRating: 6,
-      controls: ['Team lift for loads >25kg', 'Mechanical aids where practical'], residualRisk: 3 },
-    { hazard: 'Work at height (ladder access)', likelihood: 2, severity: 4, riskRating: 8,
-      controls: ['Class 1 ladder to BS EN 131', '1:4 angle', '3-point contact'], residualRisk: 4 },
-    { hazard: 'Hidden services in walls (cables, pipes)', likelihood: 3, severity: 3, riskRating: 9,
-      controls: ['Cable detector scanning', 'Safe zones BS 7671 Reg 522.6.202'], residualRisk: 6 },
-    { hazard: 'Dust and debris from chasing', likelihood: 4, severity: 1, riskRating: 4,
-      controls: ['Dust extraction', 'Respiratory protection FFP3'], residualRisk: 2 }
+    {
+      hazard: 'Electric shock from existing circuits',
+      likelihood: 2,
+      severity: 4,
+      riskRating: 8,
+      controls: ['Safe isolation to EWR 1989', 'Voltage indicator testing', 'Lock-off devices'],
+      residualRisk: 4,
+    },
+    {
+      hazard: 'Manual handling of cable drums and equipment',
+      likelihood: 3,
+      severity: 2,
+      riskRating: 6,
+      controls: ['Team lift for loads >25kg', 'Mechanical aids where practical'],
+      residualRisk: 3,
+    },
+    {
+      hazard: 'Work at height (ladder access)',
+      likelihood: 2,
+      severity: 4,
+      riskRating: 8,
+      controls: ['Class 1 ladder to BS EN 131', '1:4 angle', '3-point contact'],
+      residualRisk: 4,
+    },
+    {
+      hazard: 'Hidden services in walls (cables, pipes)',
+      likelihood: 3,
+      severity: 3,
+      riskRating: 9,
+      controls: ['Cable detector scanning', 'Safe zones BS 7671 Reg 522.6.202'],
+      residualRisk: 6,
+    },
+    {
+      hazard: 'Dust and debris from chasing',
+      likelihood: 4,
+      severity: 1,
+      riskRating: 4,
+      controls: ['Dust extraction', 'Respiratory protection FFP3'],
+      residualRisk: 2,
+    },
   ];
-  
+
   if (workType.includes('outdoor')) {
     baseHazards.push(
-      { hazard: 'Adverse weather conditions', likelihood: 3, severity: 2, riskRating: 6,
-        controls: ['Suspend work in high winds >40mph', 'Weatherproof clothing'], residualRisk: 3 },
-      { hazard: 'Slips and trips on external surfaces', likelihood: 3, severity: 2, riskRating: 6,
-        controls: ['Non-slip footwear BS EN ISO 20345', 'Clear walkways'], residualRisk: 3 }
+      {
+        hazard: 'Adverse weather conditions',
+        likelihood: 3,
+        severity: 2,
+        riskRating: 6,
+        controls: ['Suspend work in high winds >40mph', 'Weatherproof clothing'],
+        residualRisk: 3,
+      },
+      {
+        hazard: 'Slips and trips on external surfaces',
+        likelihood: 3,
+        severity: 2,
+        riskRating: 6,
+        controls: ['Non-slip footwear BS EN ISO 20345', 'Clear walkways'],
+        residualRisk: 3,
+      }
     );
   }
-  
+
   return baseHazards.slice(0, count);
 }
 
@@ -890,7 +1095,7 @@ function generateDefaultPPE(): string[] {
     'Insulated gloves (BS EN 60903)',
     'Hard hat (BS EN 397)',
     'High-visibility vest (BS EN ISO 20471)',
-    'Safety glasses (BS EN 166)'
+    'Safety glasses (BS EN 166)',
   ];
 }
 
@@ -902,14 +1107,14 @@ function generateDefaultMethodSteps(scale: string): string[] {
     'Route cable maintaining safe zones',
     'Fix cable at appropriate intervals',
     'Terminate at consumer unit and accessories',
-    'Re-test and energise'
+    'Re-test and energise',
   ];
-  
+
   if (scale === 'commercial' || scale === 'industrial') {
     steps.unshift('Obtain permit to work');
     steps.push('Complete handover documentation');
   }
-  
+
   return steps;
 }
 

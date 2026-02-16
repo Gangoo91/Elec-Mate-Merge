@@ -5,107 +5,229 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 const suppliers = [
-  { name: "Screwfix", url: "https://www.screwfix.com/search?search=" },
-  { name: "Toolstation", url: "https://www.toolstation.com/search?q=" },
-  { name: "RS Components", url: "https://uk.rs-online.com/web/c/?searchTerm=" },
-  { name: "CEF - City Electrical Factors", url: "https://www.cef.co.uk/catalogue/products/search?q=" },
+  { name: 'Screwfix', url: 'https://www.screwfix.com/search?search=' },
+  { name: 'Toolstation', url: 'https://www.toolstation.com/search?q=' },
+  { name: 'RS Components', url: 'https://uk.rs-online.com/web/c/?searchTerm=' },
+  {
+    name: 'CEF - City Electrical Factors',
+    url: 'https://www.cef.co.uk/catalogue/products/search?q=',
+  },
 ];
 
 // Electrical Materials Categories - BS7671 Compliant (All 12 Categories)
 const materialCategories = [
   {
-    category: "Cables & Wiring",
-    categoryId: "cables",
-    items: ["twin earth cable", "SWA cable", "armoured cable", "coaxial cable", "cat6 cable", "fire rated cable", "flex cable", "data cable", "NYCY cable"],
+    category: 'Cables & Wiring',
+    categoryId: 'cables',
+    items: [
+      'twin earth cable',
+      'SWA cable',
+      'armoured cable',
+      'coaxial cable',
+      'cat6 cable',
+      'fire rated cable',
+      'flex cable',
+      'data cable',
+      'NYCY cable',
+    ],
   },
   {
-    category: "Electrical Components", 
-    categoryId: "components",
-    items: ["consumer unit", "MCB", "RCD", "RCBO", "distribution board", "switch", "socket outlet", "junction box", "isolator switch", "meter box"],
+    category: 'Electrical Components',
+    categoryId: 'components',
+    items: [
+      'consumer unit',
+      'MCB',
+      'RCD',
+      'RCBO',
+      'distribution board',
+      'switch',
+      'socket outlet',
+      'junction box',
+      'isolator switch',
+      'meter box',
+    ],
   },
   {
-    category: "Protection Equipment",
-    categoryId: "protection",
-    items: ["earth rod", "surge protector", "RCD protection", "SPD", "electrical enclosure", "weatherproof box", "IP65 box", "earth clamp"],
+    category: 'Protection Equipment',
+    categoryId: 'protection',
+    items: [
+      'earth rod',
+      'surge protector',
+      'RCD protection',
+      'SPD',
+      'electrical enclosure',
+      'weatherproof box',
+      'IP65 box',
+      'earth clamp',
+    ],
   },
   {
-    category: "Installation Accessories",
-    categoryId: "accessories",
-    items: ["cable gland", "cable tray", "conduit", "trunking", "back box", "mounting plate", "cable clip", "grommets", "cable markers"],
+    category: 'Installation Accessories',
+    categoryId: 'accessories',
+    items: [
+      'cable gland',
+      'cable tray',
+      'conduit',
+      'trunking',
+      'back box',
+      'mounting plate',
+      'cable clip',
+      'grommets',
+      'cable markers',
+    ],
   },
   {
-    category: "Lighting Solutions",
-    categoryId: "lighting",
-    items: ["LED downlight", "emergency lighting", "LED batten", "outdoor lighting", "PIR sensor", "dimmer switch", "LED panel", "flood light"]
+    category: 'Lighting Solutions',
+    categoryId: 'lighting',
+    items: [
+      'LED downlight',
+      'emergency lighting',
+      'LED batten',
+      'outdoor lighting',
+      'PIR sensor',
+      'dimmer switch',
+      'LED panel',
+      'flood light',
+    ],
   },
   {
-    category: "Fixings & Consumables",
-    categoryId: "fixings",
-    items: ["rawl plugs", "screws", "wall plugs", "cable ties", "electrical tape", "terminal blocks", "wire nuts", "crimps", "connectors"]
+    category: 'Fixings & Consumables',
+    categoryId: 'fixings',
+    items: [
+      'rawl plugs',
+      'screws',
+      'wall plugs',
+      'cable ties',
+      'electrical tape',
+      'terminal blocks',
+      'wire nuts',
+      'crimps',
+      'connectors',
+    ],
   },
   {
-    category: "Cable Management & Conduit",
-    categoryId: "cable-management",
-    items: ["plastic conduit", "metal conduit", "cable basket", "cable ladder", "trunking systems", "dado trunking", "mini trunking", "conduit fittings"]
+    category: 'Cable Management & Conduit',
+    categoryId: 'cable-management',
+    items: [
+      'plastic conduit',
+      'metal conduit',
+      'cable basket',
+      'cable ladder',
+      'trunking systems',
+      'dado trunking',
+      'mini trunking',
+      'conduit fittings',
+    ],
   },
   {
-    category: "Smart Home & Controls",
-    categoryId: "smart-home",
-    items: ["smart switch", "smart socket", "PIR occupancy sensor", "timer switch", "motion detector", "smart thermostat", "home automation", "wireless controls"]
+    category: 'Smart Home & Controls',
+    categoryId: 'smart-home',
+    items: [
+      'smart switch',
+      'smart socket',
+      'PIR occupancy sensor',
+      'timer switch',
+      'motion detector',
+      'smart thermostat',
+      'home automation',
+      'wireless controls',
+    ],
   },
   {
-    category: "Data & Networking",
-    categoryId: "data-networking",
-    items: ["cat6 cable", "cat6a cable", "ethernet cable", "data socket", "patch panel", "network cabinet", "fibre optic cable", "coaxial cable"]
+    category: 'Data & Networking',
+    categoryId: 'data-networking',
+    items: [
+      'cat6 cable',
+      'cat6a cable',
+      'ethernet cable',
+      'data socket',
+      'patch panel',
+      'network cabinet',
+      'fibre optic cable',
+      'coaxial cable',
+    ],
   },
   {
-    category: "Heating Controls",
-    categoryId: "heating-controls",
-    items: ["room thermostat", "programmable thermostat", "TRV", "zone valve", "heating timer", "underfloor heating", "immersion heater timer", "frost stat"]
+    category: 'Heating Controls',
+    categoryId: 'heating-controls',
+    items: [
+      'room thermostat',
+      'programmable thermostat',
+      'TRV',
+      'zone valve',
+      'heating timer',
+      'underfloor heating',
+      'immersion heater timer',
+      'frost stat',
+    ],
   },
   {
-    category: "EV Charging",
-    categoryId: "ev-charging",
-    items: ["EV charger", "electric vehicle charging point", "type 2 charger", "home EV charger", "7kw charger", "22kw charger", "EV cable", "charging station"]
+    category: 'EV Charging',
+    categoryId: 'ev-charging',
+    items: [
+      'EV charger',
+      'electric vehicle charging point',
+      'type 2 charger',
+      'home EV charger',
+      '7kw charger',
+      '22kw charger',
+      'EV cable',
+      'charging station',
+    ],
   },
   {
-    category: "Fire & Security",
-    categoryId: "fire-security",
-    items: ["smoke detector", "fire alarm", "heat detector", "emergency lighting", "PIR security", "door entry", "CCTV", "intruder alarm", "fire rated cable"]
-  }
+    category: 'Fire & Security',
+    categoryId: 'fire-security',
+    items: [
+      'smoke detector',
+      'fire alarm',
+      'heat detector',
+      'emergency lighting',
+      'PIR security',
+      'door entry',
+      'CCTV',
+      'intruder alarm',
+      'fire rated cable',
+    ],
+  },
 ];
 
 // Firecrawl Schema for Materials
 const materialSchema = {
-  type: "array",
+  type: 'array',
   items: {
-    type: "object",
-    required: ["name", "price", "view_product_url"],
+    type: 'object',
+    required: ['name', 'price', 'view_product_url'],
     properties: {
-      name: { type: "string" },
-      category: { type: "string" },
-      brand: { type: "string" },
-      price: { type: "string" },
-      description: { type: "string" },
-      specifications: { type: "string" },
-      image: { type: "string", format: "uri" },
-      view_product_url: { type: "string", format: "uri" },
-      stock_status: { type: "string" },
-      ratings: { type: "string" }
+      name: { type: 'string' },
+      category: { type: 'string' },
+      brand: { type: 'string' },
+      price: { type: 'string' },
+      description: { type: 'string' },
+      specifications: { type: 'string' },
+      image: { type: 'string', format: 'uri' },
+      view_product_url: { type: 'string', format: 'uri' },
+      stock_status: { type: 'string' },
+      ratings: { type: 'string' },
     },
   },
 };
 
-async function fetchMaterialsFromSupplier(supplier: any, query: string, category: string, FIRECRAWL_API_KEY: string) {
+async function fetchMaterialsFromSupplier(
+  supplier: any,
+  query: string,
+  category: string,
+  FIRECRAWL_API_KEY: string
+) {
   console.log(`🔍 Fetching ${query} from ${supplier.name} for category: ${category}`);
 
-  const firecrawl_url = "https://api.firecrawl.dev/v2/scrape";
+  const firecrawl_url = 'https://api.firecrawl.dev/v2/scrape';
 
   const options = {
-    method: "POST",
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${FIRECRAWL_API_KEY}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       url: `${supplier.url}${encodeURIComponent(query)}`,
@@ -113,7 +235,7 @@ async function fetchMaterialsFromSupplier(supplier: any, query: string, category
       maxAge: 0,
       formats: [
         {
-          type: "json",
+          type: 'json',
           prompt: `Extract electrical material product details for ${query} in category ${category}. Focus on electrical installation materials, cables, components, and equipment.`,
           schema: materialSchema,
         },
@@ -123,24 +245,20 @@ async function fetchMaterialsFromSupplier(supplier: any, query: string, category
 
   try {
     const response = await withRetry(
-      () => withTimeout(
-        fetch(firecrawl_url, options),
-        Timeouts.LONG,
-        'Firecrawl API call'
-      ),
+      () => withTimeout(fetch(firecrawl_url, options), Timeouts.LONG, 'Firecrawl API call'),
       RetryPresets.STANDARD
     );
     if (!response.ok) {
       console.error(`❌ API request failed: ${response.status} ${response.statusText}`);
       return [];
     }
-    
+
     const responseText = await response.text();
     if (!responseText || responseText.trim() === '') {
       console.error(`❌ Empty response from Firecrawl API for ${supplier.name}`);
       return [];
     }
-    
+
     let data;
     try {
       data = JSON.parse(responseText);
@@ -150,24 +268,41 @@ async function fetchMaterialsFromSupplier(supplier: any, query: string, category
     }
 
     const products = data.data?.json || [];
-    
+
     // Filter to ensure we only get electrical materials
     const filteredProducts = products.filter((item: any) => {
       const name = (item.name || '').toLowerCase();
       const description = (item.description || '').toLowerCase();
-      
+
       // Exclude non-electrical items
       const exclusions = ['furniture', 'clothing', 'food', 'garden', 'automotive', 'plumbing only'];
-      if (exclusions.some(exc => name.includes(exc) || description.includes(exc))) {
+      if (exclusions.some((exc) => name.includes(exc) || description.includes(exc))) {
         return false;
       }
-      
+
       // Include electrical materials
-      const inclusions = ['electrical', 'electric', 'cable', 'wire', 'mcb', 'rcd', 'consumer unit', 
-                         'switch', 'socket', 'led', 'lighting', 'protection', 'earth', 'surge'];
-      return inclusions.some(inc => name.includes(inc) || description.includes(inc) || query.toLowerCase().includes(inc));
+      const inclusions = [
+        'electrical',
+        'electric',
+        'cable',
+        'wire',
+        'mcb',
+        'rcd',
+        'consumer unit',
+        'switch',
+        'socket',
+        'led',
+        'lighting',
+        'protection',
+        'earth',
+        'surge',
+      ];
+      return inclusions.some(
+        (inc) =>
+          name.includes(inc) || description.includes(inc) || query.toLowerCase().includes(inc)
+      );
     });
-    
+
     return filteredProducts.map((item: any, index: number) => ({
       id: Date.now() + Math.random() * 1000 + index,
       name: item.name || 'Unknown Product',
@@ -183,7 +318,7 @@ async function fetchMaterialsFromSupplier(supplier: any, query: string, category
       stock_status: item.stock_status || 'In Stock',
       ratings: item.ratings,
       stockStatus: 'In Stock' as const,
-      isOnSale: false
+      isOnSale: false,
     }));
   } catch (error) {
     console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
@@ -193,49 +328,54 @@ async function fetchMaterialsFromSupplier(supplier: any, query: string, category
 
 async function getMaterials(FIRECRAWL_API_KEY: string) {
   console.log('🚀 Starting comprehensive materials weekly scraping...');
-  
+
   const jobs = [];
   const BATCH_SIZE = 5; // Process 5 items at a time to avoid timeouts
-  
+
   // Select only top items per category to reduce load
   for (const categoryGroup of materialCategories) {
     const topItems = categoryGroup.items.slice(0, 3); // Only take first 3 items per category
     for (const material of topItems) {
-      for (const supplier of suppliers.slice(0, 2)) { // Only use first 2 suppliers (Screwfix, Toolstation)
-        jobs.push(fetchMaterialsFromSupplier(supplier, material, categoryGroup.category, FIRECRAWL_API_KEY));
+      for (const supplier of suppliers.slice(0, 2)) {
+        // Only use first 2 suppliers (Screwfix, Toolstation)
+        jobs.push(
+          fetchMaterialsFromSupplier(supplier, material, categoryGroup.category, FIRECRAWL_API_KEY)
+        );
       }
     }
   }
 
   console.log(`📋 Processing ${jobs.length} scraping jobs in batches of ${BATCH_SIZE}...`);
-  
+
   const materials: any[] = [];
-  
+
   // Process jobs in batches
   for (let i = 0; i < jobs.length; i += BATCH_SIZE) {
     const batch = jobs.slice(i, i + BATCH_SIZE);
-    console.log(`🔄 Processing batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(jobs.length / BATCH_SIZE)}`);
-    
+    console.log(
+      `🔄 Processing batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(jobs.length / BATCH_SIZE)}`
+    );
+
     const results = await Promise.allSettled(batch);
     const batchMaterials = results
-      .map((material) => (material.status === "fulfilled" ? material.value : []))
+      .map((material) => (material.status === 'fulfilled' ? material.value : []))
       .flat();
-    
+
     materials.push(...batchMaterials);
-    
+
     // Small delay between batches to avoid rate limiting
     if (i + BATCH_SIZE < jobs.length) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
-  
+
   console.log(`✅ Successfully fetched ${materials.length} products`);
   return materials;
 }
 
 async function saveMaterialsToCache(materials: any[]) {
   console.log(`💾 Saving ${materials.length} materials to cache...`);
-  
+
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
@@ -256,19 +396,25 @@ async function saveMaterialsToCache(materials: any[]) {
   }
 
   // Group materials by category
-  const groupedMaterials = materials.reduce((acc, material) => {
-    const category = material.category;
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(material);
-    return acc;
-  }, {} as Record<string, any[]>);
+  const groupedMaterials = materials.reduce(
+    (acc, material) => {
+      const category = material.category;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(material);
+      return acc;
+    },
+    {} as Record<string, any[]>
+  );
 
   // Find category ID mapping
   const getCategoryId = (categoryName: string) => {
-    const categoryConfig = materialCategories.find(cat => cat.category === categoryName);
-    return categoryConfig?.categoryId || categoryName.toLowerCase().replace(/\s+/g, '_').replace(/&/g, 'and');
+    const categoryConfig = materialCategories.find((cat) => cat.category === categoryName);
+    return (
+      categoryConfig?.categoryId ||
+      categoryName.toLowerCase().replace(/\s+/g, '_').replace(/&/g, 'and')
+    );
   };
 
   // Insert new cache entries
@@ -279,13 +425,11 @@ async function saveMaterialsToCache(materials: any[]) {
     last_updated: new Date().toISOString(),
     expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
     update_status: 'completed',
-    source: 'comprehensive-materials-scraper'
+    source: 'comprehensive-materials-scraper',
   }));
 
   const { error: insertError } = await withTimeout(
-    supabase
-      .from('materials_weekly_cache')
-      .insert(cacheEntries),
+    supabase.from('materials_weekly_cache').insert(cacheEntries),
     Timeouts.STANDARD,
     'save to cache'
   );
@@ -301,28 +445,26 @@ async function saveMaterialsToCache(materials: any[]) {
 
 async function savePricesToHistory(materials: any[]) {
   console.log(`💾 Saving ${materials.length} prices to historical database...`);
-  
+
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
   const historicalEntries = materials
-    .filter(material => material.price && material.price !== '£0.00')
-    .map(material => ({
+    .filter((material) => material.price && material.price !== '£0.00')
+    .map((material) => ({
       product_name: material.name,
       supplier: material.supplier,
       price: parseFloat(material.price.replace('£', '').replace(',', '')),
       currency: 'GBP',
       source_url: material.productUrl,
       category: material.category,
-      date_scraped: new Date().toISOString()
+      date_scraped: new Date().toISOString(),
     }));
 
   if (historicalEntries.length > 0) {
     const { error } = await withTimeout(
-      supabase
-        .from('historical_prices')
-        .insert(historicalEntries),
+      supabase.from('historical_prices').insert(historicalEntries),
       Timeouts.STANDARD,
       'save historical prices'
     );
@@ -345,7 +487,7 @@ Deno.serve(async (req) => {
 
   try {
     logger.info('🔧 Materials weekly scraper started');
-    
+
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
     if (!FIRECRAWL_API_KEY) {
       throw new ValidationError('FIRECRAWL_API_KEY not configured');
@@ -358,13 +500,13 @@ Deno.serve(async (req) => {
         const materials = await getMaterials(FIRECRAWL_API_KEY);
         const cacheEntries = await saveMaterialsToCache(materials);
         await savePricesToHistory(materials);
-        logger.info('Background task completed', { 
-          materialsCount: materials.length, 
-          categoriesCount: cacheEntries.length 
+        logger.info('Background task completed', {
+          materialsCount: materials.length,
+          categoriesCount: cacheEntries.length,
         });
       } catch (error) {
-        logger.error('Background scraping failed', { 
-          error: error instanceof Error ? error.message : String(error) 
+        logger.error('Background scraping failed', {
+          error: error instanceof Error ? error.message : String(error),
         });
       }
     };
@@ -377,16 +519,15 @@ Deno.serve(async (req) => {
         success: true,
         message: 'Materials scraping started in background',
         status: 'processing',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error) {
-    logger.error('Materials scraper error', { 
-      error: error instanceof Error ? error.message : String(error) 
+    logger.error('Materials scraper error', {
+      error: error instanceof Error ? error.message : String(error),
     });
     return handleError(error);
   }

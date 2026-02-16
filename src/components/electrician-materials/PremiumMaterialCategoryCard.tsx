@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import { Package, Loader2, ArrowRight } from "lucide-react";
-import { getMaterialCategoryStyle } from "./materialCategoryStyleUtils";
+import { Badge } from '@/components/ui/badge';
+import { Package, Loader2, ArrowRight } from 'lucide-react';
+import { getMaterialCategoryStyle } from './materialCategoryStyleUtils';
 
 export interface MaterialCategory {
   id: string;
@@ -90,9 +90,7 @@ const PremiumMaterialCategoryCard = ({
               {category.productCount} available
             </Badge>
           ) : (
-            <span className="text-xs text-muted-foreground italic">
-              Data being collected
-            </span>
+            <span className="text-xs text-muted-foreground italic">Data being collected</span>
           )}
 
           {/* Arrow indicator */}

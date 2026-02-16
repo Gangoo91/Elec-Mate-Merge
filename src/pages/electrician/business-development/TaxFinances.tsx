@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import {
   Calculator,
   FileText,
@@ -28,34 +28,40 @@ import {
   Heart,
   Target,
   ArrowUpRight,
-} from "lucide-react";
-import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
+} from 'lucide-react';
+import {
+  BusinessPageLayout,
+  SectionNav,
+  ContentBlock,
+  DataGrid,
+  InfoList,
+} from '@/components/business-hub';
 
 const TaxFinances = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeSection = searchParams.get("section") || "structure";
+  const activeSection = searchParams.get('section') || 'structure';
   const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
-    { id: "structure", label: "Structure", icon: FileText },
-    { id: "expenses", label: "Expenses", icon: Calculator },
-    { id: "cashflow", label: "Cash Flow", icon: TrendingUp },
-    { id: "vat", label: "VAT & HMRC", icon: PoundSterling },
-    { id: "tax-planning", label: "Tax Planning", icon: Clock },
-    { id: "insurance", label: "Insurance", icon: Shield },
-    { id: "retirement", label: "Pensions", icon: PiggyBank },
+    { id: 'structure', label: 'Structure', icon: FileText },
+    { id: 'expenses', label: 'Expenses', icon: Calculator },
+    { id: 'cashflow', label: 'Cash Flow', icon: TrendingUp },
+    { id: 'vat', label: 'VAT & HMRC', icon: PoundSterling },
+    { id: 'tax-planning', label: 'Tax Planning', icon: Clock },
+    { id: 'insurance', label: 'Insurance', icon: Shield },
+    { id: 'retirement', label: 'Pensions', icon: PiggyBank },
   ];
 
   const keyStats = [
-    { label: "Tax Year End", value: "5 April", sublabel: "Plan ahead" },
-    { label: "VAT Threshold", value: "£90,000", sublabel: "2024/25" },
-    { label: "Personal Allowance", value: "£12,570", sublabel: "Tax-free" },
-    { label: "Basic Rate", value: "20%", sublabel: "Up to £50,270" },
+    { label: 'Tax Year End', value: '5 April', sublabel: 'Plan ahead' },
+    { label: 'VAT Threshold', value: '£90,000', sublabel: '2024/25' },
+    { label: 'Personal Allowance', value: '£12,570', sublabel: 'Tax-free' },
+    { label: 'Basic Rate', value: '20%', sublabel: 'Up to £50,270' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sections.map(s => document.getElementById(s.id));
+      const sectionElements = sections.map((s) => document.getElementById(s.id));
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sectionElements.length - 1; i >= 0; i--) {
@@ -67,8 +73,8 @@ const TaxFinances = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/tax-finances`;
@@ -110,8 +116,9 @@ const TaxFinances = () => {
             icon={FileText}
             summary={
               <p className="text-white">
-                Choosing the right business structure affects your tax liability, personal liability, and administrative requirements.
-                Most electricians start as sole traders and consider incorporation as they grow.
+                Choosing the right business structure affects your tax liability, personal
+                liability, and administrative requirements. Most electricians start as sole traders
+                and consider incorporation as they grow.
               </p>
             }
           >
@@ -124,12 +131,15 @@ const TaxFinances = () => {
                     <h4 className="text-base font-semibold text-white">Sole Trader</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    The simplest structure. You are the business and personally responsible for all debts and obligations.
+                    The simplest structure. You are the business and personally responsible for all
+                    debts and obligations.
                   </p>
                   <div className="space-y-2 mb-4">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Easy to set up - register with HMRC</span>
+                      <span className="text-sm text-white">
+                        Easy to set up - register with HMRC
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -145,7 +155,9 @@ const TaxFinances = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">Best under £50k profit</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      Best under £50k profit
+                    </span>
                   </div>
                 </div>
                 <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
@@ -154,7 +166,8 @@ const TaxFinances = () => {
                     <h4 className="text-base font-semibold text-white">Limited Company</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    A separate legal entity. Limited liability protection, but more compliance requirements.
+                    A separate legal entity. Limited liability protection, but more compliance
+                    requirements.
                   </p>
                   <div className="space-y-2 mb-4">
                     <div className="flex items-start gap-2">
@@ -163,11 +176,15 @@ const TaxFinances = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Corporation Tax often lower than Income Tax</span>
+                      <span className="text-sm text-white">
+                        Corporation Tax often lower than Income Tax
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">More credibility with commercial clients</span>
+                      <span className="text-sm text-white">
+                        More credibility with commercial clients
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -175,7 +192,9 @@ const TaxFinances = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">Best over £50k profit</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      Best over £50k profit
+                    </span>
                   </div>
                 </div>
               </div>
@@ -189,7 +208,9 @@ const TaxFinances = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Profits consistently exceed £50,000/year</span>
+                    <span className="text-sm text-white">
+                      Profits consistently exceed £50,000/year
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -197,7 +218,9 @@ const TaxFinances = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Working with corporate clients regularly</span>
+                    <span className="text-sm text-white">
+                      Working with corporate clients regularly
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -215,8 +238,8 @@ const TaxFinances = () => {
             icon={Calculator}
             summary={
               <p className="text-white">
-                Claiming all allowable expenses reduces your taxable profit and tax bill.
-                Keep receipts and records for all business expenses for at least 6 years.
+                Claiming all allowable expenses reduces your taxable profit and tax bill. Keep
+                receipts and records for all business expenses for at least 6 years.
               </p>
             }
           >
@@ -231,7 +254,9 @@ const TaxFinances = () => {
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Van purchase, lease, or finance costs</span>
+                      <span className="text-sm text-white">
+                        Van purchase, lease, or finance costs
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -279,7 +304,9 @@ const TaxFinances = () => {
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Proportion of rent/mortgage interest</span>
+                      <span className="text-sm text-white">
+                        Proportion of rent/mortgage interest
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -303,7 +330,9 @@ const TaxFinances = () => {
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Professional memberships and subscriptions</span>
+                      <span className="text-sm text-white">
+                        Professional memberships and subscriptions
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -325,10 +354,26 @@ const TaxFinances = () => {
               <InfoList
                 variant="numbered"
                 items={[
-                  { title: "Keep All Receipts", description: "Store physical or digital copies of all receipts and invoices for at least 6 years" },
-                  { title: "Use Accounting Software", description: "FreeAgent, Xero, or QuickBooks make expense tracking and tax returns easier" },
-                  { title: "Separate Business Account", description: "Keep business and personal finances separate for clearer record keeping" },
-                  { title: "Regular Bookkeeping", description: "Update records weekly to avoid year-end scramble and missed claims" },
+                  {
+                    title: 'Keep All Receipts',
+                    description:
+                      'Store physical or digital copies of all receipts and invoices for at least 6 years',
+                  },
+                  {
+                    title: 'Use Accounting Software',
+                    description:
+                      'FreeAgent, Xero, or QuickBooks make expense tracking and tax returns easier',
+                  },
+                  {
+                    title: 'Separate Business Account',
+                    description:
+                      'Keep business and personal finances separate for clearer record keeping',
+                  },
+                  {
+                    title: 'Regular Bookkeeping',
+                    description:
+                      'Update records weekly to avoid year-end scramble and missed claims',
+                  },
                 ]}
               />
             </div>
@@ -341,8 +386,9 @@ const TaxFinances = () => {
             icon={TrendingUp}
             summary={
               <p className="text-white">
-                Cash flow is the lifeblood of your business. Poor cash flow is the number one cause of business failure,
-                even for profitable businesses. Plan ahead for tax payments and quiet periods.
+                Cash flow is the lifeblood of your business. Poor cash flow is the number one cause
+                of business failure, even for profitable businesses. Plan ahead for tax payments and
+                quiet periods.
               </p>
             }
           >
@@ -376,10 +422,26 @@ const TaxFinances = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Collect Deposits", description: "Request 25-50% deposits on larger jobs to cover material costs and secure commitment" },
-                    { title: "Invoice Immediately", description: "Send invoices on job completion day with clear payment terms and bank details" },
-                    { title: "Chase Promptly", description: "Follow up on overdue invoices at 7, 14, and 21 days with increasing urgency" },
-                    { title: "Build Reserves", description: "Set aside 30% of income for tax and maintain 3-6 months operating expenses in reserve" },
+                    {
+                      title: 'Collect Deposits',
+                      description:
+                        'Request 25-50% deposits on larger jobs to cover material costs and secure commitment',
+                    },
+                    {
+                      title: 'Invoice Immediately',
+                      description:
+                        'Send invoices on job completion day with clear payment terms and bank details',
+                    },
+                    {
+                      title: 'Chase Promptly',
+                      description:
+                        'Follow up on overdue invoices at 7, 14, and 21 days with increasing urgency',
+                    },
+                    {
+                      title: 'Build Reserves',
+                      description:
+                        'Set aside 30% of income for tax and maintain 3-6 months operating expenses in reserve',
+                    },
                   ]}
                 />
               </div>
@@ -392,7 +454,8 @@ const TaxFinances = () => {
                     <h4 className="text-base font-semibold text-white">Domestic Customers</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Payment on completion is standard. Consider card payments for convenience and faster settlement.
+                    Payment on completion is standard. Consider card payments for convenience and
+                    faster settlement.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
@@ -415,12 +478,15 @@ const TaxFinances = () => {
                     <h4 className="text-base font-semibold text-white">Commercial Customers</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Formal invoicing with 14-30 day payment terms. Factor cash flow impact into pricing.
+                    Formal invoicing with 14-30 day payment terms. Factor cash flow impact into
+                    pricing.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Professional invoices with PO numbers</span>
+                      <span className="text-sm text-white">
+                        Professional invoices with PO numbers
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -428,7 +494,9 @@ const TaxFinances = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Credit check new commercial clients</span>
+                      <span className="text-sm text-white">
+                        Credit check new commercial clients
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -443,8 +511,9 @@ const TaxFinances = () => {
             icon={PoundSterling}
             summary={
               <p className="text-white">
-                VAT registration is mandatory when your taxable turnover exceeds £90,000 (2024/25 threshold).
-                You can voluntarily register earlier, which has pros and cons to consider.
+                VAT registration is mandatory when your taxable turnover exceeds £90,000 (2024/25
+                threshold). You can voluntarily register earlier, which has pros and cons to
+                consider.
               </p>
             }
           >
@@ -457,12 +526,15 @@ const TaxFinances = () => {
                     <h4 className="text-base font-semibold text-white">Standard VAT</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Charge 20% VAT to customers, reclaim VAT on business purchases. Good if you have significant VAT-able expenses.
+                    Charge 20% VAT to customers, reclaim VAT on business purchases. Good if you have
+                    significant VAT-able expenses.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Reclaim VAT on all business purchases</span>
+                      <span className="text-sm text-white">
+                        Reclaim VAT on all business purchases
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -480,7 +552,8 @@ const TaxFinances = () => {
                     <h4 className="text-base font-semibold text-white">Flat Rate Scheme</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Pay a fixed percentage of gross turnover (14.5% for electricians). Simpler but can't reclaim VAT on purchases.
+                    Pay a fixed percentage of gross turnover (14.5% for electricians). Simpler but
+                    can't reclaim VAT on purchases.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
@@ -508,10 +581,14 @@ const TaxFinances = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-white">Self Assessment Registration</span>
+                      <span className="text-sm font-medium text-white">
+                        Self Assessment Registration
+                      </span>
                       <span className="text-xs text-yellow-400">5 October</span>
                     </div>
-                    <p className="text-sm text-white/90">Register by 5 Oct after year you started</p>
+                    <p className="text-sm text-white/90">
+                      Register by 5 Oct after year you started
+                    </p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
@@ -529,7 +606,9 @@ const TaxFinances = () => {
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-white">Second Payment on Account</span>
+                      <span className="text-sm font-medium text-white">
+                        Second Payment on Account
+                      </span>
                       <span className="text-xs text-yellow-400">31 July</span>
                     </div>
                     <p className="text-sm text-white/90">Second payment on account due 31 Jul</p>
@@ -544,7 +623,9 @@ const TaxFinances = () => {
                   Construction Industry Scheme (CIS)
                 </h4>
                 <p className="text-sm text-white mb-3">
-                  If you work for contractors, they must deduct CIS tax (usually 20%) from your payments. Register as a subcontractor to reduce this to 0% once you have a good compliance record.
+                  If you work for contractors, they must deduct CIS tax (usually 20%) from your
+                  payments. Register as a subcontractor to reduce this to 0% once you have a good
+                  compliance record.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
@@ -567,8 +648,9 @@ const TaxFinances = () => {
             icon={Clock}
             summary={
               <p className="text-white">
-                Proactive tax planning legally minimises your tax liability. The key is timing income and expenses,
-                maximising allowances, and choosing the right business structure.
+                Proactive tax planning legally minimises your tax liability. The key is timing
+                income and expenses, maximising allowances, and choosing the right business
+                structure.
               </p>
             }
           >
@@ -582,10 +664,26 @@ const TaxFinances = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Maximise Pension Contributions", description: "Contributions reduce taxable profit. Up to £60,000/year or 100% of earnings (whichever is lower)" },
-                    { title: "Claim All Allowable Expenses", description: "Many electricians miss legitimate expenses. Review regularly with your accountant" },
-                    { title: "Use Annual Investment Allowance", description: "100% tax relief on qualifying equipment up to £1 million per year" },
-                    { title: "Time Income and Expenses", description: "Bring forward expenses or delay income near year end if beneficial" },
+                    {
+                      title: 'Maximise Pension Contributions',
+                      description:
+                        'Contributions reduce taxable profit. Up to £60,000/year or 100% of earnings (whichever is lower)',
+                    },
+                    {
+                      title: 'Claim All Allowable Expenses',
+                      description:
+                        'Many electricians miss legitimate expenses. Review regularly with your accountant',
+                    },
+                    {
+                      title: 'Use Annual Investment Allowance',
+                      description:
+                        '100% tax relief on qualifying equipment up to £1 million per year',
+                    },
+                    {
+                      title: 'Time Income and Expenses',
+                      description:
+                        'Bring forward expenses or delay income near year end if beneficial',
+                    },
                   ]}
                 />
               </div>
@@ -630,8 +728,9 @@ const TaxFinances = () => {
             icon={Shield}
             summary={
               <p className="text-white">
-                Adequate insurance protects you from financial ruin due to accidents, claims, or unexpected events.
-                Public liability is essential; other covers depend on your work type and risk level.
+                Adequate insurance protects you from financial ruin due to accidents, claims, or
+                unexpected events. Public liability is essential; other covers depend on your work
+                type and risk level.
               </p>
             }
           >
@@ -645,10 +744,26 @@ const TaxFinances = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Public Liability (£2-5m)", description: "Covers injury to third parties and damage to their property. Essential for all electricians. Typically £150-300/year" },
-                    { title: "Employers Liability (£10m)", description: "Legal requirement if you employ anyone, including apprentices. Around £100-200/year" },
-                    { title: "Professional Indemnity", description: "Covers claims arising from your professional advice or design work. Important for certification. £200-400/year" },
-                    { title: "Tools & Equipment", description: "Covers theft, loss, or damage to tools. Van insurance may have limited cover. £100-300/year" },
+                    {
+                      title: 'Public Liability (£2-5m)',
+                      description:
+                        'Covers injury to third parties and damage to their property. Essential for all electricians. Typically £150-300/year',
+                    },
+                    {
+                      title: 'Employers Liability (£10m)',
+                      description:
+                        'Legal requirement if you employ anyone, including apprentices. Around £100-200/year',
+                    },
+                    {
+                      title: 'Professional Indemnity',
+                      description:
+                        'Covers claims arising from your professional advice or design work. Important for certification. £200-400/year',
+                    },
+                    {
+                      title: 'Tools & Equipment',
+                      description:
+                        'Covers theft, loss, or damage to tools. Van insurance may have limited cover. £100-300/year',
+                    },
                   ]}
                 />
               </div>
@@ -663,7 +778,9 @@ const TaxFinances = () => {
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Commercial vehicle insurance required</span>
+                      <span className="text-sm text-white">
+                        Commercial vehicle insurance required
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -706,8 +823,9 @@ const TaxFinances = () => {
             icon={PiggyBank}
             summary={
               <p className="text-white">
-                Self-employed workers don't have employer pension contributions, making personal pension planning essential.
-                Contributions reduce your tax bill while building retirement savings.
+                Self-employed workers don't have employer pension contributions, making personal
+                pension planning essential. Contributions reduce your tax bill while building
+                retirement savings.
               </p>
             }
           >
@@ -721,9 +839,21 @@ const TaxFinances = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Personal Pension (SIPP)", description: "Flexible pension with wide investment choice. Contributions get tax relief at your marginal rate" },
-                    { title: "Stakeholder Pension", description: "Simple, low-cost pension with capped charges. Good starting option with lower amounts" },
-                    { title: "NEST Pension", description: "Government-backed, low-cost option. Simple to set up and manage with flexible contributions" },
+                    {
+                      title: 'Personal Pension (SIPP)',
+                      description:
+                        'Flexible pension with wide investment choice. Contributions get tax relief at your marginal rate',
+                    },
+                    {
+                      title: 'Stakeholder Pension',
+                      description:
+                        'Simple, low-cost pension with capped charges. Good starting option with lower amounts',
+                    },
+                    {
+                      title: 'NEST Pension',
+                      description:
+                        'Government-backed, low-cost option. Simple to set up and manage with flexible contributions',
+                    },
                   ]}
                 />
               </div>
@@ -757,7 +887,9 @@ const TaxFinances = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Start early - compound growth matters</span>
+                    <span className="text-sm text-white">
+                      Start early - compound growth matters
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -786,9 +918,9 @@ const TaxFinances = () => {
             <div>
               <h3 className="text-base font-semibold text-white mb-2">Important Disclaimer</h3>
               <p className="text-sm text-white leading-relaxed">
-                This information is for general guidance only and does not constitute professional financial
-                or tax advice. Tax laws change frequently. Always consult a qualified accountant or tax
-                advisor for advice specific to your business.
+                This information is for general guidance only and does not constitute professional
+                financial or tax advice. Tax laws change frequently. Always consult a qualified
+                accountant or tax advisor for advice specific to your business.
               </p>
             </div>
           </div>

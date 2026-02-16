@@ -1,45 +1,45 @@
-import { ArrowLeft, Scale, Users, ClipboardCheck, BookOpen } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, Users, ClipboardCheck, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The Regulatory Reform (Fire Safety) Order 2005",
+    title: 'The Regulatory Reform (Fire Safety) Order 2005',
     icon: Scale,
     description:
-      "The primary fire safety legislation in England and Wales, replacing over 70 pieces of previous fire law with a single risk-based framework",
+      'The primary fire safety legislation in England and Wales, replacing over 70 pieces of previous fire law with a single risk-based framework',
   },
   {
     id: 2,
-    title: "The Responsible Person",
+    title: 'The Responsible Person',
     icon: Users,
     description:
-      "Who is the responsible person, their legal duties, and the consequences of non-compliance including criminal prosecution",
+      'Who is the responsible person, their legal duties, and the consequences of non-compliance including criminal prosecution',
   },
   {
     id: 3,
-    title: "Fire Risk Assessment",
+    title: 'Fire Risk Assessment',
     icon: ClipboardCheck,
     description:
-      "The five-step fire risk assessment process: identify hazards, identify people at risk, evaluate and act, record and plan, review and update",
+      'The five-step fire risk assessment process: identify hazards, identify people at risk, evaluate and act, record and plan, review and update',
   },
   {
     id: 4,
-    title: "Supporting Legislation & Standards",
+    title: 'Supporting Legislation & Standards',
     icon: BookOpen,
     description:
-      "Health and Safety at Work Act 1974, Management Regulations 1999, Building Regulations Part B, and BS 5839 fire detection standards",
+      'Health and Safety at Work Act 1974, Management Regulations 1999, Building Regulations Part B, and BS 5839 fire detection standards',
   },
 ];
 
 export default function FireSafetyModule2() {
   useSEO({
-    title: "Module 2: Fire Safety Legislation | Fire Safety & Fire Marshal",
+    title: 'Module 2: Fire Safety Legislation | Fire Safety & Fire Marshal',
     description:
-      "Learn about the Regulatory Reform (Fire Safety) Order 2005, the responsible person, fire risk assessments, and supporting legislation.",
+      'Learn about the Regulatory Reform (Fire Safety) Order 2005, the responsible person, fire risk assessments, and supporting legislation.',
   });
 
   return (

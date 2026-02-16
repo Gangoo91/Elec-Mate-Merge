@@ -1,20 +1,19 @@
-
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { MaterialItem } from "@/data/electrician/productData";
-import { cn } from "@/lib/utils";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { MaterialItem } from '@/data/electrician/productData';
+import { cn } from '@/lib/utils';
 
 const SUPPLIERS = [
-  { slug: "screwfix", name: "Screwfix" },
-  { slug: "electricaldirect", name: "ElectricalDirect" },
-  { slug: "toolstation", name: "Toolstation" },
+  { slug: 'screwfix', name: 'Screwfix' },
+  { slug: 'electricaldirect', name: 'ElectricalDirect' },
+  { slug: 'toolstation', name: 'Toolstation' },
 ] as const;
 
-type SupplierSlug = typeof SUPPLIERS[number]["slug"];
+type SupplierSlug = (typeof SUPPLIERS)[number]['slug'];
 
 interface MaterialSearchProps {
   supplierSlug?: SupplierSlug | string;
@@ -22,13 +21,16 @@ interface MaterialSearchProps {
 }
 
 const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
-  const initialSupplier = (supplierSlug?.toLowerCase() as SupplierSlug) || "electricaldirect";
-  const [searchQuery, setSearchQuery] = useState("");
+  const initialSupplier = (supplierSlug?.toLowerCase() as SupplierSlug) || 'electricaldirect';
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedSupplier, setSelectedSupplier] = useState<SupplierSlug>(initialSupplier);
   const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef<number | null>(null);
 
-  const supplierName = useMemo(() => SUPPLIERS.find(s => s.slug === selectedSupplier)?.name || "Supplier", [selectedSupplier]);
+  const supplierName = useMemo(
+    () => SUPPLIERS.find((s) => s.slug === selectedSupplier)?.name || 'Supplier',
+    [selectedSupplier]
+  );
 
   const runSearch = async (term: string) => {
     if (!term || term.trim().length < 2) return;
@@ -44,16 +46,20 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('scrape-supplier-products', {
-        body: { supplierSlug: selectedSupplier, searchTerm: term }
+        body: { supplierSlug: selectedSupplier, searchTerm: term },
       });
       if (error) throw new Error(error.message);
 
-      const items = Array.isArray(data?.products) ? data.products as MaterialItem[] : [];
+      const items = Array.isArray(data?.products) ? (data.products as MaterialItem[]) : [];
       onResults?.(items, data?.supplier || supplierName);
       sessionStorage.setItem(cacheKey, JSON.stringify(data ?? {}));
     } catch (e) {
-      console.error("Live search failed", e);
-      toast({ title: "Search failed", description: "Please try again in a moment.", variant: "destructive" });
+      console.error('Live search failed', e);
+      toast({
+        title: 'Search failed',
+        description: 'Please try again in a moment.',
+        variant: 'destructive',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -64,7 +70,9 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
     if (!searchQuery) return;
 
     debounceRef.current = window.setTimeout(() => runSearch(searchQuery), 450);
-    return () => { if (debounceRef.current) window.clearTimeout(debounceRef.current); };
+    return () => {
+      if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    };
   }, [searchQuery, selectedSupplier]);
 
   return (
@@ -76,7 +84,7 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
           )}
           <Input
             placeholder={`Search ${supplierName}…`}
-            className={cn(!searchQuery && "pl-8")}
+            className={cn(!searchQuery && 'pl-8')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label="Search materials"
@@ -88,20 +96,29 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
           value={selectedSupplier}
           onChange={(e) => setSelectedSupplier(e.target.value as SupplierSlug)}
         >
-          {SUPPLIERS.map(s => (
-            <option key={s.slug} value={s.slug}>{s.name}</option>
+          {SUPPLIERS.map((s) => (
+            <option key={s.slug} value={s.slug}>
+              {s.name}
+            </option>
           ))}
         </select>
       </div>
-      
+
       <div className="flex gap-2 w-full sm:w-auto">
-        <Button className="flex-1" variant="default" onClick={() => runSearch(searchQuery)} disabled={isLoading}>
-          {isLoading ? "Searching…" : "Search"}
+        <Button
+          className="flex-1"
+          variant="default"
+          onClick={() => runSearch(searchQuery)}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Searching…' : 'Search'}
         </Button>
-        <Button 
-          className="flex-1" 
+        <Button
+          className="flex-1"
           variant="outline"
-          onClick={() => window.location.href = `/materials/compare?q=${encodeURIComponent(searchQuery)}`}
+          onClick={() =>
+            (window.location.href = `/materials/compare?q=${encodeURIComponent(searchQuery)}`)
+          }
           disabled={!searchQuery.trim()}
         >
           Compare Prices

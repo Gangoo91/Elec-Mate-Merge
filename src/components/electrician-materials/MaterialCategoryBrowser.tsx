@@ -1,9 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Cable, Zap, Shield, Package, Building, TrendingUp, ArrowRight, Award, Loader2, RefreshCw } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useMaterialsData } from "@/hooks/useMaterialsData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Cable,
+  Zap,
+  Shield,
+  Package,
+  Building,
+  TrendingUp,
+  ArrowRight,
+  Award,
+  Loader2,
+  RefreshCw,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useMaterialsData } from '@/hooks/useMaterialsData';
 
 const MaterialCategoryBrowser = () => {
   const { data: categories, isLoading, error, refetch, isRefetching } = useMaterialsData();
@@ -20,22 +31,22 @@ const MaterialCategoryBrowser = () => {
     'data-networking': Cable,
     'heating-controls': Building,
     'ev-charging': Zap,
-    'fire-security': Shield
+    'fire-security': Shield,
   };
 
   const categoryDescriptions = {
-    cables: "Twin & Earth, SWA, armoured and data cables",
-    components: "Consumer units, MCBs, RCDs and distribution boards",
-    protection: "Earth rods, surge protectors and safety devices",
-    accessories: "Junction boxes, cable glands and fixing accessories",
-    lighting: "LED downlights, emergency lighting and battens",
-    fixings: "Cable ties, screws, plugs and electrical consumables",
-    'cable-management': "Conduit, trunking and cable management systems",
-    'smart-home': "Smart switches, sensors and home automation",
-    'data-networking': "Cat6 cables, data sockets and network equipment",
-    'heating-controls': "Thermostats, timers and heating control systems",
-    'ev-charging': "Electric vehicle chargers and charging equipment",
-    'fire-security': "Smoke detectors, alarms and security systems"
+    cables: 'Twin & Earth, SWA, armoured and data cables',
+    components: 'Consumer units, MCBs, RCDs and distribution boards',
+    protection: 'Earth rods, surge protectors and safety devices',
+    accessories: 'Junction boxes, cable glands and fixing accessories',
+    lighting: 'LED downlights, emergency lighting and battens',
+    fixings: 'Cable ties, screws, plugs and electrical consumables',
+    'cable-management': 'Conduit, trunking and cable management systems',
+    'smart-home': 'Smart switches, sensors and home automation',
+    'data-networking': 'Cat6 cables, data sockets and network equipment',
+    'heating-controls': 'Thermostats, timers and heating control systems',
+    'ev-charging': 'Electric vehicle chargers and charging equipment',
+    'fire-security': 'Smoke detectors, alarms and security systems',
   };
 
   if (error) {
@@ -43,9 +54,9 @@ const MaterialCategoryBrowser = () => {
       <div className="space-y-6 text-center">
         <div className="text-red-400">
           <p>Failed to load materials data</p>
-          <Button 
-            variant="outline" 
-            onClick={() => refetch()} 
+          <Button
+            variant="outline"
+            onClick={() => refetch()}
             className="mt-4"
             disabled={isRefetching}
           >
@@ -83,8 +94,8 @@ const MaterialCategoryBrowser = () => {
           )}
         </div>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Explore our comprehensive range of electrical materials organised by category. 
-          Find everything you need for professional electrical installations.
+          Explore our comprehensive range of electrical materials organised by category. Find
+          everything you need for professional electrical installations.
         </p>
       </div>
 
@@ -112,10 +123,14 @@ const MaterialCategoryBrowser = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories?.map((category) => {
             const IconComponent = categoryIcons[category.id as keyof typeof categoryIcons];
-            const description = categoryDescriptions[category.id as keyof typeof categoryDescriptions];
-            
+            const description =
+              categoryDescriptions[category.id as keyof typeof categoryDescriptions];
+
             return (
-              <Card key={category.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all">
+              <Card
+                key={category.id}
+                className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all"
+              >
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -124,7 +139,9 @@ const MaterialCategoryBrowser = () => {
                       </div>
                       <div>
                         <CardTitle className="text-lg text-foreground">{category.title}</CardTitle>
-                        <p className="text-sm text-muted-foreground">{category.productCount} products</p>
+                        <p className="text-sm text-muted-foreground">
+                          {category.productCount} products
+                        </p>
                       </div>
                     </div>
                     {category.trending && (
@@ -138,7 +155,7 @@ const MaterialCategoryBrowser = () => {
 
                 <CardContent className="space-y-4">
                   <p className="text-sm text-muted-foreground">{description}</p>
-                  
+
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Price Range:</span>
                     <span className="text-elec-yellow font-medium">{category.priceRange}</span>
@@ -151,20 +168,29 @@ const MaterialCategoryBrowser = () => {
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {category.topBrands.slice(0, 3).map((brand) => (
-                        <Badge key={brand} variant="outline" className="text-xs border-elec-yellow/30 text-foreground">
+                        <Badge
+                          key={brand}
+                          variant="outline"
+                          className="text-xs border-elec-yellow/30 text-foreground"
+                        >
                           {brand}
                         </Badge>
                       ))}
                       {category.topBrands.length > 3 && (
-                        <Badge variant="outline" className="text-xs border-elec-yellow/30 text-foreground">
+                        <Badge
+                          variant="outline"
+                          className="text-xs border-elec-yellow/30 text-foreground"
+                        >
                           +{category.topBrands.length - 3}
                         </Badge>
                       )}
                     </div>
                   </div>
 
-
-                  <Button asChild className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
+                  <Button
+                    asChild
+                    className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors"
+                  >
                     <Link to={`/electrician/materials/category/${category.id}`}>
                       Browse {category.title}
                       <ArrowRight className="h-4 w-4 ml-2" />

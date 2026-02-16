@@ -1,11 +1,11 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import type { Section } from "@/pages/employer/EmployerDashboard";
-import { useIncidentStats } from "@/hooks/useIncidents";
-import { useRAMSDocumentStats } from "@/hooks/useRAMSDocuments";
-import { useContractStats } from "@/hooks/useContracts";
-import { useTrainingStats } from "@/hooks/useTrainingRecords";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import type { Section } from '@/pages/employer/EmployerDashboard';
+import { useIncidentStats } from '@/hooks/useIncidents';
+import { useRAMSDocumentStats } from '@/hooks/useRAMSDocuments';
+import { useContractStats } from '@/hooks/useContracts';
+import { useTrainingStats } from '@/hooks/useTrainingRecords';
 import {
   Shield,
   AlertTriangle,
@@ -20,7 +20,7 @@ import {
   Zap,
   TrendingUp,
   Bell,
-} from "lucide-react";
+} from 'lucide-react';
 
 interface SafetyHubProps {
   onNavigate: (section: Section) => void;
@@ -37,7 +37,13 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
 
   // Calculate safety score based on incidents
   const safetyScore = incidentStats
-    ? Math.max(0, 100 - ((incidentStats.critical || 0) * 15) - ((incidentStats.high || 0) * 10) - ((incidentStats.open || 0) * 5))
+    ? Math.max(
+        0,
+        100 -
+          (incidentStats.critical || 0) * 15 -
+          (incidentStats.high || 0) * 10 -
+          (incidentStats.open || 0) * 5
+      )
     : 100;
 
   const openIncidents = incidentStats?.open || 0;
@@ -50,39 +56,42 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
     {
       icon: Shield,
       value: `${safetyScore}%`,
-      label: "Safety",
-      bgClass: "from-success/20 to-success/5",
-      borderClass: "border-success/30 hover:border-success/60",
-      textClass: "text-success",
-      section: "incidents" as Section,
+      label: 'Safety',
+      bgClass: 'from-success/20 to-success/5',
+      borderClass: 'border-success/30 hover:border-success/60',
+      textClass: 'text-success',
+      section: 'incidents' as Section,
     },
     {
       icon: AlertTriangle,
       value: openIncidents,
-      label: "Incidents",
-      bgClass: openIncidents > 0 ? "from-warning/20 to-warning/5" : "from-muted/20 to-muted/5",
-      borderClass: openIncidents > 0 ? "border-warning/50 hover:border-warning/80" : "border-muted/30 hover:border-muted/50",
-      textClass: openIncidents > 0 ? "text-warning" : "text-muted-foreground",
-      section: "incidents" as Section,
+      label: 'Incidents',
+      bgClass: openIncidents > 0 ? 'from-warning/20 to-warning/5' : 'from-muted/20 to-muted/5',
+      borderClass:
+        openIncidents > 0
+          ? 'border-warning/50 hover:border-warning/80'
+          : 'border-muted/30 hover:border-muted/50',
+      textClass: openIncidents > 0 ? 'text-warning' : 'text-muted-foreground',
+      section: 'incidents' as Section,
       pulse: openIncidents > 0,
     },
     {
       icon: FileText,
       value: activeRAMS,
-      label: "RAMS",
-      bgClass: "from-elec-yellow/20 to-elec-yellow/5",
-      borderClass: "border-elec-yellow/30 hover:border-elec-yellow/60",
-      textClass: "text-elec-yellow",
-      section: "rams" as Section,
+      label: 'RAMS',
+      bgClass: 'from-elec-yellow/20 to-elec-yellow/5',
+      borderClass: 'border-elec-yellow/30 hover:border-elec-yellow/60',
+      textClass: 'text-elec-yellow',
+      section: 'rams' as Section,
     },
     {
       icon: BookOpen,
       value: hrDocuments,
-      label: "HR Docs",
-      bgClass: "from-info/20 to-info/5",
-      borderClass: "border-info/30 hover:border-info/60",
-      textClass: "text-info",
-      section: "policies" as Section,
+      label: 'HR Docs',
+      bgClass: 'from-info/20 to-info/5',
+      borderClass: 'border-info/30 hover:border-info/60',
+      textClass: 'text-info',
+      section: 'policies' as Section,
     },
   ];
 
@@ -151,7 +160,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
         <div className="grid grid-cols-2 gap-3">
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-warning/50 bg-gradient-to-br from-elec-gray/50 via-background to-warning/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-warning/5"
-            onClick={() => onNavigate("incidents")}
+            onClick={() => onNavigate('incidents')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-warning/0 to-warning/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -162,9 +171,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-warning group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">Incident Reports</h3>
-              <p className="text-xs text-muted-foreground">
-                Report & track safety
-              </p>
+              <p className="text-xs text-muted-foreground">Report & track safety</p>
               {openIncidents > 0 && (
                 <Badge className="mt-2.5 bg-warning/20 text-warning border-warning/30 text-xs font-medium">
                   {openIncidents} open
@@ -175,7 +182,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-elec-yellow/50 bg-gradient-to-br from-elec-gray/50 via-background to-elec-yellow/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/5"
-            onClick={() => onNavigate("rams")}
+            onClick={() => onNavigate('rams')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/0 to-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -186,9 +193,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">RAMS</h3>
-              <p className="text-xs text-muted-foreground">
-                Risk assessments
-              </p>
+              <p className="text-xs text-muted-foreground">Risk assessments</p>
               <Badge className="mt-2.5 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs font-medium">
                 {activeRAMS} active
               </Badge>
@@ -209,7 +214,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
         <div className="grid grid-cols-2 gap-3">
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-info/50 bg-gradient-to-br from-elec-gray/50 via-background to-info/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-info/5"
-            onClick={() => onNavigate("policies")}
+            onClick={() => onNavigate('policies')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-info/0 to-info/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -220,15 +225,13 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-info group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">Policies</h3>
-              <p className="text-xs text-muted-foreground">
-                Company policies
-              </p>
+              <p className="text-xs text-muted-foreground">Company policies</p>
             </CardContent>
           </Card>
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-purple-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-purple-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
-            onClick={() => onNavigate("contracts")}
+            onClick={() => onNavigate('contracts')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -239,15 +242,13 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-purple-500 group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">Contracts</h3>
-              <p className="text-xs text-muted-foreground">
-                Employment docs
-              </p>
+              <p className="text-xs text-muted-foreground">Employment docs</p>
             </CardContent>
           </Card>
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-success/50 bg-gradient-to-br from-elec-gray/50 via-background to-success/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-success/5"
-            onClick={() => onNavigate("training")}
+            onClick={() => onNavigate('training')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-success/0 to-success/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -258,9 +259,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-success group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">Training</h3>
-              <p className="text-xs text-muted-foreground">
-                Records & certs
-              </p>
+              <p className="text-xs text-muted-foreground">Records & certs</p>
               {expiringCerts > 0 && (
                 <Badge className="mt-2 bg-warning/20 text-warning border-warning/30 text-xs font-medium">
                   {expiringCerts} expiring
@@ -283,7 +282,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
         <div className="grid grid-cols-2 gap-3">
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-cyan-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-cyan-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/5"
-            onClick={() => onNavigate("briefings")}
+            onClick={() => onNavigate('briefings')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -294,15 +293,13 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-cyan-500 group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">Briefings</h3>
-              <p className="text-xs text-muted-foreground">
-                Toolbox talks
-              </p>
+              <p className="text-xs text-muted-foreground">Toolbox talks</p>
             </CardContent>
           </Card>
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-orange-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-orange-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/5"
-            onClick={() => onNavigate("compliance")}
+            onClick={() => onNavigate('compliance')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -313,9 +310,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">Compliance</h3>
-              <p className="text-xs text-muted-foreground">
-                Sign-offs & evidence
-              </p>
+              <p className="text-xs text-muted-foreground">Sign-offs & evidence</p>
             </CardContent>
           </Card>
         </div>

@@ -1,9 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Plus, Check } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { MaterialItem } from "@/hooks/useToolsForMaterials";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ExternalLink, Plus, Check } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { MaterialItem } from '@/hooks/useToolsForMaterials';
 
 interface MaterialListCardProps {
   item: MaterialItem;
@@ -13,12 +13,12 @@ interface MaterialListCardProps {
   isCompareDisabled?: boolean;
 }
 
-const MaterialListCard: React.FC<MaterialListCardProps> = ({ 
-  item, 
-  onAddToCompare, 
-  onRemoveFromCompare, 
-  isSelected = false, 
-  isCompareDisabled = false 
+const MaterialListCard: React.FC<MaterialListCardProps> = ({
+  item,
+  onAddToCompare,
+  onRemoveFromCompare,
+  isSelected = false,
+  isCompareDisabled = false,
 }) => {
   const isMobile = useIsMobile();
 
@@ -26,26 +26,26 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
   const getMaterialInfo = () => {
     const name = item.name.toLowerCase();
     const info: { type?: string; size?: string; length?: string; cores?: string } = {};
-    
+
     // Cable type detection
     if (name.includes('twin') && name.includes('earth')) info.type = 'T&E';
     else if (name.includes('swa')) info.type = 'SWA';
     else if (name.includes('flex') || name.includes('flexible')) info.type = 'Flex';
     else if (name.includes('cat6') || name.includes('cat5')) info.type = 'Data';
     else if (name.includes('coax')) info.type = 'Coax';
-    
+
     // Size detection
     const sizeMatch = name.match(/(\d+(?:\.\d+)?)\s*mm(?:2|²)?/);
     if (sizeMatch) info.size = `${sizeMatch[1]}mm²`;
-    
+
     // Length detection
     const lengthMatch = name.match(/(\d+)\s*m(?:etre)?(?:s?)?\b/);
     if (lengthMatch) info.length = `${lengthMatch[1]}m`;
-    
+
     // Core count detection
     const coreMatch = name.match(/(\d+)\s*core/);
     if (coreMatch) info.cores = `${coreMatch[1]} core`;
-    
+
     return info;
   };
 
@@ -54,23 +54,24 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
 
   // Default URLs if not provided in the data
   const getProductUrl = () => {
-    const supplier = (item.supplier || "").toLowerCase();
+    const supplier = (item.supplier || '').toLowerCase();
     const hosts: Record<string, string> = {
-      "screwfix": "screwfix.com",
-      "city electrical factors": "cef.co.uk",
-      "city-electrical-factors": "cef.co.uk",
-      "electricaldirect": "electricaldirect.co.uk",
-      "toolstation": "toolstation.com",
+      screwfix: 'screwfix.com',
+      'city electrical factors': 'cef.co.uk',
+      'city-electrical-factors': 'cef.co.uk',
+      electricaldirect: 'electricaldirect.co.uk',
+      toolstation: 'toolstation.com',
     };
     const expectedHost = hosts[supplier];
 
     const buildSearch = (q: string) => {
       const term = encodeURIComponent(q);
-      if (supplier.includes("electricaldirect")) return `https://www.electricaldirect.co.uk/search?query=${term}`;
-      if (supplier.includes("city")) return `https://www.cef.co.uk/search?q=${term}`;
-      if (supplier.includes("screwfix")) return `https://www.screwfix.com/search?search=${term}`;
-      if (supplier.includes("toolstation")) return `https://www.toolstation.com/search?q=${term}`;
-      return "#";
+      if (supplier.includes('electricaldirect'))
+        return `https://www.electricaldirect.co.uk/search?query=${term}`;
+      if (supplier.includes('city')) return `https://www.cef.co.uk/search?q=${term}`;
+      if (supplier.includes('screwfix')) return `https://www.screwfix.com/search?search=${term}`;
+      if (supplier.includes('toolstation')) return `https://www.toolstation.com/search?q=${term}`;
+      return '#';
     };
 
     if (item.productUrl) {
@@ -91,20 +92,20 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
   // Normalise image paths
   const imageSrc = (() => {
     const src = item.image;
-    if (!src) return "/placeholder.svg";
-    
+    if (!src) return '/placeholder.svg';
+
     let finalSrc = src;
-    
+
     // If it's not already an absolute URL, make it one
-    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+    if (!/^https?:\/\//i.test(src) && !src.startsWith('/')) {
       finalSrc = `/${src}`;
     }
-    
+
     // Update image size parameters from 136x136 to 236x236
-    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
-      finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
+    if (finalSrc.includes('wid=136') && finalSrc.includes('hei=136')) {
+      finalSrc = finalSrc.replace(/wid=136/g, 'wid=236').replace(/hei=136/g, 'hei=236');
     }
-    
+
     return finalSrc;
   })();
 
@@ -120,7 +121,9 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                 alt={`${item.name} from ${item.supplier}`}
                 loading="lazy"
                 className="object-cover w-full h-full transition-transform duration-200 group-hover:scale-105"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
+                }}
               />
             </div>
           </div>
@@ -132,15 +135,20 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
               <div className="flex-1 min-w-0">
                 {/* Header with badges */}
                 <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <Badge variant="outline" className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 text-[10px] font-medium">
+                  <Badge
+                    variant="outline"
+                    className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 text-[10px] font-medium"
+                  >
                     {item.category}
                   </Badge>
                   {item.stockStatus && (
-                    <Badge 
+                    <Badge
                       variant={
-                        item.stockStatus === "In Stock" ? "success" :
-                        item.stockStatus === "Low Stock" ? "warning" :
-                        "destructive"
+                        item.stockStatus === 'In Stock'
+                          ? 'success'
+                          : item.stockStatus === 'Low Stock'
+                            ? 'warning'
+                            : 'destructive'
                       }
                       className="text-[10px] font-medium"
                     >
@@ -148,7 +156,9 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                     </Badge>
                   )}
                   {item.isOnSale && (
-                    <Badge variant="destructive" className="text-[10px] font-medium">SALE</Badge>
+                    <Badge variant="destructive" className="text-[10px] font-medium">
+                      SALE
+                    </Badge>
                   )}
                 </div>
 
@@ -162,22 +172,34 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                   <div className="mb-2">
                     <div className="flex flex-wrap gap-1">
                       {materialInfo.type && (
-                        <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
+                        <Badge
+                          variant="secondary"
+                          className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10"
+                        >
                           {materialInfo.type}
                         </Badge>
                       )}
                       {materialInfo.size && (
-                        <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
+                        <Badge
+                          variant="secondary"
+                          className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10"
+                        >
                           {materialInfo.size}
                         </Badge>
                       )}
                       {materialInfo.length && (
-                        <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
+                        <Badge
+                          variant="secondary"
+                          className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10"
+                        >
                           {materialInfo.length}
                         </Badge>
                       )}
                       {materialInfo.cores && (
-                        <Badge variant="secondary" className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10">
+                        <Badge
+                          variant="secondary"
+                          className="text-[10px] bg-elec-gray/50 text-text-subtle border-elec-yellow/10"
+                        >
                           {materialInfo.cores}
                         </Badge>
                       )}
@@ -186,15 +208,13 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                 )}
 
                 {/* Supplier */}
-                <div className="text-sm text-text-muted mb-2 font-medium">
-                  {item.supplier}
-                </div>
+                <div className="text-sm text-text-muted mb-2 font-medium">{item.supplier}</div>
 
                 {/* Highlights - truncated for list view */}
                 {item.highlights && item.highlights.length > 0 && (
                   <div className="mb-2">
                     <p className="text-xs text-text-subtle line-clamp-2">
-                      {item.highlights.slice(0, 2).join(" • ")}
+                      {item.highlights.slice(0, 2).join(' • ')}
                     </p>
                   </div>
                 )}
@@ -226,7 +246,7 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                         }
                       }}
                       disabled={isCompareDisabled && !isSelected}
-                      variant={isSelected ? "gold" : "outline"}
+                      variant={isSelected ? 'gold' : 'outline'}
                       className={`w-full h-11 touch-manipulation active:scale-[0.98] ${isSelected ? 'shadow-sm' : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}`}
                     >
                       {isSelected ? (
@@ -243,8 +263,16 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                     </Button>
                   )}
 
-                  <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
-                    <Button variant="gold" className="w-full h-11 shadow-sm hover:shadow-md transition-shadow duration-200 touch-manipulation active:scale-[0.98]">
+                  <a
+                    href={getProductUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full"
+                  >
+                    <Button
+                      variant="gold"
+                      className="w-full h-11 shadow-sm hover:shadow-md transition-shadow duration-200 touch-manipulation active:scale-[0.98]"
+                    >
                       View Deal
                       <ExternalLink className="h-4 w-4 ml-2" />
                     </Button>

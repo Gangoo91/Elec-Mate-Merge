@@ -8,7 +8,7 @@ export function transformHealthSafetyResponse(hsData: any, projectDetails?: any)
   }
 
   const sourceData = hsData;
-  
+
   if (!sourceData.hazards || !Array.isArray(sourceData.hazards)) {
     console.error('❌ No hazards array found');
     return null;
@@ -21,35 +21,35 @@ export function transformHealthSafetyResponse(hsData: any, projectDetails?: any)
       risk: h.hazard || 'Unknown risk',
       likelihood: h.likelihood || 3,
       severity: h.severity || 3,
-      riskRating: h.riskScore || (h.likelihood * h.severity) || 9,
+      riskRating: h.riskScore || h.likelihood * h.severity || 9,
       controls: h.controlMeasure || 'No controls specified',
       residualRisk: h.residualRisk || Math.ceil((h.riskScore || 9) * 0.3) || 3,
       linkedToStep: h.linkedToStep || 0,
       furtherAction: h.regulation || '',
       responsible: '',
       actionBy: '',
-      done: false
+      done: false,
     })),
-    
+
     ppeDetails: (sourceData.ppe || []).map((p: any, idx: number) => ({
       id: `ppe-${p.itemNumber || idx + 1}`,
       itemNumber: p.itemNumber || idx + 1,
       ppeType: p.ppeType || 'PPE Item',
       standard: p.standard || 'N/A',
       mandatory: p.mandatory !== false,
-      purpose: p.purpose || 'Protection'
+      purpose: p.purpose || 'Protection',
     })),
-    
+
     emergencyProcedures: sourceData.emergencyProcedures || [],
     complianceRegulations: sourceData.complianceRegulations || [],
-    
+
     projectName: projectDetails?.projectName || '',
     location: projectDetails?.location || '',
     date: new Date().toISOString().split('T')[0],
     assessor: projectDetails?.assessor || '',
     contractor: projectDetails?.contractor || '',
     supervisor: projectDetails?.supervisor || '',
-    activities: []
+    activities: [],
   };
 
   return transformed;

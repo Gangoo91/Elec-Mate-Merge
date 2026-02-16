@@ -1,45 +1,45 @@
-import { ArrowLeft, ShieldCheck, Bell, Siren, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ShieldCheck, Bell, Siren, Lightbulb } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Fire Prevention Measures",
+    title: 'Fire Prevention Measures',
     icon: ShieldCheck,
     description:
-      "Eliminating ignition sources, safe storage of flammable materials, hot work permits, electrical safety, and good housekeeping",
+      'Eliminating ignition sources, safe storage of flammable materials, hot work permits, electrical safety, and good housekeeping',
   },
   {
     id: 2,
-    title: "Fire Detection Systems",
+    title: 'Fire Detection Systems',
     icon: Bell,
     description:
-      "Conventional, addressable, and analogue-addressable systems, detector types (smoke, heat, multi-sensor), BS 5839 categories L1-L5 and P1-P2",
+      'Conventional, addressable, and analogue-addressable systems, detector types (smoke, heat, multi-sensor), BS 5839 categories L1-L5 and P1-P2',
   },
   {
     id: 3,
-    title: "Fire Alarm Systems",
+    title: 'Fire Alarm Systems',
     icon: Siren,
     description:
-      "Manual call points, alarm sounders, visual alarm devices, cause and effect, zoning, and false alarm management",
+      'Manual call points, alarm sounders, visual alarm devices, cause and effect, zoning, and false alarm management',
   },
   {
     id: 4,
-    title: "Emergency Lighting",
+    title: 'Emergency Lighting',
     icon: Lightbulb,
     description:
-      "BS 5266 requirements, maintained vs non-maintained, escape route lighting, open area lighting, testing and maintenance schedules",
+      'BS 5266 requirements, maintained vs non-maintained, escape route lighting, open area lighting, testing and maintenance schedules',
   },
 ];
 
 export default function FireSafetyModule3() {
   useSEO({
-    title: "Module 3: Fire Prevention & Detection | Fire Safety & Fire Marshal",
+    title: 'Module 3: Fire Prevention & Detection | Fire Safety & Fire Marshal',
     description:
-      "Learn about fire prevention measures, detection systems, fire alarm systems, and emergency lighting requirements.",
+      'Learn about fire prevention measures, detection systems, fire alarm systems, and emergency lighting requirements.',
   });
 
   return (

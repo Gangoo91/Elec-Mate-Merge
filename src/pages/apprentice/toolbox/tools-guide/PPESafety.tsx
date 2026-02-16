@@ -1,15 +1,42 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Shield, HardHat, Eye, Star } from "lucide-react";
-import PPETab from "@/components/apprentice/tools-guide/PPETab";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Shield, HardHat, Eye, Star } from 'lucide-react';
+import PPETab from '@/components/apprentice/tools-guide/PPETab';
 
 const PPESafety = () => {
   const quickStats = [
-    { label: "Basic PPE Items", value: "5+", icon: Shield, color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" },
-    { label: "Specialist PPE", value: "5+", icon: HardHat, color: "text-orange-400", bg: "from-orange-500/10 to-orange-500/5", border: "border-orange-500/30" },
-    { label: "BS Standards", value: "6+", icon: Eye, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
-    { label: "Safety Priority", value: "#1", icon: Star, color: "text-green-400", bg: "from-green-500/10 to-green-500/5", border: "border-green-500/30" }
+    {
+      label: 'Basic PPE Items',
+      value: '5+',
+      icon: Shield,
+      color: 'text-elec-yellow',
+      bg: 'from-elec-yellow/10 to-elec-yellow/5',
+      border: 'border-elec-yellow/30',
+    },
+    {
+      label: 'Specialist PPE',
+      value: '5+',
+      icon: HardHat,
+      color: 'text-orange-400',
+      bg: 'from-orange-500/10 to-orange-500/5',
+      border: 'border-orange-500/30',
+    },
+    {
+      label: 'BS Standards',
+      value: '6+',
+      icon: Eye,
+      color: 'text-blue-400',
+      bg: 'from-blue-500/10 to-blue-500/5',
+      border: 'border-blue-500/30',
+    },
+    {
+      label: 'Safety Priority',
+      value: '#1',
+      icon: Star,
+      color: 'text-green-400',
+      bg: 'from-green-500/10 to-green-500/5',
+      border: 'border-green-500/30',
+    },
   ];
 
   return (
@@ -23,7 +50,8 @@ const PPESafety = () => {
           PPE & Safety Equipment
         </h1>
         <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Personal Protective Equipment is essential for every UK electrical apprentice. Your safety is paramount - never compromise on PPE quality.
+          Personal Protective Equipment is essential for every UK electrical apprentice. Your safety
+          is paramount - never compromise on PPE quality.
         </p>
         <SmartBackButton />
       </div>

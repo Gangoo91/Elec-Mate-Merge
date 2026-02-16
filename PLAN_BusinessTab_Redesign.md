@@ -3,6 +3,7 @@
 ## Current State Analysis
 
 ### Two Separate Business Pages
+
 1. **BusinessTab.tsx** (Settings > Business tab) - Basic form with:
    - Company Details (name, address, phone, email, etc.)
    - Registration & Certification (scheme, number, expiry)
@@ -26,6 +27,7 @@
    - ProfileFooter
 
 ### Problems
+
 - **Duplicate functionality** across two pages
 - **BusinessTab is a basic form** - doesn't match native app feel
 - **Profile page has all the features** but is a separate route, not in Settings
@@ -49,6 +51,7 @@ The BusinessTab should become the **single source of truth** for all business se
 Replace the current form-based BusinessTab with a card-based layout using the existing profile card components.
 
 **New BusinessTab Structure:**
+
 ```
 BusinessTab
 ├── ProfileHeader (company avatar, name, Elec-ID badge)
@@ -70,6 +73,7 @@ BusinessTab
 ### Phase 2: Adapt Card Components for Settings Context
 
 The existing card components in `/components/profile/` are designed for the Profile page. We'll:
+
 1. **Import and reuse them directly** in BusinessTab
 2. Pass the same props (companyProfile, onSave, isLoading)
 3. Remove the Profile.tsx page and route
@@ -77,6 +81,7 @@ The existing card components in `/components/profile/` are designed for the Prof
 ### Phase 3: Wire Up All Functionality
 
 Each card already has its own edit sheet/modal. Ensure:
+
 - PaymentBankingCard includes Stripe Connect status & dashboard link
 - AccountingConnectorsCard shows connection status for Xero/QuickBooks/Sage
 - All cards call `saveCompanyProfile` from `useCompanyProfile` hook
@@ -85,6 +90,7 @@ Each card already has its own edit sheet/modal. Ensure:
 ### Phase 4: Delete Redundant Files
 
 After BusinessTab is complete:
+
 1. Delete `/src/pages/Profile.tsx`
 2. Remove `/profile` route from router
 3. Optionally consolidate card components if they're only used here
@@ -93,15 +99,16 @@ After BusinessTab is complete:
 
 ## Files to Modify
 
-| File | Action |
-|------|--------|
+| File                                      | Action                            |
+| ----------------------------------------- | --------------------------------- |
 | `src/components/settings/BusinessTab.tsx` | **Rewrite** - Use card components |
-| `src/pages/Profile.tsx` | **Delete** after migration |
-| `src/App.tsx` or router file | **Remove** `/profile` route |
+| `src/pages/Profile.tsx`                   | **Delete** after migration        |
+| `src/App.tsx` or router file              | **Remove** `/profile` route       |
 
 ## Files to Reuse (no changes needed)
 
 These existing card components will be imported into BusinessTab:
+
 - `src/components/profile/ProfileHeader.tsx`
 - `src/components/profile/ContactDetailsCard.tsx`
 - `src/components/profile/BusinessDetailsCard.tsx`
@@ -119,6 +126,7 @@ These existing card components will be imported into BusinessTab:
 ## UI/UX Design
 
 ### Mobile-First Card Layout
+
 - Single column on mobile
 - Two columns on desktop (lg breakpoint)
 - Each card is tappable with chevron indicator
@@ -126,6 +134,7 @@ These existing card components will be imported into BusinessTab:
 - Native iOS-style animations
 
 ### Card Design Pattern (matching existing)
+
 ```
 ┌─Card─────────────────────────────────────────────┐
 │ ● Card Title                               [>]   │
@@ -139,6 +148,7 @@ These existing card components will be imported into BusinessTab:
 ```
 
 ### Key Features to Include
+
 1. **Stripe Connect** - Show connection status, link to Stripe Dashboard
 2. **Bank Details** - Account name, sort code, account number
 3. **Accounting Integrations** - Xero, QuickBooks, Sage connections
@@ -151,6 +161,7 @@ These existing card components will be imported into BusinessTab:
 ---
 
 ## What's NOT Included (per user request)
+
 - Terms & Conditions (user confirmed they don't have T&Cs)
 
 ---
@@ -158,6 +169,7 @@ These existing card components will be imported into BusinessTab:
 ## Verification Checklist
 
 After implementation:
+
 - [ ] BusinessTab displays all company info in card format
 - [ ] Each card opens edit sheet when tapped
 - [ ] Stripe Connect shows connection status

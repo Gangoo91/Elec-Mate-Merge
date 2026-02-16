@@ -10,29 +10,29 @@ const SafetyResources = () => {
       description: 'Complete safety requirements and procedures',
       type: 'PDF Guide',
       icon: FileText,
-      color: 'text-blue-400'
+      color: 'text-blue-400',
     },
     {
       title: 'Safe Isolation Video Guide',
       description: 'Step-by-step visual demonstration',
       type: 'Video Tutorial',
       icon: Video,
-      color: 'text-green-400'
+      color: 'text-green-400',
     },
     {
       title: 'PPE Selection Chart',
       description: 'Quick reference for protective equipment',
       type: 'Reference',
       icon: BookOpen,
-      color: 'text-orange-400'
+      color: 'text-orange-400',
     },
     {
       title: 'Emergency Response Checklist',
       description: 'Downloadable emergency procedures',
       type: 'Checklist',
       icon: Download,
-      color: 'text-red-400'
-    }
+      color: 'text-red-400',
+    },
   ];
 
   return (
@@ -64,7 +64,9 @@ const SafetyResources = () => {
                       </Button>
                     </div>
                     <p className="text-sm text-white mb-1">{resource.description}</p>
-                    <span className={`text-xs ${resource.color} bg-neutral-600 px-2 py-0.5 rounded`}>
+                    <span
+                      className={`text-xs ${resource.color} bg-neutral-600 px-2 py-0.5 rounded`}
+                    >
                       {resource.type}
                     </span>
                   </div>
@@ -73,7 +75,7 @@ const SafetyResources = () => {
             );
           })}
         </div>
-        
+
         <div className="mt-4 pt-4 border-t border-border">
           <Button className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
             <Download className="h-4 w-4 mr-2" />

@@ -1,17 +1,19 @@
-
-import { Shield, Zap, AlertTriangle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Shield, Zap, AlertTriangle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface InsulationTestingDiagramProps {
   systemType?: string;
   installationType?: string;
 }
 
-const InsulationTestingDiagram = ({ systemType, installationType }: InsulationTestingDiagramProps) => {
+const InsulationTestingDiagram = ({
+  systemType,
+  installationType,
+}: InsulationTestingDiagramProps) => {
   return (
     <div className="space-y-4">
       <div className="text-sm text-indigo-200 mb-4">
-        Insulation resistance testing for {systemType || "electrical"} systems
+        Insulation resistance testing for {systemType || 'electrical'} systems
       </div>
 
       {/* Test Voltage Selection */}
@@ -43,24 +45,50 @@ const InsulationTestingDiagram = ({ systemType, installationType }: InsulationTe
           Required Test Combinations
         </h4>
         <div className="space-y-3">
-          {systemType === "three-phase" ? (
+          {systemType === 'three-phase' ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L1-L2</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L1-L3</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L2-L3</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L1-N</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L2-N</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L3-N</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L1-E</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L2-E</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">L3-E</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">N-E</Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L1-L2
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L1-L3
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L2-L3
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L1-N
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L2-N
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L3-N
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L1-E
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L2-E
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                L3-E
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                N-E
+              </Badge>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-              <Badge variant="outline" className="text-green-300 border-green-400/30">Line-Neutral</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">Line-Earth</Badge>
-              <Badge variant="outline" className="text-green-300 border-green-400/30">Neutral-Earth</Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                Line-Neutral
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                Line-Earth
+              </Badge>
+              <Badge variant="outline" className="text-green-300 border-green-400/30">
+                Neutral-Earth
+              </Badge>
             </div>
           )}
         </div>
@@ -75,7 +103,9 @@ const InsulationTestingDiagram = ({ systemType, installationType }: InsulationTe
         <div className="space-y-2 text-xs text-amber-200">
           <div className="flex items-start gap-2">
             <span className="text-amber-400 mt-1">1.</span>
-            <span>Disconnect or bypass all electronic equipment (LED lights, dimmer switches, etc.)</span>
+            <span>
+              Disconnect or bypass all electronic equipment (LED lights, dimmer switches, etc.)
+            </span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-amber-400 mt-1">2.</span>

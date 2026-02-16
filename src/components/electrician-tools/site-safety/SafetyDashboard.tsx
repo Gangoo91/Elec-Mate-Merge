@@ -35,6 +35,7 @@ interface DashboardStats {
   recentInspectionsPassed: number;
   recentInspectionsFailed: number;
   accidentCount30Days: number;
+  riddorPendingCount?: number;
 }
 
 interface SafetyDashboardProps {
@@ -454,6 +455,30 @@ export function SafetyDashboard({
           </div>
         </div>
       </motion.div>
+
+      {/* RIDDOR Urgency Banner */}
+      {stats.riddorPendingCount != null && stats.riddorPendingCount > 0 && (
+        <motion.button
+          variants={itemVariants}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => onCardTap?.('accident-book')}
+          className="w-full p-3 rounded-xl border border-red-500/30 bg-gradient-to-r from-red-500/15 to-red-600/10 flex items-center gap-3 touch-manipulation active:opacity-80 transition-opacity"
+        >
+          <div className="w-9 h-9 rounded-lg bg-red-500/20 flex items-center justify-center flex-shrink-0">
+            <AlertTriangle className="h-4.5 w-4.5 text-red-400" />
+          </div>
+          <div className="flex-1 text-left">
+            <p className="text-xs font-bold text-red-300">
+              {stats.riddorPendingCount} RIDDOR Report{stats.riddorPendingCount > 1 ? 's' : ''}{' '}
+              Pending
+            </p>
+            <p className="text-[10px] text-white mt-0.5">
+              Tap to review and report to HSE
+            </p>
+          </div>
+          <ChevronRight className="h-4 w-4 text-red-400 flex-shrink-0" />
+        </motion.button>
+      )}
 
       {/* Stats Grid — 3 columns, 2 rows */}
       <motion.div variants={containerVariants} className="grid grid-cols-3 gap-2">

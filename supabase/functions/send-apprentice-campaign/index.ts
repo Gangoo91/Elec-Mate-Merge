@@ -1,88 +1,91 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
-import { Resend } from "npm:resend@2.0.0";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { Resend } from 'npm:resend@2.0.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 // Rate limiting: 500ms between sends to stay within Resend limits (2/sec)
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const SEND_DELAY_MS = 500;
 
+// Direct Stripe payment links for trial winback CTA
+const APPRENTICE_WINBACK_CONFIG = {
+  monthlyPaymentLink: 'https://buy.stripe.com/aFa14g4sy8fi5Q57JkbjW05', // £4.99/mo — price_1SmUef2RKw5t5RAmRIMTWTqU
+  yearlyPaymentLink: 'https://buy.stripe.com/9B628k9MS8fi6U9fbMbjW06', // £49.99/yr — price_1SmUfK2RKw5t5RAml6bj1I77
+};
+
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 // Campaign type definitions
 const CAMPAIGN_TYPES = {
-  feature_spotlight: { cooldownDays: 14, label: "Feature Spotlight" },
-  new_content: { cooldownDays: 7, label: "New Content" },
-  engagement_nudge: { cooldownDays: 14, label: "Engagement Nudge" },
-  trial_winback: { cooldownDays: null, label: "Trial Win-Back" }, // once only
+  feature_spotlight: { cooldownDays: 14, label: 'Feature Spotlight' },
+  new_content: { cooldownDays: 7, label: 'New Content' },
+  engagement_nudge: { cooldownDays: 14, label: 'Engagement Nudge' },
+  trial_winback: { cooldownDays: null, label: 'Trial Win-Back' }, // once only
 } as const;
 
 type CampaignType = keyof typeof CAMPAIGN_TYPES;
 
 // Apprentice features for spotlight emails
-const SPOTLIGHT_FEATURES: Record<
-  string,
-  { name: string; description: string }
-> = {
+const SPOTLIGHT_FEATURES: Record<string, { name: string; description: string }> = {
   study_centre: {
-    name: "Study Centre",
+    name: 'Study Centre',
     description:
-      "36 courses covering Level 2, Level 3, EAL, City & Guilds, HNC, and 18th Edition. 500+ practice questions to nail your exams.",
+      '36 courses covering Level 2, Level 3, EAL, City & Guilds, HNC, and 18th Edition. 500+ practice questions to nail your exams.',
   },
   am2_simulator: {
-    name: "AM2 Simulator",
+    name: 'AM2 Simulator',
     description:
-      "Practice safe isolation, fault finding, and knowledge tests in a realistic simulation. Know exactly what to expect on the day.",
+      'Practice safe isolation, fault finding, and knowledge tests in a realistic simulation. Know exactly what to expect on the day.',
   },
   epa_simulator: {
-    name: "EPA Simulator",
+    name: 'EPA Simulator',
     description:
       "AI-scored professional discussions with predicted grading. Practice your EPA until you're confident you'll smash it.",
   },
   portfolio_hub: {
-    name: "Portfolio Hub",
+    name: 'Portfolio Hub',
     description:
-      "Track your evidence, map it to assessment criteria, and log your OJT hours. Everything your assessor needs in one place.",
+      'Track your evidence, map it to assessment criteria, and log your OJT hours. Everything your assessor needs in one place.',
   },
   site_diary: {
-    name: "Site Diary",
+    name: 'Site Diary',
     description:
-      "Daily logging, mood tracking, streaks, and AI coach insights. Build a record of everything you do on site.",
+      'Daily logging, mood tracking, streaks, and AI coach insights. Build a record of everything you do on site.',
   },
   ask_dave: {
-    name: "Ask Dave",
+    name: 'Ask Dave',
     description:
-      "Your 24/7 AI mentor who knows BS 7671 inside out. Ask anything about the regs, wiring, or your coursework.",
+      'Your 24/7 AI mentor who knows BS 7671 inside out. Ask anything about the regs, wiring, or your coursework.',
   },
   mental_health: {
-    name: "Mental Health Hub",
+    name: 'Mental Health Hub',
     description:
-      "Mood tracking, breathing exercises, gratitude journaling, and crisis support. Because your mental health matters just as much.",
+      'Mood tracking, breathing exercises, gratitude journaling, and crisis support. Because your mental health matters just as much.',
   },
   career_development: {
-    name: "Career Development",
+    name: 'Career Development',
     description:
       "See your career pathways, plan your certifications, and connect with others in the trade. Know where you're headed.",
   },
   ojt_hub: {
-    name: "OJT Hub",
+    name: 'OJT Hub',
     description:
-      "Track your on-the-job training hours, check compliance with the 20% requirement, and link evidence to your portfolio.",
+      'Track your on-the-job training hours, check compliance with the 20% requirement, and link evidence to your portfolio.',
   },
   learning_videos: {
-    name: "Learning Videos",
+    name: 'Learning Videos',
     description:
-      "60 curated videos from top electrical educators. Watch, learn, and revise at your own pace.",
+      '60 curated videos from top electrical educators. Watch, learn, and revise at your own pace.',
   },
   calculators: {
-    name: "Electrical Calculators",
+    name: 'Electrical Calculators',
     description:
-      "40+ calculators for cable sizing, voltage drop, Zs values, diversity, and more. The quick answers you need on site.",
+      '40+ calculators for cable sizing, voltage drop, Zs values, diversity, and more. The quick answers you need on site.',
   },
 };
 
@@ -136,18 +139,11 @@ function signOff(): string {
           </tr>`;
 }
 
-function utmUrl(
-  path: string,
-  campaignType: string
-): string {
+function utmUrl(path: string, campaignType: string): string {
   return `https://elec-mate.com${path}?utm_source=email&utm_medium=campaign&utm_campaign=apprentice_${campaignType}`;
 }
 
-function ctaBlock(
-  text: string,
-  campaignType: string,
-  path: string = "/subscriptions"
-): string {
+function ctaBlock(text: string, campaignType: string, path: string = '/subscriptions'): string {
   const url = utmUrl(path, campaignType);
   return `
           <tr>
@@ -164,13 +160,10 @@ function ctaBlock(
 
 // ─── Email Templates ────────────────────────────────────────────────
 
-function generateFeatureSpotlightEmail(
-  firstName: string,
-  featureKey: string
-): string {
+function generateFeatureSpotlightEmail(firstName: string, featureKey: string): string {
   const feature = SPOTLIGHT_FEATURES[featureKey] || {
     name: featureKey,
-    description: "A powerful tool built just for UK apprentices.",
+    description: 'A powerful tool built just for UK apprentices.',
   };
 
   return emailWrapper(`
@@ -209,7 +202,7 @@ function generateFeatureSpotlightEmail(
             </td>
           </tr>
 
-          ${ctaBlock("Check it out before prices go up", "feature_spotlight")}
+          ${ctaBlock('Check it out before prices go up', 'feature_spotlight')}
           ${signOff()}
   `);
 }
@@ -255,7 +248,7 @@ function generateNewContentEmail(
             </td>
           </tr>
 
-          ${ctaBlock("Jump in now &mdash; prices rise at app store launch", "new_content")}
+          ${ctaBlock('Jump in now &mdash; prices rise at app store launch', 'new_content')}
           ${signOff()}
   `);
 }
@@ -263,64 +256,64 @@ function generateNewContentEmail(
 function generateEngagementNudgeEmail(firstName: string): string {
   const features = [
     {
-      name: "Study Centre",
-      desc: "36 courses, Level 2 &amp; 3, EAL &amp; City &amp; Guilds, 500+ questions",
-      colour: "#22c55e",
+      name: 'Study Centre',
+      desc: '36 courses, Level 2 &amp; 3, EAL &amp; City &amp; Guilds, 500+ questions',
+      colour: '#22c55e',
     },
     {
-      name: "AM2 Simulator",
-      desc: "Safe isolation, fault finding, knowledge tests",
-      colour: "#3b82f6",
+      name: 'AM2 Simulator',
+      desc: 'Safe isolation, fault finding, knowledge tests',
+      colour: '#3b82f6',
     },
     {
-      name: "EPA Simulator",
-      desc: "AI-scored professional discussions, predicted grading",
-      colour: "#8b5cf6",
+      name: 'EPA Simulator',
+      desc: 'AI-scored professional discussions, predicted grading',
+      colour: '#8b5cf6',
     },
     {
-      name: "Portfolio Hub",
-      desc: "Evidence tracking, assessment criteria mapping, OJT hours",
-      colour: "#f59e0b",
+      name: 'Portfolio Hub',
+      desc: 'Evidence tracking, assessment criteria mapping, OJT hours',
+      colour: '#f59e0b',
     },
     {
-      name: "Site Diary",
-      desc: "Daily logging, mood tracking, streaks, AI coach insights",
-      colour: "#ef4444",
+      name: 'Site Diary',
+      desc: 'Daily logging, mood tracking, streaks, AI coach insights',
+      colour: '#ef4444',
     },
     {
-      name: "60 Learning Videos",
-      desc: "Curated from top electrical educators",
-      colour: "#06b6d4",
+      name: '60 Learning Videos',
+      desc: 'Curated from top electrical educators',
+      colour: '#06b6d4',
     },
     {
-      name: "40+ Electrical Calculators",
-      desc: "Cable sizing, voltage drop, diversity, Zs values",
-      colour: "#10b981",
+      name: '40+ Electrical Calculators',
+      desc: 'Cable sizing, voltage drop, diversity, Zs values',
+      colour: '#10b981',
     },
     {
-      name: "Ask Dave",
-      desc: "24/7 AI mentor who knows BS 7671",
-      colour: "#fbbf24",
+      name: 'Ask Dave',
+      desc: '24/7 AI mentor who knows BS 7671',
+      colour: '#fbbf24',
     },
     {
-      name: "Mental Health Hub",
-      desc: "Mood tracking, breathing exercises, gratitude journal, crisis support",
-      colour: "#ec4899",
+      name: 'Mental Health Hub',
+      desc: 'Mood tracking, breathing exercises, gratitude journal, crisis support',
+      colour: '#ec4899',
     },
     {
-      name: "Career Development",
-      desc: "Pathways, certifications, networking",
-      colour: "#a78bfa",
+      name: 'Career Development',
+      desc: 'Pathways, certifications, networking',
+      colour: '#a78bfa',
     },
     {
-      name: "Apprentice Toolbox",
-      desc: "Year-by-year expectations, jargon guide, funding info, study tips",
-      colour: "#14b8a6",
+      name: 'Apprentice Toolbox',
+      desc: 'Year-by-year expectations, jargon guide, funding info, study tips',
+      colour: '#14b8a6',
     },
     {
-      name: "OJT Hub",
-      desc: "Time tracking, compliance tracking, 20% requirement",
-      colour: "#f97316",
+      name: 'OJT Hub',
+      desc: 'Time tracking, compliance tracking, 20% requirement',
+      colour: '#f97316',
     },
   ];
 
@@ -332,7 +325,7 @@ function generateEngagementNudgeEmail(firstName: string): string {
                 <p style="margin: 0; font-size: 13px; color: #94a3b8; line-height: 1.5;">${f.desc}</p>
               </div>`
     )
-    .join("");
+    .join('');
 
   return emailWrapper(`
           <tr>
@@ -365,7 +358,7 @@ function generateEngagementNudgeEmail(firstName: string): string {
             </td>
           </tr>
 
-          ${ctaBlock("Get back into Elec-Mate", "engagement_nudge")}
+          ${ctaBlock('Get back into Elec-Mate', 'engagement_nudge')}
           ${signOff()}
   `);
 }
@@ -457,8 +450,11 @@ function generateTrialWinbackEmail(firstName: string): string {
                 <p style="margin: 6px 0 16px; font-size: 14px; color: #94a3b8;">
                   or &pound;49.99/year (&pound;4.17/mo)
                 </p>
-                <a href="https://elec-mate.com/subscriptions?utm_source=email&utm_medium=campaign&utm_campaign=apprentice_trial_winback" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
+                <a href="${APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
                   Lock in &pound;4.99/mo now &rarr;
+                </a>
+                <a href="${APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
+                  Or save with &pound;49.99/year &rarr;
                 </a>
                 <p style="margin: 10px 0 0; font-size: 12px; color: #64748b;">
                   Prices go up when we hit the app stores
@@ -482,6 +478,61 @@ function generateTrialWinbackEmail(firstName: string): string {
   `);
 }
 
+function generateTrialWinbackEmailV2(firstName: string): string {
+  return emailWrapper(`
+          <tr>
+            <td style="padding: 32px 24px 20px;">
+              <p style="margin: 0 0 18px; font-size: 17px; color: #ffffff; line-height: 1.6;">
+                Hey ${firstName},
+              </p>
+              <p style="margin: 0 0 16px; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
+                Quick one &mdash; your trial's done but I wanted to check in.
+              </p>
+              <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7;">
+                Elec-Mate has <strong style="color: #fbbf24;">36 courses</strong>, AM2 &amp; EPA simulators, 500+ questions, 60 videos, 40+ calculators, and your own 24/7 AI mentor &mdash; all for <strong style="color: #fbbf24;">&pound;4.99/mo</strong>.
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding: 0 20px 20px;">
+              <div style="background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; padding: 16px; text-align: center;">
+                <p style="margin: 0 0 4px; font-size: 14px; color: #94a3b8;">
+                  Nothing else comes close for UK apprentices
+                </p>
+                <p style="margin: 0; font-size: 15px; color: #fbbf24; font-weight: 600; line-height: 1.6;">
+                  Level 2 &amp; 3 &middot; EAL &middot; City &amp; Guilds &middot; HNC &middot; 18th Edition
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding: 0 20px 24px;">
+              <a href="${APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
+                Grab &pound;4.99/mo before prices rise &rarr;
+              </a>
+              <a href="${APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
+                Or save with &pound;49.99/year &rarr;
+              </a>
+              <p style="margin: 8px 0 0; font-size: 12px; color: #64748b; text-align: center;">
+                Prices go up when we hit the app stores
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding: 0 24px 24px;">
+              <p style="margin: 0; font-size: 14px; color: #e2e8f0; line-height: 1.6;">
+                Not sure? Just reply to this email &mdash; I'll give you <strong style="color: #60a5fa;">another free week</strong>. No strings.
+              </p>
+            </td>
+          </tr>
+
+          ${signOff()}
+  `);
+}
+
 // ─── Template Dispatch ──────────────────────────────────────────────
 function generateCampaignEmail(
   campaignType: CampaignType,
@@ -490,73 +541,90 @@ function generateCampaignEmail(
     featureKey?: string;
     contentTitle?: string;
     contentDescription?: string;
+    email_version?: string;
   }
 ): { html: string; subject: string } {
   switch (campaignType) {
-    case "feature_spotlight": {
-      const featureKey = params.featureKey || "study_centre";
+    case 'feature_spotlight': {
+      const featureKey = params.featureKey || 'study_centre';
       const feature = SPOTLIGHT_FEATURES[featureKey] || {
         name: featureKey,
-        description: "",
+        description: '',
       };
       return {
         html: generateFeatureSpotlightEmail(firstName, featureKey),
         subject: `Have you tried ${feature.name} yet?`,
       };
     }
-    case "new_content":
+    case 'new_content':
       return {
         html: generateNewContentEmail(
           firstName,
-          params.contentTitle || "Something New",
+          params.contentTitle || 'Something New',
           params.contentDescription || "We've just added something great."
         ),
-        subject: `New in Elec-Mate: ${params.contentTitle || "Something New"}`,
+        subject: `New in Elec-Mate: ${params.contentTitle || 'Something New'}`,
       };
-    case "engagement_nudge":
+    case 'engagement_nudge':
       return {
         html: generateEngagementNudgeEmail(firstName),
         subject: "The UK's best apprentice app is waiting for you",
       };
-    case "trial_winback":
+    case 'trial_winback': {
+      const isV2 = params.email_version === 'v2';
       return {
-        html: generateTrialWinbackEmail(firstName),
-        subject:
-          "The UK's #1 apprentice app \u2014 \u00A34.99/mo before prices rise",
+        html: isV2
+          ? generateTrialWinbackEmailV2(firstName)
+          : generateTrialWinbackEmail(firstName),
+        subject: isV2
+          ? `${firstName}, your apprentice toolkit is waiting`
+          : "The UK's #1 apprentice app \u2014 \u00A34.99/mo before prices rise",
       };
+    }
   }
 }
 
 // ─── Main Handler ───────────────────────────────────────────────────
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) throw new Error("No authorization header");
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) throw new Error('No authorization header');
 
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
-      { global: { headers: { Authorization: authHeader } } }
-    );
+    // Allow service_role key for internal/CLI calls (e.g. net.http_post from Postgres)
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    const token = authHeader.replace('Bearer ', '');
+    const isServiceRole = token === serviceRoleKey;
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabaseClient.auth.getUser();
-    if (userError || !user) throw new Error("Unauthorized");
+    let callerId = 'service_role';
+    let callerName = 'Service Role';
 
-    const { data: callerProfile } = await supabaseClient
-      .from("profiles")
-      .select("admin_role, full_name")
-      .eq("id", user.id)
-      .single();
+    if (!isServiceRole) {
+      const supabaseClient = createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+        { global: { headers: { Authorization: authHeader } } }
+      );
 
-    if (!callerProfile?.admin_role)
-      throw new Error("Unauthorized: Admin access required");
+      const {
+        data: { user },
+        error: userError,
+      } = await supabaseClient.auth.getUser();
+      if (userError || !user) throw new Error('Unauthorized');
+
+      const { data: callerProfile } = await supabaseClient
+        .from('profiles')
+        .select('admin_role, full_name')
+        .eq('id', user.id)
+        .single();
+
+      if (!callerProfile?.admin_role) throw new Error('Unauthorized: Admin access required');
+      callerId = user.id;
+      callerName = callerProfile.full_name || 'Admin';
+    }
 
     const {
       action,
@@ -569,15 +637,14 @@ Deno.serve(async (req) => {
       featureKey,
       contentTitle,
       contentDescription,
+      email_version,
     } = await req.json();
 
-    console.log(
-      `Admin ${user.id} (${callerProfile.full_name}) apprentice campaign, action: ${action}`
-    );
+    console.log(`Admin ${callerId} (${callerName}) apprentice campaign, action: ${action}`);
 
     const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
@@ -585,25 +652,26 @@ Deno.serve(async (req) => {
 
     switch (action) {
       // ─── get_eligible ───────────────────────────────────────
-      case "get_eligible": {
+      case 'get_eligible': {
         if (!campaignType || !CAMPAIGN_TYPES[campaignType as CampaignType]) {
-          throw new Error("Valid campaignType is required");
+          throw new Error('Valid campaignType is required');
         }
         const ct = campaignType as CampaignType;
 
         const { data: profiles, error: pErr } = await supabaseAdmin
-          .from("profiles")
+          .from('profiles')
           .select(
-            "id, full_name, username, created_at, subscribed, free_access_granted, apprentice_campaign_sent_at, apprentice_campaign_type"
+            'id, full_name, username, created_at, subscribed, free_access_granted, apprentice_campaign_sent_at, apprentice_campaign_type'
           )
-          .eq("role", "apprentice")
-          .order("created_at", { ascending: false });
+          .eq('role', 'apprentice')
+          .order('created_at', { ascending: false });
 
         if (pErr) throw pErr;
 
         // Get auth users for emails + last_sign_in_at
-        const { data: authUsers, error: authErr } =
-          await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
+        const { data: authUsers, error: authErr } = await supabaseAdmin.auth.admin.listUsers({
+          perPage: 1000,
+        });
         if (authErr) throw authErr;
 
         const emailMap = new Map<string, string>();
@@ -616,31 +684,24 @@ Deno.serve(async (req) => {
         const now = Date.now();
         const filtered =
           profiles?.filter((p: any) => {
-            if (ct === "trial_winback") {
+            if (ct === 'trial_winback') {
               // Unsubscribed, trial expired, never sent winback
-              if (p.subscribed === true || p.free_access_granted === true)
+              if (p.subscribed === true || p.free_access_granted === true) return false;
+              if (p.apprentice_campaign_sent_at && p.apprentice_campaign_type === 'trial_winback')
                 return false;
-              if (
-                p.apprentice_campaign_sent_at &&
-                p.apprentice_campaign_type === "trial_winback"
-              )
-                return false;
-              // Trial = 7 days from signup. Eligible once trial has expired.
+              // Trial = 7 days from signup + 24hr grace buffer before sending
               const trialEnd =
-                new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000;
+                new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000 + 24 * 60 * 60 * 1000;
               return now >= trialEnd;
             }
 
             // All other types require subscribed or free access
-            if (p.subscribed !== true && p.free_access_granted !== true)
-              return false;
+            if (p.subscribed !== true && p.free_access_granted !== true) return false;
 
-            if (ct === "engagement_nudge") {
+            if (ct === 'engagement_nudge') {
               // Inactive 14+ days — use last_sign_in_at from auth.users
               const lastSignIn = lastSignInMap.get(p.id);
-              const lastActive = lastSignIn
-                ? new Date(lastSignIn).getTime()
-                : 0;
+              const lastActive = lastSignIn ? new Date(lastSignIn).getTime() : 0;
               if (now - lastActive < 14 * 24 * 60 * 60 * 1000) return false;
             }
 
@@ -648,11 +709,8 @@ Deno.serve(async (req) => {
             if (p.apprentice_campaign_sent_at) {
               const cooldownDays = CAMPAIGN_TYPES[ct].cooldownDays;
               if (cooldownDays) {
-                const sentAt = new Date(
-                  p.apprentice_campaign_sent_at
-                ).getTime();
-                if (now - sentAt < cooldownDays * 24 * 60 * 60 * 1000)
-                  return false;
+                const sentAt = new Date(p.apprentice_campaign_sent_at).getTime();
+                if (now - sentAt < cooldownDays * 24 * 60 * 60 * 1000) return false;
               }
             }
 
@@ -676,26 +734,25 @@ Deno.serve(async (req) => {
       }
 
       // ─── get_stats ──────────────────────────────────────────
-      case "get_stats": {
+      case 'get_stats': {
         if (!campaignType || !CAMPAIGN_TYPES[campaignType as CampaignType]) {
-          throw new Error("Valid campaignType is required");
+          throw new Error('Valid campaignType is required');
         }
         const ct = campaignType as CampaignType;
 
         const { data: profiles, error: pErr } = await supabaseAdmin
-          .from("profiles")
+          .from('profiles')
           .select(
-            "id, subscribed, free_access_granted, created_at, apprentice_campaign_sent_at, apprentice_campaign_type"
+            'id, subscribed, free_access_granted, created_at, apprentice_campaign_sent_at, apprentice_campaign_type'
           )
-          .eq("role", "apprentice");
+          .eq('role', 'apprentice');
 
         if (pErr) throw pErr;
 
         // Fetch auth users for last_sign_in_at (needed for engagement_nudge)
         let lastSignInMap = new Map<string, string | null>();
-        if (ct === "engagement_nudge") {
-          const { data: authUsers } =
-            await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
+        if (ct === 'engagement_nudge') {
+          const { data: authUsers } = await supabaseAdmin.auth.admin.listUsers({ perPage: 1000 });
           authUsers?.users?.forEach((u: any) => {
             lastSignInMap.set(u.id, u.last_sign_in_at || null);
           });
@@ -706,35 +763,25 @@ Deno.serve(async (req) => {
         // Count eligible (same logic as get_eligible)
         const eligible =
           profiles?.filter((p: any) => {
-            if (ct === "trial_winback") {
-              if (p.subscribed === true || p.free_access_granted === true)
-                return false;
-              if (
-                p.apprentice_campaign_sent_at &&
-                p.apprentice_campaign_type === "trial_winback"
-              )
+            if (ct === 'trial_winback') {
+              if (p.subscribed === true || p.free_access_granted === true) return false;
+              if (p.apprentice_campaign_sent_at && p.apprentice_campaign_type === 'trial_winback')
                 return false;
               const trialEnd =
-                new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000;
+                new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000 + 24 * 60 * 60 * 1000;
               return now >= trialEnd;
             }
-            if (p.subscribed !== true && p.free_access_granted !== true)
-              return false;
-            if (ct === "engagement_nudge") {
+            if (p.subscribed !== true && p.free_access_granted !== true) return false;
+            if (ct === 'engagement_nudge') {
               const lastSignIn = lastSignInMap.get(p.id);
-              const lastActive = lastSignIn
-                ? new Date(lastSignIn).getTime()
-                : 0;
+              const lastActive = lastSignIn ? new Date(lastSignIn).getTime() : 0;
               if (now - lastActive < 14 * 24 * 60 * 60 * 1000) return false;
             }
             if (p.apprentice_campaign_sent_at) {
               const cooldownDays = CAMPAIGN_TYPES[ct].cooldownDays;
               if (cooldownDays) {
-                const sentAt = new Date(
-                  p.apprentice_campaign_sent_at
-                ).getTime();
-                if (now - sentAt < cooldownDays * 24 * 60 * 60 * 1000)
-                  return false;
+                const sentAt = new Date(p.apprentice_campaign_sent_at).getTime();
+                if (now - sentAt < cooldownDays * 24 * 60 * 60 * 1000) return false;
               }
             }
             return true;
@@ -743,18 +790,16 @@ Deno.serve(async (req) => {
         // Count sent (for this campaign type)
         const sent =
           profiles?.filter(
-            (p: any) =>
-              p.apprentice_campaign_sent_at &&
-              p.apprentice_campaign_type === ct
+            (p: any) => p.apprentice_campaign_sent_at && p.apprentice_campaign_type === ct
           ).length || 0;
 
         // Conversions only apply to trial_winback
         const conversions =
-          ct === "trial_winback"
+          ct === 'trial_winback'
             ? profiles?.filter(
                 (p: any) =>
                   p.apprentice_campaign_sent_at &&
-                  p.apprentice_campaign_type === "trial_winback" &&
+                  p.apprentice_campaign_type === 'trial_winback' &&
                   p.subscribed
               ).length || 0
             : 0;
@@ -763,62 +808,76 @@ Deno.serve(async (req) => {
           totalEligible: eligible,
           offersSent: sent,
           conversions,
-          conversionRate:
-            sent > 0 ? ((conversions / sent) * 100).toFixed(1) : "0",
+          conversionRate: sent > 0 ? ((conversions / sent) * 100).toFixed(1) : '0',
         };
         break;
       }
 
       // ─── send_single ────────────────────────────────────────
-      case "send_single": {
-        if (!userId) throw new Error("User ID is required");
+      case 'send_single': {
+        if (!userId) throw new Error('User ID is required');
         if (!campaignType || !CAMPAIGN_TYPES[campaignType as CampaignType])
-          throw new Error("Valid campaignType is required");
+          throw new Error('Valid campaignType is required');
         const ct = campaignType as CampaignType;
 
         const { data: profile } = await supabaseAdmin
-          .from("profiles")
-          .select("id, full_name, username")
-          .eq("id", userId)
+          .from('profiles')
+          .select('id, full_name, username')
+          .eq('id', userId)
           .single();
 
-        if (!profile) throw new Error("User not found");
+        if (!profile) throw new Error('User not found');
 
         const { data: authUser, error: authErr } =
           await supabaseAdmin.auth.admin.getUserById(userId);
-        if (authErr || !authUser.user?.email)
-          throw new Error("Could not get user email");
+        if (authErr || !authUser.user?.email) throw new Error('Could not get user email');
 
-        const firstName = profile.full_name?.split(" ")[0] || "mate";
+        const firstName = profile.full_name?.split(' ')[0] || 'mate';
         const { html, subject } = generateCampaignEmail(ct, firstName, {
           featureKey,
           contentTitle,
           contentDescription,
+          email_version,
         });
 
-        const { error: emailError } = await resend.emails.send({
-          from: "Elec-Mate <hello@elec-mate.com>",
+        const fromAddress =
+          ct === 'trial_winback'
+            ? 'Andrew from Elec-Mate <founder@elec-mate.com>'
+            : 'Elec-Mate <hello@elec-mate.com>';
+
+        const { data: emailData, error: emailError } = await resend.emails.send({
+          from: fromAddress,
           to: [authUser.user.email.trim().toLowerCase()],
           subject,
           html,
+          tags: [
+            { name: 'campaign', value: `apprentice_${ct}` },
+            { name: 'version', value: email_version || 'v1' },
+            { name: 'user_id', value: userId },
+          ],
         });
 
-        if (emailError) throw new Error("Failed to send email");
+        if (emailError) throw new Error('Failed to send email');
 
         await supabaseAdmin
-          .from("profiles")
+          .from('profiles')
           .update({
             apprentice_campaign_sent_at: new Date().toISOString(),
             apprentice_campaign_type: ct,
           })
-          .eq("id", userId);
+          .eq('id', userId);
 
-        await supabaseAdmin.from("email_logs").insert({
+        await supabaseAdmin.from('email_logs').insert({
           to_email: authUser.user.email,
           subject,
           template: `apprentice_${ct}`,
-          status: "sent",
-          metadata: { user_id: userId, campaign_type: ct },
+          status: 'sent',
+          metadata: {
+            user_id: userId,
+            campaign_type: ct,
+            email_version: email_version || 'v1',
+            resend_id: emailData?.id,
+          },
         });
 
         result = { success: true, email: authUser.user.email };
@@ -826,11 +885,11 @@ Deno.serve(async (req) => {
       }
 
       // ─── send_bulk ──────────────────────────────────────────
-      case "send_bulk": {
+      case 'send_bulk': {
         if (!userIds || !Array.isArray(userIds) || userIds.length === 0)
-          throw new Error("User IDs array is required");
+          throw new Error('User IDs array is required');
         if (!campaignType || !CAMPAIGN_TYPES[campaignType as CampaignType])
-          throw new Error("Valid campaignType is required");
+          throw new Error('Valid campaignType is required');
         const ct = campaignType as CampaignType;
 
         let sentCount = 0;
@@ -840,9 +899,9 @@ Deno.serve(async (req) => {
         for (const uid of userIds) {
           try {
             const { data: profile } = await supabaseAdmin
-              .from("profiles")
-              .select("id, full_name, username")
-              .eq("id", uid)
+              .from('profiles')
+              .select('id, full_name, username')
+              .eq('id', uid)
               .single();
 
             if (!profile) {
@@ -857,18 +916,29 @@ Deno.serve(async (req) => {
               continue;
             }
 
-            const firstName = profile.full_name?.split(" ")[0] || "mate";
+            const firstName = profile.full_name?.split(' ')[0] || 'mate';
             const { html, subject } = generateCampaignEmail(ct, firstName, {
               featureKey,
               contentTitle,
               contentDescription,
+              email_version,
             });
 
-            const { error: emailError } = await resend.emails.send({
-              from: "Elec-Mate <hello@elec-mate.com>",
+            const fromAddress =
+              ct === 'trial_winback'
+                ? 'Andrew from Elec-Mate <founder@elec-mate.com>'
+                : 'Elec-Mate <hello@elec-mate.com>';
+
+            const { data: bulkEmailData, error: emailError } = await resend.emails.send({
+              from: fromAddress,
               to: [authUser.user.email.trim().toLowerCase()],
               subject,
               html,
+              tags: [
+                { name: 'campaign', value: `apprentice_${ct}` },
+                { name: 'version', value: email_version || 'v1' },
+                { name: 'user_id', value: uid },
+              ],
             });
 
             if (emailError) {
@@ -877,19 +947,24 @@ Deno.serve(async (req) => {
             }
 
             await supabaseAdmin
-              .from("profiles")
+              .from('profiles')
               .update({
                 apprentice_campaign_sent_at: new Date().toISOString(),
                 apprentice_campaign_type: ct,
               })
-              .eq("id", uid);
+              .eq('id', uid);
 
-            await supabaseAdmin.from("email_logs").insert({
+            await supabaseAdmin.from('email_logs').insert({
               to_email: authUser.user.email,
               subject,
               template: `apprentice_${ct}`,
-              status: "sent",
-              metadata: { user_id: uid, campaign_type: ct },
+              status: 'sent',
+              metadata: {
+                user_id: uid,
+                campaign_type: ct,
+                email_version: email_version || 'v1',
+                resend_id: bulkEmailData?.id,
+              },
             });
 
             sentCount++;
@@ -913,65 +988,87 @@ Deno.serve(async (req) => {
       }
 
       // ─── send_test ──────────────────────────────────────────
-      case "send_test": {
-        if (!testEmail) throw new Error("Test email address is required");
+      case 'send_test': {
+        if (!testEmail) throw new Error('Test email address is required');
         if (!campaignType || !CAMPAIGN_TYPES[campaignType as CampaignType])
-          throw new Error("Valid campaignType is required");
+          throw new Error('Valid campaignType is required');
         const ct = campaignType as CampaignType;
 
-        const { html, subject } = generateCampaignEmail(ct, "Test", {
+        const { html, subject } = generateCampaignEmail(ct, 'Test', {
           featureKey,
           contentTitle,
           contentDescription,
+          email_version,
         });
 
+        const fromAddress =
+          ct === 'trial_winback'
+            ? 'Andrew from Elec-Mate <founder@elec-mate.com>'
+            : 'Elec-Mate <hello@elec-mate.com>';
+
         const { error: emailError } = await resend.emails.send({
-          from: "Elec-Mate <hello@elec-mate.com>",
+          from: fromAddress,
           to: [testEmail.trim().toLowerCase()],
           subject: `[TEST] ${subject}`,
           html,
+          tags: [
+            { name: 'campaign', value: `apprentice_${ct}` },
+            { name: 'version', value: email_version || 'v1' },
+            { name: 'type', value: 'test' },
+          ],
         });
 
-        if (emailError)
-          throw new Error(`Failed to send test email: ${emailError.message}`);
+        if (emailError) throw new Error(`Failed to send test email: ${emailError.message}`);
 
         result = { success: true, email: testEmail };
         break;
       }
 
       // ─── send_manual ────────────────────────────────────────
-      case "send_manual": {
-        if (!manualEmail) throw new Error("Email address is required");
+      case 'send_manual': {
+        if (!manualEmail) throw new Error('Email address is required');
         if (!campaignType || !CAMPAIGN_TYPES[campaignType as CampaignType])
-          throw new Error("Valid campaignType is required");
+          throw new Error('Valid campaignType is required');
         const ct = campaignType as CampaignType;
 
-        const firstName = recipientName?.split(" ")[0] || "mate";
+        const firstName = recipientName?.split(' ')[0] || 'mate';
         const { html, subject } = generateCampaignEmail(ct, firstName, {
           featureKey,
           contentTitle,
           contentDescription,
+          email_version,
         });
 
-        const { error: emailError } = await resend.emails.send({
-          from: "Elec-Mate <hello@elec-mate.com>",
+        const fromAddress =
+          ct === 'trial_winback'
+            ? 'Andrew from Elec-Mate <founder@elec-mate.com>'
+            : 'Elec-Mate <hello@elec-mate.com>';
+
+        const { data: manualEmailData, error: emailError } = await resend.emails.send({
+          from: fromAddress,
           to: [manualEmail.trim().toLowerCase()],
           subject,
           html,
+          tags: [
+            { name: 'campaign', value: `apprentice_${ct}` },
+            { name: 'version', value: email_version || 'v1' },
+            { name: 'type', value: 'manual' },
+          ],
         });
 
-        if (emailError)
-          throw new Error(`Failed to send email: ${emailError.message}`);
+        if (emailError) throw new Error(`Failed to send email: ${emailError.message}`);
 
-        await supabaseAdmin.from("email_logs").insert({
+        await supabaseAdmin.from('email_logs').insert({
           to_email: manualEmail.trim().toLowerCase(),
           subject,
           template: `apprentice_${ct}_manual`,
-          status: "sent",
+          status: 'sent',
           metadata: {
-            sent_by_admin: user.id,
+            sent_by_admin: callerId,
             recipient_name: recipientName,
             campaign_type: ct,
+            email_version: email_version || 'v1',
+            resend_id: manualEmailData?.id,
           },
         });
 
@@ -980,19 +1077,62 @@ Deno.serve(async (req) => {
       }
 
       // ─── get_sent_history ───────────────────────────────────
-      case "get_sent_history": {
+      case 'get_sent_history': {
         const { data: sentUsers, error: sentErr } = await supabaseAdmin
-          .from("profiles")
+          .from('profiles')
           .select(
-            "id, full_name, username, created_at, apprentice_campaign_sent_at, apprentice_campaign_type, subscribed"
+            'id, full_name, username, created_at, apprentice_campaign_sent_at, apprentice_campaign_type, subscribed'
           )
-          .eq("role", "apprentice")
-          .not("apprentice_campaign_sent_at", "is", null)
-          .order("apprentice_campaign_sent_at", { ascending: false })
+          .eq('role', 'apprentice')
+          .not('apprentice_campaign_sent_at', 'is', null)
+          .order('apprentice_campaign_sent_at', { ascending: false })
           .limit(100);
 
         if (sentErr) throw sentErr;
         result = { users: sentUsers || [] };
+        break;
+      }
+
+      // ─── reset_sent ────────────────────────────────────────
+      case 'reset_sent': {
+        // Reset apprentice_campaign_sent_at for users who were sent 24+ hours ago
+        // and still haven't subscribed — allows resending with a new template
+        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+        const { data: resetUsers, error: resetErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id')
+          .eq('role', 'apprentice')
+          .eq('subscribed', false)
+          .not('apprentice_campaign_sent_at', 'is', null)
+          .lt('apprentice_campaign_sent_at', cutoff);
+
+        if (resetErr) throw resetErr;
+
+        const resetIds = resetUsers?.map((u: any) => u.id) || [];
+
+        if (resetIds.length === 0) {
+          result = {
+            reset: 0,
+            message: 'No users eligible for reset (all sent < 24h ago or already subscribed)',
+          };
+          break;
+        }
+
+        const { error: updateErr } = await supabaseAdmin
+          .from('profiles')
+          .update({ apprentice_campaign_sent_at: null })
+          .in('id', resetIds);
+
+        if (updateErr) throw updateErr;
+
+        console.log(
+          `Admin ${callerId} reset apprentice_campaign_sent_at for ${resetIds.length} users`
+        );
+        result = {
+          reset: resetIds.length,
+          message: `${resetIds.length} users reset and eligible for resend`,
+        };
         break;
       }
 
@@ -1001,18 +1141,18 @@ Deno.serve(async (req) => {
     }
 
     return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
   } catch (error: any) {
-    console.error("Error in send-apprentice-campaign:", error.message);
+    console.error('Error in send-apprentice-campaign:', error.message);
     return new Response(
       JSON.stringify({
         error: error.message,
-        stack: error.stack?.split("\n").slice(0, 3).join(" | "),
+        stack: error.stack?.split('\n').slice(0, 3).join(' | '),
       }),
       {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,
       }
     );

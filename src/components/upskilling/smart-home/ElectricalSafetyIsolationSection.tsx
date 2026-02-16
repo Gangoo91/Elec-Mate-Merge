@@ -13,7 +13,9 @@ const ElectricalSafetyIsolationSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Proper isolation is the foundation of safe electrical work. Smart devices may appear harmless, but many connect directly to mains circuits and pose identical risks to traditional electrical equipment.
+          Proper isolation is the foundation of safe electrical work. Smart devices may appear
+          harmless, but many connect directly to mains circuits and pose identical risks to
+          traditional electrical equipment.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -25,17 +27,25 @@ const ElectricalSafetyIsolationSection = () => {
             <div className="space-y-3">
               <div className="p-3 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-1">1. Switch Off at Consumer Unit</h5>
-                <p className="text-gray-300 text-sm">Always isolate at the main circuit breaker, never rely on local switches or software controls</p>
+                <p className="text-gray-300 text-sm">
+                  Always isolate at the main circuit breaker, never rely on local switches or
+                  software controls
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-1">2. Lock Off and Tag</h5>
-                <p className="text-gray-300 text-sm">Use mechanical lock-off devices and warning tags to prevent accidental re-energisation</p>
+                <p className="text-gray-300 text-sm">
+                  Use mechanical lock-off devices and warning tags to prevent accidental
+                  re-energisation
+                </p>
               </div>
-              
+
               <div className="p-3 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-1">3. Test and Prove</h5>
-                <p className="text-gray-300 text-sm">Use a proving unit to confirm isolation is effective before starting work</p>
+                <p className="text-gray-300 text-sm">
+                  Use a proving unit to confirm isolation is effective before starting work
+                </p>
               </div>
             </div>
           </div>
@@ -47,28 +57,36 @@ const ElectricalSafetyIsolationSection = () => {
                 <span className="text-elec-yellow text-sm">•</span>
                 <div>
                   <span className="font-medium text-foreground">Lock-off devices:</span>
-                  <span className="text-gray-300 text-sm ml-1">Mechanical prevention of switch operation</span>
+                  <span className="text-gray-300 text-sm ml-1">
+                    Mechanical prevention of switch operation
+                  </span>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-elec-yellow text-sm">•</span>
                 <div>
                   <span className="font-medium text-foreground">Proving units:</span>
-                  <span className="text-gray-300 text-sm ml-1">Test voltage presence before and after isolation</span>
+                  <span className="text-gray-300 text-sm ml-1">
+                    Test voltage presence before and after isolation
+                  </span>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-elec-yellow text-sm">•</span>
                 <div>
                   <span className="font-medium text-foreground">Warning tags:</span>
-                  <span className="text-gray-300 text-sm ml-1">Visual indication of work in progress</span>
+                  <span className="text-gray-300 text-sm ml-1">
+                    Visual indication of work in progress
+                  </span>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-elec-yellow text-sm">•</span>
                 <div>
                   <span className="font-medium text-foreground">Two-pole testers:</span>
-                  <span className="text-gray-300 text-sm ml-1">Verify absence of voltage at work location</span>
+                  <span className="text-gray-300 text-sm ml-1">
+                    Verify absence of voltage at work location
+                  </span>
                 </div>
               </div>
             </div>

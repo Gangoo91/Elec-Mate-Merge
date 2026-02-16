@@ -38,7 +38,7 @@ import { generateRAMSPDF } from '@/utils/rams-pdf';
 import type { RAMSRisk } from '@/types/rams';
 import { RAMSPDFPreview } from './RAMSPDFPreview';
 import { SignaturePad } from './common/SignaturePad';
-import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
+
 import { HazardSelect } from './common/HazardSelect';
 import { RiskSelect } from './common/RiskSelect';
 import { RiskMatrix } from './common/RiskMatrix';
@@ -87,7 +87,6 @@ const RAMSGenerator: React.FC = () => {
   const [selectedRisk, setSelectedRisk] = useState('');
   const [showHazardSelector, setShowHazardSelector] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
-  const [photos, setPhotos] = useState<string[]>([]);
 
   const validation = validate();
 
@@ -814,23 +813,6 @@ const RAMSGenerator: React.FC = () => {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Evidence Photos */}
-        <AccordionItem
-          value="photos"
-          className="border-elec-yellow/20 bg-elec-gray/60 rounded-lg px-4"
-        >
-          <AccordionTrigger className="text-foreground hover:text-elec-yellow">
-            Site Evidence Photos (Optional)
-          </AccordionTrigger>
-          <AccordionContent className="pt-4">
-            <SafetyPhotoCapture
-              photos={photos}
-              onPhotosChange={setPhotos}
-              maxPhotos={10}
-              label="Evidence Photos"
-            />
-          </AccordionContent>
-        </AccordionItem>
       </Accordion>
 
       {/* Action Bar */}

@@ -1,10 +1,16 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { HelpCircle, PoundSterling, TrendingUp } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { HelpCircle, PoundSterling, TrendingUp } from 'lucide-react';
 
 interface InteractiveInputsProps {
   startupInputs: any;
@@ -25,41 +31,41 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
     const hints = {
       startup: {
         tools: {
-          "sole-trader": "Basic hand tools and power tools (£3k-8k)",
-          "partnership": "Shared professional tool set (£5k-12k)",
-          "limited-company": "Commercial grade equipment (£8k-15k)",
-          "franchise": "Franchise-specified tool requirements (£10k-20k)"
+          'sole-trader': 'Basic hand tools and power tools (£3k-8k)',
+          partnership: 'Shared professional tool set (£5k-12k)',
+          'limited-company': 'Commercial grade equipment (£8k-15k)',
+          franchise: 'Franchise-specified tool requirements (£10k-20k)',
         },
         testEquipment: {
-          "sole-trader": "Essential multifunction tester (£800-2k)",
-          "partnership": "Multiple testers for efficiency (£1.5k-4k)",
-          "limited-company": "Professional calibrated equipment (£3k-6k)",
-          "franchise": "Franchise-approved test equipment (£4k-8k)"
+          'sole-trader': 'Essential multifunction tester (£800-2k)',
+          partnership: 'Multiple testers for efficiency (£1.5k-4k)',
+          'limited-company': 'Professional calibrated equipment (£3k-6k)',
+          franchise: 'Franchise-approved test equipment (£4k-8k)',
         },
         vehicle: {
-          "sole-trader": "Used van with basic fit-out (£8k-15k)",
-          "partnership": "Quality van or multiple vehicles (£15k-25k)",
-          "limited-company": "Professional fleet vehicles (£20k-40k)",
-          "franchise": "Franchise-branded commercial vehicles (£25k-50k)"
-        }
+          'sole-trader': 'Used van with basic fit-out (£8k-15k)',
+          partnership: 'Quality van or multiple vehicles (£15k-25k)',
+          'limited-company': 'Professional fleet vehicles (£20k-40k)',
+          franchise: 'Franchise-branded commercial vehicles (£25k-50k)',
+        },
       },
       monthly: {
         insurance: {
-          "sole-trader": "Basic liability and professional cover (£150-300)",
-          "partnership": "Multi-person coverage (£250-500)",
-          "limited-company": "Comprehensive corporate insurance (£400-800)",
-          "franchise": "Franchise-required insurance levels (£300-600)"
+          'sole-trader': 'Basic liability and professional cover (£150-300)',
+          partnership: 'Multi-person coverage (£250-500)',
+          'limited-company': 'Comprehensive corporate insurance (£400-800)',
+          franchise: 'Franchise-required insurance levels (£300-600)',
         },
         marketing: {
-          "sole-trader": "Local advertising and online presence (£100-300)",
-          "partnership": "Shared marketing costs (£200-500)",
-          "limited-company": "Professional marketing strategy (£500-1200)",
-          "franchise": "Franchise marketing fee included (£200-400)"
-        }
-      }
+          'sole-trader': 'Local advertising and online presence (£100-300)',
+          partnership: 'Shared marketing costs (£200-500)',
+          'limited-company': 'Professional marketing strategy (£500-1200)',
+          franchise: 'Franchise marketing fee included (£200-400)',
+        },
+      },
     };
-    
-    return hints[type]?.[field]?.[businessType] || "";
+
+    return hints[type]?.[field]?.[businessType] || '';
   };
 
   const getDropdownOptions = (field: string, type: 'startup' | 'monthly') => {
@@ -71,7 +77,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
         insurance: [0, 500, 1000, 2000, 3000, 4000, 5000],
         qualifications: [0, 1000, 2000, 3000, 5000, 6000, 8000],
         marketing: [0, 500, 1000, 2500, 5000, 7500, 10000],
-        workingCapital: [0, 5000, 10000, 20000, 30000, 40000, 50000]
+        workingCapital: [0, 5000, 10000, 20000, 30000, 40000, 50000],
       },
       monthly: {
         insurance: [0, 100, 200, 300, 500, 700, 1000],
@@ -81,20 +87,20 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
         phoneInternet: [0, 30, 60, 100, 150, 200],
         accountancy: [0, 100, 200, 300, 400, 500],
         rent: [0, 300, 600, 1000, 1500, 2000],
-        utilities: [0, 50, 100, 200, 300, 400]
-      }
+        utilities: [0, 50, 100, 200, 300, 400],
+      },
     };
-    
+
     return configs[type][field] || [0, 1000, 2000, 5000, 10000];
   };
 
-  const DropdownInput = ({ 
-    label, 
-    field, 
-    value, 
-    onChange, 
-    type, 
-    icon 
+  const DropdownInput = ({
+    label,
+    field,
+    value,
+    onChange,
+    type,
+    icon,
   }: {
     label: string;
     field: string;
@@ -105,7 +111,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
   }) => {
     const options = getDropdownOptions(field, type);
     const hint = getFieldHint(field, type);
-    
+
     return (
       <div className="space-y-3">
         <div className="flex items-center gap-2">
@@ -124,9 +130,7 @@ const InteractiveInputs: React.FC<InteractiveInputsProps> = ({
         </div>
         <Select value={value.toString()} onValueChange={(val) => onChange(field, parseInt(val))}>
           <SelectTrigger className="w-full border border-muted/40 bg-card">
-            <SelectValue placeholder="Select amount">
-              £{value.toLocaleString()}
-            </SelectValue>
+            <SelectValue placeholder="Select amount">£{value.toLocaleString()}</SelectValue>
           </SelectTrigger>
           <SelectContent className="bg-card border border-muted/40 z-50">
             {options.map((option) => (

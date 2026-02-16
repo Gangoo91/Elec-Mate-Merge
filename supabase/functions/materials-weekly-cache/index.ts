@@ -39,69 +39,69 @@ interface ProcessedCategoryData {
 
 // Comprehensive category mapping to align with frontend
 const categoryMapping = {
-  "Cables & Wiring": "cables",
-  "Electrical Components": "components", 
-  "Protection Equipment": "protection",
-  "Installation Accessories": "accessories",
-  "Lighting Solutions": "lighting",
-  "Testing & Tools": "tools"
+  'Cables & Wiring': 'cables',
+  'Electrical Components': 'components',
+  'Protection Equipment': 'protection',
+  'Installation Accessories': 'accessories',
+  'Lighting Solutions': 'lighting',
+  'Testing & Tools': 'tools',
 };
 
 const defaultCategoryData: ProcessedCategoryData[] = [
   {
-    id: "cables",
-    title: "Cables & Wiring",
+    id: 'cables',
+    title: 'Cables & Wiring',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Prysmian", "Nexans", "Excel"],
+    priceRange: 'Loading...',
+    topBrands: ['Prysmian', 'Nexans', 'Excel'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "components", 
-    title: "Electrical Components",
+    id: 'components',
+    title: 'Electrical Components',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Schneider", "Hager", "Wylex"],
+    priceRange: 'Loading...',
+    topBrands: ['Schneider', 'Hager', 'Wylex'],
     popularItems: [],
-    trending: false
+    trending: false,
   },
   {
-    id: "protection",
-    title: "Protection Equipment",
+    id: 'protection',
+    title: 'Protection Equipment',
     productCount: 0,
-    priceRange: "Loading...", 
-    topBrands: ["Furse", "Dehn", "Phoenix"],
+    priceRange: 'Loading...',
+    topBrands: ['Furse', 'Dehn', 'Phoenix'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "accessories",
-    title: "Installation Accessories", 
+    id: 'accessories',
+    title: 'Installation Accessories',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Wiska", "Gewiss", "Marshall Tufflex"],
+    priceRange: 'Loading...',
+    topBrands: ['Wiska', 'Gewiss', 'Marshall Tufflex'],
     popularItems: [],
-    trending: false
+    trending: false,
   },
   {
-    id: "lighting",
-    title: "Lighting Solutions",
+    id: 'lighting',
+    title: 'Lighting Solutions',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Ansell", "Kosnic", "Aurora"],
+    priceRange: 'Loading...',
+    topBrands: ['Ansell', 'Kosnic', 'Aurora'],
     popularItems: [],
-    trending: true
+    trending: true,
   },
   {
-    id: "tools",
-    title: "Testing & Tools",
+    id: 'tools',
+    title: 'Testing & Tools',
     productCount: 0,
-    priceRange: "Loading...",
-    topBrands: ["Fluke", "Megger", "Kewtech"],
+    priceRange: 'Loading...',
+    topBrands: ['Fluke', 'Megger', 'Kewtech'],
     popularItems: [],
-    trending: false
-  }
+    trending: false,
+  },
 ];
 
 function extractPriceNumber(priceStr: string): number {
@@ -114,8 +114,8 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
     return defaultCategoryData;
   }
 
-  return defaultCategoryData.map(defaultCategory => {
-    const categoryMaterials = materials.filter(material => {
+  return defaultCategoryData.map((defaultCategory) => {
+    const categoryMaterials = materials.filter((material) => {
       const mappedId = categoryMapping[material.category as keyof typeof categoryMapping];
       return mappedId === defaultCategory.id;
     });
@@ -124,32 +124,28 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
       return defaultCategory;
     }
 
-    const prices = categoryMaterials
-      .map(m => extractPriceNumber(m.price))
-      .filter(p => p > 0);
-    
+    const prices = categoryMaterials.map((m) => extractPriceNumber(m.price)).filter((p) => p > 0);
+
     const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
     const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
-    const priceRange = prices.length > 0 ? `£${minPrice} - £${maxPrice}` : "Price on request";
+    const priceRange = prices.length > 0 ? `£${minPrice} - £${maxPrice}` : 'Price on request';
 
-    const suppliers = [...new Set(categoryMaterials.map(m => m.supplier))];
+    const suppliers = [...new Set(categoryMaterials.map((m) => m.supplier))];
     const topBrands = suppliers.slice(0, 4);
 
-    const popularItems = categoryMaterials
-      .slice(0, 3)
-      .map(material => ({
-        name: material.name,
-        price: material.price,
-        rating: 4.5 + Math.random() * 0.4,
-        sales: Math.floor(Math.random() * 200) + 50
-      }));
+    const popularItems = categoryMaterials.slice(0, 3).map((material) => ({
+      name: material.name,
+      price: material.price,
+      rating: 4.5 + Math.random() * 0.4,
+      sales: Math.floor(Math.random() * 200) + 50,
+    }));
 
     return {
       ...defaultCategory,
       productCount: categoryMaterials.length,
       priceRange,
       topBrands: topBrands.length > 0 ? topBrands : defaultCategory.topBrands,
-      popularItems
+      popularItems,
     };
   });
 }
@@ -166,9 +162,9 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
+
     logger.info('Checking materials weekly cache');
-    
+
     // Parse request body for filters
     const body = await req.json().catch(() => ({}));
     const { category, supplier, search } = body;
@@ -191,10 +187,10 @@ serve(async (req) => {
 
     if (cacheData && cacheData.length > 0) {
       console.log('✅ Found valid cache data, serving from cache...');
-      
+
       const latestCache = cacheData[0];
       let cachePayload = latestCache.cache_data;
-      
+
       // Handle both new comprehensive cache format and legacy format
       if (Array.isArray(cachePayload)) {
         // Legacy format - just processed data
@@ -203,24 +199,26 @@ serve(async (req) => {
           rawMaterials: [],
           fromCache: true,
           totalMaterials: latestCache.total_products || 0,
-          lastUpdated: latestCache.created_at
+          lastUpdated: latestCache.created_at,
         };
       }
-      
+
       // If no filters, return cached data with both processed and raw materials
       if (!category && !supplier && !search) {
         fromCache = true;
-        
+
         const response = {
           data: cachePayload.processedData || cachePayload,
           rawMaterials: cachePayload.rawMaterials || [],
           fromCache: true,
           timestamp: new Date().toISOString(),
-          totalMaterials: cachePayload.totalMaterials || latestCache.total_products || 0
+          totalMaterials: cachePayload.totalMaterials || latestCache.total_products || 0,
         };
 
-        console.log(`✅ Serving ${response.data.length} categories and ${response.rawMaterials.length} raw materials from cache`);
-        
+        console.log(
+          `✅ Serving ${response.data.length} categories and ${response.rawMaterials.length} raw materials from cache`
+        );
+
         return new Response(JSON.stringify(response), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
@@ -233,90 +231,85 @@ serve(async (req) => {
     // If no cache or filters applied, fetch fresh data
     if (!fromCache) {
       console.log('🔄 Fetching fresh data from scraper...');
-    // Call comprehensive scraper with timeout protection
-    try {
-      const { data: liveData, error: liveError } = await logger.time(
-        'Comprehensive materials scraper',
-        () => withTimeout(
-          supabase.functions.invoke(
-            'comprehensive-materials-scraper',
-            { 
-              body: { 
-                category, 
-                supplier, 
-                searchTerm: search 
-              }
-            }
-          ),
-          Timeouts.LONG,
-          'Comprehensive materials scraper'
-        )
-      );
+      // Call comprehensive scraper with timeout protection
+      try {
+        const { data: liveData, error: liveError } = await logger.time(
+          'Comprehensive materials scraper',
+          () =>
+            withTimeout(
+              supabase.functions.invoke('comprehensive-materials-scraper', {
+                body: {
+                  category,
+                  supplier,
+                  searchTerm: search,
+                },
+              }),
+              Timeouts.LONG,
+              'Comprehensive materials scraper'
+            )
+        );
 
-      if (liveError) {
-        logger.error('Live scraper error', { error: liveError });
-        // Fall back to cached data or fallback
+        if (liveError) {
+          logger.error('Live scraper error', { error: liveError });
+          // Fall back to cached data or fallback
+          const { data: fallbackCache } = await supabase
+            .from('cables_materials_cache')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(1);
+
+          if (fallbackCache && fallbackCache.length > 0) {
+            logger.info('Using fallback cache from cables_materials_cache');
+            rawMaterials = fallbackCache[0].cache_data || [];
+          } else {
+            logger.warn('No fallback cache available, using empty data');
+            rawMaterials = [];
+          }
+        } else {
+          rawMaterials = liveData?.materials || [];
+          logger.info('Serving materials from live scraper', { count: rawMaterials.length });
+        }
+      } catch (invokeError) {
+        logger.error('Function invoke error', { error: invokeError });
+        // Fall back to cached data
         const { data: fallbackCache } = await supabase
           .from('cables_materials_cache')
           .select('*')
           .order('created_at', { ascending: false })
           .limit(1);
-        
+
         if (fallbackCache && fallbackCache.length > 0) {
-          logger.info('Using fallback cache from cables_materials_cache');
+          logger.info('Using fallback cache due to invoke error');
           rawMaterials = fallbackCache[0].cache_data || [];
         } else {
           logger.warn('No fallback cache available, using empty data');
           rawMaterials = [];
         }
-      } else {
-        rawMaterials = liveData?.materials || [];
-        logger.info('Serving materials from live scraper', { count: rawMaterials.length });
       }
-    } catch (invokeError) {
-      logger.error('Function invoke error', { error: invokeError });
-      // Fall back to cached data
-      const { data: fallbackCache } = await supabase
-        .from('cables_materials_cache')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(1);
-      
-      if (fallbackCache && fallbackCache.length > 0) {
-        logger.info('Using fallback cache due to invoke error');
-        rawMaterials = fallbackCache[0].cache_data || [];
-      } else {
-        logger.warn('No fallback cache available, using empty data');
-        rawMaterials = [];
-      }
-    }
-      
+
       // Store the fresh data in cache for future requests
       if (rawMaterials.length > 0) {
         console.log('💾 Storing fresh data in cache...');
-        
+
         // Process the data first to get metadata
         const processedData = processMaterialsData(rawMaterials);
-        
+
         // Calculate aggregated metadata
-        const allPrices = rawMaterials
-          .map(m => extractPriceNumber(m.price))
-          .filter(p => p > 0);
+        const allPrices = rawMaterials.map((m) => extractPriceNumber(m.price)).filter((p) => p > 0);
         const minPrice = allPrices.length > 0 ? Math.min(...allPrices) : 0;
         const maxPrice = allPrices.length > 0 ? Math.max(...allPrices) : 0;
-        const priceRange = allPrices.length > 0 ? `£${minPrice} - £${maxPrice}` : "Price on request";
-        
-        const allSuppliers = [...new Set(rawMaterials.map(m => m.supplier))];
+        const priceRange =
+          allPrices.length > 0 ? `£${minPrice} - £${maxPrice}` : 'Price on request';
+
+        const allSuppliers = [...new Set(rawMaterials.map((m) => m.supplier))];
         const topBrands = allSuppliers.slice(0, 10);
-        
-        const popularItems = rawMaterials
-          .slice(0, 10)
-          .map(material => ({
-            name: material.name,
-            price: material.price,
-            rating: 4.5 + Math.random() * 0.4,
-            sales: Math.floor(Math.random() * 200) + 50
-          }));
+
+        const popularItems = rawMaterials.slice(0, 10).map((material) => ({
+          name: material.name,
+          price: material.price,
+          rating: 4.5 + Math.random() * 0.4,
+          sales: Math.floor(Math.random() * 200) + 50,
+        }));
 
         // Store comprehensive cache with both processed and raw data
         const cachePayload = {
@@ -324,19 +317,19 @@ serve(async (req) => {
           rawMaterials,
           fromCache: false,
           totalMaterials: rawMaterials.length,
-          lastUpdated: new Date().toISOString()
+          lastUpdated: new Date().toISOString(),
         };
 
         // Ensure arrays are properly formatted for PostgreSQL
         const sanitizedTopBrands = topBrands
-          .filter(brand => brand && typeof brand === 'string')
+          .filter((brand) => brand && typeof brand === 'string')
           .slice(0, 10); // Limit to 10 brands
-        
-        const sanitizedPopularItems = popularItems.map(item => ({
+
+        const sanitizedPopularItems = popularItems.map((item) => ({
           name: typeof item.name === 'string' ? item.name.slice(0, 200) : 'Unknown Item',
           price: typeof item.price === 'string' ? item.price : '£0.00',
           rating: typeof item.rating === 'number' ? Math.round(item.rating * 100) / 100 : 4.5,
-          sales: typeof item.sales === 'number' ? item.sales : 0
+          sales: typeof item.sales === 'number' ? item.sales : 0,
         }));
 
         console.log('📊 Preparing cache entry:', {
@@ -345,7 +338,7 @@ serve(async (req) => {
           topBrandsCount: sanitizedTopBrands.length,
           popularItemsCount: sanitizedPopularItems.length,
           topBrandsPreview: sanitizedTopBrands.slice(0, 3),
-          priceRangeType: typeof priceRange
+          priceRangeType: typeof priceRange,
         });
 
         const cacheEntry = {
@@ -356,7 +349,7 @@ serve(async (req) => {
           top_brands: sanitizedTopBrands, // Clean string array
           popular_items: sanitizedPopularItems, // Clean JSONB object
           expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
-          update_status: 'completed'
+          update_status: 'completed',
         };
 
         // Validate cache entry before insertion
@@ -368,7 +361,7 @@ serve(async (req) => {
           top_brands_length: cacheEntry.top_brands?.length,
           popular_items_type: typeof cacheEntry.popular_items,
           popular_items_is_array: Array.isArray(cacheEntry.popular_items),
-          popular_items_length: cacheEntry.popular_items?.length
+          popular_items_length: cacheEntry.popular_items?.length,
         });
 
         const { error: cacheError } = await supabase
@@ -383,13 +376,15 @@ serve(async (req) => {
             price_range: cacheEntry.price_range,
             top_brands: cacheEntry.top_brands,
             top_brands_sample: cacheEntry.top_brands?.slice(0, 2),
-            popular_items_sample: cacheEntry.popular_items?.slice(0, 1)
+            popular_items_sample: cacheEntry.popular_items?.slice(0, 1),
           });
           // Don't throw error, just log it - we still have the data to return
         } else {
           console.log('✅ Cache stored successfully');
-          console.log(`✅ Stored ${rawMaterials.length} materials with ${processedData.length} categories`);
-          
+          console.log(
+            `✅ Stored ${rawMaterials.length} materials with ${processedData.length} categories`
+          );
+
           // Verify the cache was actually stored
           const { data: verifyCache, error: verifyError } = await supabase
             .from('materials_weekly_cache')
@@ -397,7 +392,7 @@ serve(async (req) => {
             .eq('category', 'comprehensive')
             .order('created_at', { ascending: false })
             .limit(1);
-          
+
           if (verifyError) {
             console.error('❌ Cache verification failed:', verifyError);
           } else if (verifyCache && verifyCache.length > 0) {
@@ -417,18 +412,19 @@ serve(async (req) => {
       rawMaterials,
       fromCache: false, // This is always fresh data
       timestamp: new Date().toISOString(),
-      totalMaterials: rawMaterials.length
+      totalMaterials: rawMaterials.length,
     };
 
-    console.log(`✅ Response ready: ${processedData.length} categories, ${rawMaterials.length} materials total`);
+    console.log(
+      `✅ Response ready: ${processedData.length} categories, ${rawMaterials.length} materials total`
+    );
 
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     logger.error('Error in materials-weekly-cache', { error });
-    
+
     // Return default data on error
     const fallbackResponse = {
       data: defaultCategoryData,
@@ -436,7 +432,7 @@ serve(async (req) => {
       fromCache: false,
       error: error instanceof Error ? error.message : 'Unknown error occurred',
       timestamp: new Date().toISOString(),
-      totalMaterials: 0
+      totalMaterials: 0,
     };
 
     return new Response(JSON.stringify(fallbackResponse), {

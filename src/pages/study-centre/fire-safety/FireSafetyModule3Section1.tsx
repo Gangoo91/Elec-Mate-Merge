@@ -20,14 +20,8 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'fs-hot-work-watch',
-    question:
-      'What is the minimum fire watch period recommended after hot works are completed?',
-    options: [
-      '15 minutes',
-      '30 minutes',
-      '60 minutes',
-      '120 minutes',
-    ],
+    question: 'What is the minimum fire watch period recommended after hot works are completed?',
+    options: ['15 minutes', '30 minutes', '60 minutes', '120 minutes'],
     correctIndex: 2,
     explanation:
       'The recommended minimum fire watch period after hot works is 60 minutes. This allows time for any smouldering materials to be detected before they develop into a fire. Some organisations specify 30 minutes as a minimum, but 60 minutes is the widely accepted best practice under most hot work permit systems.',
@@ -35,12 +29,7 @@ const quickCheckQuestions = [
   {
     id: 'fs-fire-door-rating',
     question: 'What fire door rating means it will resist fire for 30 minutes?',
-    options: [
-      'FD15',
-      'FD30',
-      'FD60',
-      'FD90',
-    ],
+    options: ['FD15', 'FD30', 'FD60', 'FD90'],
     correctIndex: 1,
     explanation:
       'FD30 stands for Fire Door 30 minutes. The number indicates the period in minutes that the door assembly has been tested to resist the passage of fire and smoke. FD30 doors are commonly used in most commercial and residential buildings, while FD60 doors are required in higher-risk areas such as stairwells and corridors serving sleeping accommodation.',
@@ -73,8 +62,7 @@ const faqs = [
       'The frequency of PAT (Portable Appliance Testing) depends on the type of equipment, its environment, and how it is used. The IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment provides guidance rather than fixed legal intervals. For construction sites and industrial environments, more frequent testing is required — typically every 3 months for 110V equipment and monthly visual inspections for 230V equipment. In offices and lower-risk environments, annual PAT testing is common, with more frequent user checks. The employer must carry out a risk assessment to determine appropriate intervals. The key principle is that all portable electrical equipment must be maintained in a safe condition, and regular inspection and testing is the primary way to demonstrate this.',
   },
   {
-    question:
-      'What are the DSEAR requirements for storing flammable liquids in a workplace?',
+    question: 'What are the DSEAR requirements for storing flammable liquids in a workplace?',
     answer:
       'The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR) require employers to assess the risks from dangerous substances, eliminate or reduce those risks, and put controls in place. For flammable liquids, this means: quantities kept in the workroom must be limited to the minimum needed for the day or shift; bulk stocks must be stored in dedicated, fire-resistant stores or cabinets; containers must be kept closed when not in use; adequate ventilation must be provided to prevent the build-up of flammable vapours; ignition sources must be eliminated from storage and handling areas; bunding (secondary containment) must be provided for liquid stores to contain spills; and appropriate signage must be displayed. The regulations apply to all workplaces where dangerous substances are present, including construction sites.',
   },
@@ -88,8 +76,7 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'A hot work permit is required before which of the following activities?',
+    question: 'A hot work permit is required before which of the following activities?',
     options: [
       'Painting a wall in a new extension',
       'Drilling a hole through a concrete wall',
@@ -102,8 +89,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'Under DSEAR 2002, flammable liquids stored in a workroom must be:',
+    question: 'Under DSEAR 2002, flammable liquids stored in a workroom must be:',
     options: [
       'Stored in any available cupboard away from doors',
       'Limited to the minimum quantity needed for the day or shift and kept in approved containers',
@@ -116,14 +102,8 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'A fire door rated FD60 will resist fire for:',
-    options: [
-      '30 minutes',
-      '45 minutes',
-      '60 minutes',
-      '90 minutes',
-    ],
+    question: 'A fire door rated FD60 will resist fire for:',
+    options: ['30 minutes', '45 minutes', '60 minutes', '90 minutes'],
     correctAnswer: 2,
     explanation:
       'FD60 means the fire door assembly has been tested to resist the passage of fire and smoke for 60 minutes. FD60 doors are typically used in higher-risk areas such as stairwells, corridors serving sleeping accommodation, and areas where longer evacuation times may be required.',
@@ -144,8 +124,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'An Arc Fault Detection Device (AFDD) protects against fire risk by:',
+    question: 'An Arc Fault Detection Device (AFDD) protects against fire risk by:',
     options: [
       'Detecting smoke particles in the air near the consumer unit',
       'Monitoring for dangerous electrical arcing caused by damaged cables or loose connections',
@@ -250,7 +229,8 @@ export default function FireSafetyModule3Section1() {
             <p className="text-rose-400 text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>Prevention hierarchy:</strong> Eliminate &rarr; Substitute &rarr; Engineer &rarr; Administrate
+                <strong>Prevention hierarchy:</strong> Eliminate &rarr; Substitute &rarr; Engineer
+                &rarr; Administrate
               </li>
               <li>
                 <strong>Hot works:</strong> Permit + fire watch + 60-min cool-down
@@ -309,9 +289,9 @@ export default function FireSafetyModule3Section1() {
               <p>
                 The most effective way to prevent fire is to{' '}
                 <strong>eliminate or control ignition sources</strong> before they can interact with
-                fuel and oxygen. In the workplace, ignition sources include electrical faults,
-                hot work activities, smoking materials, heating equipment, and deliberate
-                fire-setting (arson). Each must be systematically identified and managed.
+                fuel and oxygen. In the workplace, ignition sources include electrical faults, hot
+                work activities, smoking materials, heating equipment, and deliberate fire-setting
+                (arson). Each must be systematically identified and managed.
               </p>
 
               {/* Electrical Safety */}
@@ -332,9 +312,9 @@ export default function FireSafetyModule3Section1() {
                     <span>
                       <strong className="text-white">Regular inspections:</strong> All fixed
                       electrical installations must be periodically inspected and tested in
-                      accordance with BS 7671. The interval depends on the type of installation
-                      and its environment — typically every 5 years for commercial premises and
-                      every 3 years for industrial sites.
+                      accordance with BS 7671. The interval depends on the type of installation and
+                      its environment — typically every 5 years for commercial premises and every 3
+                      years for industrial sites.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -342,35 +322,35 @@ export default function FireSafetyModule3Section1() {
                     <span>
                       <strong className="text-white">PAT testing:</strong> Portable Appliance
                       Testing ensures that plugged-in equipment (kettles, power tools, extension
-                      leads, chargers) is safe for continued use. Frequency depends on the
-                      equipment type and environment — more frequent on construction sites.
+                      leads, chargers) is safe for continued use. Frequency depends on the equipment
+                      type and environment — more frequent on construction sites.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Correct fuse ratings:</strong> Using the
-                      wrong fuse rating can allow excessive current to flow without the fuse
-                      blowing, leading to overheating and potential fire. Always match fuse
-                      ratings to the equipment and cable ratings.
+                      <strong className="text-white">Correct fuse ratings:</strong> Using the wrong
+                      fuse rating can allow excessive current to flow without the fuse blowing,
+                      leading to overheating and potential fire. Always match fuse ratings to the
+                      equipment and cable ratings.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Avoiding overloaded sockets:</strong> Never
-                      daisy-chain extension leads or plug adaptors into other adaptors. Each
-                      socket outlet has a maximum rated load — exceeding it causes overheating of
+                      daisy-chain extension leads or plug adaptors into other adaptors. Each socket
+                      outlet has a maximum rated load — exceeding it causes overheating of
                       connections and cables.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Maintaining equipment:</strong> Damaged
-                      cables, cracked plugs, loose connections, and worn insulation must be
-                      reported and repaired immediately. Equipment with visible damage must be
-                      taken out of service and labelled &ldquo;Do Not Use&rdquo;.
+                      <strong className="text-white">Maintaining equipment:</strong> Damaged cables,
+                      cracked plugs, loose connections, and worn insulation must be reported and
+                      repaired immediately. Equipment with visible damage must be taken out of
+                      service and labelled &ldquo;Do Not Use&rdquo;.
                     </span>
                   </li>
                 </ul>
@@ -384,17 +364,16 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <p className="text-sm text-white/80 mb-3">
                   Hot work — including welding, brazing, soldering, grinding, and the use of
-                  blowtorches — is one of the most common causes of workplace fires. A formal
-                  hot work permit system is essential wherever hot work is carried out.
+                  blowtorches — is one of the most common causes of workplace fires. A formal hot
+                  work permit system is essential wherever hot work is carried out.
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Permits:</strong> A written hot work permit
-                      must be issued before any hot work begins. The permit specifies the
-                      location, duration, precautions required, and the person responsible for
-                      the fire watch.
+                      must be issued before any hot work begins. The permit specifies the location,
+                      duration, precautions required, and the person responsible for the fire watch.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -402,16 +381,16 @@ export default function FireSafetyModule3Section1() {
                     <span>
                       <strong className="text-white">Fire watch:</strong> A dedicated person must
                       remain on site during the hot work and for a minimum of{' '}
-                      <strong className="text-rose-300">60 minutes</strong> after work is
-                      completed to watch for smouldering or delayed ignition.
+                      <strong className="text-rose-300">60 minutes</strong> after work is completed
+                      to watch for smouldering or delayed ignition.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Removing combustibles:</strong> All
-                      combustible materials within a minimum radius of 10 metres must be removed
-                      or covered with fire-resistant sheeting before hot work begins.
+                      <strong className="text-white">Removing combustibles:</strong> All combustible
+                      materials within a minimum radius of 10 metres must be removed or covered with
+                      fire-resistant sheeting before hot work begins.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -426,10 +405,10 @@ export default function FireSafetyModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">60-minute cool-down:</strong> The hot work
-                      area must be monitored for at least 60 minutes after the work is completed.
-                      Many hot-work fires start well after the work itself has finished, when
-                      smouldering materials finally reach ignition temperature.
+                      <strong className="text-white">60-minute cool-down:</strong> The hot work area
+                      must be monitored for at least 60 minutes after the work is completed. Many
+                      hot-work fires start well after the work itself has finished, when smouldering
+                      materials finally reach ignition temperature.
                     </span>
                   </li>
                 </ul>
@@ -446,7 +425,10 @@ export default function FireSafetyModule3Section1() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Provide designated smoking areas away from buildings and combustible materials</span>
+                      <span>
+                        Provide designated smoking areas away from buildings and combustible
+                        materials
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -459,7 +441,9 @@ export default function FireSafetyModule3Section1() {
                   <ul className="text-sm text-white/80 space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Maintain minimum clearances from combustible materials (typically 1 metre)</span>
+                      <span>
+                        Maintain minimum clearances from combustible materials (typically 1 metre)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -476,7 +460,9 @@ export default function FireSafetyModule3Section1() {
                   <ul className="text-sm text-white/80 space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Maintain perimeter security — fencing, locked gates, access control</span>
+                      <span>
+                        Maintain perimeter security — fencing, locked gates, access control
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -484,7 +470,9 @@ export default function FireSafetyModule3Section1() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Remove waste, pallets, and combustibles from the building perimeter</span>
+                      <span>
+                        Remove waste, pallets, and combustibles from the building perimeter
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -497,11 +485,11 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <p className="text-sm text-white/80">
                   Arson accounts for approximately{' '}
-                  <strong className="text-white">45% of all fires in commercial premises</strong>{' '}
-                  in the UK. Many arson fires are opportunistic — the arsonist uses waste or
-                  materials already present outside the building. Simply removing combustible
-                  waste from the perimeter of your building significantly reduces the risk of
-                  deliberate fire-setting.
+                  <strong className="text-white">45% of all fires in commercial premises</strong> in
+                  the UK. Many arson fires are opportunistic — the arsonist uses waste or materials
+                  already present outside the building. Simply removing combustible waste from the
+                  perimeter of your building significantly reduces the risk of deliberate
+                  fire-setting.
                 </p>
               </div>
             </div>
@@ -517,39 +505,42 @@ export default function FireSafetyModule3Section1() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The <strong>Dangerous Substances and Explosive Atmospheres Regulations 2002
-                (DSEAR)</strong> require employers to assess, eliminate, or control the risks
-                from dangerous substances — including flammable liquids, gases, dusts, and
-                aerosols. DSEAR applies to all workplaces where dangerous substances are used
-                or stored, including construction sites and electrical workshops.
+                The{' '}
+                <strong>
+                  Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)
+                </strong>{' '}
+                require employers to assess, eliminate, or control the risks from dangerous
+                substances — including flammable liquids, gases, dusts, and aerosols. DSEAR applies
+                to all workplaces where dangerous substances are used or stored, including
+                construction sites and electrical workshops.
               </p>
 
               {/* Flammable Liquids */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Flammable Liquids</p>
                 <p className="text-sm text-white/80 mb-3">
-                  Solvents, adhesives, paints, thinners, cleaning fluids, and many other
-                  substances commonly found on electrical and construction sites are classified
-                  as flammable liquids. Their vapours are heavier than air and can travel
-                  significant distances to find an ignition source.
+                  Solvents, adhesives, paints, thinners, cleaning fluids, and many other substances
+                  commonly found on electrical and construction sites are classified as flammable
+                  liquids. Their vapours are heavier than air and can travel significant distances
+                  to find an ignition source.
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Fire-resistant cabinets:</strong> Flammable
-                      liquids must be stored in purpose-built, fire-resistant storage cabinets
-                      that meet BS EN 14470-1. These cabinets provide a minimum of 15 or 30
-                      minutes fire resistance and are equipped with self-closing doors, liquid-tight
-                      sumps, and ventilation connections.
+                      liquids must be stored in purpose-built, fire-resistant storage cabinets that
+                      meet BS EN 14470-1. These cabinets provide a minimum of 15 or 30 minutes fire
+                      resistance and are equipped with self-closing doors, liquid-tight sumps, and
+                      ventilation connections.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Maximum quantities in workrooms:</strong> Only
-                      the minimum quantity needed for the current day or shift should be kept in
-                      the workroom. Bulk supplies must be stored in separate, dedicated stores.
+                      the minimum quantity needed for the current day or shift should be kept in the
+                      workroom. Bulk supplies must be stored in separate, dedicated stores.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -557,8 +548,8 @@ export default function FireSafetyModule3Section1() {
                     <span>
                       <strong className="text-white">Separate stores:</strong> For larger
                       quantities, a dedicated flammable liquids store must be provided — a
-                      fire-resistant enclosure separate from the main building, with direct
-                      external ventilation, no ignition sources, and appropriate signage.
+                      fire-resistant enclosure separate from the main building, with direct external
+                      ventilation, no ignition sources, and appropriate signage.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -573,10 +564,10 @@ export default function FireSafetyModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Ventilation:</strong> Adequate ventilation
-                      must be provided in storage and use areas to prevent the accumulation of
-                      flammable vapours to dangerous concentrations. Natural ventilation at low
-                      level is preferred for flammable liquid stores.
+                      <strong className="text-white">Ventilation:</strong> Adequate ventilation must
+                      be provided in storage and use areas to prevent the accumulation of flammable
+                      vapours to dangerous concentrations. Natural ventilation at low level is
+                      preferred for flammable liquid stores.
                     </span>
                   </li>
                 </ul>
@@ -587,8 +578,8 @@ export default function FireSafetyModule3Section1() {
                 <p className="text-sm font-medium text-orange-400 mb-3">Gas Cylinders</p>
                 <p className="text-sm text-white/80 mb-3">
                   Compressed gas cylinders (propane, acetylene, oxygen, LPG) present significant
-                  fire and explosion risks if stored or handled incorrectly. Heat exposure can
-                  cause catastrophic cylinder failure.
+                  fire and explosion risks if stored or handled incorrectly. Heat exposure can cause
+                  catastrophic cylinder failure.
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -609,24 +600,24 @@ export default function FireSafetyModule3Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Separated by type:</strong> Flammable gases
-                      (acetylene, propane) must be stored separately from oxidising gases (oxygen)
-                      — minimum 3 metres separation or a fire-resistant partition
+                      (acetylene, propane) must be stored separately from oxidising gases (oxygen) —
+                      minimum 3 metres separation or a fire-resistant partition
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">External storage preferred:</strong> Outdoor
-                      storage in a well-ventilated, secure compound is always preferred over
-                      indoor storage
+                      storage in a well-ventilated, secure compound is always preferred over indoor
+                      storage
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Signage:</strong> Clear &ldquo;Highly
-                      Flammable&rdquo; and &ldquo;No Smoking&rdquo; signs must be displayed at
-                      all gas cylinder storage locations
+                      Flammable&rdquo; and &ldquo;No Smoking&rdquo; signs must be displayed at all
+                      gas cylinder storage locations
                     </span>
                   </li>
                 </ul>
@@ -639,8 +630,8 @@ export default function FireSafetyModule3Section1() {
                   <p className="text-sm text-white/80 mb-3">
                     Aerosol cans (spray paints, lubricants, foam cleaners) contain flammable
                     propellants that can explode if heated. They must be stored away from heat
-                    sources and direct sunlight, in cool, ventilated areas, and never punctured
-                    or thrown into fires.
+                    sources and direct sunlight, in cool, ventilated areas, and never punctured or
+                    thrown into fires.
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -648,8 +639,8 @@ export default function FireSafetyModule3Section1() {
                   <p className="text-sm text-white/80 mb-3">
                     Fine dusts from wood, metal, flour, and other materials can form explosive
                     atmospheres when suspended in air. Dust extraction systems, regular cleaning,
-                    and elimination of ignition sources in dusty environments are essential.
-                    DSEAR specifically covers explosive atmospheres created by combustible dusts.
+                    and elimination of ignition sources in dusty environments are essential. DSEAR
+                    specifically covers explosive atmospheres created by combustible dusts.
                   </p>
                 </div>
               </div>
@@ -702,50 +693,49 @@ export default function FireSafetyModule3Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Controlled waste storage areas:</strong>{' '}
-                      Designated waste storage areas must be fire-resistant, well away from the
-                      main building, and emptied regularly before waste accumulates
+                      Designated waste storage areas must be fire-resistant, well away from the main
+                      building, and emptied regularly before waste accumulates
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">External bin placement:</strong> Bins and
-                      skips must be positioned away from the building — a minimum of 6 metres is
+                      <strong className="text-white">External bin placement:</strong> Bins and skips
+                      must be positioned away from the building — a minimum of 6 metres is
                       recommended. Bins placed against building walls are a common arson target
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Oily rag disposal:</strong> Rags
-                      contaminated with oil, solvents, or other flammable substances must be
-                      placed in metal containers with self-closing lids. Oily rags left in piles
-                      can spontaneously combust through exothermic oxidation
+                      <strong className="text-white">Oily rag disposal:</strong> Rags contaminated
+                      with oil, solvents, or other flammable substances must be placed in metal
+                      containers with self-closing lids. Oily rags left in piles can spontaneously
+                      combust through exothermic oxidation
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Dust and lint removal:</strong> Regular
-                      cleaning of dust accumulations on surfaces, equipment, cable trays, and
-                      within enclosures — dust deposits provide easily ignitable fuel
+                      cleaning of dust accumulations on surfaces, equipment, cable trays, and within
+                      enclosures — dust deposits provide easily ignitable fuel
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Clear corridors and escape routes:</strong>{' '}
-                      Corridors, stairways, and fire exits must be kept completely clear of
-                      stored materials, furniture, and obstructions at all times
+                      Corridors, stairways, and fire exits must be kept completely clear of stored
+                      materials, furniture, and obstructions at all times
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">No storage under stairways:</strong> The
-                      space under stairways is a protected escape route and must never be used
-                      for storage — fire in this location blocks the primary means of vertical
-                      escape
+                      <strong className="text-white">No storage under stairways:</strong> The space
+                      under stairways is a protected escape route and must never be used for storage
+                      — fire in this location blocks the primary means of vertical escape
                     </span>
                   </li>
                 </ul>
@@ -757,20 +747,28 @@ export default function FireSafetyModule3Section1() {
                 </p>
                 <p className="text-sm text-white/80 mb-3">
                   Regular housekeeping audits should be conducted to verify that fire prevention
-                  standards are maintained. The <strong className="text-white">5S methodology</strong>{' '}
-                  — originally developed for manufacturing — provides an excellent framework for
-                  fire-safe housekeeping:
+                  standards are maintained. The{' '}
+                  <strong className="text-white">5S methodology</strong> — originally developed for
+                  manufacturing — provides an excellent framework for fire-safe housekeeping:
                 </p>
                 <div className="grid sm:grid-cols-5 gap-2">
                   {[
                     { label: 'Sort', desc: 'Remove unnecessary items from the work area' },
-                    { label: 'Set in Order', desc: 'Organise remaining items with designated places' },
+                    {
+                      label: 'Set in Order',
+                      desc: 'Organise remaining items with designated places',
+                    },
                     { label: 'Shine', desc: 'Clean the work area thoroughly and regularly' },
                     { label: 'Standardise', desc: 'Create consistent housekeeping procedures' },
                     { label: 'Sustain', desc: 'Maintain standards through audits and discipline' },
                   ].map((s, i) => (
-                    <div key={i} className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg text-center">
-                      <p className="text-xs font-bold text-rose-400 mb-1">{i + 1}. {s.label}</p>
+                    <div
+                      key={i}
+                      className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg text-center"
+                    >
+                      <p className="text-xs font-bold text-rose-400 mb-1">
+                        {i + 1}. {s.label}
+                      </p>
                       <p className="text-xs text-white/70">{s.desc}</p>
                     </div>
                   ))}
@@ -791,10 +789,10 @@ export default function FireSafetyModule3Section1() {
               <p>
                 <strong>Compartmentation</strong> is the division of a building into discrete
                 fire-resistant sections (compartments) using fire walls, fire floors, and fire
-                doors. The purpose is to contain a fire within the compartment of origin for
-                long enough to allow safe evacuation and for the fire service to mount an
-                effective response. Every element that breaches a compartment boundary — doors,
-                cables, pipes, ducts — must maintain the fire rating of that boundary.
+                doors. The purpose is to contain a fire within the compartment of origin for long
+                enough to allow safe evacuation and for the fire service to mount an effective
+                response. Every element that breaches a compartment boundary — doors, cables, pipes,
+                ducts — must maintain the fire rating of that boundary.
               </p>
 
               {/* Fire Doors */}
@@ -805,22 +803,22 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <p className="text-sm text-white/80 mb-3">
                   Fire doors are the most common — and most commonly compromised — element of
-                  compartmentation. They are tested to resist the passage of fire and smoke for
-                  a specified period and are critical life-safety elements.
+                  compartmentation. They are tested to resist the passage of fire and smoke for a
+                  specified period and are critical life-safety elements.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4 mb-3">
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-rose-400 mb-1">FD30</p>
                     <p className="text-xs text-white/70">
-                      Resists fire for 30 minutes. Used in most commercial and residential
-                      buildings — offices, corridors, storerooms.
+                      Resists fire for 30 minutes. Used in most commercial and residential buildings
+                      — offices, corridors, storerooms.
                     </p>
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-rose-400 mb-1">FD60</p>
                     <p className="text-xs text-white/70">
-                      Resists fire for 60 minutes. Used in higher-risk areas — stairwells,
-                      corridors serving sleeping accommodation, plant rooms.
+                      Resists fire for 60 minutes. Used in higher-risk areas — stairwells, corridors
+                      serving sleeping accommodation, plant rooms.
                     </p>
                   </div>
                 </div>
@@ -828,9 +826,9 @@ export default function FireSafetyModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Self-closing:</strong> All fire doors must
-                      be fitted with an approved self-closing device that fully closes the door
-                      into its frame and engages the latch
+                      <strong className="text-white">Self-closing:</strong> All fire doors must be
+                      fitted with an approved self-closing device that fully closes the door into
+                      its frame and engages the latch
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -845,8 +843,8 @@ export default function FireSafetyModule3Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Never propped open:</strong> Fire doors must
-                      never be propped open with wedges, extinguishers, or other objects. The
-                      only acceptable hold-open device is an{' '}
+                      never be propped open with wedges, extinguishers, or other objects. The only
+                      acceptable hold-open device is an{' '}
                       <strong className="text-rose-300">
                         electromagnetic hold-open device connected to the fire alarm system
                       </strong>{' '}
@@ -857,8 +855,8 @@ export default function FireSafetyModule3Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Intumescent strips and smoke seals:</strong>{' '}
-                      Fire doors incorporate intumescent strips that expand when heated, sealing
-                      the gap between the door and frame. Cold smoke seals prevent smoke migration
+                      Fire doors incorporate intumescent strips that expand when heated, sealing the
+                      gap between the door and frame. Cold smoke seals prevent smoke migration
                       before the fire reaches the door
                     </span>
                   </li>
@@ -873,19 +871,19 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <p className="text-sm text-white/80 mb-3">
                   Fire stopping is the process of sealing penetrations through fire-rated barriers
-                  to maintain their fire resistance. This is <strong className="text-white">
-                  critically important for electricians</strong> — every cable, trunking, conduit,
-                  or busbar that passes through a fire wall or fire floor creates a penetration
-                  that must be fire-stopped.
+                  to maintain their fire resistance. This is{' '}
+                  <strong className="text-white">critically important for electricians</strong> —
+                  every cable, trunking, conduit, or busbar that passes through a fire wall or fire
+                  floor creates a penetration that must be fire-stopped.
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Intumescent products:</strong> Sealants,
-                      wraps, and collars that expand when heated to fill gaps and seal around
-                      cable penetrations. Intumescent sealants are the most commonly used
-                      fire-stopping material for small cable penetrations.
+                      <strong className="text-white">Intumescent products:</strong> Sealants, wraps,
+                      and collars that expand when heated to fill gaps and seal around cable
+                      penetrations. Intumescent sealants are the most commonly used fire-stopping
+                      material for small cable penetrations.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -899,9 +897,9 @@ export default function FireSafetyModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Fire batts:</strong> Mineral fibre boards
-                      used to fill larger openings before sealing with intumescent sealant. Used
-                      for multiple cable penetrations through a single opening.
+                      <strong className="text-white">Fire batts:</strong> Mineral fibre boards used
+                      to fill larger openings before sealing with intumescent sealant. Used for
+                      multiple cable penetrations through a single opening.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -916,11 +914,10 @@ export default function FireSafetyModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Dampers in ductwork:</strong> Fire dampers
-                      are installed where ventilation ducts pass through fire-rated barriers. They
-                      close automatically when the surrounding temperature reaches a set point
-                      (typically 72&deg;C), preventing fire and smoke from spreading through the
-                      duct system.
+                      <strong className="text-white">Dampers in ductwork:</strong> Fire dampers are
+                      installed where ventilation ducts pass through fire-rated barriers. They close
+                      automatically when the surrounding temperature reaches a set point (typically
+                      72&deg;C), preventing fire and smoke from spreading through the duct system.
                     </span>
                   </li>
                 </ul>
@@ -933,12 +930,11 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <p className="text-sm text-white/80">
                   Inadequate fire stopping is one of the{' '}
-                  <strong className="text-white">most common fire safety failings</strong>{' '}
-                  found during building inspections. Electricians, plumbers, and other trades
-                  frequently create penetrations through fire barriers during installation
-                  and refurbishment work. Every single penetration must be fire-stopped using
-                  approved materials and methods — there are no exceptions. Failure to fire-stop
-                  penetrations can result in{' '}
+                  <strong className="text-white">most common fire safety failings</strong> found
+                  during building inspections. Electricians, plumbers, and other trades frequently
+                  create penetrations through fire barriers during installation and refurbishment
+                  work. Every single penetration must be fire-stopped using approved materials and
+                  methods — there are no exceptions. Failure to fire-stop penetrations can result in{' '}
                   <strong className="text-red-300">
                     enforcement action, prosecution, and catastrophic loss of life
                   </strong>{' '}
@@ -1015,8 +1011,8 @@ export default function FireSafetyModule3Section1() {
                     <p className="text-xs text-white/70">
                       Detect imbalances between live and neutral currents, indicating current is
                       leaking to earth through an unintended path. Trip at 30 mA for personal
-                      protection, 300 mA for fire protection. Effective against earth faults but
-                      do not detect series arc faults.
+                      protection, 300 mA for fire protection. Effective against earth faults but do
+                      not detect series arc faults.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
@@ -1039,8 +1035,8 @@ export default function FireSafetyModule3Section1() {
                       conductors, loose connections, or insulation breakdown) and parallel arcs
                       (caused by short circuits between conductors). Arc faults can generate
                       localised temperatures exceeding{' '}
-                      <strong className="text-white">6,000&deg;C</strong> — more than sufficient
-                      to ignite surrounding combustible materials. AFDDs provide a level of fire
+                      <strong className="text-white">6,000&deg;C</strong> — more than sufficient to
+                      ignite surrounding combustible materials. AFDDs provide a level of fire
                       protection that RCDs and MCBs alone cannot offer.
                     </p>
                   </div>
@@ -1058,7 +1054,9 @@ export default function FireSafetyModule3Section1() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Derating factors: ambient temperature, grouping, thermal insulation</span>
+                      <span>
+                        Derating factors: ambient temperature, grouping, thermal insulation
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -1077,11 +1075,17 @@ export default function FireSafetyModule3Section1() {
                   <ul className="text-sm text-white/80 space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Thermal imaging cameras detect hot spots in electrical panels, connections, and cables</span>
+                      <span>
+                        Thermal imaging cameras detect hot spots in electrical panels, connections,
+                        and cables
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Identifies loose connections, overloaded circuits, and failing components before fire occurs</span>
+                      <span>
+                        Identifies loose connections, overloaded circuits, and failing components
+                        before fire occurs
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -1107,10 +1111,10 @@ export default function FireSafetyModule3Section1() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Construction and refurbishment sites present significantly elevated fire risks
-                due to the combination of hot work activities, temporary electrical installations,
-                large quantities of combustible building materials, incomplete fire protection
-                systems, and constantly changing site layouts. The{' '}
+                Construction and refurbishment sites present significantly elevated fire risks due
+                to the combination of hot work activities, temporary electrical installations, large
+                quantities of combustible building materials, incomplete fire protection systems,
+                and constantly changing site layouts. The{' '}
                 <strong>
                   FPA Joint Code of Practice for fire prevention on construction sites
                 </strong>{' '}
@@ -1120,7 +1124,9 @@ export default function FireSafetyModule3Section1() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <HardHat className="h-5 w-5 text-orange-400" />
-                  <p className="text-sm font-medium text-orange-400">Construction Site Fire Prevention</p>
+                  <p className="text-sm font-medium text-orange-400">
+                    Construction Site Fire Prevention
+                  </p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -1136,18 +1142,18 @@ export default function FireSafetyModule3Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Site security:</strong> The site must be
-                      secured against unauthorised access to prevent arson and vandalism —
-                      perimeter fencing, locked gates, CCTV, and security patrols for high-value
-                      or high-risk sites.
+                      secured against unauthorised access to prevent arson and vandalism — perimeter
+                      fencing, locked gates, CCTV, and security patrols for high-value or high-risk
+                      sites.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Hot work permits:</strong> Construction-specific
-                      hot work permits must include consideration of the unique risks on site —
-                      incomplete fire barriers, combustible insulation, temporary covers, and
-                      other trades working nearby.
+                      <strong className="text-white">Hot work permits:</strong>{' '}
+                      Construction-specific hot work permits must include consideration of the
+                      unique risks on site — incomplete fire barriers, combustible insulation,
+                      temporary covers, and other trades working nearby.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1155,17 +1161,17 @@ export default function FireSafetyModule3Section1() {
                     <span>
                       <strong className="text-white">Temporary fire detection:</strong> Temporary
                       fire detection and alarm systems must be installed during construction and
-                      refurbishment works. These systems must be extended and modified as the
-                      works progress through different phases.
+                      refurbishment works. These systems must be extended and modified as the works
+                      progress through different phases.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Escape routes maintained:</strong> Safe
-                      escape routes must be established, maintained, signed, and communicated to
-                      all workers throughout every phase of the construction works. Routes will
-                      change as the building develops — regular review is essential.
+                      <strong className="text-white">Escape routes maintained:</strong> Safe escape
+                      routes must be established, maintained, signed, and communicated to all
+                      workers throughout every phase of the construction works. Routes will change
+                      as the building develops — regular review is essential.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1198,14 +1204,16 @@ export default function FireSafetyModule3Section1() {
                 Technical measures alone are insufficient to prevent fire. A strong{' '}
                 <strong>fire prevention culture</strong> — where every person in the organisation
                 understands fire risks, takes personal responsibility for prevention, and actively
-                participates in maintaining fire safety standards — is essential for long-term
-                fire prevention success.
+                participates in maintaining fire safety standards — is essential for long-term fire
+                prevention success.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <Users className="h-5 w-5 text-rose-400" />
-                  <p className="text-sm font-medium text-rose-400">Building a Fire Prevention Culture</p>
+                  <p className="text-sm font-medium text-rose-400">
+                    Building a Fire Prevention Culture
+                  </p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -1246,10 +1254,10 @@ export default function FireSafetyModule3Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Reporting near-misses:</strong> A
-                      no-blame reporting system for fire-related near-misses and hazard
-                      observations. Near-miss data is invaluable for identifying weaknesses in
-                      fire prevention before an actual fire occurs.
+                      <strong className="text-white">Reporting near-misses:</strong> A no-blame
+                      reporting system for fire-related near-misses and hazard observations.
+                      Near-miss data is invaluable for identifying weaknesses in fire prevention
+                      before an actual fire occurs.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1265,8 +1273,8 @@ export default function FireSafetyModule3Section1() {
                     <span>
                       <strong className="text-white">Continuous improvement:</strong> Fire
                       prevention standards must be regularly reviewed and updated in response to
-                      changes in the workplace, new legislation, industry best practice, and
-                      lessons learned from incidents.
+                      changes in the workplace, new legislation, industry best practice, and lessons
+                      learned from incidents.
                     </span>
                   </li>
                 </ul>
@@ -1286,29 +1294,35 @@ export default function FireSafetyModule3Section1() {
               {/* Elimination */}
               <div className="bg-green-500/15 border border-green-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-green-400 text-xs font-bold uppercase tracking-wider">1. Elimination</span>
+                  <span className="text-green-400 text-xs font-bold uppercase tracking-wider">
+                    1. Elimination
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
-                  Remove the hazard entirely &mdash; eliminate the ignition source or the
-                  flammable material from the workplace
+                  Remove the hazard entirely &mdash; eliminate the ignition source or the flammable
+                  material from the workplace
                 </p>
               </div>
 
               {/* Substitution */}
               <div className="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider">2. Substitution</span>
+                  <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                    2. Substitution
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
-                  Replace the dangerous substance with a less flammable alternative &mdash;
-                  e.g. water-based paint instead of solvent-based
+                  Replace the dangerous substance with a less flammable alternative &mdash; e.g.
+                  water-based paint instead of solvent-based
                 </p>
               </div>
 
               {/* Engineering Controls */}
               <div className="bg-blue-500/15 border border-blue-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-blue-400 text-xs font-bold uppercase tracking-wider">3. Engineering Controls</span>
+                  <span className="text-blue-400 text-xs font-bold uppercase tracking-wider">
+                    3. Engineering Controls
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
                   Physical measures &mdash; fire-resistant storage, ventilation systems,
@@ -1319,18 +1333,22 @@ export default function FireSafetyModule3Section1() {
               {/* Administrative Controls */}
               <div className="bg-amber-500/15 border border-amber-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-amber-400 text-xs font-bold uppercase tracking-wider">4. Administrative Controls</span>
+                  <span className="text-amber-400 text-xs font-bold uppercase tracking-wider">
+                    4. Administrative Controls
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
-                  Policies, procedures, training, permits to work, housekeeping audits,
-                  signage, and management systems
+                  Policies, procedures, training, permits to work, housekeeping audits, signage, and
+                  management systems
                 </p>
               </div>
 
               {/* PPE / Emergency */}
               <div className="bg-rose-500/15 border border-rose-500/30 rounded-lg p-3 sm:p-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-rose-400 text-xs font-bold uppercase tracking-wider">5. PPE &amp; Emergency Response</span>
+                  <span className="text-rose-400 text-xs font-bold uppercase tracking-wider">
+                    5. PPE &amp; Emergency Response
+                  </span>
                 </div>
                 <p className="text-xs sm:text-sm text-white/80">
                   Last resort &mdash; fire extinguishers, fire blankets, fire-resistant PPE,

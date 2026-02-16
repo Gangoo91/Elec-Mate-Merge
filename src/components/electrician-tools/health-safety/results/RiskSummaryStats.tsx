@@ -8,7 +8,11 @@ interface RiskSummaryStatsProps {
   emergencyProcedures: string[];
 }
 
-export const RiskSummaryStats = ({ hazards, ppeItems, emergencyProcedures }: RiskSummaryStatsProps) => {
+export const RiskSummaryStats = ({
+  hazards,
+  ppeItems,
+  emergencyProcedures,
+}: RiskSummaryStatsProps) => {
   const totalHazards = hazards?.length || 0;
   const highestScore = getHighestRiskScore(hazards);
   const riskColors = getRiskColors(highestScore);
@@ -52,15 +56,10 @@ export const RiskSummaryStats = ({ hazards, ppeItems, emergencyProcedures }: Ris
       {stats.map((stat, idx) => {
         const Icon = stat.icon;
         return (
-          <div
-            key={idx}
-            className={`${stat.bgColor} p-4 rounded-xl min-h-[44px]`}
-          >
+          <div key={idx} className={`${stat.bgColor} p-4 rounded-xl min-h-[44px]`}>
             <div className="flex items-center gap-2 mb-2">
               <Icon className={`h-4 w-4 ${stat.color}`} />
-              <span className="text-xs text-white/50 font-medium">
-                {stat.label}
-              </span>
+              <span className="text-xs text-white/50 font-medium">{stat.label}</span>
             </div>
             <div className="text-2xl sm:text-3xl font-bold">{stat.value}</div>
             {stat.badge && (

@@ -62,10 +62,14 @@ type DateRange = '7d' | '30d' | '90d' | '1yr';
 
 const getDaysForRange = (range: DateRange): number => {
   switch (range) {
-    case '7d': return 7;
-    case '30d': return 30;
-    case '90d': return 90;
-    case '1yr': return 365;
+    case '7d':
+      return 7;
+    case '30d':
+      return 30;
+    case '90d':
+      return 90;
+    case '1yr':
+      return 365;
   }
 };
 

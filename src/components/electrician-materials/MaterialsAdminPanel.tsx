@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { RefreshCw, Loader2, Calendar, TrendingUp, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { RefreshCw, Loader2, Calendar, TrendingUp, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
 
 const MaterialsAdminPanel = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -15,7 +15,7 @@ const MaterialsAdminPanel = () => {
     setIsRefreshing(true);
     try {
       const { data, error } = await supabase.functions.invoke('materials-weekly-scheduler', {
-        body: { manual_trigger: true }
+        body: { manual_trigger: true },
       });
 
       if (error) {
@@ -23,17 +23,18 @@ const MaterialsAdminPanel = () => {
       }
 
       toast({
-        title: "Materials Refresh Started",
-        description: "Weekly materials refresh has been triggered manually. This may take several minutes.",
+        title: 'Materials Refresh Started',
+        description:
+          'Weekly materials refresh has been triggered manually. This may take several minutes.',
       });
 
       console.log('Manual refresh response:', data);
     } catch (error) {
       console.error('Error triggering manual refresh:', error);
       toast({
-        title: "Refresh Failed",
-        description: "Failed to trigger materials refresh. Please try again.",
-        variant: "destructive",
+        title: 'Refresh Failed',
+        description: 'Failed to trigger materials refresh. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsRefreshing(false);
@@ -56,21 +57,23 @@ const MaterialsAdminPanel = () => {
       const totalProducts = data?.reduce((sum, cache) => sum + (cache.total_products || 0), 0) || 0;
       const lastUpdate = data?.[0]?.last_updated ? new Date(data[0].last_updated) : null;
       const categories = data?.length || 0;
-      
+
       let status = 'fresh';
       if (!lastUpdate) {
         status = 'no-data';
       } else {
         const hoursSinceUpdate = (now.getTime() - lastUpdate.getTime()) / (1000 * 60 * 60);
-        if (hoursSinceUpdate > 168) { // 7 days
+        if (hoursSinceUpdate > 168) {
+          // 7 days
           status = 'stale';
-        } else if (hoursSinceUpdate > 144) { // 6 days
+        } else if (hoursSinceUpdate > 144) {
+          // 6 days
           status = 'aging';
         }
       }
 
       toast({
-        title: "Cache Status",
+        title: 'Cache Status',
         description: `${totalProducts} products across ${categories} categories. Last updated: ${lastUpdate ? lastUpdate.toLocaleDateString() : 'Never'}`,
       });
 
@@ -78,9 +81,9 @@ const MaterialsAdminPanel = () => {
     } catch (error) {
       console.error('Error checking cache status:', error);
       toast({
-        title: "Status Check Failed",
-        description: "Failed to check cache status.",
-        variant: "destructive",
+        title: 'Status Check Failed',
+        description: 'Failed to check cache status.',
+        variant: 'destructive',
       });
     } finally {
       setIsChecking(false);

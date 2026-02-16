@@ -1,4 +1,4 @@
-import { format, isValid, parseISO } from "date-fns";
+import { format, isValid, parseISO } from 'date-fns';
 
 /**
  * Safe helper functions for PDF generation to prevent crashes from imperfect data
@@ -6,9 +6,9 @@ import { format, isValid, parseISO } from "date-fns";
 
 export const safeText = (text: string | undefined | null): string => {
   if (!text) return '';
-  
+
   let cleanText = text.toString().trim();
-  
+
   // Comprehensive HTML entity decoding with enhanced electrical symbols
   const entityMap: Record<string, string> = {
     // Standard HTML entities
@@ -64,38 +64,38 @@ export const safeText = (text: string | undefined | null): string => {
     '&frac14;': '¼',
     '&frac34;': '¾',
     // Common electrical unicode codes
-    '&#8486;': 'Ω',  // Ohm symbol
-    '&#8804;': '≤',  // Less than or equal
-    '&#8805;': '≥',  // Greater than or equal
-    '&#177;': '±',   // Plus-minus
-    '&#181;': 'μ',   // Micro
-    '&#8730;': '√',  // Square root
-    '&#8734;': '∞',  // Infinity
-    '&#8776;': '≈',  // Approximately equal
+    '&#8486;': 'Ω', // Ohm symbol
+    '&#8804;': '≤', // Less than or equal
+    '&#8805;': '≥', // Greater than or equal
+    '&#177;': '±', // Plus-minus
+    '&#181;': 'μ', // Micro
+    '&#8730;': '√', // Square root
+    '&#8734;': '∞', // Infinity
+    '&#8776;': '≈', // Approximately equal
     // Broken encoding fixes
     'Î©': 'Ω',
-    'âˆž': '∞',
+    âˆž: '∞',
     'â‰¥': '≥',
     'â‰¤': '≤',
     'Â±': '±',
-    'Âµ': 'μ'
+    Âµ: 'μ',
   };
-  
+
   // Apply all entity replacements
   Object.entries(entityMap).forEach(([entity, replacement]) => {
     cleanText = cleanText.replace(new RegExp(entity, 'g'), replacement);
   });
-  
+
   // Handle numeric character references
   cleanText = cleanText.replace(/&#(\d+);/g, (match, dec) => {
     return String.fromCharCode(parseInt(dec, 10));
   });
-  
-  // Handle hexadecimal character references  
+
+  // Handle hexadecimal character references
   cleanText = cleanText.replace(/&#x([0-9A-Fa-f]+);/g, (match, hex) => {
     return String.fromCharCode(parseInt(hex, 16));
   });
-  
+
   return cleanText;
 };
 
@@ -109,11 +109,11 @@ export const safeNumber = (num: number | string | undefined | null): number => {
 };
 
 export const safeDate = (dateInput: string | Date | undefined | null): string => {
-  if (!dateInput) return format(new Date(), "dd/MM/yyyy");
-  
+  if (!dateInput) return format(new Date(), 'dd/MM/yyyy');
+
   try {
     let date: Date;
-    
+
     if (dateInput instanceof Date) {
       date = dateInput;
     } else if (typeof dateInput === 'string') {
@@ -122,20 +122,20 @@ export const safeDate = (dateInput: string | Date | undefined | null): string =>
     } else {
       date = new Date();
     }
-    
-    return isValid(date) ? format(date, "dd/MM/yyyy") : format(new Date(), "dd/MM/yyyy");
+
+    return isValid(date) ? format(date, 'dd/MM/yyyy') : format(new Date(), 'dd/MM/yyyy');
   } catch (error) {
     console.warn('Invalid date provided to safeDate:', dateInput);
-    return format(new Date(), "dd/MM/yyyy");
+    return format(new Date(), 'dd/MM/yyyy');
   }
 };
 
 export const safeDatetime = (dateInput: string | Date | undefined | null): string => {
-  if (!dateInput) return format(new Date(), "dd/MM/yyyy HH:mm");
-  
+  if (!dateInput) return format(new Date(), 'dd/MM/yyyy HH:mm');
+
   try {
     let date: Date;
-    
+
     if (dateInput instanceof Date) {
       date = dateInput;
     } else if (typeof dateInput === 'string') {
@@ -143,20 +143,22 @@ export const safeDatetime = (dateInput: string | Date | undefined | null): strin
     } else {
       date = new Date();
     }
-    
-    return isValid(date) ? format(date, "dd/MM/yyyy HH:mm") : format(new Date(), "dd/MM/yyyy HH:mm");
+
+    return isValid(date)
+      ? format(date, 'dd/MM/yyyy HH:mm')
+      : format(new Date(), 'dd/MM/yyyy HH:mm');
   } catch (error) {
     console.warn('Invalid date provided to safeDatetime:', dateInput);
-    return format(new Date(), "dd/MM/yyyy HH:mm");
+    return format(new Date(), 'dd/MM/yyyy HH:mm');
   }
 };
 
 export const getRiskLevel = (rating: number): string => {
   const safeRating = safeNumber(rating);
-  if (safeRating <= 4) return "Low";
-  if (safeRating <= 9) return "Medium";
-  if (safeRating <= 16) return "High";
-  return "Very High";
+  if (safeRating <= 4) return 'Low';
+  if (safeRating <= 9) return 'Medium';
+  if (safeRating <= 16) return 'High';
+  return 'Very High';
 };
 
 export const getRiskColor = (rating: number): [number, number, number] => {
@@ -167,7 +169,10 @@ export const getRiskColor = (rating: number): [number, number, number] => {
   return [239, 68, 68]; // red
 };
 
-export const calculateRiskRating = (likelihood: number | string | undefined, severity: number | string | undefined): number => {
+export const calculateRiskRating = (
+  likelihood: number | string | undefined,
+  severity: number | string | undefined
+): number => {
   const safeLikelihood = Math.max(1, Math.min(5, safeNumber(likelihood)));
   const safeSeverity = Math.max(1, Math.min(5, safeNumber(severity)));
   return safeLikelihood * safeSeverity;

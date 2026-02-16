@@ -1,12 +1,18 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
-import { MapPin, Search, Info, X, Filter, SlidersHorizontal, TrendingUp } from "lucide-react";
-import EnhancedPricingCard from "./EnhancedPricingCard";
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { MapPin, Search, Info, X, Filter, SlidersHorizontal, TrendingUp } from 'lucide-react';
+import EnhancedPricingCard from './EnhancedPricingCard';
 
 interface RegionalPricingData {
   id: string;
@@ -32,38 +38,61 @@ interface SearchDrivenRegionalPricingProps {
 }
 
 const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPricingProps) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedComplexity, setSelectedComplexity] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedComplexity, setSelectedComplexity] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000]);
-  const [sortBy, setSortBy] = useState<string>("relevance");
+  const [sortBy, setSortBy] = useState<string>('relevance');
 
   // Quick search options
-  const quickLocations = ["London", "Manchester", "Birmingham", "Leeds", "Bristol", "Glasgow", "Liverpool", "Sheffield"];
+  const quickLocations = [
+    'London',
+    'Manchester',
+    'Birmingham',
+    'Leeds',
+    'Bristol',
+    'Glasgow',
+    'Liverpool',
+    'Sheffield',
+  ];
   const quickJobTypes = [
-    "Socket Installation", "Consumer Unit", "Rewiring", "Testing", "Fault Finding",
-    "Light Switch", "Outdoor Socket", "Cooker Point", "EV Charger", "Smoke Alarm",
-    "Shower Installation", "Fuse Box", "Ceiling Fan", "Emergency Lighting"
+    'Socket Installation',
+    'Consumer Unit',
+    'Rewiring',
+    'Testing',
+    'Fault Finding',
+    'Light Switch',
+    'Outdoor Socket',
+    'Cooker Point',
+    'EV Charger',
+    'Smoke Alarm',
+    'Shower Installation',
+    'Fuse Box',
+    'Ceiling Fan',
+    'Emergency Lighting',
   ];
 
   // Popular results to show by default
   const popularJobs = useMemo(() => {
-    const jobCounts = regionalData.reduce((acc, item) => {
-      acc[item.job_type] = (acc[item.job_type] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    
+    const jobCounts = regionalData.reduce(
+      (acc, item) => {
+        acc[item.job_type] = (acc[item.job_type] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
     return Object.entries(jobCounts)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 8)
       .map(([jobType]) => jobType);
   }, [regionalData]);
 
   const defaultResults = useMemo(() => {
     return regionalData
-      .filter(item => popularJobs.includes(item.job_type))
+      .filter((item) => popularJobs.includes(item.job_type))
       .sort((a, b) => b.confidence_score! - a.confidence_score!)
       .slice(0, 6);
   }, [regionalData, popularJobs]);
@@ -72,13 +101,13 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
   const fuzzyMatch = (text: string, search: string): boolean => {
     const searchLower = search.toLowerCase();
     const textLower = text.toLowerCase();
-    
+
     // Exact match gets highest priority
     if (textLower.includes(searchLower)) return true;
-    
+
     // Split search terms and check each
     const searchTerms = searchLower.split(' ');
-    return searchTerms.every(term => textLower.includes(term));
+    return searchTerms.every((term) => textLower.includes(term));
   };
 
   const handleSearch = () => {
@@ -94,12 +123,12 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
   };
 
   const clearSearch = () => {
-    setSearchTerm("");
+    setSearchTerm('');
     setShowResults(false);
-    setSelectedCategory("all");
-    setSelectedComplexity("all");
+    setSelectedCategory('all');
+    setSelectedComplexity('all');
     setPriceRange([0, 5000]);
-    setSortBy("relevance");
+    setSortBy('relevance');
   };
 
   const handleQuickSearch = (term: string) => {
@@ -113,43 +142,46 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
 
     // Text search with fuzzy matching
     if (searchTerm.trim()) {
-      results = results.filter(item => 
-        fuzzyMatch(item.region, searchTerm) ||
-        fuzzyMatch(item.county || "", searchTerm) ||
-        fuzzyMatch(item.job_type, searchTerm) ||
-        fuzzyMatch(item.job_category, searchTerm) ||
-        fuzzyMatch(item.postcode || "", searchTerm)
+      results = results.filter(
+        (item) =>
+          fuzzyMatch(item.region, searchTerm) ||
+          fuzzyMatch(item.county || '', searchTerm) ||
+          fuzzyMatch(item.job_type, searchTerm) ||
+          fuzzyMatch(item.job_category, searchTerm) ||
+          fuzzyMatch(item.postcode || '', searchTerm)
       );
     }
 
     // Category filter
-    if (selectedCategory !== "all") {
-      results = results.filter(item => item.job_category === selectedCategory);
+    if (selectedCategory !== 'all') {
+      results = results.filter((item) => item.job_category === selectedCategory);
     }
 
     // Complexity filter
-    if (selectedComplexity !== "all") {
-      results = results.filter(item => item.complexity_level === selectedComplexity);
+    if (selectedComplexity !== 'all') {
+      results = results.filter((item) => item.complexity_level === selectedComplexity);
     }
 
     // Price range filter
-    results = results.filter(item => 
-      item.average_price >= priceRange[0] && item.average_price <= priceRange[1]
+    results = results.filter(
+      (item) => item.average_price >= priceRange[0] && item.average_price <= priceRange[1]
     );
 
     // Sorting
     switch (sortBy) {
-      case "price_low":
+      case 'price_low':
         results.sort((a, b) => a.min_price - b.min_price);
         break;
-      case "price_high":
+      case 'price_high':
         results.sort((a, b) => b.min_price - a.min_price);
         break;
-      case "confidence":
+      case 'confidence':
         results.sort((a, b) => (b.confidence_score || 0) - (a.confidence_score || 0));
         break;
-      case "recent":
-        results.sort((a, b) => new Date(b.last_updated).getTime() - new Date(a.last_updated).getTime());
+      case 'recent':
+        results.sort(
+          (a, b) => new Date(b.last_updated).getTime() - new Date(a.last_updated).getTime()
+        );
         break;
       default: // relevance
         results.sort((a, b) => (b.confidence_score || 0) - (a.confidence_score || 0));
@@ -170,8 +202,10 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
     }).format(price);
   };
 
-  const categories = [...new Set(regionalData.map(item => item.job_category))].filter(Boolean);
-  const complexityLevels = [...new Set(regionalData.map(item => item.complexity_level))].filter(Boolean);
+  const categories = [...new Set(regionalData.map((item) => item.job_category))].filter(Boolean);
+  const complexityLevels = [...new Set(regionalData.map((item) => item.complexity_level))].filter(
+    Boolean
+  );
 
   const showingResults = showResults || searchTerm.trim();
   const displayData = showingResults ? filteredData : defaultResults;
@@ -187,7 +221,7 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
           Search for pricing information by region, county, or job type
         </p>
       </CardHeader>
-      
+
       <CardContent className="mobile-input-spacing">
         {/* Search Interface */}
         <div className="space-y-3">
@@ -202,9 +236,9 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
             <Button onClick={handleSearch} disabled={!searchTerm.trim()} className="touch-target">
               <Search className="h-4 w-4" />
             </Button>
-            <Button 
-              variant="outline" 
-              onClick={() => setShowFilters(!showFilters)} 
+            <Button
+              variant="outline"
+              onClick={() => setShowFilters(!showFilters)}
               className="touch-target"
             >
               <SlidersHorizontal className="h-4 w-4" />
@@ -221,37 +255,47 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
             <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg bg-elec-yellow/5">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
-                  <label className="mobile-small-text font-medium text-elec-yellow mb-2 block">Category</label>
+                  <label className="mobile-small-text font-medium text-elec-yellow mb-2 block">
+                    Category
+                  </label>
                   <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                     <SelectTrigger className="mobile-focus">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All Categories</SelectItem>
-                      {categories.map(cat => (
-                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat} value={cat}>
+                          {cat}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <label className="mobile-small-text font-medium text-elec-yellow mb-2 block">Complexity</label>
+                  <label className="mobile-small-text font-medium text-elec-yellow mb-2 block">
+                    Complexity
+                  </label>
                   <Select value={selectedComplexity} onValueChange={setSelectedComplexity}>
                     <SelectTrigger className="mobile-focus">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All Levels</SelectItem>
-                      {complexityLevels.map(level => (
-                        <SelectItem key={level} value={level}>{level}</SelectItem>
+                      {complexityLevels.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <label className="mobile-small-text font-medium text-elec-yellow mb-2 block">Sort By</label>
+                  <label className="mobile-small-text font-medium text-elec-yellow mb-2 block">
+                    Sort By
+                  </label>
                   <Select value={sortBy} onValueChange={setSortBy}>
                     <SelectTrigger className="mobile-focus">
                       <SelectValue />
@@ -299,7 +343,7 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
                   </Badge>
                 )}
               </div>
-              
+
               <div className="mobile-grid-auto">
                 {filteredData.slice(0, 12).map((item) => (
                   <EnhancedPricingCard key={item.id} pricingData={item} />
@@ -309,7 +353,9 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
           ) : (
             <div className="text-center py-8 text-muted-foreground">
               <Info className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p className="mobile-text">No pricing data found{searchTerm && ` for "${searchTerm}"`}</p>
+              <p className="mobile-text">
+                No pricing data found{searchTerm && ` for "${searchTerm}"`}
+              </p>
               <p className="mobile-small-text mt-2">Try adjusting your search or filters.</p>
             </div>
           )
@@ -334,7 +380,9 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
               <p className="mobile-text font-medium mb-4 text-center">Quick search</p>
 
               <div className="mb-6">
-                <h4 className="mobile-small-text uppercase tracking-wider text-elec-yellow/80 mb-3 text-center">Popular locations</h4>
+                <h4 className="mobile-small-text uppercase tracking-wider text-elec-yellow/80 mb-3 text-center">
+                  Popular locations
+                </h4>
                 <div className="flex flex-wrap justify-center gap-2">
                   {quickLocations.map((loc) => (
                     <Button
@@ -351,7 +399,9 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
               </div>
 
               <div>
-                <h4 className="mobile-small-text uppercase tracking-wider text-elec-yellow/80 mb-3 text-center">Common jobs</h4>
+                <h4 className="mobile-small-text uppercase tracking-wider text-elec-yellow/80 mb-3 text-center">
+                  Common jobs
+                </h4>
                 <div className="flex flex-wrap justify-center gap-2">
                   {quickJobTypes.map((job) => (
                     <Button
@@ -377,8 +427,8 @@ const SearchDrivenRegionalPricing = ({ regionalData }: SearchDrivenRegionalPrici
             Regional Pricing Information
           </h4>
           <p className="mobile-small-text text-muted-foreground">
-            Prices shown are indicative of current UK market rates and may vary by supplier, complexity, and local factors. 
-            Always obtain multiple quotes for accurate pricing.
+            Prices shown are indicative of current UK market rates and may vary by supplier,
+            complexity, and local factors. Always obtain multiple quotes for accurate pricing.
           </p>
         </div>
       </CardContent>

@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Info, Scale } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Shield, Info, Scale } from 'lucide-react';
 
 const AboutCard = () => {
   return (
@@ -24,8 +23,10 @@ const AboutCard = () => {
               <Info className="h-4 w-4 text-elec-yellow" />
             </div>
             <p className="text-sm text-white/70 leading-relaxed">
-              These interactive case studies are based on real situations encountered by UK electrical apprentices and electricians.
-              Each scenario is designed to help you apply your knowledge of UK electrical regulations, safety standards, and professional conduct.
+              These interactive case studies are based on real situations encountered by UK
+              electrical apprentices and electricians. Each scenario is designed to help you apply
+              your knowledge of UK electrical regulations, safety standards, and professional
+              conduct.
             </p>
           </div>
         </div>
@@ -36,9 +37,10 @@ const AboutCard = () => {
               <Scale className="h-4 w-4 text-blue-400" />
             </div>
             <p className="text-sm text-blue-300 leading-relaxed">
-              All references to regulations are specific to the UK electrical industry, including BS 7671 (IET Wiring Regulations),
-              the Electricity at Work Regulations 1989, and other relevant HSE guidelines. Practising these scenarios will help prepare
-              you for real-world decision making on the job.
+              All references to regulations are specific to the UK electrical industry, including BS
+              7671 (IET Wiring Regulations), the Electricity at Work Regulations 1989, and other
+              relevant HSE guidelines. Practising these scenarios will help prepare you for
+              real-world decision making on the job.
             </p>
           </div>
         </div>

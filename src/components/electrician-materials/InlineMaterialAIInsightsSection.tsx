@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Brain,
   ChevronDown,
@@ -13,8 +13,8 @@ import {
   Cable,
   Shield,
   Zap,
-} from "lucide-react";
-import { MaterialItem } from "@/hooks/useToolsForMaterials";
+} from 'lucide-react';
+import { MaterialItem } from '@/hooks/useToolsForMaterials';
 
 interface InlineMaterialAIInsightsSectionProps {
   materials: MaterialItem[];
@@ -45,8 +45,8 @@ const InlineMaterialAIInsightsSection = ({
 
     // Find best value (lowest price)
     const sortedByPrice = [...materials].sort((a, b) => {
-      const priceA = parseFloat((a.salePrice || a.price || "0").replace(/[£,]/g, ""));
-      const priceB = parseFloat((b.salePrice || b.price || "0").replace(/[£,]/g, ""));
+      const priceA = parseFloat((a.salePrice || a.price || '0').replace(/[£,]/g, ''));
+      const priceB = parseFloat((b.salePrice || b.price || '0').replace(/[£,]/g, ''));
       return priceA - priceB;
     });
     const bestValue = sortedByPrice[0] || null;
@@ -56,7 +56,7 @@ const InlineMaterialAIInsightsSection = ({
 
     // Generate recommendations
     const recommendations = [
-      bestDeal && `Save on ${bestDeal.name.split(" ").slice(0, 3).join(" ")} - currently on sale`,
+      bestDeal && `Save on ${bestDeal.name.split(' ').slice(0, 3).join(' ')} - currently on sale`,
       materials.length > 10 && `${materials.length} options available - use filters to narrow down`,
       onSaleMaterials.length > 0 && `${onSaleMaterials.length} items on sale in this category`,
     ].filter(Boolean);
@@ -130,10 +130,7 @@ const InlineMaterialAIInsightsSection = ({
             </h3>
             <div className="space-y-2">
               {insights.recommendations.map((rec, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-2 text-sm text-muted-foreground"
-                >
+                <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                   <CheckCircle className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
                   <span>{rec}</span>
                 </div>
@@ -154,10 +151,7 @@ const InlineMaterialAIInsightsSection = ({
             </h3>
             <div className="space-y-2">
               {insights.tips.map((tip, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-2 text-sm text-muted-foreground"
-                >
+                <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                   <Star className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
                   <span>{tip}</span>
                 </div>
@@ -173,11 +167,9 @@ const InlineMaterialAIInsightsSection = ({
                   <TrendingUp className="h-5 w-5 text-green-500" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white">
-                    Best Deal Available
-                  </p>
+                  <p className="text-sm font-medium text-white">Best Deal Available</p>
                   <p className="text-sm text-muted-foreground">
-                    {insights.bestDeal.name.slice(0, 50)}... -{" "}
+                    {insights.bestDeal.name.slice(0, 50)}... -{' '}
                     <span className="text-green-500 font-semibold">
                       {insights.bestDeal.salePrice}
                     </span>
@@ -198,83 +190,85 @@ const InlineMaterialAIInsightsSection = ({
 // Category-specific tips
 const getCategoryTips = (category: string): string[] => {
   const tips: Record<string, string[]> = {
-    "Cables & Wiring": [
-      "Use 2.5mm² for ring mains, 1.5mm² for lighting",
-      "Check voltage drop calculations for longer runs",
-      "SWA cable required for external/underground installation",
+    'Cables & Wiring': [
+      'Use 2.5mm² for ring mains, 1.5mm² for lighting',
+      'Check voltage drop calculations for longer runs',
+      'SWA cable required for external/underground installation',
     ],
     cables: [
-      "Use 2.5mm² for ring mains, 1.5mm² for lighting",
-      "Check voltage drop calculations for longer runs",
-      "SWA cable required for external/underground installation",
+      'Use 2.5mm² for ring mains, 1.5mm² for lighting',
+      'Check voltage drop calculations for longer runs',
+      'SWA cable required for external/underground installation',
     ],
-    "Electrical Components": [
-      "RCBO provides individual circuit protection",
-      "Check discrimination between protective devices",
-      "Consider surge protection for sensitive equipment",
+    'Electrical Components': [
+      'RCBO provides individual circuit protection',
+      'Check discrimination between protective devices',
+      'Consider surge protection for sensitive equipment',
     ],
     components: [
-      "RCBO provides individual circuit protection",
-      "Check discrimination between protective devices",
-      "Consider surge protection for sensitive equipment",
+      'RCBO provides individual circuit protection',
+      'Check discrimination between protective devices',
+      'Consider surge protection for sensitive equipment',
     ],
-    "Protection Equipment": [
-      "30mA RCD for socket outlets",
-      "Type A RCD for electronic equipment",
-      "Check earth electrode resistance annually",
+    'Protection Equipment': [
+      '30mA RCD for socket outlets',
+      'Type A RCD for electronic equipment',
+      'Check earth electrode resistance annually',
     ],
     protection: [
-      "30mA RCD for socket outlets",
-      "Type A RCD for electronic equipment",
-      "Check earth electrode resistance annually",
+      '30mA RCD for socket outlets',
+      'Type A RCD for electronic equipment',
+      'Check earth electrode resistance annually',
     ],
-    "Lighting Solutions": [
-      "Check LED driver compatibility with dimmers",
-      "Emergency lighting requires 3-hour battery backup",
-      "IP65 minimum for outdoor lighting",
+    'Lighting Solutions': [
+      'Check LED driver compatibility with dimmers',
+      'Emergency lighting requires 3-hour battery backup',
+      'IP65 minimum for outdoor lighting',
     ],
     lighting: [
-      "Check LED driver compatibility with dimmers",
-      "Emergency lighting requires 3-hour battery backup",
-      "IP65 minimum for outdoor lighting",
+      'Check LED driver compatibility with dimmers',
+      'Emergency lighting requires 3-hour battery backup',
+      'IP65 minimum for outdoor lighting',
     ],
-    "Cable Management & Conduit": [
-      "45% cable fill for conduit",
-      "Fire barriers required at compartment walls",
-      "Steel conduit provides mechanical protection",
+    'Cable Management & Conduit': [
+      '45% cable fill for conduit',
+      'Fire barriers required at compartment walls',
+      'Steel conduit provides mechanical protection',
     ],
-    "cable-management": [
-      "45% cable fill for conduit",
-      "Fire barriers required at compartment walls",
-      "Steel conduit provides mechanical protection",
+    'cable-management': [
+      '45% cable fill for conduit',
+      'Fire barriers required at compartment walls',
+      'Steel conduit provides mechanical protection',
     ],
-    "Smart Home & Controls": [
-      "Check neutral wire requirement for smart switches",
-      "Consider hub compatibility before purchase",
-      "Mesh systems improve reliability",
+    'Smart Home & Controls': [
+      'Check neutral wire requirement for smart switches',
+      'Consider hub compatibility before purchase',
+      'Mesh systems improve reliability',
     ],
-    "smart-controls": [
-      "Check neutral wire requirement for smart switches",
-      "Consider hub compatibility before purchase",
-      "Mesh systems improve reliability",
+    'smart-controls': [
+      'Check neutral wire requirement for smart switches',
+      'Consider hub compatibility before purchase',
+      'Mesh systems improve reliability',
     ],
-    "EV Charging": [
-      "Minimum 32A supply for 7kW charger",
-      "PME earthing may require earth rod",
-      "Consider load management for multiple chargers",
+    'EV Charging': [
+      'Minimum 32A supply for 7kW charger',
+      'PME earthing may require earth rod',
+      'Consider load management for multiple chargers',
     ],
-    "ev-charging": [
-      "Minimum 32A supply for 7kW charger",
-      "PME earthing may require earth rod",
-      "Consider load management for multiple chargers",
+    'ev-charging': [
+      'Minimum 32A supply for 7kW charger',
+      'PME earthing may require earth rod',
+      'Consider load management for multiple chargers',
     ],
   };
 
-  return tips[category] || [
-    "Buy quality - it lasts longer",
-    "Check BS7671 compliance",
-    "Consider warranty and support",
-  ];
+  return (
+    tips[category] || [
+      'Buy quality - it lasts longer',
+      'Check BS7671 compliance',
+      'Consider warranty and support',
+    ]
+  );
 };
 
 export default InlineMaterialAIInsightsSection;

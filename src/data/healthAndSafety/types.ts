@@ -1,4 +1,3 @@
-
 export interface Subsection {
   id: string;
   title: string;

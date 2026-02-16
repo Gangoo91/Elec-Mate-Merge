@@ -1,18 +1,17 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, GraduationCap } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, GraduationCap } from 'lucide-react';
 
 const LearningOutcomes = () => {
   const outcomes = [
-    "Critical thinking in high-pressure situations",
-    "Regulations awareness and application",
-    "Situational judgement skills development",
-    "Professional communication under pressure",
-    "UK regulatory framework compliance",
-    "Risk assessment and hazard identification",
-    "Emergency response preparedness",
-    "Electrical safety in specialised environments"
+    'Critical thinking in high-pressure situations',
+    'Regulations awareness and application',
+    'Situational judgement skills development',
+    'Professional communication under pressure',
+    'UK regulatory framework compliance',
+    'Risk assessment and hazard identification',
+    'Emergency response preparedness',
+    'Electrical safety in specialised environments',
   ];
 
   return (

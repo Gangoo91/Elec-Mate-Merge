@@ -1,12 +1,10 @@
-
-import BackButton from "@/components/common/BackButton";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Heart, TrendingUp, Scale, Users } from "lucide-react";
-import BusinessPlanningTab from "./BusinessPlanningTab";
-import LegalComplianceTab from "./LegalComplianceTab";
-import SupportResourcesTab from "./SupportResourcesTab";
-
+import BackButton from '@/components/common/BackButton';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DropdownTabs } from '@/components/ui/dropdown-tabs';
+import { Heart, TrendingUp, Scale, Users } from 'lucide-react';
+import BusinessPlanningTab from './BusinessPlanningTab';
+import LegalComplianceTab from './LegalComplianceTab';
+import SupportResourcesTab from './SupportResourcesTab';
 
 const EnhancedStartupTabs = () => {
   return (
@@ -17,9 +15,13 @@ const EnhancedStartupTabs = () => {
           Starting an Electrical Business
         </h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
-          Your complete guide to establishing and growing a successful electrical contracting business in the UK
+          Your complete guide to establishing and growing a successful electrical contracting
+          business in the UK
         </p>
-        <BackButton customUrl="/electrician/business-development" label="Back to Business Development" />
+        <BackButton
+          customUrl="/electrician/business-development"
+          label="Back to Business Development"
+        />
       </div>
 
       <DropdownTabs
@@ -27,23 +29,23 @@ const EnhancedStartupTabs = () => {
         placeholder="Select a section"
         tabs={[
           {
-            value: "planning",
-            label: "Business Planning",
+            value: 'planning',
+            label: 'Business Planning',
             icon: TrendingUp,
-            content: <BusinessPlanningTab />
+            content: <BusinessPlanningTab />,
           },
           {
-            value: "legal",
-            label: "Legal & Compliance",
+            value: 'legal',
+            label: 'Legal & Compliance',
             icon: Scale,
-            content: <LegalComplianceTab />
+            content: <LegalComplianceTab />,
           },
           {
-            value: "support",
-            label: "Support & Resources",
+            value: 'support',
+            label: 'Support & Resources',
             icon: Users,
-            content: <SupportResourcesTab />
-          }
+            content: <SupportResourcesTab />,
+          },
         ]}
       />
 
@@ -56,10 +58,11 @@ const EnhancedStartupTabs = () => {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm md:text-base leading-relaxed text-center md:text-left">
-            Starting a business is a significant step that requires careful planning and preparation. 
-            While the journey can be challenging, with the right guidance and resources, you can build 
-            a successful electrical contracting business. Take your time, seek advice when needed, 
-            and remember that every successful business started with a single step.
+            Starting a business is a significant step that requires careful planning and
+            preparation. While the journey can be challenging, with the right guidance and
+            resources, you can build a successful electrical contracting business. Take your time,
+            seek advice when needed, and remember that every successful business started with a
+            single step.
           </p>
         </CardContent>
       </Card>

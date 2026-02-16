@@ -24,23 +24,23 @@ export interface SVGDiagramRendererProps {
 export const SVGDiagramRenderer = ({
   layout,
   editable = false,
-  onElementUpdate
+  onElementUpdate,
 }: SVGDiagramRendererProps) => {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
 
   // Get BS 7671 regulation reference for element type
   const getRegulationForElement = (type: string, props?: any): string => {
     const regulations: Record<string, string> = {
-      'mcb': 'BS 7671 Reg 411.3.2 - Fault protection by automatic disconnection',
-      'rcbo': 'BS 7671 Reg 415.1.1 - Additional protection by RCD',
-      'rcd': 'BS 7671 Reg 415.1 - Additional protection',
-      'cable': `BS 7671 Reg 522 - Cable selection and installation${props?.liveSize ? ` (${props.liveSize}mm²)` : ''}`,
-      'earth': 'BS 7671 Reg 411.3.1.2 - Main protective bonding',
+      mcb: 'BS 7671 Reg 411.3.2 - Fault protection by automatic disconnection',
+      rcbo: 'BS 7671 Reg 415.1.1 - Additional protection by RCD',
+      rcd: 'BS 7671 Reg 415.1 - Additional protection',
+      cable: `BS 7671 Reg 522 - Cable selection and installation${props?.liveSize ? ` (${props.liveSize}mm²)` : ''}`,
+      earth: 'BS 7671 Reg 411.3.1.2 - Main protective bonding',
       'consumer-unit': 'BS 7671 Reg 530.3 - Distribution boards',
-      'load': 'BS 7671 Reg 132.16 - Operational conditions',
+      load: 'BS 7671 Reg 132.16 - Operational conditions',
       'ev-charger': 'BS 7671 Reg 722 - Electric vehicle charging installations',
       'heat-pump': 'BS 7671 Reg 554 - Heating appliances',
-      'shower': 'BS 7671 Reg 701 - Locations containing a bath or shower'
+      shower: 'BS 7671 Reg 701 - Locations containing a bath or shower',
     };
     return regulations[type] || 'BS 7671 compliant component';
   };
@@ -53,7 +53,7 @@ export const SVGDiagramRenderer = ({
         setTooltip({
           x: e.clientX - svgRect.left,
           y: e.clientY - svgRect.top - 20,
-          content: getRegulationForElement(element.type, element.props)
+          content: getRegulationForElement(element.type, element.props),
         });
       }
     };
@@ -76,7 +76,7 @@ export const SVGDiagramRenderer = ({
               kaRating={element.props.kaRating}
             />
           );
-        
+
         case 'rcbo':
           return (
             <RCBOSymbol
@@ -91,7 +91,7 @@ export const SVGDiagramRenderer = ({
               kaRating={element.props.kaRating}
             />
           );
-        
+
         case 'rcd':
           return (
             <RCDSymbol
@@ -106,7 +106,7 @@ export const SVGDiagramRenderer = ({
               poles={element.props.poles}
             />
           );
-        
+
         case 'cable':
           return (
             <CableSymbol
@@ -122,7 +122,7 @@ export const SVGDiagramRenderer = ({
               showAnnotation={element.props.showAnnotation}
             />
           );
-        
+
         case 'earth':
           return (
             <EarthSymbol
@@ -133,7 +133,7 @@ export const SVGDiagramRenderer = ({
               label={element.props.label}
             />
           );
-        
+
         case 'consumer-unit':
           return (
             <ConsumerUnitSymbol
@@ -146,7 +146,7 @@ export const SVGDiagramRenderer = ({
               label={element.props.label}
             />
           );
-        
+
         case 'load':
           return (
             <LoadSymbol
@@ -202,7 +202,7 @@ export const SVGDiagramRenderer = ({
               label={element.props.label}
             />
           );
-        
+
         default:
           return null;
       }
@@ -239,23 +239,11 @@ export const SVGDiagramRenderer = ({
             stroke="#d1d5db"
             strokeWidth="1"
           />
-          <text
-            x="20"
-            y="25"
-            fontSize="16"
-            fontWeight="bold"
-            fill="#1f2937"
-          >
+          <text x="20" y="25" fontSize="16" fontWeight="bold" fill="#1f2937">
             {layout.title}
           </text>
           {layout.metadata.date && (
-            <text
-              x={layout.width - 20}
-              y="25"
-              textAnchor="end"
-              fontSize="12"
-              fill="#6b7280"
-            >
+            <text x={layout.width - 20} y="25" textAnchor="end" fontSize="12" fill="#6b7280">
               {layout.metadata.date}
             </text>
           )}
@@ -264,21 +252,23 @@ export const SVGDiagramRenderer = ({
         {/* Main diagram content */}
         <g transform="translate(0, 40)">
           {/* Render connections first (so they appear behind elements) */}
-          {layout.connections.map(conn => (
+          {layout.connections.map((conn) => (
             <line
               key={conn.id}
               x1={conn.from.x}
               y1={conn.from.y}
               x2={conn.to.x}
               y2={conn.to.y}
-              stroke={conn.type === 'earth' ? '#22c55e' : conn.type === 'neutral' ? '#3b82f6' : '#000'}
+              stroke={
+                conn.type === 'earth' ? '#22c55e' : conn.type === 'neutral' ? '#3b82f6' : '#000'
+              }
               strokeWidth="2"
               strokeLinecap="round"
             />
           ))}
 
           {/* Render all diagram elements */}
-          {layout.elements.map(element => renderElement(element))}
+          {layout.elements.map((element) => renderElement(element))}
         </g>
 
         {/* Footer / Legend */}

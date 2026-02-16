@@ -1,10 +1,18 @@
-import { MapPin, Building, Shield, AlertTriangle, CheckCircle, Eye, Navigation, DoorOpen } from 'lucide-react';
+import {
+  MapPin,
+  Building,
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  Eye,
+  Navigation,
+  DoorOpen,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const EmergencyLightingContentSection2 = () => {
   return (
     <div className="space-y-6">
-      
       {/* BS5266 Requirements */}
       <Card className="bg-elec-gray border-gray-600 shadow-lg">
         <CardHeader>
@@ -14,14 +22,15 @@ export const EmergencyLightingContentSection2 = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
-          
           <div className="p-4 bg-green-600/10 border border-green-600/30 rounded-lg">
-            <h4 className="text-green-400 font-semibold mb-3">Mandatory Emergency Lighting Locations</h4>
+            <h4 className="text-green-400 font-semibold mb-3">
+              Mandatory Emergency Lighting Locations
+            </h4>
             <p className="text-sm mb-4">
-              BS5266-1 specifies that emergency lighting must be provided in all areas where sudden loss 
-              of normal lighting would present a hazard to occupants.
+              BS5266-1 specifies that emergency lighting must be provided in all areas where sudden
+              loss of normal lighting would present a hazard to occupants.
             </p>
-            
+
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="font-medium text-foreground mb-2">Primary Locations:</h5>
@@ -49,7 +58,6 @@ export const EmergencyLightingContentSection2 = () => {
               </div>
             </div>
           </div>
-
         </CardContent>
       </Card>
 
@@ -62,16 +70,14 @@ export const EmergencyLightingContentSection2 = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
-          
           <div className="p-4 bg-blue-600/10 border border-blue-600/30 rounded-lg">
             <h4 className="text-blue-400 font-semibold mb-3 flex items-center gap-2">
               <Navigation className="h-4 w-4" />
               Escape Route Categories
             </h4>
-            
+
             <div className="space-y-4">
               <div className="grid md:grid-cols-3 gap-4 text-sm">
-                
                 <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded">
                   <h5 className="font-semibold text-blue-300 mb-2">Horizontal Routes</h5>
                   <ul className="space-y-1 text-gray-300">
@@ -104,13 +110,11 @@ export const EmergencyLightingContentSection2 = () => {
                     <li>• Within 2m of exit door</li>
                   </ul>
                 </div>
-
               </div>
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
-            
             <div className="p-4 bg-purple-600/10 border border-purple-600/30 rounded-lg">
               <h5 className="font-semibold text-purple-400 mb-3 flex items-center gap-2">
                 <Eye className="h-4 w-4" />
@@ -138,9 +142,7 @@ export const EmergencyLightingContentSection2 = () => {
                 <li>• Fire door locations</li>
               </ul>
             </div>
-
           </div>
-
         </CardContent>
       </Card>
 
@@ -153,9 +155,7 @@ export const EmergencyLightingContentSection2 = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
-          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            
             <div className="p-4 bg-red-600/10 border border-red-600/30 rounded-lg">
               <h5 className="font-semibold text-red-400 mb-3">Healthcare Facilities</h5>
               <ul className="space-y-1 text-sm text-gray-300">
@@ -227,9 +227,7 @@ export const EmergencyLightingContentSection2 = () => {
                 <li>• Laundry and service areas</li>
               </ul>
             </div>
-
           </div>
-
         </CardContent>
       </Card>
 
@@ -242,7 +240,6 @@ export const EmergencyLightingContentSection2 = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
-          
           <div className="p-4 bg-red-600/10 border border-red-600/30 rounded-lg">
             <h4 className="text-red-400 font-semibold mb-3">Areas of Special Fire Risk</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -270,7 +267,6 @@ export const EmergencyLightingContentSection2 = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
-            
             <div className="p-4 bg-amber-600/10 border border-amber-600/30 rounded-lg">
               <h5 className="font-semibold text-amber-400 mb-3">Plant and Service Rooms</h5>
               <ul className="space-y-1 text-sm text-gray-300">
@@ -294,12 +290,9 @@ export const EmergencyLightingContentSection2 = () => {
                 <li>• Easy maintenance access</li>
               </ul>
             </div>
-
           </div>
-
         </CardContent>
       </Card>
-
     </div>
   );
 };

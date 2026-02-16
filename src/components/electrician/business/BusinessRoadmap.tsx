@@ -1,44 +1,45 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { FileText, PenTool } from "lucide-react";
+import { Card, CardContent } from '@/components/ui/card';
+import { FileText, PenTool } from 'lucide-react';
 
 const businessSteps = [
   {
     id: 1,
-    title: "Business Structure Setup",
-    description: "Choose between sole trader, partnership, or limited company structures, each with different legal and tax implications.",
-    timeline: "Month 1-2",
+    title: 'Business Structure Setup',
+    description:
+      'Choose between sole trader, partnership, or limited company structures, each with different legal and tax implications.',
+    timeline: 'Month 1-2',
     keyTasks: [
-      "Register with HMRC",
-      "Set up business banking",
-      "Arrange business insurance",
-      "Register for VAT (if applicable)"
-    ]
+      'Register with HMRC',
+      'Set up business banking',
+      'Arrange business insurance',
+      'Register for VAT (if applicable)',
+    ],
   },
   {
     id: 2,
-    title: "Certification & Compliance",
-    description: "Ensure you have all necessary certifications to operate legally and build trust with customers.",
-    timeline: "Month 2-4",
+    title: 'Certification & Compliance',
+    description:
+      'Ensure you have all necessary certifications to operate legally and build trust with customers.',
+    timeline: 'Month 2-4',
     keyTasks: [
-      "Apply for competent person scheme membership",
-      "Prepare for assessment visits",
-      "Set up notification processes for building control",
-      "Establish health and safety policies"
-    ]
+      'Apply for competent person scheme membership',
+      'Prepare for assessment visits',
+      'Set up notification processes for building control',
+      'Establish health and safety policies',
+    ],
   },
   {
     id: 3,
-    title: "Marketing & Client Acquisition",
-    description: "Develop your brand and marketing strategy to attract your first clients.",
-    timeline: "Month 3-6",
+    title: 'Marketing & Client Acquisition',
+    description: 'Develop your brand and marketing strategy to attract your first clients.',
+    timeline: 'Month 3-6',
     keyTasks: [
-      "Create business website and social profiles",
-      "Design business cards and brochures",
-      "Establish relationships with builders and other trades",
-      "Set up online business listings"
-    ]
-  }
+      'Create business website and social profiles',
+      'Design business cards and brochures',
+      'Establish relationships with builders and other trades',
+      'Set up online business listings',
+    ],
+  },
 ];
 
 const BusinessRoadmap = () => {
@@ -48,7 +49,7 @@ const BusinessRoadmap = () => {
         <PenTool className="h-5 w-5 text-elec-yellow" />
         <span>Business Establishment Roadmap</span>
       </h3>
-      
+
       <div className="space-y-4">
         {businessSteps.map((step, index) => (
           <Card key={step.id} className="border-elec-yellow/20 bg-elec-gray">
@@ -59,7 +60,7 @@ const BusinessRoadmap = () => {
                     {index + 1}
                   </div>
                 </div>
-                
+
                 <div className="space-y-2 flex-grow">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <h4 className="font-medium text-lg">{step.title}</h4>
@@ -67,9 +68,9 @@ const BusinessRoadmap = () => {
                       {step.timeline}
                     </span>
                   </div>
-                  
+
                   <p className="text-sm">{step.description}</p>
-                  
+
                   <div className="pt-2">
                     <h5 className="text-xs text-elec-yellow mb-1.5">Key Tasks:</h5>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">

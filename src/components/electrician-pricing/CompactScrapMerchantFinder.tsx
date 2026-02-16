@@ -1,9 +1,8 @@
-
-import { useScrapMerchantFinder } from "@/hooks/useScrapMerchantFinder";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search, MapPin, Phone, ExternalLink } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useScrapMerchantFinder } from '@/hooks/useScrapMerchantFinder';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search, MapPin, Phone, ExternalLink } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 const CompactScrapMerchantFinder = () => {
   const {
@@ -14,7 +13,7 @@ const CompactScrapMerchantFinder = () => {
     isLoading,
     error,
     handleSearch,
-    openDirections
+    openDirections,
   } = useScrapMerchantFinder();
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -25,7 +24,7 @@ const CompactScrapMerchantFinder = () => {
 
   const handleDirectionsClick = (merchant: any) => {
     console.log('Opening directions for:', merchant);
-    
+
     // Enhanced directions logic with better fallbacks
     if (merchant.location && merchant.location.lat && merchant.location.lng) {
       const url = `https://www.google.com/maps/dir/?api=1&destination=${merchant.location.lat},${merchant.location.lng}`;
@@ -77,17 +76,17 @@ const CompactScrapMerchantFinder = () => {
               <p className="text-sm text-muted-foreground">
                 Found {merchants.length} scrap merchants near {postcode}
               </p>
-              
+
               {merchants.slice(0, 3).map((merchant) => (
-                <div 
-                  key={merchant.id} 
+                <div
+                  key={merchant.id}
                   className="p-3 border border-elec-yellow/20 rounded-lg bg-elec-gray/50"
                 >
                   <div className="flex justify-between items-start gap-3">
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium truncate">{merchant.name}</h4>
                       <p className="text-sm text-muted-foreground truncate">{merchant.address}</p>
-                      
+
                       <div className="flex items-center gap-4 mt-2 text-xs">
                         <span className="flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
@@ -100,7 +99,7 @@ const CompactScrapMerchantFinder = () => {
                           </span>
                         )}
                       </div>
-                      
+
                       <div className="flex flex-wrap gap-1 mt-2">
                         {merchant.acceptedMaterials.slice(0, 3).map((material, index) => (
                           <Badge key={index} variant="secondary" className="text-xs">
@@ -114,7 +113,7 @@ const CompactScrapMerchantFinder = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     <Button
                       variant="outline"
                       size="sm"
@@ -127,7 +126,7 @@ const CompactScrapMerchantFinder = () => {
                   </div>
                 </div>
               ))}
-              
+
               {merchants.length > 3 && (
                 <p className="text-xs text-muted-foreground text-center">
                   And {merchants.length - 3} more merchants...
@@ -142,7 +141,7 @@ const CompactScrapMerchantFinder = () => {
           )}
         </div>
       )}
-      
+
       {!searchPerformed && (
         <p className="text-xs text-foreground">
           Enter your postcode to find nearby scrap merchants with current material prices.

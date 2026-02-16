@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Trash2, Copy, TrendingUp, TrendingDown, Minus, Settings } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Plus, Trash2, Copy, TrendingUp, TrendingDown, Minus, Settings } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface Scenario {
   id: string;
@@ -31,21 +37,21 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
   onLoadScenario,
 }) => {
   const { toast } = useToast();
-  const [viewMode, setViewMode] = useState("comparison");
+  const [viewMode, setViewMode] = useState('comparison');
   const [scenarios, setScenarios] = useState<Scenario[]>([
     {
-      id: "1",
-      name: "Conservative Start",
-      businessType: "sole-trader",
+      id: '1',
+      name: 'Conservative Start',
+      businessType: 'sole-trader',
       totalStartup: 18000,
       totalMonthly: 1200,
       yearOneTotal: 32400,
       createdAt: new Date(),
     },
     {
-      id: "2",
-      name: "Professional Setup",
-      businessType: "limited-company",
+      id: '2',
+      name: 'Professional Setup',
+      businessType: 'limited-company',
       totalStartup: 45000,
       totalMonthly: 2800,
       yearOneTotal: 78600,
@@ -54,7 +60,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
   ]);
 
   const saveCurrentScenario = () => {
-    const name = prompt("Enter a name for this scenario:");
+    const name = prompt('Enter a name for this scenario:');
     if (!name) return;
 
     const newScenario: Scenario = {
@@ -67,19 +73,19 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
       createdAt: new Date(),
     };
 
-    setScenarios(prev => [newScenario, ...prev]);
+    setScenarios((prev) => [newScenario, ...prev]);
     toast({
-      title: "Scenario Saved",
+      title: 'Scenario Saved',
       description: `"${name}" has been saved to your scenarios.`,
-      variant: "success",
+      variant: 'success',
     });
   };
 
   const deleteScenario = (id: string) => {
-    setScenarios(prev => prev.filter(s => s.id !== id));
+    setScenarios((prev) => prev.filter((s) => s.id !== id));
     toast({
-      title: "Scenario Deleted",
-      description: "The scenario has been removed.",
+      title: 'Scenario Deleted',
+      description: 'The scenario has been removed.',
     });
   };
 
@@ -90,10 +96,10 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
       name: `${scenario.name} (Copy)`,
       createdAt: new Date(),
     };
-    setScenarios(prev => [newScenario, ...prev]);
+    setScenarios((prev) => [newScenario, ...prev]);
     toast({
-      title: "Scenario Duplicated",
-      description: "A copy has been created.",
+      title: 'Scenario Duplicated',
+      description: 'A copy has been created.',
     });
   };
 
@@ -105,12 +111,12 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
 
   const getBusinessTypeColor = (type: string) => {
     const colors = {
-      "sole-trader": "bg-blue-500/20 text-blue-300 border-blue-500/30",
-      "partnership": "bg-purple-500/20 text-purple-300 border-purple-500/30",
-      "limited-company": "bg-green-500/20 text-green-300 border-green-500/30",
-      "franchise": "bg-orange-500/20 text-orange-300 border-orange-500/30",
+      'sole-trader': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+      partnership: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+      'limited-company': 'bg-green-500/20 text-green-300 border-green-500/30',
+      franchise: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
     };
-    return colors[type] || "bg-gray-500/20 text-gray-300 border-gray-500/30";
+    return colors[type] || 'bg-gray-500/20 text-gray-300 border-gray-500/30';
   };
 
   return (
@@ -147,7 +153,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
       </Card>
 
       {/* Content based on view mode */}
-      {viewMode === "comparison" && (
+      {viewMode === 'comparison' && (
         <div className="space-y-4">
           {scenarios.length > 0 ? (
             <div className="space-y-4">
@@ -158,7 +164,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
                       <div className="flex items-center gap-3">
                         <h4 className="font-semibold">{scenario.name}</h4>
                         <Badge className={getBusinessTypeColor(scenario.businessType)}>
-                          {scenario.businessType.replace("-", " ")}
+                          {scenario.businessType.replace('-', ' ')}
                         </Badge>
                       </div>
                       <Button
@@ -170,41 +176,53 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
                         Load
                       </Button>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="text-center p-3 rounded-lg bg-background/30">
                         <div className="flex items-center justify-center gap-1 mb-2">
                           {getComparisonIcon(scenario.totalStartup, currentScenario.totalStartup)}
                           <span className="text-sm text-muted-foreground font-medium">Startup</span>
                         </div>
-                        <p className="font-semibold text-lg">£{scenario.totalStartup.toLocaleString()}</p>
+                        <p className="font-semibold text-lg">
+                          £{scenario.totalStartup.toLocaleString()}
+                        </p>
                         <p className="text-xs text-muted-foreground">
-                          {scenario.totalStartup > currentScenario.totalStartup ? "+" : ""}
-                          £{Math.abs(scenario.totalStartup - currentScenario.totalStartup).toLocaleString()}
+                          {scenario.totalStartup > currentScenario.totalStartup ? '+' : ''}£
+                          {Math.abs(
+                            scenario.totalStartup - currentScenario.totalStartup
+                          ).toLocaleString()}
                         </p>
                       </div>
-                      
+
                       <div className="text-center p-3 rounded-lg bg-background/30">
                         <div className="flex items-center justify-center gap-1 mb-2">
                           {getComparisonIcon(scenario.totalMonthly, currentScenario.totalMonthly)}
                           <span className="text-sm text-muted-foreground font-medium">Monthly</span>
                         </div>
-                        <p className="font-semibold text-lg">£{scenario.totalMonthly.toLocaleString()}</p>
+                        <p className="font-semibold text-lg">
+                          £{scenario.totalMonthly.toLocaleString()}
+                        </p>
                         <p className="text-xs text-muted-foreground">
-                          {scenario.totalMonthly > currentScenario.totalMonthly ? "+" : ""}
-                          £{Math.abs(scenario.totalMonthly - currentScenario.totalMonthly).toLocaleString()}
+                          {scenario.totalMonthly > currentScenario.totalMonthly ? '+' : ''}£
+                          {Math.abs(
+                            scenario.totalMonthly - currentScenario.totalMonthly
+                          ).toLocaleString()}
                         </p>
                       </div>
-                      
+
                       <div className="text-center p-3 rounded-lg bg-background/30">
                         <div className="flex items-center justify-center gap-1 mb-2">
                           {getComparisonIcon(scenario.yearOneTotal, currentScenario.yearOneTotal)}
                           <span className="text-sm text-muted-foreground font-medium">Year 1</span>
                         </div>
-                        <p className="font-semibold text-lg">£{scenario.yearOneTotal.toLocaleString()}</p>
+                        <p className="font-semibold text-lg">
+                          £{scenario.yearOneTotal.toLocaleString()}
+                        </p>
                         <p className="text-xs text-muted-foreground">
-                          {scenario.yearOneTotal > currentScenario.yearOneTotal ? "+" : ""}
-                          £{Math.abs(scenario.yearOneTotal - currentScenario.yearOneTotal).toLocaleString()}
+                          {scenario.yearOneTotal > currentScenario.yearOneTotal ? '+' : ''}£
+                          {Math.abs(
+                            scenario.yearOneTotal - currentScenario.yearOneTotal
+                          ).toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -226,7 +244,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
         </div>
       )}
 
-      {viewMode === "management" && (
+      {viewMode === 'management' && (
         <div className="space-y-4">
           {scenarios.length > 0 ? (
             scenarios.map((scenario) => (
@@ -237,7 +255,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
                       <h4 className="font-semibold mb-2">{scenario.name}</h4>
                       <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
                         <Badge className={getBusinessTypeColor(scenario.businessType)}>
-                          {scenario.businessType.replace("-", " ")}
+                          {scenario.businessType.replace('-', ' ')}
                         </Badge>
                         <span>•</span>
                         <span>Created {scenario.createdAt.toLocaleDateString()}</span>

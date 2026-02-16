@@ -9,12 +9,13 @@ import {
   useCreateAccidentRecord,
   useRIDDORDeadlineCheck,
   useArchiveOldRecords,
+  useMarkRIDDORReported,
   getRIDDORDeadlineStatus,
   calculateRIDDORDeadline,
 } from '@/hooks/useAccidentRecords';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { SmartTextarea } from './common/SmartTextarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -51,6 +52,8 @@ import {
   Info,
   FileDown,
   Loader2,
+  ExternalLink,
+  Check,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { useShowMore } from '@/hooks/useShowMore';
@@ -382,6 +385,36 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const [reporterSigData, setReporterSigData] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
+  // RIDDOR reporting state
+  const [showMarkReported, setShowMarkReported] = useState(false);
+  const [riddorRef, setRiddorRef] = useState('');
+  const [riddorReportedDate, setRiddorReportedDate] = useState(
+    new Date().toISOString().split('T')[0]
+  );
+  const markReported = useMarkRIDDORReported();
+
+  const handleMarkReported = async () => {
+    if (!viewingRecord || !riddorRef.trim()) return;
+    await markReported.mutateAsync({
+      id: viewingRecord.id,
+      riddor_reference: riddorRef.trim(),
+      riddor_reported_date: riddorReportedDate,
+    });
+    setShowMarkReported(false);
+    setRiddorRef('');
+    setViewingRecord(null);
+  };
+
+  const F2508_CHECKLIST = [
+    'Name, address & telephone of the person reporting',
+    'Date, time & location of the incident',
+    'Name, address & occupation of the injured person',
+    'Nature of injury or condition',
+    'Brief description of the circumstances',
+    "Name & address of the injured person's employer",
+    'Details of the dangerous occurrence (if applicable)',
+  ];
+
   const updateForm = (updates: Partial<AccidentRecord>) => {
     setForm((prev) => ({ ...prev, ...updates }));
   };
@@ -604,9 +637,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               </div>
               <div>
                 <Label className="text-white text-sm">How Did the Incident Happen? *</Label>
-                <Textarea
+                <SmartTextarea
                   value={form.incident_description}
-                  onChange={(e) => updateForm({ incident_description: e.target.value })}
+                  onChange={(val) => updateForm({ incident_description: val })}
                   className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                   placeholder="Describe exactly what happened, including what the person was doing..."
                 />
@@ -700,9 +733,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
               <div>
                 <Label className="text-white text-sm">Injury Description</Label>
-                <Textarea
+                <SmartTextarea
                   value={form.injury_description}
-                  onChange={(e) => updateForm({ injury_description: e.target.value })}
+                  onChange={(val) => updateForm({ injury_description: val })}
                   className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                   placeholder="Describe the injury in detail..."
                 />
@@ -737,9 +770,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                 <>
                   <div>
                     <Label className="text-white text-sm">First Aid Details</Label>
-                    <Textarea
+                    <SmartTextarea
                       value={form.first_aid_details}
-                      onChange={(e) => updateForm({ first_aid_details: e.target.value })}
+                      onChange={(val) => updateForm({ first_aid_details: val })}
                       className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                       placeholder="Treatment administered..."
                     />
@@ -853,9 +886,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
               <div>
                 <Label className="text-white text-sm">Corrective Actions Taken</Label>
-                <Textarea
+                <SmartTextarea
                   value={form.corrective_actions}
-                  onChange={(e) => updateForm({ corrective_actions: e.target.value })}
+                  onChange={(val) => updateForm({ corrective_actions: val })}
                   className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                   placeholder="Actions taken to prevent recurrence..."
                 />
@@ -873,9 +906,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
 
               <div>
                 <Label className="text-white text-sm">Additional Notes</Label>
-                <Textarea
+                <SmartTextarea
                   value={form.additional_notes}
-                  onChange={(e) => updateForm({ additional_notes: e.target.value })}
+                  onChange={(val) => updateForm({ additional_notes: val })}
                   className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                   placeholder="Any additional notes..."
                 />
@@ -1358,28 +1391,90 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                           </p>
                         )}
                         {deadlineStatus.status !== 'reported' && (
-                          <div className="flex gap-2 pt-1">
-                            <a
-                              href="https://www.hse.gov.uk/riddor"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                          <>
+                            {/* F2508 Checklist */}
+                            <div className="mt-2 p-2 rounded-lg bg-white/[0.03] border border-white/10">
+                              <p className="text-[11px] font-semibold text-white mb-1.5">
+                                Information needed for F2508:
+                              </p>
+                              {F2508_CHECKLIST.map((item, i) => (
+                                <div key={i} className="flex items-start gap-1.5 mb-1">
+                                  <Check className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                                  <span className="text-[11px] text-white">{item}</span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="flex gap-2 pt-1">
+                              <a
+                                href="https://notifications.hse.gov.uk/riddorforms/Injury"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                              >
+                                <ExternalLink className="h-3.5 w-3.5" />
+                                Report Online
+                              </a>
+                              <a
+                                href="tel:03453009923"
+                                className="h-11 px-4 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                              >
+                                <Phone className="h-3.5 w-3.5" />
+                                Call HSE
+                              </a>
+                            </div>
+
+                            <button
+                              onClick={() => setShowMarkReported(true)}
+                              className="w-full h-11 mt-1 flex items-center justify-center gap-2 rounded-xl bg-green-500/15 border border-green-500/30 text-green-400 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
                             >
-                              <FileText className="h-3.5 w-3.5" />
-                              Report Online
-                            </a>
-                            <a
-                              href="tel:03453009923"
-                              className="h-11 px-4 flex items-center justify-center gap-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                            >
-                              <Phone className="h-3.5 w-3.5" />
-                              Call HSE
-                            </a>
-                          </div>
+                              <CheckCircle2 className="h-3.5 w-3.5" />
+                              Mark as Reported
+                            </button>
+                          </>
                         )}
                       </div>
                     );
                   })()}
+
+                {/* Mark as Reported Bottom Sheet */}
+                <Sheet open={showMarkReported} onOpenChange={setShowMarkReported}>
+                  <SheetContent side="bottom" className="rounded-t-2xl p-0">
+                    <div className="p-4 space-y-4">
+                      <h3 className="text-base font-bold text-white">Mark RIDDOR as Reported</h3>
+                      <div>
+                        <Label className="text-sm text-white">HSE Reference Number</Label>
+                        <Input
+                          value={riddorRef}
+                          onChange={(e) => setRiddorRef(e.target.value)}
+                          placeholder="e.g. 2024/12345"
+                          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-sm text-white">Date Reported</Label>
+                        <Input
+                          type="date"
+                          value={riddorReportedDate}
+                          onChange={(e) => setRiddorReportedDate(e.target.value)}
+                          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 mt-1"
+                        />
+                      </div>
+                      <Button
+                        onClick={handleMarkReported}
+                        disabled={!riddorRef.trim() || markReported.isPending}
+                        className="w-full h-11 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                      >
+                        {markReported.isPending ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <CheckCircle2 className="h-4 w-4 mr-2" />
+                        )}
+                        Confirm Reported
+                      </Button>
+                    </div>
+                  </SheetContent>
+                </Sheet>
 
                 {/* Corrective Actions */}
                 {viewingRecord.corrective_actions && (
@@ -1401,7 +1496,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   )}
                 </div>
               </div>
-              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))] space-y-2">
                 <Button
                   onClick={() => exportPDF('accident', viewingRecord.id)}
                   disabled={isExporting && exportingId === viewingRecord.id}
@@ -1414,6 +1509,21 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
                   )}
                   Export PDF
                 </Button>
+                {viewingRecord.is_riddor_reportable && (
+                  <Button
+                    onClick={() => exportPDF('riddor-report', viewingRecord.id)}
+                    disabled={isExporting && exportingId === viewingRecord.id}
+                    variant="outline"
+                    className="w-full h-11 border-red-500/30 text-red-300 font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  >
+                    {isExporting && exportingId === viewingRecord.id ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <FileDown className="h-4 w-4 mr-2" />
+                    )}
+                    Export RIDDOR Report
+                  </Button>
+                )}
               </div>
             </div>
           )}

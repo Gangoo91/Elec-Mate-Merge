@@ -22,12 +22,12 @@ export const CableSymbol = ({
   x2,
   y2,
   cableType = 'Twin & Earth',
-  showAnnotation = true
+  showAnnotation = true,
 }: CableSymbolProps) => {
   // Calculate midpoint for annotation
   const midX = (x1 + x2) / 2;
   const midY = (y1 + y2) / 2;
-  
+
   // Calculate angle for vertical text if cable is vertical
   const isVertical = Math.abs(x2 - x1) < 10;
   const angle = isVertical ? -90 : 0;
@@ -44,7 +44,7 @@ export const CableSymbol = ({
         strokeWidth={liveSize >= 10 ? 3 : 2}
         strokeLinecap="round"
       />
-      
+
       {/* Annotation */}
       {showAnnotation && (
         <g transform={`translate(${midX}, ${midY}) rotate(${angle})`}>
@@ -59,27 +59,14 @@ export const CableSymbol = ({
             strokeWidth="1"
             rx="2"
           />
-          
+
           {/* Cable size text */}
-          <text
-            x="0"
-            y="-2"
-            textAnchor="middle"
-            fontSize="11"
-            fontWeight="bold"
-            fill="black"
-          >
+          <text x="0" y="-2" textAnchor="middle" fontSize="11" fontWeight="bold" fill="black">
             {liveSize}mm² / {cpcSize}mm²
           </text>
-          
+
           {/* Length text */}
-          <text
-            x="0"
-            y="8"
-            textAnchor="middle"
-            fontSize="10"
-            fill="black"
-          >
+          <text x="0" y="8" textAnchor="middle" fontSize="10" fill="black">
             {length}m
           </text>
         </g>

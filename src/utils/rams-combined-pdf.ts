@@ -12,7 +12,10 @@ function formatControlMeasures(text: string): string {
 
   // Split by keywords and add line breaks
   return text
-    .replace(/(PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER(?:ING)? CONTROLS?:|ADMINISTRATIVE CONTROLS?:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS?:|REGULATION:|PPE:|TRAINING:|MONITORING:|EMERGENCY:)/gi, '\n\n$1')
+    .replace(
+      /(PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER(?:ING)? CONTROLS?:|ADMINISTRATIVE CONTROLS?:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS?:|REGULATION:|PPE:|TRAINING:|MONITORING:|EMERGENCY:)/gi,
+      '\n\n$1'
+    )
     .trim()
     .replace(/\n{3,}/g, '\n\n'); // Normalize multiple line breaks
 }
@@ -52,18 +55,18 @@ export async function generateCombinedRAMSPDF(
   const addPageHeader = () => {
     doc.setFillColor(255, 215, 0); // elec-yellow
     doc.rect(0, 0, pageWidth, 25, 'F');
-    
+
     doc.setTextColor(20, 20, 20);
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
     doc.text('RISK ASSESSMENT AND METHOD STATEMENT', pageWidth / 2, 12, { align: 'center' });
-    
+
     if (options.companyName) {
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       doc.text(safeText(options.companyName), pageWidth / 2, 19, { align: 'center' });
     }
-    
+
     return 30;
   };
 
@@ -82,7 +85,9 @@ export async function generateCombinedRAMSPDF(
   if (options.documentReference) {
     doc.setFontSize(9);
     doc.setTextColor(100, 100, 100);
-    doc.text(`Ref: ${safeText(options.documentReference)}`, pageWidth - margin, yPos, { align: 'right' });
+    doc.text(`Ref: ${safeText(options.documentReference)}`, pageWidth - margin, yPos, {
+      align: 'right',
+    });
   }
 
   yPos += 15;
@@ -105,7 +110,7 @@ export async function generateCombinedRAMSPDF(
     ['Supervisor:', safeText(methodData.supervisor)],
     ['Work Type:', safeText(methodData.workType)],
     ['Duration:', safeText(methodData.duration)],
-    ['Team Size:', safeText(methodData.teamSize)]
+    ['Team Size:', safeText(methodData.teamSize)],
   ];
 
   doc.setFontSize(9);
@@ -139,7 +144,7 @@ export async function generateCombinedRAMSPDF(
     safeNumber(risk.riskRating).toString(),
     getRiskLevel(risk.riskRating),
     formatControlMeasures(safeText(risk.controls)),
-    safeNumber(risk.residualRisk).toString()
+    safeNumber(risk.residualRisk).toString(),
   ]);
 
   autoTable(doc, {
@@ -151,11 +156,11 @@ export async function generateCombinedRAMSPDF(
       fillColor: [50, 50, 50],
       textColor: [255, 255, 255],
       fontStyle: 'bold',
-      fontSize: 8
+      fontSize: 8,
     },
     bodyStyles: {
       fontSize: 8,
-      cellPadding: 3
+      cellPadding: 3,
     },
     columnStyles: {
       0: { cellWidth: 40 },
@@ -164,7 +169,7 @@ export async function generateCombinedRAMSPDF(
       3: { cellWidth: 12, halign: 'center' },
       4: { cellWidth: 18 },
       5: { cellWidth: 70 },
-      6: { cellWidth: 15, halign: 'center' }
+      6: { cellWidth: 15, halign: 'center' },
     },
     didParseCell: (data) => {
       if (data.section === 'body' && data.column.index === 4) {
@@ -175,7 +180,7 @@ export async function generateCombinedRAMSPDF(
         data.cell.styles.fontStyle = 'bold';
       }
     },
-    margin: { left: margin, right: margin }
+    margin: { left: margin, right: margin },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 15;
@@ -191,12 +196,12 @@ export async function generateCombinedRAMSPDF(
     { level: 'Low', range: '1-4', color: [34, 197, 94] },
     { level: 'Medium', range: '5-9', color: [255, 193, 7] },
     { level: 'High', range: '10-16', color: [255, 152, 0] },
-    { level: 'Very High', range: '17-25', color: [239, 68, 68] }
+    { level: 'Very High', range: '17-25', color: [239, 68, 68] },
   ];
 
   doc.setFont('helvetica', 'normal');
   riskKey.forEach((item, idx) => {
-    const xPos = margin + (idx * 42);
+    const xPos = margin + idx * 42;
     doc.setFillColor(item.color[0], item.color[1], item.color[2]);
     doc.rect(xPos, yPos - 3, 6, 4, 'F');
     doc.text(`${item.level} (${item.range})`, xPos + 8, yPos);
@@ -208,7 +213,7 @@ export async function generateCombinedRAMSPDF(
   // Enhanced PPE section with table
   if (ramsData.ppeDetails && ramsData.ppeDetails.length > 0) {
     checkPageBreak(80);
-    
+
     doc.setFillColor(240, 240, 240);
     doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
     doc.setFontSize(11);
@@ -216,15 +221,15 @@ export async function generateCombinedRAMSPDF(
     doc.setTextColor(20, 20, 20);
     doc.text('REQUIRED PERSONAL PROTECTIVE EQUIPMENT', margin + 3, yPos + 5.5);
     yPos += 12;
-    
+
     const ppeTableData = ramsData.ppeDetails.map((ppe: PPEItem) => [
       ppe.itemNumber.toString(),
       safeText(ppe.ppeType),
       safeText(ppe.standard),
       ppe.mandatory ? 'Yes' : 'No',
-      safeText(ppe.purpose)
+      safeText(ppe.purpose),
     ]);
-    
+
     autoTable(doc, {
       startY: yPos,
       head: [['ITEM', 'PPE TYPE', 'STANDARD', 'MANDATORY?', 'PURPOSE']],
@@ -235,18 +240,18 @@ export async function generateCombinedRAMSPDF(
         textColor: [255, 255, 255],
         fontSize: 8,
         fontStyle: 'bold',
-        halign: 'left'
+        halign: 'left',
       },
       bodyStyles: {
         fontSize: 7,
-        cellPadding: 2
+        cellPadding: 2,
       },
       columnStyles: {
         0: { cellWidth: 12, halign: 'center', fontStyle: 'bold' },
         1: { cellWidth: 30 },
         2: { cellWidth: 30 },
         3: { cellWidth: 18, halign: 'center' },
-        4: { cellWidth: 'auto' }
+        4: { cellWidth: 'auto' },
       },
       didParseCell: (data: any) => {
         if (data.column.index === 3 && data.section === 'body') {
@@ -260,9 +265,9 @@ export async function generateCombinedRAMSPDF(
           }
         }
       },
-      margin: { left: margin, right: margin }
+      margin: { left: margin, right: margin },
     });
-    
+
     yPos = (doc as any).lastAutoTable.finalY + 10;
     checkPageBreak(40);
   } else if (ramsData.requiredPPE && ramsData.requiredPPE.length > 0) {
@@ -274,7 +279,7 @@ export async function generateCombinedRAMSPDF(
     doc.setTextColor(20, 20, 20);
     doc.text('REQUIRED PPE', margin + 3, yPos + 5.5);
     yPos += 12;
-    
+
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     ramsData.requiredPPE.forEach((ppe) => {
@@ -298,7 +303,7 @@ export async function generateCombinedRAMSPDF(
     doc.setTextColor(20, 20, 20);
     doc.text('EMERGENCY PROCEDURES', margin + 3, yPos + 5.5);
     yPos += 12;
-    
+
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     ramsData.emergencyProcedures.forEach((proc) => {
@@ -342,10 +347,10 @@ export async function generateCombinedRAMSPDF(
     safeText(step.title),
     formatDescription(safeText(step.description)),
     step.safetyRequirements && step.safetyRequirements.length > 0
-      ? step.safetyRequirements.map(r => `• ${r}`).join('\n')
+      ? step.safetyRequirements.map((r) => `• ${r}`).join('\n')
       : 'N/A',
     step.riskLevel.toUpperCase(),
-    safeText(step.estimatedDuration)
+    safeText(step.estimatedDuration),
   ]);
 
   autoTable(doc, {
@@ -357,11 +362,11 @@ export async function generateCombinedRAMSPDF(
       fillColor: [50, 50, 50],
       textColor: [255, 255, 255],
       fontStyle: 'bold',
-      fontSize: 8
+      fontSize: 8,
     },
     bodyStyles: {
       fontSize: 8,
-      cellPadding: 3
+      cellPadding: 3,
     },
     columnStyles: {
       0: { cellWidth: 10, halign: 'center' },
@@ -369,7 +374,7 @@ export async function generateCombinedRAMSPDF(
       2: { cellWidth: 55 },
       3: { cellWidth: 45 },
       4: { cellWidth: 15, halign: 'center' },
-      5: { cellWidth: 18 }
+      5: { cellWidth: 18 },
     },
     didParseCell: (data) => {
       if (data.section === 'body' && data.column.index === 4) {
@@ -387,7 +392,7 @@ export async function generateCombinedRAMSPDF(
         data.cell.styles.fontStyle = 'bold';
       }
     },
-    margin: { left: margin, right: margin }
+    margin: { left: margin, right: margin },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 15;
@@ -403,7 +408,7 @@ export async function generateCombinedRAMSPDF(
 
   // Signature boxes
   const sigBoxWidth = (pageWidth - 3 * margin) / 2;
-  
+
   // Prepared by
   doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
@@ -437,7 +442,8 @@ export async function generateCombinedRAMSPDF(
   doc.setFontSize(7);
   doc.setTextColor(100, 100, 100);
   doc.setFont('helvetica', 'italic');
-  const footerText = 'This RAMS document complies with CDM Regulations 2015, Health & Safety at Work Act 1974, and BS 7671:2018 (18th Edition).';
+  const footerText =
+    'This RAMS document complies with CDM Regulations 2015, Health & Safety at Work Act 1974, and BS 7671:2018 (18th Edition).';
   const footerLines = doc.splitTextToSize(footerText, pageWidth - 2 * margin);
   doc.text(footerLines, pageWidth / 2, pageHeight - 15, { align: 'center' });
 
@@ -452,7 +458,9 @@ export async function generateCombinedRAMSPDF(
   }
 
   // Download the PDF
-  doc.save(`Combined_RAMS_${safeText(ramsData.projectName || 'Document')}_${new Date().toISOString().split('T')[0]}.pdf`);
+  doc.save(
+    `Combined_RAMS_${safeText(ramsData.projectName || 'Document')}_${new Date().toISOString().split('T')[0]}.pdf`
+  );
 }
 
 /**
@@ -465,7 +473,7 @@ export async function generateCombinedRAMSPDFBlob(
 ): Promise<Blob> {
   // Reuse the same PDF generation logic but return blob
   const doc = new jsPDF('p', 'mm', 'a4');
-  
+
   // Return blob output
   return doc.output('blob');
 }

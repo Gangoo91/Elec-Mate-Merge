@@ -1,8 +1,8 @@
-import { useState, useMemo, useCallback, useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Newspaper,
   AlertTriangle,
@@ -12,18 +12,18 @@ import {
   ArrowLeft,
   Sparkles,
   Zap,
-  ChevronDown
-} from "lucide-react";
-import { useIndustryNews } from "@/hooks/useIndustryNews";
-import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
-import { isValidUrl } from "@/utils/urlUtils";
-import NewsGrid from "./NewsGrid";
-import NewsPagination from "./NewsPagination";
-import NewsFeaturedCarousel from "./NewsFeaturedCarousel";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+  ChevronDown,
+} from 'lucide-react';
+import { useIndustryNews } from '@/hooks/useIndustryNews';
+import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import { isValidUrl } from '@/utils/urlUtils';
+import NewsGrid from './NewsGrid';
+import NewsPagination from './NewsPagination';
+import NewsFeaturedCarousel from './NewsFeaturedCarousel';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -52,13 +52,13 @@ const NewIndustryNewsCard = () => {
     refresh,
     isRefreshing,
     refreshError,
-    refreshSuccess
+    refreshSuccess,
   } = useIndustryNews();
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const ITEMS_PER_PAGE = 18;
   const categories = ['All', 'Industry', 'Safety', 'Technical', 'BS7671', 'Projects'];
@@ -68,8 +68,9 @@ const NewIndustryNewsCard = () => {
     if (!articles || articles.length === 0) return [];
 
     return articles
-      .filter(article => {
-        const matchesSearch = !searchTerm ||
+      .filter((article) => {
+        const matchesSearch =
+          !searchTerm ||
           article.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           article.summary?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory === 'All' || article.category === selectedCategory;
@@ -110,7 +111,7 @@ const NewIndustryNewsCard = () => {
   useEffect(() => {
     if (refreshSuccess && !isRefreshing && !hasShownSuccessRef.current) {
       hasShownSuccessRef.current = true;
-      toast({ title: "Updated", description: "Latest news fetched", duration: 2000 });
+      toast({ title: 'Updated', description: 'Latest news fetched', duration: 2000 });
     }
     if (!refreshSuccess) {
       hasShownSuccessRef.current = false;
@@ -120,7 +121,12 @@ const NewIndustryNewsCard = () => {
   useEffect(() => {
     if (refreshError && !hasShownErrorRef.current) {
       hasShownErrorRef.current = true;
-      toast({ title: "Error", description: "Could not refresh", variant: "destructive", duration: 2000 });
+      toast({
+        title: 'Error',
+        description: 'Could not refresh',
+        variant: 'destructive',
+        duration: 2000,
+      });
     }
     if (!refreshError) {
       hasShownErrorRef.current = false;
@@ -135,8 +141,14 @@ const NewIndustryNewsCard = () => {
           <AlertTriangle className="h-8 w-8 text-red-400" />
         </div>
         <h2 className="text-lg font-semibold text-white mb-2">Unable to load news</h2>
-        <p className="text-sm text-white/50 text-center mb-4">Please check your connection and try again</p>
-        <Button onClick={() => window.location.reload()} variant="outline" className="border-white/20">
+        <p className="text-sm text-white/50 text-center mb-4">
+          Please check your connection and try again
+        </p>
+        <Button
+          onClick={() => window.location.reload()}
+          variant="outline"
+          className="border-white/20"
+        >
           Retry
         </Button>
       </div>
@@ -239,15 +251,15 @@ const NewIndustryNewsCard = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={cn(
-                    "w-full h-12 pr-4 bg-white/[0.03] border-white/[0.08] rounded-xl text-white placeholder:text-white/30 focus:bg-white/[0.05] focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all",
-                    !searchTerm && "pl-11"
+                    'w-full h-12 pr-4 bg-white/[0.03] border-white/[0.08] rounded-xl text-white placeholder:text-white/30 focus:bg-white/[0.05] focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all',
+                    !searchTerm && 'pl-11'
                   )}
                 />
                 {searchTerm && (
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setSearchTerm("")}
+                    onClick={() => setSearchTerm('')}
                     className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white/40 hover:text-white hover:bg-white/10 rounded-lg"
                   >
                     <X className="h-4 w-4" />
@@ -264,7 +276,8 @@ const NewIndustryNewsCard = () => {
                     exit={{ opacity: 0, y: -8 }}
                     className="absolute -bottom-7 left-0 text-xs text-white/40"
                   >
-                    {filteredArticles.length} result{filteredArticles.length !== 1 ? 's' : ''} for "{searchTerm}"
+                    {filteredArticles.length} result{filteredArticles.length !== 1 ? 's' : ''} for "
+                    {searchTerm}"
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -272,15 +285,15 @@ const NewIndustryNewsCard = () => {
 
             {/* Category filter pills */}
             <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
-              {categories.map(cat => (
+              {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={cn(
-                    "px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation",
+                    'px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation',
                     selectedCategory === cat
-                      ? "bg-elec-yellow text-black font-medium"
-                      : "bg-white/10 text-white/60 hover:bg-white/15"
+                      ? 'bg-elec-yellow text-black font-medium'
+                      : 'bg-white/10 text-white/60 hover:bg-white/15'
                   )}
                 >
                   {cat}
@@ -355,13 +368,8 @@ const NewIndustryNewsCard = () => {
         )}
 
         {/* Footer attribution */}
-        <motion.footer
-          variants={itemVariants}
-          className="pt-8 pb-4 text-center"
-        >
-          <p className="text-[11px] text-white/20">
-            News aggregated from trusted industry sources
-          </p>
+        <motion.footer variants={itemVariants} className="pt-8 pb-4 text-center">
+          <p className="text-[11px] text-white/20">News aggregated from trusted industry sources</p>
         </motion.footer>
       </motion.div>
     </PullToRefresh>

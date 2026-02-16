@@ -1,6 +1,6 @@
-import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
-import { ValidationError, handleError } from "../_shared/errors.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { ValidationError, handleError } from '../_shared/errors.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -20,11 +20,11 @@ serve(async (req) => {
           success: true,
           suggestions: [],
           query: query || '',
-          requestId
+          requestId,
         }),
         {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
+          status: 200,
         }
       );
     }
@@ -45,13 +45,14 @@ serve(async (req) => {
     // Use the fuzzy search function with a lower threshold for more suggestions
     const { data: results, error: searchError } = await logger.time(
       'Autocomplete fuzzy search',
-      async () => await supabase.rpc('search_materials_fuzzy', {
-        search_query: searchTerm,
-        category_filter: null,
-        supplier_filter: null,
-        similarity_threshold: 0.15,
-        result_limit: limit * 2 // Get extra to filter and dedupe
-      })
+      async () =>
+        await supabase.rpc('search_materials_fuzzy', {
+          search_query: searchTerm,
+          category_filter: null,
+          supplier_filter: null,
+          similarity_threshold: 0.15,
+          result_limit: limit * 2, // Get extra to filter and dedupe
+        })
     );
 
     if (searchError) {
@@ -72,7 +73,7 @@ serve(async (req) => {
         suggestions.push({
           name: item.item_name,
           score: item.similarity_score,
-          category: item.category || 'Materials'
+          category: item.category || 'Materials',
         });
       }
     }
@@ -82,7 +83,7 @@ serve(async (req) => {
 
     logger.info('Autocomplete completed successfully', {
       suggestionsCount: suggestions.length,
-      requestId
+      requestId,
     });
 
     return new Response(
@@ -90,14 +91,13 @@ serve(async (req) => {
         success: true,
         suggestions,
         query,
-        requestId
+        requestId,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
+        status: 200,
       }
     );
-
   } catch (error) {
     logger.error('Autocomplete failed', { error });
     return handleError(error);

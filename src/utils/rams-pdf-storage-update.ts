@@ -11,8 +11,10 @@ export async function updateRAMSDocument(
   methodData: Partial<MethodStatementData>
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     if (!user) {
       return { success: false, error: 'User not authenticated' };
     }
@@ -47,8 +49,8 @@ export async function updateRAMSDocument(
         ai_generation_metadata: {
           updated_at: new Date().toISOString(),
           method_steps_count: methodData.steps?.length || 0,
-          risk_count: ramsData.risks?.length || 0
-        } as any
+          risk_count: ramsData.risks?.length || 0,
+        } as any,
       })
       .eq('id', documentId);
 

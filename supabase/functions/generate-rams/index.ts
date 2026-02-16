@@ -1,10 +1,10 @@
 /**
  * Unified RAMS Generator with 3-Layer Caching
- * 
+ *
  * Layer 1: Full RAMS Cache (existing) - Instant if identical job found
  * Layer 2: RAG Cache (NEW) - Skip expensive RAG searches (45s → <1s)
  * Layer 3: Partial Agent Cache (NEW) - Reuse completed agent outputs
- * 
+ *
  * Phase 1: Reduced RAG documents (35→15 installer, 20→10 H&S)
  */
 
@@ -18,7 +18,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -36,7 +37,7 @@ Deno.serve(async (req) => {
   try {
     const { jobId: requestJobId } = await req.json();
     jobId = requestJobId;
-    
+
     console.log(`🚀 Starting RAMS generation for job: ${jobId}`);
 
     // Fetch job details
@@ -53,10 +54,10 @@ Deno.serve(async (req) => {
     // Check if cancelled
     if (job.status === 'cancelled') {
       console.log(`🚫 Job ${jobId} was cancelled`);
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const projectDetails = {
@@ -71,14 +72,11 @@ Deno.serve(async (req) => {
       firstAiderPhone: job.project_info.firstAiderPhone,
       safetyOfficerName: job.project_info.safetyOfficerName,
       safetyOfficerPhone: job.project_info.safetyOfficerPhone,
-      assemblyPoint: job.project_info.assemblyPoint
+      assemblyPoint: job.project_info.assemblyPoint,
     };
 
     // ⚡ CRITICAL FIX #2: Fail-safe progress updater (never throws)
-    const safeUpdateProgress = async (
-      progress: number,
-      step: string
-    ): Promise<void> => {
+    const safeUpdateProgress = async (progress: number, step: string): Promise<void> => {
       try {
         await supabase
           .from('rams_generation_jobs')
@@ -100,21 +98,23 @@ Deno.serve(async (req) => {
       try {
         const agentField = agent === 'hs' ? 'hs_agent_progress' : 'installer_agent_progress';
         const statusField = agent === 'hs' ? 'hs_agent_status' : 'installer_agent_status';
-        
+
         // Update agent-specific fields
         const { data, error } = await supabase
           .from('rams_generation_jobs')
           .update({
             [agentField]: agentProgress,
             [statusField]: agentStatus,
-            current_step: step
+            current_step: step,
           })
           .eq('id', jobId)
-          .select('hs_agent_progress, installer_agent_progress, hs_agent_status, installer_agent_status')
+          .select(
+            'hs_agent_progress, installer_agent_progress, hs_agent_status, installer_agent_status'
+          )
           .single();
-        
+
         if (error || !data) return;
-        
+
         // PHASE 1 FIX: Sequential progress zones (no backwards jumps)
         // Zone 1: 0-10% = Initialization
         // Zone 2: 10-50% = H&S agent (0-100% mapped to 10-50%)
@@ -122,18 +122,18 @@ Deno.serve(async (req) => {
         // Zone 4: 90-100% = Finalization
         const hsProgress = data.hs_agent_progress || 0;
         const installerProgress = data.installer_agent_progress || 0;
-        
+
         let overallProgress = 10; // Start after initialization
-        
+
         if (agent === 'hs') {
           // H&S zone: 10-50%
-          overallProgress = Math.round(10 + (hsProgress * 0.4));
+          overallProgress = Math.round(10 + hsProgress * 0.4);
         } else {
           // Installer zone: 50-90% (starts at 50 even if H&S not complete)
-          const hsComplete = data.hs_agent_status === 'complete' ? 40 : (hsProgress * 0.4);
-          overallProgress = Math.round(10 + hsComplete + (installerProgress * 0.4));
+          const hsComplete = data.hs_agent_status === 'complete' ? 40 : hsProgress * 0.4;
+          overallProgress = Math.round(10 + hsComplete + installerProgress * 0.4);
         }
-        
+
         // Update overall progress
         await supabase
           .from('rams_generation_jobs')
@@ -157,18 +157,18 @@ Deno.serve(async (req) => {
 
     // ⚡ LAYER 1: Check Full RAMS Cache first
     await safeUpdateProgress(3, '🔍 Checking RAMS cache...');
-    
+
     const cacheResult = await checkRAMSCache({
       supabase,
       jobDescription: job.job_description,
       workType: job.job_scale, // Use job_scale as work_type
       jobScale: job.job_scale,
-      openAiKey: Deno.env.get('OPENAI_API_KEY')!
+      openAiKey: Deno.env.get('OPENAI_API_KEY')!,
     });
 
     if (cacheResult.hit && cacheResult.data) {
       console.log('✅ LAYER 1 CACHE HIT - Returning cached RAMS instantly!');
-      
+
       await supabase
         .from('rams_generation_jobs')
         .update({
@@ -182,16 +182,16 @@ Deno.serve(async (req) => {
           rams_data: cacheResult.data.rams_data,
           method_data: cacheResult.data.method_data,
           completed_at: new Date().toISOString(),
-          cache_hit: true
+          cache_hit: true,
         })
         .eq('id', jobId);
 
       return new Response(
-        JSON.stringify({ 
-          success: true, 
+        JSON.stringify({
+          success: true,
           jobId,
           cache_hit: true,
-          similarity: cacheResult.data.similarity
+          similarity: cacheResult.data.similarity,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -206,22 +206,22 @@ Deno.serve(async (req) => {
         status: 'processing',
         started_at: new Date().toISOString(),
         progress: 5,
-        current_step: 'Analysing job description and identifying potential hazards...'
+        current_step: 'Analysing job description and identifying potential hazards...',
       })
       .eq('id', jobId);
 
     if (await checkCancelled()) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     await supabase
       .from('rams_generation_jobs')
       .update({
         progress: 8,
-        current_step: 'Fetching regulations intelligence (shared for both agents)...'
+        current_step: 'Fetching regulations intelligence (shared for both agents)...',
       })
       .eq('id', jobId);
 
@@ -237,24 +237,24 @@ Deno.serve(async (req) => {
         progress: 10,
         current_step: `Running Health & Safety and Method Planner in parallel for ${job.job_scale} installation...`,
         hs_agent_status: 'pending',
-        installer_agent_status: 'pending'
+        installer_agent_status: 'pending',
       })
       .eq('id', jobId);
 
     console.log('🔍 Starting AI agents in parallel...');
 
     if (await checkCancelled()) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // ⚡ LAYER 3: Check Partial Agent Caches
     console.log('🔍 Checking partial caches for both agents...');
-    
+
     const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
-    
+
     const [hsCacheResult, installerCacheResult] = await Promise.all([
       checkPartialCache({
         supabase,
@@ -262,7 +262,7 @@ Deno.serve(async (req) => {
         workType: job.job_scale, // Use job_scale as work_type
         jobScale: job.job_scale,
         agentType: 'health_safety',
-        openAiKey
+        openAiKey,
       }),
       checkPartialCache({
         supabase,
@@ -270,17 +270,17 @@ Deno.serve(async (req) => {
         workType: job.job_scale, // Use job_scale as work_type
         jobScale: job.job_scale,
         agentType: 'installer',
-        openAiKey
-      })
+        openAiKey,
+      }),
     ]);
 
     // Call both agents in parallel (or use cached results)
     console.log('🤖 Starting AI agent generation...');
     const startTime = Date.now();
-    
+
     const [hsResult, installerResult] = await Promise.allSettled([
       // Health & Safety Agent (use cache if available)
-      hsCacheResult.hit 
+      hsCacheResult.hit
         ? Promise.resolve(hsCacheResult.data)
         : (async () => {
             try {
@@ -318,7 +318,7 @@ Deno.serve(async (req) => {
               console.error('❌ Installer agent failed:', error);
               throw error;
             }
-          })()
+          })(),
     ]);
 
     // Log cache performance
@@ -332,10 +332,10 @@ Deno.serve(async (req) => {
     }
 
     if (await checkCancelled()) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const duration = Date.now() - startTime;
@@ -352,7 +352,7 @@ Deno.serve(async (req) => {
       console.error('❌ Health & Safety agent rejected:', {
         message: hsError?.message,
         stack: hsError?.stack,
-        name: hsError?.name
+        name: hsError?.name,
       });
     }
 
@@ -364,7 +364,7 @@ Deno.serve(async (req) => {
       console.error('❌ Installer agent rejected:', {
         message: installerError?.message,
         stack: installerError?.stack,
-        name: installerError?.name
+        name: installerError?.name,
       });
     }
 
@@ -381,22 +381,22 @@ Deno.serve(async (req) => {
           progress: 0,
           current_step: 'Both agents failed to generate content',
           error_message: `H&S Error: ${hsError?.message || 'Unknown'}, Installer Error: ${installerError?.message || 'Unknown'}`,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
 
-      return new Response(
-        JSON.stringify({ success: false, error: 'Both agents failed' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Both agents failed' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Handle partial success - RAMS only
     if (hsSucceeded && !installerSucceeded) {
       console.warn('⚠️ Installer failed but Health & Safety succeeded');
-      
+
       const transformedRAMSData = transformHealthSafetyResponse(hsData, projectDetails);
-      
+
       await supabase
         .from('rams_generation_jobs')
         .update({
@@ -406,7 +406,7 @@ Deno.serve(async (req) => {
           rams_data: transformedRAMSData,
           method_data: null,
           error_message: `Method statement generation failed: ${installerError?.message || 'Unknown error'}`,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
 
@@ -419,7 +419,7 @@ Deno.serve(async (req) => {
     // Handle partial success - Method only
     if (!hsSucceeded && installerSucceeded) {
       console.warn('⚠️ Health & Safety failed but Installer succeeded');
-      
+
       await supabase
         .from('rams_generation_jobs')
         .update({
@@ -429,7 +429,7 @@ Deno.serve(async (req) => {
           rams_data: null,
           method_data: installerData,
           error_message: `Risk assessment generation failed: ${hsError?.message || 'Unknown error'}`,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
 
@@ -443,7 +443,7 @@ Deno.serve(async (req) => {
     await safeUpdateProgress(90, 'Finalising risk assessment and method statement...');
 
     const transformedRAMSData = transformHealthSafetyResponse(hsData, projectDetails);
-    
+
     // Build method statement data
     const finalMethodData = {
       jobTitle: projectDetails.projectName,
@@ -462,15 +462,18 @@ Deno.serve(async (req) => {
         stepNumber: s.step,
         title: s.title,
         description: s.description,
-        safetyRequirements: Array.isArray(s.safetyNotes) ? s.safetyNotes : 
-                           (typeof s.safetyNotes === 'string' ? [s.safetyNotes] : []),
+        safetyRequirements: Array.isArray(s.safetyNotes)
+          ? s.safetyNotes
+          : typeof s.safetyNotes === 'string'
+            ? [s.safetyNotes]
+            : [],
         equipmentNeeded: s.tools || [],
         materialsNeeded: s.materials || [],
         qualifications: s.qualifications || [],
         estimatedDuration: `${s.estimatedTime || 30} minutes`,
         riskLevel: 'medium',
         linkedHazards: s.linkedHazards || [],
-        dependencies: []
+        dependencies: [],
       })),
       toolsRequired: installerData.toolsRequired || [],
       materialsRequired: installerData.installationSteps.flatMap((s: any) => s.materials || []),
@@ -479,9 +482,9 @@ Deno.serve(async (req) => {
       testingProcedures: installerData.testingProcedures || [],
       overallRiskLevel: 'medium',
       totalEstimatedTime: installerData.installationSteps.reduce(
-        (sum: number, s: any) => sum + (s.estimatedTime || 30), 
+        (sum: number, s: any) => sum + (s.estimatedTime || 30),
         0
-      )
+      ),
     };
 
     // ⚡ LAYER 3: Store partial caches for future reuse
@@ -493,10 +496,10 @@ Deno.serve(async (req) => {
         jobScale: job.job_scale,
         agentType: 'health_safety',
         agentOutput: hsData,
-        openAiKey
+        openAiKey,
       });
     }
-    
+
     if (!installerCacheResult.hit && installerSucceeded) {
       await storePartialCache({
         supabase,
@@ -505,7 +508,7 @@ Deno.serve(async (req) => {
         jobScale: job.job_scale,
         agentType: 'installer',
         agentOutput: installerData,
-        openAiKey
+        openAiKey,
       });
     }
 
@@ -517,7 +520,7 @@ Deno.serve(async (req) => {
       jobScale: job.job_scale,
       ramsData: transformedRAMSData,
       methodData: finalMethodData,
-      openAiKey
+      openAiKey,
     });
 
     // Save final results
@@ -539,24 +542,23 @@ Deno.serve(async (req) => {
           cacheStats: {
             layer1Hit: false, // Fresh generation
             layer3HsHit: hsCacheResult.hit,
-            layer3InstallerHit: installerCacheResult.hit
+            layer3InstallerHit: installerCacheResult.hit,
           },
           ragStats: {
             healthSafetyDocs: hsData._ragStats?.totalDocs || 0,
             installerDocs: installerData._ragStats?.totalDocs || 0,
-            total: (hsData._ragStats?.totalDocs || 0) + (installerData._ragStats?.totalDocs || 0)
-          }
-        }
+            total: (hsData._ragStats?.totalDocs || 0) + (installerData._ragStats?.totalDocs || 0),
+          },
+        },
       })
       .eq('id', jobId);
 
     console.log(`🎉 Job complete: ${jobId}`);
 
-    return new Response(
-      JSON.stringify({ success: true, jobId }),
-      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ success: true, jobId }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('❌ Generation failed:', error);
 
@@ -565,7 +567,7 @@ Deno.serve(async (req) => {
       functionName: 'generate-rams',
       requestUrl: req.url,
       requestMethod: req.method,
-      extra: { jobId }
+      extra: { jobId },
     });
 
     if (jobId) {
@@ -574,14 +576,14 @@ Deno.serve(async (req) => {
         .update({
           status: 'failed',
           error_message: error.message,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
     }
 
-    return new Response(
-      JSON.stringify({ success: false, error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ success: false, error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

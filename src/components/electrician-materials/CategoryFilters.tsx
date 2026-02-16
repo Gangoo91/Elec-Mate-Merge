@@ -1,10 +1,9 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Filter, ChevronDown, X, Sliders } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Filter, ChevronDown, X, Sliders } from 'lucide-react';
 
 interface FilterState {
   productTypes: string[];
@@ -27,60 +26,65 @@ const FILTER_OPTIONS = {
     brands: ['Wylex', 'MK Sentry', 'Crabtree', 'Schneider Electric'],
     priceRanges: ['Under £25', '£25-£50', '£50-£100', 'Over £100'],
     moduleSizes: ['4-Module', '10-Module', '13-Module', '16-Module', '21-Module'],
-    cableTypes: [] as string[]
+    cableTypes: [] as string[],
   },
   cables: {
     cableTypes: ['Twin & Earth', 'SWA', 'Flex', 'Data', 'Control'],
     productTypes: [] as string[],
     brands: [] as string[],
     priceRanges: [] as string[],
-    moduleSizes: [] as string[]
+    moduleSizes: [] as string[],
   },
   protection: {
     productTypes: ['RCBOs', 'Surge Protectors', 'Earth Rods', 'Bonding'],
     brands: ['Hager', 'Schneider', 'ABB', 'Eaton'],
     priceRanges: [] as string[],
     moduleSizes: [] as string[],
-    cableTypes: [] as string[]
+    cableTypes: [] as string[],
   },
   accessories: {
     productTypes: ['Junction Boxes', 'Cable Glands', 'Trunking', 'Fixings'],
     brands: ['Marshall-Tufflex', 'Legrand', 'Gewiss'],
     priceRanges: [] as string[],
     moduleSizes: [] as string[],
-    cableTypes: [] as string[]
+    cableTypes: [] as string[],
   },
   lighting: {
     productTypes: ['LED Downlights', 'Battens', 'Emergency Lighting', 'Controls'],
     brands: ['Aurora', 'Integral', 'JCC', 'Ansell'],
     priceRanges: [] as string[],
     moduleSizes: [] as string[],
-    cableTypes: [] as string[]
+    cableTypes: [] as string[],
   },
   tools: {
     productTypes: ['Testers', 'Hand Tools', 'Power Tools', 'Measuring'],
     brands: [] as string[],
     priceRanges: ['Under £25', '£25-£50', '£50-£100', '£100-£250', 'Over £250'],
     moduleSizes: [] as string[],
-    cableTypes: [] as string[]
-  }
+    cableTypes: [] as string[],
+  },
 };
 
-const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }: CategoryFiltersProps) => {
+const CategoryFilters = ({
+  categoryId,
+  filters,
+  onFiltersChange,
+  productsCount,
+}: CategoryFiltersProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const filterConfig = FILTER_OPTIONS[categoryId as keyof typeof FILTER_OPTIONS];
-  
+
   if (!filterConfig) return null;
 
   const toggleFilter = (type: keyof FilterState, value: string) => {
     const currentValues = filters[type];
-    const newValues = currentValues.includes(value) 
-      ? currentValues.filter(v => v !== value)
+    const newValues = currentValues.includes(value)
+      ? currentValues.filter((v) => v !== value)
       : [...currentValues, value];
-    
+
     onFiltersChange({
       ...filters,
-      [type]: newValues
+      [type]: newValues,
     });
   };
 
@@ -90,11 +94,11 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
       brands: [],
       priceRanges: [],
       moduleSizes: [],
-      cableTypes: []
+      cableTypes: [],
     });
   };
 
-  const hasActiveFilters = Object.values(filters).some(arr => arr.length > 0);
+  const hasActiveFilters = Object.values(filters).some((arr) => arr.length > 0);
   const activeFilterCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
 
   const renderFilterSection = (title: string, type: keyof FilterState, options: string[]) => (
@@ -109,10 +113,10 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
           return (
             <Badge
               key={option}
-              variant={isSelected ? "default" : "outline"}
+              variant={isSelected ? 'default' : 'outline'}
               className={`cursor-pointer transition-all duration-200 text-xs px-3 py-1.5 rounded-full border ${
-                isSelected 
-                  ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 border-elec-yellow shadow-lg shadow-elec-yellow/20 transform hover:scale-105' 
+                isSelected
+                  ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 border-elec-yellow shadow-lg shadow-elec-yellow/20 transform hover:scale-105'
                   : 'hover:bg-elec-yellow/10 hover:border-elec-yellow/50 border-elec-yellow/20 text-elec-yellow/80 hover:text-elec-yellow'
               }`}
               onClick={() => toggleFilter(type, option)}
@@ -148,11 +152,13 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
                   </div>
                 )}
               </div>
-              <ChevronDown className={`h-5 w-5 text-elec-yellow/70 transition-all duration-300 ${isExpanded ? 'rotate-180 text-elec-yellow' : ''}`} />
+              <ChevronDown
+                className={`h-5 w-5 text-elec-yellow/70 transition-all duration-300 ${isExpanded ? 'rotate-180 text-elec-yellow' : ''}`}
+              />
             </div>
           </div>
         </CollapsibleTrigger>
-        
+
         <CollapsibleContent className="overflow-hidden">
           <CardContent className="pt-6 pb-6 space-y-6">
             {/* Active filters summary */}
@@ -178,13 +184,15 @@ const CategoryFilters = ({ categoryId, filters, onFiltersChange, productsCount }
 
             {/* Filter sections based on category */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {filterConfig.productTypes && renderFilterSection(
-                categoryId === 'cables' ? 'Cable Types' : 'Product Types', 
-                categoryId === 'cables' ? 'cableTypes' : 'productTypes', 
-                categoryId === 'cables' ? filterConfig.cableTypes! : filterConfig.productTypes
-              )}
-              
-              {filterConfig.priceRanges && renderFilterSection('Price Range', 'priceRanges', filterConfig.priceRanges)}
+              {filterConfig.productTypes &&
+                renderFilterSection(
+                  categoryId === 'cables' ? 'Cable Types' : 'Product Types',
+                  categoryId === 'cables' ? 'cableTypes' : 'productTypes',
+                  categoryId === 'cables' ? filterConfig.cableTypes! : filterConfig.productTypes
+                )}
+
+              {filterConfig.priceRanges &&
+                renderFilterSection('Price Range', 'priceRanges', filterConfig.priceRanges)}
             </div>
 
             {/* Filter actions */}

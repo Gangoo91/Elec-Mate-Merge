@@ -1,11 +1,18 @@
-import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Settings, Save, AlertCircle } from "lucide-react";
-import { toast } from "sonner";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Settings, Save, AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export interface BusinessSettings {
   monthlyOverheads: {
@@ -38,30 +45,28 @@ export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
     toolDepreciation: 200,
     insurance: 150,
     adminCosts: 100,
-    marketing: 50
+    marketing: 50,
   },
   labourRates: {
     electrician: 50,
     apprentice: 15,
-    targetIncome: 3500
+    targetIncome: 3500,
   },
   profitTargets: {
     minimum: 10,
     target: 25,
-    premium: 40
+    premium: 40,
   },
   jobCosts: {
     travel: 30,
     permits: 0,
-    waste: 20
-  }
+    waste: 20,
+  },
 };
 
 // Generate user-scoped storage key for business settings
 const getStorageKey = (userId?: string) =>
-  userId
-    ? `electrician_business_settings_${userId}`
-    : 'electrician_business_settings_guest';
+  userId ? `electrician_business_settings_${userId}` : 'electrician_business_settings_guest';
 
 interface BusinessSettingsDialogProps {
   onSettingsChange?: (settings: BusinessSettings) => void;
@@ -78,14 +83,16 @@ export function BusinessSettingsDialog({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
   hideButton = false,
-  userId
+  userId,
 }: BusinessSettingsDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
 
   // Support both controlled and uncontrolled modes
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
   const setOpen = controlledOnOpenChange || setInternalOpen;
-  const [settings, setSettings] = useState<BusinessSettings>(currentSettings || DEFAULT_BUSINESS_SETTINGS);
+  const [settings, setSettings] = useState<BusinessSettings>(
+    currentSettings || DEFAULT_BUSINESS_SETTINGS
+  );
   const [hasConfigured, setHasConfigured] = useState(false);
 
   const storageKey = getStorageKey(userId);
@@ -113,12 +120,12 @@ export function BusinessSettingsDialog({
     setHasConfigured(true);
     onSettingsChange?.(settings);
     setOpen(false);
-    toast.success("Business settings saved", {
-      description: "Your profitability calculations will now use these settings"
+    toast.success('Business settings saved', {
+      description: 'Your profitability calculations will now use these settings',
     });
   };
 
-  const totalMonthlyOverheads = 
+  const totalMonthlyOverheads =
     settings.monthlyOverheads.vanCosts +
     settings.monthlyOverheads.toolDepreciation +
     settings.monthlyOverheads.insurance +
@@ -132,18 +139,18 @@ export function BusinessSettingsDialog({
       {!hideButton && (
         <DialogTrigger asChild>
           <Button
-            variant={hasConfigured ? "outline" : "default"}
+            variant={hasConfigured ? 'outline' : 'default'}
             size="lg"
             className={cn(
-              "w-full h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold",
+              'w-full h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold',
               hasConfigured
-                ? "border-green-500/30 bg-green-500/10 hover:bg-green-500/20"
-                : "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 animate-pulse"
+                ? 'border-green-500/30 bg-green-500/10 hover:bg-green-500/20'
+                : 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 animate-pulse'
             )}
           >
             <Settings className="h-5 w-5 mr-2 flex-shrink-0" />
             <span className="truncate">
-              {hasConfigured ? "Business Settings ✓" : "Configure Business Settings"}
+              {hasConfigured ? 'Business Settings ✓' : 'Configure Business Settings'}
             </span>
           </Button>
         </DialogTrigger>
@@ -155,7 +162,8 @@ export function BusinessSettingsDialog({
             Business Settings for Profitability
           </DialogTitle>
           <DialogDescription>
-            Configure your business overheads and profit targets to get accurate break-even and quote recommendations
+            Configure your business overheads and profit targets to get accurate break-even and
+            quote recommendations
           </DialogDescription>
         </DialogHeader>
 
@@ -168,15 +176,37 @@ export function BusinessSettingsDialog({
             <CardContent className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-foreground">Total Overheads:</span>
-                <span className="text-base font-semibold">£{totalMonthlyOverheads.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/month</span>
+                <span className="text-base font-semibold">
+                  £
+                  {totalMonthlyOverheads.toLocaleString('en-GB', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                  /month
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-foreground">Per Working Day (22 days):</span>
-                <span className="text-base font-semibold">£{(totalMonthlyOverheads / 22).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/day</span>
+                <span className="text-base font-semibold">
+                  £
+                  {(totalMonthlyOverheads / 22).toLocaleString('en-GB', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                  /day
+                </span>
               </div>
               <div className="flex justify-between items-center border-t border-elec-yellow/20 pt-3 mt-1">
-                <span className="text-sm font-medium text-foreground">Monthly Break-even Target:</span>
-                <span className="text-lg font-bold text-elec-yellow">£{monthlyBreakeven.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span className="text-sm font-medium text-foreground">
+                  Monthly Break-even Target:
+                </span>
+                <span className="text-lg font-bold text-elec-yellow">
+                  £
+                  {monthlyBreakeven.toLocaleString('en-GB', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
               </div>
             </CardContent>
           </Card>
@@ -194,10 +224,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.monthlyOverheads.vanCosts.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  monthlyOverheads: { ...settings.monthlyOverheads, vanCosts: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    monthlyOverheads: {
+                      ...settings.monthlyOverheads,
+                      vanCosts: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <MobileInput
@@ -207,10 +242,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.monthlyOverheads.toolDepreciation.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  monthlyOverheads: { ...settings.monthlyOverheads, toolDepreciation: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    monthlyOverheads: {
+                      ...settings.monthlyOverheads,
+                      toolDepreciation: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <MobileInput
@@ -220,10 +260,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.monthlyOverheads.insurance.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  monthlyOverheads: { ...settings.monthlyOverheads, insurance: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    monthlyOverheads: {
+                      ...settings.monthlyOverheads,
+                      insurance: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <MobileInput
@@ -233,10 +278,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.monthlyOverheads.adminCosts.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  monthlyOverheads: { ...settings.monthlyOverheads, adminCosts: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    monthlyOverheads: {
+                      ...settings.monthlyOverheads,
+                      adminCosts: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <MobileInput
@@ -246,10 +296,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.monthlyOverheads.marketing.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  monthlyOverheads: { ...settings.monthlyOverheads, marketing: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    monthlyOverheads: {
+                      ...settings.monthlyOverheads,
+                      marketing: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
             </div>
           </div>
@@ -265,10 +320,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£/hr"
                 value={settings.labourRates.electrician.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  labourRates: { ...settings.labourRates, electrician: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    labourRates: {
+                      ...settings.labourRates,
+                      electrician: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <MobileInput
@@ -278,10 +338,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£/hr"
                 value={settings.labourRates.apprentice.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  labourRates: { ...settings.labourRates, apprentice: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    labourRates: {
+                      ...settings.labourRates,
+                      apprentice: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <div className="sm:col-span-2">
@@ -292,10 +357,15 @@ export function BusinessSettingsDialog({
                   inputMode="decimal"
                   unit="£/mo"
                   value={settings.labourRates.targetIncome.toString()}
-                  onChange={(e) => setSettings({
-                    ...settings,
-                    labourRates: { ...settings.labourRates, targetIncome: Number(e.target.value) || 0 }
-                  })}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      labourRates: {
+                        ...settings.labourRates,
+                        targetIncome: Number(e.target.value) || 0,
+                      },
+                    })
+                  }
                 />
               </div>
             </div>
@@ -312,10 +382,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="%"
                 value={settings.profitTargets.minimum.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  profitTargets: { ...settings.profitTargets, minimum: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    profitTargets: {
+                      ...settings.profitTargets,
+                      minimum: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <MobileInput
@@ -325,10 +400,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="%"
                 value={settings.profitTargets.target.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  profitTargets: { ...settings.profitTargets, target: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    profitTargets: {
+                      ...settings.profitTargets,
+                      target: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
 
               <MobileInput
@@ -338,10 +418,15 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="%"
                 value={settings.profitTargets.premium.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  profitTargets: { ...settings.profitTargets, premium: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    profitTargets: {
+                      ...settings.profitTargets,
+                      premium: Number(e.target.value) || 0,
+                    },
+                  })
+                }
               />
             </div>
           </div>
@@ -357,10 +442,12 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.jobCosts.travel.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  jobCosts: { ...settings.jobCosts, travel: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    jobCosts: { ...settings.jobCosts, travel: Number(e.target.value) || 0 },
+                  })
+                }
               />
 
               <MobileInput
@@ -370,10 +457,12 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.jobCosts.permits.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  jobCosts: { ...settings.jobCosts, permits: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    jobCosts: { ...settings.jobCosts, permits: Number(e.target.value) || 0 },
+                  })
+                }
               />
 
               <MobileInput
@@ -383,10 +472,12 @@ export function BusinessSettingsDialog({
                 inputMode="decimal"
                 unit="£"
                 value={settings.jobCosts.waste.toString()}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  jobCosts: { ...settings.jobCosts, waste: Number(e.target.value) || 0 }
-                })}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    jobCosts: { ...settings.jobCosts, waste: Number(e.target.value) || 0 },
+                  })
+                }
               />
             </div>
           </div>
@@ -397,9 +488,12 @@ export function BusinessSettingsDialog({
               <div className="flex gap-3">
                 <AlertCircle className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
                 <div className="space-y-1 text-sm">
-                  <p className="font-semibold text-orange-500">Important: Review These Settings Regularly</p>
+                  <p className="font-semibold text-orange-500">
+                    Important: Review These Settings Regularly
+                  </p>
                   <p className="text-foreground">
-                    Your business costs change over time. Update these settings every few months to ensure accurate profitability calculations.
+                    Your business costs change over time. Update these settings every few months to
+                    ensure accurate profitability calculations.
                   </p>
                 </div>
               </div>
@@ -408,10 +502,17 @@ export function BusinessSettingsDialog({
 
           {/* Actions */}
           <div className="flex gap-3 pt-6 sticky bottom-0 bg-background pb-2">
-            <Button variant="outline" onClick={() => setOpen(false)} className="flex-1 h-12 touch-manipulation">
+            <Button
+              variant="outline"
+              onClick={() => setOpen(false)}
+              className="flex-1 h-12 touch-manipulation"
+            >
               Cancel
             </Button>
-            <Button onClick={handleSave} className="flex-1 h-12 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+            <Button
+              onClick={handleSave}
+              className="flex-1 h-12 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            >
               <Save className="h-4 w-4 mr-2" />
               Save Settings
             </Button>

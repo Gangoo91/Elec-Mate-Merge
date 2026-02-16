@@ -1,71 +1,90 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Shield, AlertTriangle, FileText, Users, Search, RefreshCw, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useIncidents, useIncidentStats, type Incident } from "@/hooks/useIncidents";
-import { useRAMSDocuments, useRAMSDocumentStats, type RAMSDocument } from "@/hooks/useRAMSDocuments";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Shield, AlertTriangle, FileText, Users, Search, RefreshCw, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useIncidents, useIncidentStats, type Incident } from '@/hooks/useIncidents';
+import {
+  useRAMSDocuments,
+  useRAMSDocumentStats,
+  type RAMSDocument,
+} from '@/hooks/useRAMSDocuments';
 
 const incidentTypeLabels: Record<string, string> = {
-  near_miss: "Near Miss",
-  unsafe_practice: "Unsafe Practice",
-  faulty_equipment: "Faulty Equipment",
-  injury: "Injury",
-  property_damage: "Property Damage",
-  environmental: "Environmental",
-  security: "Security",
-  other: "Other",
+  near_miss: 'Near Miss',
+  unsafe_practice: 'Unsafe Practice',
+  faulty_equipment: 'Faulty Equipment',
+  injury: 'Injury',
+  property_damage: 'Property Damage',
+  environmental: 'Environmental',
+  security: 'Security',
+  other: 'Other',
 };
 
 const severityColors: Record<string, string> = {
-  low: "bg-blue-500/20 text-blue-400",
-  medium: "bg-yellow-500/20 text-yellow-400",
-  high: "bg-orange-500/20 text-orange-400",
-  critical: "bg-red-500/20 text-red-400",
+  low: 'bg-blue-500/20 text-blue-400',
+  medium: 'bg-yellow-500/20 text-yellow-400',
+  high: 'bg-orange-500/20 text-orange-400',
+  critical: 'bg-red-500/20 text-red-400',
 };
 
 const statusColors: Record<string, string> = {
-  draft: "bg-gray-500/20 text-gray-400",
-  submitted: "bg-blue-500/20 text-blue-400",
-  under_review: "bg-yellow-500/20 text-yellow-400",
-  investigating: "bg-orange-500/20 text-orange-400",
-  resolved: "bg-green-500/20 text-green-400",
-  closed: "bg-green-500/20 text-green-400",
-  approved: "bg-green-500/20 text-green-400",
-  rejected: "bg-red-500/20 text-red-400",
-  pending: "bg-yellow-500/20 text-yellow-400",
+  draft: 'bg-gray-500/20 text-gray-400',
+  submitted: 'bg-blue-500/20 text-blue-400',
+  under_review: 'bg-yellow-500/20 text-yellow-400',
+  investigating: 'bg-orange-500/20 text-orange-400',
+  resolved: 'bg-green-500/20 text-green-400',
+  closed: 'bg-green-500/20 text-green-400',
+  approved: 'bg-green-500/20 text-green-400',
+  rejected: 'bg-red-500/20 text-red-400',
+  pending: 'bg-yellow-500/20 text-yellow-400',
 };
 
 export function SafetyHRSection() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Use real hooks
-  const { data: incidents, isLoading: incidentsLoading, error: incidentsError, refetch: refetchIncidents } = useIncidents();
+  const {
+    data: incidents,
+    isLoading: incidentsLoading,
+    error: incidentsError,
+    refetch: refetchIncidents,
+  } = useIncidents();
   const { data: incidentStats } = useIncidentStats();
-  const { data: ramsDocuments, isLoading: ramsLoading, error: ramsError, refetch: refetchRams } = useRAMSDocuments();
+  const {
+    data: ramsDocuments,
+    isLoading: ramsLoading,
+    error: ramsError,
+    refetch: refetchRams,
+  } = useRAMSDocuments();
   const { data: ramsStats } = useRAMSDocumentStats();
 
   // Filter data by search
-  const filteredIncidents = incidents?.filter(
-    (incident) =>
-      incident.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      incident.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      incident.location?.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredIncidents =
+    incidents?.filter(
+      (incident) =>
+        incident.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        incident.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        incident.location?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
-  const filteredRams = ramsDocuments?.filter(
-    (rams) =>
-      rams.project_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      rams.location?.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  const filteredRams =
+    ramsDocuments?.filter(
+      (rams) =>
+        rams.project_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        rams.location?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
   // Calculate safety score (simplified)
   const safetyScore = incidentStats
-    ? Math.max(0, 100 - (incidentStats.critical * 15) - (incidentStats.high * 10) - (incidentStats.open * 5))
+    ? Math.max(
+        0,
+        100 - incidentStats.critical * 15 - incidentStats.high * 10 - incidentStats.open * 5
+      )
     : 100;
 
   const isLoading = incidentsLoading || ramsLoading;
@@ -103,7 +122,7 @@ export function SafetyHRSection() {
             placeholder="Search incidents and RAMS..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("h-11 touch-manipulation", !searchQuery && "pl-10")}
+            className={cn('h-11 touch-manipulation', !searchQuery && 'pl-10')}
           />
         </div>
       </div>
@@ -209,7 +228,9 @@ export function SafetyHRSection() {
               <CardContent className="p-8 text-center">
                 <Shield className="h-12 w-12 text-success mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">No Incidents</h3>
-                <p className="text-muted-foreground">No incidents recorded. Keep up the safe work!</p>
+                <p className="text-muted-foreground">
+                  No incidents recorded. Keep up the safe work!
+                </p>
               </CardContent>
             </Card>
           ) : (
@@ -220,7 +241,7 @@ export function SafetyHRSection() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-semibold text-foreground">{incident.title}</h3>
-                        <Badge className={severityColors[incident.severity] || ""}>
+                        <Badge className={severityColors[incident.severity] || ''}>
                           {incident.severity}
                         </Badge>
                       </div>
@@ -228,8 +249,8 @@ export function SafetyHRSection() {
                         {incidentTypeLabels[incident.incident_type] || incident.incident_type}
                       </p>
                     </div>
-                    <Badge className={statusColors[incident.status] || ""}>
-                      {incident.status.replace("_", " ")}
+                    <Badge className={statusColors[incident.status] || ''}>
+                      {incident.status.replace('_', ' ')}
                     </Badge>
                   </div>
 
@@ -241,7 +262,7 @@ export function SafetyHRSection() {
 
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>{incident.location}</span>
-                    <span>{new Date(incident.date_occurred).toLocaleDateString("en-GB")}</span>
+                    <span>{new Date(incident.date_occurred).toLocaleDateString('en-GB')}</span>
                   </div>
                 </CardContent>
               </Card>
@@ -279,29 +300,27 @@ export function SafetyHRSection() {
                       <p className="text-sm text-muted-foreground">{rams.location}</p>
                     </div>
                     <div className="flex flex-col items-end gap-1">
-                      <Badge className={statusColors[rams.status] || ""}>
-                        {rams.status}
-                      </Badge>
+                      <Badge className={statusColors[rams.status] || ''}>{rams.status}</Badge>
                       <span className="text-xs text-muted-foreground">v{rams.version}</span>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>Assessor: {rams.assessor}</span>
-                    <span>Updated: {new Date(rams.updated_at).toLocaleDateString("en-GB")}</span>
+                    <span>Updated: {new Date(rams.updated_at).toLocaleDateString('en-GB')}</span>
                   </div>
 
                   {rams.risks && rams.risks.length > 0 && (
                     <div className="mt-3 flex items-center gap-2">
                       <span className="text-xs text-muted-foreground">Risks:</span>
                       <Badge variant="outline" className="text-xs">
-                        {rams.risks.filter((r) => r.risk_level === "high").length} High
+                        {rams.risks.filter((r) => r.risk_level === 'high').length} High
                       </Badge>
                       <Badge variant="outline" className="text-xs">
-                        {rams.risks.filter((r) => r.risk_level === "medium").length} Medium
+                        {rams.risks.filter((r) => r.risk_level === 'medium').length} Medium
                       </Badge>
                       <Badge variant="outline" className="text-xs">
-                        {rams.risks.filter((r) => r.risk_level === "low").length} Low
+                        {rams.risks.filter((r) => r.risk_level === 'low').length} Low
                       </Badge>
                     </div>
                   )}

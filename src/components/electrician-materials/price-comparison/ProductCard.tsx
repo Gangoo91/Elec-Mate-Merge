@@ -1,9 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Crown, TrendingDown, Star, ExternalLink, Plus } from "lucide-react";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Crown, TrendingDown, Star, ExternalLink, Plus } from 'lucide-react';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export interface PriceComparisonItem {
   id: number;
@@ -12,7 +12,7 @@ export interface PriceComparisonItem {
   price: string;
   supplier: string;
   image: string;
-  stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
+  stockStatus: 'In Stock' | 'Low Stock' | 'Out of Stock';
   productUrl?: string;
   highlights?: string[];
   numericPrice: number;
@@ -36,45 +36,64 @@ interface ProductCardProps {
   onAddToQuote?: (material: any, quantity?: number) => void;
 }
 
-export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAddToQuote }: ProductCardProps) => {
+export const ProductCard = ({
+  product,
+  isCheapest,
+  cheapestPrice,
+  savings,
+  onAddToQuote,
+}: ProductCardProps) => {
   const isMobile = useIsMobile();
-  
-  const calculatedIsCheapest = isCheapest !== undefined ? isCheapest : (cheapestPrice ? product.numericPrice === cheapestPrice : false);
-  const calculatedSavings = savings !== undefined ? savings : (cheapestPrice && cheapestPrice > 0 ? Math.round(((product.numericPrice - cheapestPrice) / cheapestPrice) * 100) : 0);
+
+  const calculatedIsCheapest =
+    isCheapest !== undefined
+      ? isCheapest
+      : cheapestPrice
+        ? product.numericPrice === cheapestPrice
+        : false;
+  const calculatedSavings =
+    savings !== undefined
+      ? savings
+      : cheapestPrice && cheapestPrice > 0
+        ? Math.round(((product.numericPrice - cheapestPrice) / cheapestPrice) * 100)
+        : 0;
 
   // Process image URL to set width and height to 236
   const imageSrc = (() => {
     const src = product.image;
-    if (!src) return "/placeholder.svg";
-    
+    if (!src) return '/placeholder.svg';
+
     let finalSrc = src;
-    
+
     // Update image size parameters from 136x136 to 236x236
-    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
-      finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
+    if (finalSrc.includes('wid=136') && finalSrc.includes('hei=136')) {
+      finalSrc = finalSrc.replace(/wid=136/g, 'wid=236').replace(/hei=136/g, 'hei=236');
     }
-    
+
     return finalSrc;
   })();
 
   const handleAddToQuote = () => {
     if (onAddToQuote) {
-      onAddToQuote({
-        name: product.name,
-        supplier: product.supplier,
-        price: product.price,
-        numericPrice: product.numericPrice,
-        category: product.category,
-        stockStatus: product.stockStatus
-      }, 1);
+      onAddToQuote(
+        {
+          name: product.name,
+          supplier: product.supplier,
+          price: product.price,
+          numericPrice: product.numericPrice,
+          category: product.category,
+          stockStatus: product.stockStatus,
+        },
+        1
+      );
     }
   };
 
   return (
-    <Card 
+    <Card
       className={`border transition-all hover:shadow-lg ${
-        calculatedIsCheapest 
-          ? 'border-green-500/50 bg-gradient-to-br from-green-500/5 to-green-500/10 ring-1 ring-green-500/20' 
+        calculatedIsCheapest
+          ? 'border-green-500/50 bg-gradient-to-br from-green-500/5 to-green-500/10 ring-1 ring-green-500/20'
           : 'border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80'
       }`}
     >
@@ -103,39 +122,35 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
           {/* Product info */}
           <div className="flex items-center gap-3 mb-3">
             <div className="shrink-0">
-              <img 
-                src={imageSrc} 
+              <img
+                src={imageSrc}
                 alt={product.name}
                 className="w-16 h-16 object-cover rounded-lg bg-elec-gray/50"
               />
             </div>
-            
+
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-foreground text-sm leading-tight line-clamp-2 mb-1">
                 {product.name}
               </h3>
-              
+
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs text-elec-yellow font-medium">
-                  {product.supplier}
-                </span>
-                <Badge 
-                  variant="outline" 
+                <span className="text-xs text-elec-yellow font-medium">{product.supplier}</span>
+                <Badge
+                  variant="outline"
                   className={`text-xs shrink-0 ${
-                    product.stockStatus === 'In Stock' 
-                      ? 'border-green-500/30 text-green-400 bg-green-500/5' 
+                    product.stockStatus === 'In Stock'
+                      ? 'border-green-500/30 text-green-400 bg-green-500/5'
                       : product.stockStatus === 'Low Stock'
-                      ? 'border-yellow-500/30 text-yellow-400 bg-yellow-500/5'
-                      : 'border-red-500/30 text-red-400 bg-red-500/5'
+                        ? 'border-yellow-500/30 text-yellow-400 bg-yellow-500/5'
+                        : 'border-red-500/30 text-red-400 bg-red-500/5'
                   }`}
                 >
                   {product.stockStatus}
                 </Badge>
               </div>
-              
-              <div className="text-xs text-muted-foreground">
-                {product.category}
-              </div>
+
+              <div className="text-xs text-muted-foreground">{product.category}</div>
             </div>
           </div>
 
@@ -143,22 +158,34 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
           {(product.length || product.cableSize || product.coreCount || product.quantity) && (
             <div className="flex flex-wrap gap-1 mb-3">
               {product.length && (
-                <Badge variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/40 text-elec-yellow bg-elec-yellow/5">
+                <Badge
+                  variant="outline"
+                  className="text-xs px-2 py-0.5 border-elec-yellow/40 text-elec-yellow bg-elec-yellow/5"
+                >
                   {product.length}
                 </Badge>
               )}
               {product.cableSize && (
-                <Badge variant="outline" className="text-xs px-2 py-0.5 border-blue-500/40 text-blue-400 bg-blue-500/5">
+                <Badge
+                  variant="outline"
+                  className="text-xs px-2 py-0.5 border-blue-500/40 text-blue-400 bg-blue-500/5"
+                >
                   {product.cableSize}
                 </Badge>
               )}
               {product.coreCount && (
-                <Badge variant="outline" className="text-xs px-2 py-0.5 border-purple-500/40 text-purple-400 bg-purple-500/5">
+                <Badge
+                  variant="outline"
+                  className="text-xs px-2 py-0.5 border-purple-500/40 text-purple-400 bg-purple-500/5"
+                >
                   {product.coreCount}
                 </Badge>
               )}
               {product.quantity && (
-                <Badge variant="outline" className="text-xs px-2 py-0.5 border-orange-500/40 text-orange-400 bg-orange-500/5">
+                <Badge
+                  variant="outline"
+                  className="text-xs px-2 py-0.5 border-orange-500/40 text-orange-400 bg-orange-500/5"
+                >
                   {product.quantity}
                 </Badge>
               )}
@@ -196,32 +223,30 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
           <div className="flex-1 flex items-center gap-4">
             {/* Product Image */}
             <div className="shrink-0">
-              <img 
-                src={imageSrc} 
+              <img
+                src={imageSrc}
                 alt={product.name}
                 className="w-16 h-16 object-cover rounded-lg bg-elec-gray/50"
               />
             </div>
-            
+
             {/* Product Details */}
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-foreground text-base leading-tight line-clamp-2 mb-2">
                 {product.name}
               </h3>
-              
+
               {/* Brand and supplier info */}
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-sm text-elec-yellow font-medium">
-                  {product.supplier}
-                </span>
-                <Badge 
-                  variant="outline" 
+                <span className="text-sm text-elec-yellow font-medium">{product.supplier}</span>
+                <Badge
+                  variant="outline"
                   className={`text-xs shrink-0 ${
-                    product.stockStatus === 'In Stock' 
-                      ? 'border-green-500/30 text-green-400 bg-green-500/5' 
+                    product.stockStatus === 'In Stock'
+                      ? 'border-green-500/30 text-green-400 bg-green-500/5'
                       : product.stockStatus === 'Low Stock'
-                      ? 'border-yellow-500/30 text-yellow-400 bg-yellow-500/5'
-                      : 'border-red-500/30 text-red-400 bg-red-500/5'
+                        ? 'border-yellow-500/30 text-yellow-400 bg-yellow-500/5'
+                        : 'border-red-500/30 text-red-400 bg-red-500/5'
                   }`}
                 >
                   {product.stockStatus}
@@ -233,40 +258,50 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
                   </div>
                 )}
               </div>
-              
+
               {/* Specifications badges */}
               {(product.length || product.cableSize || product.coreCount || product.quantity) && (
                 <div className="flex flex-wrap gap-1 mb-2">
                   {product.length && (
-                    <Badge variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/40 text-elec-yellow bg-elec-yellow/5">
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-0.5 border-elec-yellow/40 text-elec-yellow bg-elec-yellow/5"
+                    >
                       {product.length}
                     </Badge>
                   )}
                   {product.cableSize && (
-                    <Badge variant="outline" className="text-xs px-2 py-0.5 border-blue-500/40 text-blue-400 bg-blue-500/5">
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-0.5 border-blue-500/40 text-blue-400 bg-blue-500/5"
+                    >
                       {product.cableSize}
                     </Badge>
                   )}
                   {product.coreCount && (
-                    <Badge variant="outline" className="text-xs px-2 py-0.5 border-purple-500/40 text-purple-400 bg-purple-500/5">
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-0.5 border-purple-500/40 text-purple-400 bg-purple-500/5"
+                    >
                       {product.coreCount}
                     </Badge>
                   )}
                   {product.quantity && (
-                    <Badge variant="outline" className="text-xs px-2 py-0.5 border-orange-500/40 text-orange-400 bg-orange-500/5">
+                    <Badge
+                      variant="outline"
+                      className="text-xs px-2 py-0.5 border-orange-500/40 text-orange-400 bg-orange-500/5"
+                    >
                       {product.quantity}
                     </Badge>
                   )}
                 </div>
               )}
-              
+
               {/* Category */}
-              <div className="text-xs text-muted-foreground">
-                {product.category}
-              </div>
+              <div className="text-xs text-muted-foreground">{product.category}</div>
             </div>
           </div>
-          
+
           {/* Price and Actions Section */}
           <div className="flex flex-col items-end gap-2 shrink-0">
             {/* Price */}
@@ -275,9 +310,7 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
                 £{product.price.replace(/[£$]/g, '')}
               </div>
               <div className="text-xs text-muted-foreground">per each</div>
-              {savings > 0 && (
-                <div className="text-xs text-red-400">+{savings}% more</div>
-              )}
+              {savings > 0 && <div className="text-xs text-red-400">+{savings}% more</div>}
               {isCheapest && (
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-2 py-0.5 mt-1">
                   <Crown className="h-3 w-3 mr-1" />
@@ -285,7 +318,7 @@ export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAdd
                 </Badge>
               )}
             </div>
-            
+
             {/* Action buttons */}
             <div className="flex gap-2">
               {onAddToQuote && (

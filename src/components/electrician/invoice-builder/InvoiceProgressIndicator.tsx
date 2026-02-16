@@ -6,10 +6,7 @@ interface InvoiceProgressIndicatorProps {
   steps: Array<{ title: string; description: string }>;
 }
 
-export const InvoiceProgressIndicator = ({
-  currentStep,
-  steps,
-}: InvoiceProgressIndicatorProps) => {
+export const InvoiceProgressIndicator = ({ currentStep, steps }: InvoiceProgressIndicatorProps) => {
   return (
     <div className="w-full overflow-x-auto pb-4">
       {/* Mobile & Desktop Step Indicator */}
@@ -25,16 +22,16 @@ export const InvoiceProgressIndicator = ({
                   index < currentStep
                     ? 'bg-elec-yellow border-elec-yellow text-black'
                     : index === currentStep
-                    ? 'border-elec-yellow bg-elec-yellow text-black'
-                    : 'border-muted bg-background text-muted-foreground'
+                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      : 'border-muted bg-background text-muted-foreground'
                 )}
               >
                 {index < currentStep ? (
                   <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" />
                 ) : (
-                  <Circle 
-                    className="w-4 h-4 sm:w-5 sm:h-5" 
-                    fill={index === currentStep ? 'currentColor' : 'none'} 
+                  <Circle
+                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    fill={index === currentStep ? 'currentColor' : 'none'}
                   />
                 )}
               </div>

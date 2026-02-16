@@ -1,50 +1,67 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Megaphone, Car, Users, Handshake, MapPin, Newspaper, Radio, FileText, Calendar, Award, Phone } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionContent,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+} from '@/components/ui/mobile-accordion';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Megaphone,
+  Car,
+  Users,
+  Handshake,
+  MapPin,
+  Newspaper,
+  Radio,
+  FileText,
+  Calendar,
+  Award,
+  Phone,
+} from 'lucide-react';
 
 const TraditionalMarketingTab = () => {
   const isMobile = useIsMobile();
 
   const traditionalMetrics = [
     {
-      metric: "Referral Conversion Rate",
-      data: "70-90% close rate",
+      metric: 'Referral Conversion Rate',
+      data: '70-90% close rate',
       icon: <Users className="h-5 w-5 text-green-400" />,
-      detail: "Word-of-mouth referrals have highest conversion"
+      detail: 'Word-of-mouth referrals have highest conversion',
     },
     {
-      metric: "Vehicle Advertising ROI",
-      data: "1,500+ daily impressions",
+      metric: 'Vehicle Advertising ROI',
+      data: '1,500+ daily impressions',
       icon: <Car className="h-5 w-5 text-orange-400" />,
-      detail: "Professional vehicle livery on average UK roads"
+      detail: 'Professional vehicle livery on average UK roads',
     },
     {
-      metric: "Local Networking Value",
-      data: "£800-3,000 per connection",
+      metric: 'Local Networking Value',
+      data: '£800-3,000 per connection',
       icon: <Handshake className="h-5 w-5 text-blue-400" />,
-      detail: "Quality business relationships and partnerships"
+      detail: 'Quality business relationships and partnerships',
     },
     {
-      metric: "Community Sponsorship ROI",
-      data: "45% brand recognition boost",
+      metric: 'Community Sponsorship ROI',
+      data: '45% brand recognition boost',
       icon: <Award className="h-5 w-5 text-purple-400" />,
-      detail: "Local sports teams and community events"
+      detail: 'Local sports teams and community events',
     },
     {
-      metric: "Local Press Coverage Value",
-      data: "£2,000-5,000 equivalent",
+      metric: 'Local Press Coverage Value',
+      data: '£2,000-5,000 equivalent',
       icon: <Newspaper className="h-5 w-5 text-yellow-400" />,
-      detail: "Free publicity through local newspaper features"
+      detail: 'Free publicity through local newspaper features',
     },
     {
-      metric: "Direct Mail Response Rate",
-      data: "2-5% response rate",
+      metric: 'Direct Mail Response Rate',
+      data: '2-5% response rate',
       icon: <FileText className="h-5 w-5 text-red-400" />,
-      detail: "Targeted leaflet drops in service areas"
-    }
+      detail: 'Targeted leaflet drops in service areas',
+    },
   ];
 
   return (
@@ -52,17 +69,24 @@ const TraditionalMarketingTab = () => {
       <Alert className="border-orange-400/50 bg-orange-400/10">
         <Megaphone className="h-4 w-4 text-orange-400" />
         <AlertDescription className="text-orange-400">
-          Traditional marketing builds local trust and credibility - 85% of customers still prefer local recommendations over online reviews.
+          Traditional marketing builds local trust and credibility - 85% of customers still prefer
+          local recommendations over online reviews.
         </AlertDescription>
       </Alert>
 
-      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-3 xl:grid-cols-6'}`}>
+      <div
+        className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-3 xl:grid-cols-6'}`}
+      >
         {traditionalMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
+                {metric.metric}
+              </div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                {metric.data}
+              </div>
             </div>
           </Card>
         ))}
@@ -76,16 +100,20 @@ const TraditionalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Professional vehicle livery turns every journey into a marketing opportunity, providing continuous exposure in your service area.
+                Professional vehicle livery turns every journey into a marketing opportunity,
+                providing continuous exposure in your service area.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Branding Strategy</h4>
-                    <p className="text-sm">Create consistent, professional vehicle livery that builds brand recognition and trust throughout your service area.</p>
+                    <p className="text-sm">
+                      Create consistent, professional vehicle livery that builds brand recognition
+                      and trust throughout your service area.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -95,7 +123,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Week 4: Staff training on brand representation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Impact</h4>
                     <ul className="text-sm space-y-1">
@@ -106,10 +134,12 @@ const TraditionalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Essential Design Elements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Essential Design Elements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Company name in bold, readable font</li>
                       <li>• Large phone number (minimum 4-inch height)</li>
@@ -120,7 +150,7 @@ const TraditionalMarketingTab = () => {
                       <li>• High-contrast colour scheme</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Quality Standards</h4>
                     <ul className="text-sm space-y-1">
@@ -132,7 +162,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Consistent across entire fleet</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Performance Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -156,16 +186,20 @@ const TraditionalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Word-of-mouth referrals remain the highest converting lead source, with 90% of satisfied customers willing to refer when asked.
+                Word-of-mouth referrals remain the highest converting lead source, with 90% of
+                satisfied customers willing to refer when asked.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Referral Strategy</h4>
-                    <p className="text-sm">Build systematic referral generation processes that turn satisfied customers into active brand ambassadors.</p>
+                    <p className="text-sm">
+                      Build systematic referral generation processes that turn satisfied customers
+                      into active brand ambassadors.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Program Development</h4>
                     <ul className="text-sm space-y-1">
@@ -175,7 +209,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Week 4: Launch with existing customers</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -186,10 +220,12 @@ const TraditionalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Referral Program Components</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Referral Program Components
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Professional referral cards</li>
                       <li>• Customer incentive structure</li>
@@ -199,7 +235,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Tracking & attribution system</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Reward Structure Ideas</h4>
                     <ul className="text-sm space-y-1">
@@ -211,7 +247,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Charity donations in customer name</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -235,18 +271,24 @@ const TraditionalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Strategic networking builds valuable business relationships that generate consistent, high-quality referrals from other professionals.
+                Strategic networking builds valuable business relationships that generate
+                consistent, high-quality referrals from other professionals.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Networking Strategy</h4>
-                    <p className="text-sm">Build mutually beneficial relationships with complementary trades and local businesses to create referral networks.</p>
+                    <p className="text-sm">
+                      Build mutually beneficial relationships with complementary trades and local
+                      businesses to create referral networks.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-                    <h4 className="font-semibold text-green-400 mb-2">Relationship Building Timeline</h4>
+                    <h4 className="font-semibold text-green-400 mb-2">
+                      Relationship Building Timeline
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Month 1: Identify key networking targets</li>
                       <li>• Month 2: Attend 4-6 local business events</li>
@@ -254,7 +296,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Month 4+: Maintain regular contact</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Partnership Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -265,7 +307,7 @@ const TraditionalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Key Partnership Targets</h4>
@@ -279,7 +321,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Solar panel installers</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Networking Opportunities</h4>
                     <ul className="text-sm space-y-1">
@@ -291,7 +333,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Community charity events</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Networking ROI Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -315,16 +357,20 @@ const TraditionalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Community involvement builds local brand recognition and positions your business as a trusted community partner.
+                Community involvement builds local brand recognition and positions your business as
+                a trusted community partner.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Community Strategy</h4>
-                    <p className="text-sm">Strategically sponsor local events and organisations that align with your target customer demographic.</p>
+                    <p className="text-sm">
+                      Strategically sponsor local events and organisations that align with your
+                      target customer demographic.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Engagement Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -334,7 +380,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Quarter 4: Evaluate ROI & plan expansion</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Brand Building Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -345,10 +391,12 @@ const TraditionalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Sponsorship Opportunities</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Sponsorship Opportunities
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Local football & cricket teams</li>
                       <li>• School fairs & fundraising events</li>
@@ -359,7 +407,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Community centre events</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Sponsorship Packages</h4>
                     <ul className="text-sm space-y-1">
@@ -371,7 +419,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Safety demonstration days: Free service</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Community Impact Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -395,16 +443,20 @@ const TraditionalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Local print media remains effective for reaching older demographics and establishing credibility in traditional communities.
+                Local print media remains effective for reaching older demographics and establishing
+                credibility in traditional communities.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Print Media Strategy</h4>
-                    <p className="text-sm">Target local publications with high readership in your service area, focusing on regular presence over one-off ads.</p>
+                    <p className="text-sm">
+                      Target local publications with high readership in your service area, focusing
+                      on regular presence over one-off ads.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Campaign Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -414,7 +466,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Week 4+: Monitor response & optimise</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Media Advantages</h4>
                     <ul className="text-sm space-y-1">
@@ -425,7 +477,7 @@ const TraditionalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Local Publication Types</h4>
@@ -439,9 +491,11 @@ const TraditionalMarketingTab = () => {
                       <li>• WI magazines & club newsletters</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Advertising Costs (Monthly)</h4>
+                    <h4 className="font-semibold text-yellow-400 mb-2">
+                      Advertising Costs (Monthly)
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Local newspaper quarter page: £150-400</li>
                       <li>• Parish magazine ads: £25-100</li>
@@ -451,7 +505,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Editorial features: £300-1,000</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Print Media KPIs</h4>
                     <ul className="text-sm space-y-1">
@@ -475,16 +529,20 @@ const TraditionalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Targeted direct mail and leaflet distribution can effectively reach specific postcode areas with tailored messaging for electrical services.
+                Targeted direct mail and leaflet distribution can effectively reach specific
+                postcode areas with tailored messaging for electrical services.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Direct Mail Strategy</h4>
-                    <p className="text-sm">Target high-value postcodes with professional leaflets focusing on safety, compliance, and emergency services.</p>
+                    <p className="text-sm">
+                      Target high-value postcodes with professional leaflets focusing on safety,
+                      compliance, and emergency services.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Campaign Schedule</h4>
                     <ul className="text-sm space-y-1">
@@ -494,7 +552,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Week 4: Track responses & follow up</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Direct Mail Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -505,10 +563,12 @@ const TraditionalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Effective Messaging Themes</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Effective Messaging Themes
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Emergency electrical services</li>
                       <li>• EICR testing & certification</li>
@@ -519,7 +579,7 @@ const TraditionalMarketingTab = () => {
                       <li>• New customer discounts</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Distribution Costs</h4>
                     <ul className="text-sm space-y-1">
@@ -531,7 +591,7 @@ const TraditionalMarketingTab = () => {
                       <li>• Follow-up postcards: £0.20-0.35 each</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Direct Mail Performance</h4>
                     <ul className="text-sm space-y-1">

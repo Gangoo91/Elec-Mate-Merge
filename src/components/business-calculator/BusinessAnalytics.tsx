@@ -1,8 +1,21 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
-import { TrendingUp, Target, BarChart3, DollarSign } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+} from 'recharts';
+import { TrendingUp, Target, BarChart3, DollarSign } from 'lucide-react';
 
 interface BusinessAnalyticsProps {
   startupInputs: Record<string, number>;
@@ -31,30 +44,41 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
     );
   }
 
-  const totalStartup = Object.values(startupInputs).reduce((sum: number, value: number) => sum + (value || 0), 0);
-  const totalMonthly = Object.values(monthlyInputs).reduce((sum: number, value: number) => sum + (value || 0), 0);
+  const totalStartup = Object.values(startupInputs).reduce(
+    (sum: number, value: number) => sum + (value || 0),
+    0
+  );
+  const totalMonthly = Object.values(monthlyInputs).reduce(
+    (sum: number, value: number) => sum + (value || 0),
+    0
+  );
 
   // Prepare startup cost breakdown data
   const startupData = Object.entries(startupInputs)
     .filter(([_, value]) => value > 0)
     .map(([key, value]: [string, number]) => ({
-      name: key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
+      name: key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase()),
       value: value,
-      percentage: ((value / totalStartup) * 100).toFixed(1)
+      percentage: ((value / totalStartup) * 100).toFixed(1),
     }));
 
   // Prepare monthly cost breakdown data
   const monthlyData = Object.entries(monthlyInputs)
     .filter(([_, value]) => value > 0)
     .map(([key, value]: [string, number]) => ({
-      name: key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()),
+      name: key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase()),
       value: value,
-      percentage: ((value / totalMonthly) * 100).toFixed(1)
+      percentage: ((value / totalMonthly) * 100).toFixed(1),
     }));
 
   // Three-year projection data
   const projectionData = [
-    { year: 'Year 1', startup: totalStartup, monthly: totalMonthly * 12, total: totalStartup + (totalMonthly * 12) },
+    {
+      year: 'Year 1',
+      startup: totalStartup,
+      monthly: totalMonthly * 12,
+      total: totalStartup + totalMonthly * 12,
+    },
     { year: 'Year 2', startup: 0, monthly: totalMonthly * 12, total: totalMonthly * 12 },
     { year: 'Year 3', startup: 0, monthly: totalMonthly * 12, total: totalMonthly * 12 },
   ];
@@ -62,9 +86,19 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
   // Break-even analysis
   const monthlyRevenueTarget = totalMonthly * 1.8; // 80% markup
   const dailyRevenueTarget = monthlyRevenueTarget / 22;
-  const breakEvenMonths = totalStartup > 0 ? Math.ceil(totalStartup / (monthlyRevenueTarget - totalMonthly)) : 0;
+  const breakEvenMonths =
+    totalStartup > 0 ? Math.ceil(totalStartup / (monthlyRevenueTarget - totalMonthly)) : 0;
 
-  const COLORS = ['#F7931E', '#FFB366', '#FF8C42', '#FF6B1A', '#E65100', '#D84315', '#BF360C', '#A6642A'];
+  const COLORS = [
+    '#F7931E',
+    '#FFB366',
+    '#FF8C42',
+    '#FF6B1A',
+    '#E65100',
+    '#D84315',
+    '#BF360C',
+    '#A6642A',
+  ];
 
   return (
     <div className="space-y-6">
@@ -75,7 +109,9 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Total Investment</p>
-                <p className="text-2xl font-bold text-elec-yellow">£{totalStartup.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-elec-yellow">
+                  £{totalStartup.toLocaleString()}
+                </p>
               </div>
               <DollarSign className="h-8 w-8 text-elec-yellow/50" />
             </div>
@@ -87,7 +123,9 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Monthly Target</p>
-                <p className="text-2xl font-bold text-elec-yellow">£{monthlyRevenueTarget.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-elec-yellow">
+                  £{monthlyRevenueTarget.toLocaleString()}
+                </p>
               </div>
               <Target className="h-8 w-8 text-elec-yellow/50" />
             </div>
@@ -99,7 +137,9 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Daily Target</p>
-                <p className="text-2xl font-bold text-elec-yellow">£{dailyRevenueTarget.toFixed(0)}</p>
+                <p className="text-2xl font-bold text-elec-yellow">
+                  £{dailyRevenueTarget.toFixed(0)}
+                </p>
               </div>
               <TrendingUp className="h-8 w-8 text-elec-yellow/50" />
             </div>
@@ -150,8 +190,8 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
               {startupData.map((item, index) => (
                 <div key={item.name} className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
+                    <div
+                      className="w-3 h-3 rounded-full"
                       style={{ backgroundColor: COLORS[index % COLORS.length] }}
                     />
                     <span>{item.name}</span>
@@ -172,8 +212,8 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <XAxis 
-                  dataKey="name" 
+                <XAxis
+                  dataKey="name"
                   tick={{ fontSize: 12 }}
                   angle={-45}
                   textAnchor="end"
@@ -223,12 +263,16 @@ const BusinessAnalytics: React.FC<BusinessAnalyticsProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
               <div className="text-center p-4 bg-elec-gray rounded-lg">
                 <h4 className="font-medium mb-2">Required Monthly Revenue</h4>
-                <p className="text-2xl font-bold text-elec-yellow">£{monthlyRevenueTarget.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-elec-yellow">
+                  £{monthlyRevenueTarget.toLocaleString()}
+                </p>
                 <p className="text-sm text-muted-foreground">To cover costs + profit</p>
               </div>
               <div className="text-center p-4 bg-elec-gray rounded-lg">
                 <h4 className="font-medium mb-2">Jobs Per Month</h4>
-                <p className="text-2xl font-bold text-elec-yellow">{Math.ceil(monthlyRevenueTarget / 500)}</p>
+                <p className="text-2xl font-bold text-elec-yellow">
+                  {Math.ceil(monthlyRevenueTarget / 500)}
+                </p>
                 <p className="text-sm text-muted-foreground">Assuming £500 average job</p>
               </div>
               <div className="text-center p-4 bg-elec-gray rounded-lg">

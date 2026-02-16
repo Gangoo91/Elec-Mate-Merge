@@ -1,4 +1,3 @@
-
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,7 +18,7 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
     error: null,
-    errorInfo: null
+    errorInfo: null,
   };
 
   public static getDerivedStateFromError(error: Error): Partial<State> {
@@ -32,12 +31,12 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
       error: error.message,
       stack: error.stack,
       componentStack: errorInfo.componentStack,
-      pageName: this.props.pageName
+      pageName: this.props.pageName,
     });
 
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     });
   }
 
@@ -45,7 +44,7 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
     this.setState({
       hasError: false,
       error: null,
-      errorInfo: null
+      errorInfo: null,
     });
   };
 
@@ -75,7 +74,8 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
                     <FileWarning className="h-4 w-4 text-red-400" />
                   </div>
                   <p className="text-sm text-white">
-                    An error occurred while loading the safety cases content. This helps us debug the issue.
+                    An error occurred while loading the safety cases content. This helps us debug
+                    the issue.
                   </p>
                 </div>
               </div>

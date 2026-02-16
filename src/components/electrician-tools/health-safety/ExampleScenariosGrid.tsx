@@ -12,16 +12,13 @@ interface ExampleScenariosGridProps {
   onSelect: (prompt: string) => void;
 }
 
-export const ExampleScenariosGrid = ({
-  scenarios,
-  onSelect
-}: ExampleScenariosGridProps) => {
+export const ExampleScenariosGrid = ({ scenarios, onSelect }: ExampleScenariosGridProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {scenarios.map((scenario, idx) => {
         const IconComponent = scenario.icon;
         return (
-          <Card 
+          <Card
             key={idx}
             className="p-3 sm:p-4 cursor-pointer hover:border-orange-400/40 transition-all hover:scale-[1.02] touch-manipulation"
             onClick={() => onSelect(scenario.prompt)}
@@ -30,9 +27,7 @@ export const ExampleScenariosGrid = ({
               <IconComponent className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
               <h5 className="font-semibold text-sm leading-tight">{scenario.title}</h5>
             </div>
-            <p className="text-xs text-muted-foreground line-clamp-2">
-              {scenario.prompt}
-            </p>
+            <p className="text-xs text-muted-foreground line-clamp-2">{scenario.prompt}</p>
           </Card>
         );
       })}

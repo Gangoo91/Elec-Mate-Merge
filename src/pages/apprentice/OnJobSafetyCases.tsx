@@ -1,22 +1,14 @@
-import React from "react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { HardHat, AlertTriangle, Flame, Target } from "lucide-react";
-import ScenarioCard from "@/components/apprentice/safety-cases/ScenarioCard";
-import ScenarioDetail from "@/components/apprentice/safety-cases/ScenarioDetail";
-import QuickReferenceSection from "@/components/apprentice/safety-cases/QuickReferenceSection";
-import SafetyCasesErrorBoundary from "@/components/apprentice/safety-cases/SafetyCasesErrorBoundary";
-import {
-  useScenarios,
-  DifficultyFilter,
-} from "@/components/apprentice/safety-cases/useScenarios";
+import React from 'react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { HardHat, AlertTriangle, Flame, Target } from 'lucide-react';
+import ScenarioCard from '@/components/apprentice/safety-cases/ScenarioCard';
+import ScenarioDetail from '@/components/apprentice/safety-cases/ScenarioDetail';
+import QuickReferenceSection from '@/components/apprentice/safety-cases/QuickReferenceSection';
+import SafetyCasesErrorBoundary from '@/components/apprentice/safety-cases/SafetyCasesErrorBoundary';
+import { useScenarios, DifficultyFilter } from '@/components/apprentice/safety-cases/useScenarios';
 
-const difficultyOptions: DifficultyFilter[] = [
-  "All",
-  "Beginner",
-  "Intermediate",
-  "Advanced",
-];
+const difficultyOptions: DifficultyFilter[] = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
 const OnJobSafetyCases = () => {
   const {
@@ -55,9 +47,7 @@ const OnJobSafetyCases = () => {
               <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/20">
                 <HardHat className="h-5 w-5 text-red-400" />
               </div>
-              <h1 className="text-xl font-bold text-white">
-                Safety Scenarios
-              </h1>
+              <h1 className="text-xl font-bold text-white">Safety Scenarios</h1>
             </div>
             <SmartBackButton />
           </div>
@@ -73,9 +63,7 @@ const OnJobSafetyCases = () => {
             {currentStreak > 0 && (
               <div className="flex items-center gap-1.5">
                 <Flame className="h-4 w-4 text-orange-400" />
-                <span className="text-white text-sm">
-                  {currentStreak}-day streak
-                </span>
+                <span className="text-white text-sm">{currentStreak}-day streak</span>
               </div>
             )}
             <div className="flex-1">
@@ -86,9 +74,7 @@ const OnJobSafetyCases = () => {
                 />
               </div>
             </div>
-            <span className="text-white text-sm font-medium">
-              {completionPercentage}%
-            </span>
+            <span className="text-white text-sm font-medium">{completionPercentage}%</span>
           </div>
 
           {/* Active scenario detail */}
@@ -119,8 +105,8 @@ const OnJobSafetyCases = () => {
                       touch-manipulation active:scale-95 transition-all min-h-[36px]
                       ${
                         difficultyFilter === d
-                          ? "bg-elec-yellow text-black"
-                          : "bg-white/10 text-white border border-white/10"
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/10 text-white border border-white/10'
                       }
                     `}
                   >
@@ -140,8 +126,8 @@ const OnJobSafetyCases = () => {
                       touch-manipulation active:scale-95 transition-all min-h-[32px]
                       ${
                         categoryFilter === c
-                          ? "bg-white/20 text-white border border-white/30"
-                          : "bg-white/5 text-white border border-white/10"
+                          ? 'bg-white/20 text-white border border-white/30'
+                          : 'bg-white/5 text-white border border-white/10'
                       }
                     `}
                   >
@@ -154,9 +140,7 @@ const OnJobSafetyCases = () => {
               <div className="space-y-3">
                 {scenarios.length === 0 ? (
                   <div className="p-8 text-center">
-                    <p className="text-white text-sm">
-                      No scenarios match these filters.
-                    </p>
+                    <p className="text-white text-sm">No scenarios match these filters.</p>
                   </div>
                 ) : (
                   scenarios.map((scenario) => (
@@ -179,9 +163,9 @@ const OnJobSafetyCases = () => {
                   <div className="flex items-start gap-3">
                     <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                     <p className="text-white text-xs leading-relaxed">
-                      These scenarios are based on real incidents in the UK
-                      electrical industry. Always follow proper safety procedures
-                      and consult with qualified professionals when uncertain.
+                      These scenarios are based on real incidents in the UK electrical industry.
+                      Always follow proper safety procedures and consult with qualified
+                      professionals when uncertain.
                     </p>
                   </div>
                 </CardContent>

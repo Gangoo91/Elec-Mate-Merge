@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export interface SafetyTemplate {
   id: string;
@@ -23,7 +23,7 @@ export interface UserSafetyDocument {
   template_id: string | null;
   name: string;
   content: string;
-  status: "Draft" | "Active" | "Review Due" | "Archived";
+  status: 'Draft' | 'Active' | 'Review Due' | 'Archived';
   company_name: string | null;
   site_address: string | null;
   adopted_at: string;
@@ -36,16 +36,16 @@ export interface UserSafetyDocument {
 
 export function useSafetyTemplates(category?: string) {
   return useQuery({
-    queryKey: ["safety-templates", category],
+    queryKey: ['safety-templates', category],
     queryFn: async (): Promise<SafetyTemplate[]> => {
       let query = supabase
-        .from("safety_document_templates")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
+        .from('safety_document_templates')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
 
       if (category) {
-        query = query.eq("category", category);
+        query = query.eq('category', category);
       }
 
       const { data, error } = await query;
@@ -58,18 +58,18 @@ export function useSafetyTemplates(category?: string) {
 
 export function useUserSafetyDocuments() {
   return useQuery({
-    queryKey: ["user-safety-documents"],
+    queryKey: ['user-safety-documents'],
     queryFn: async (): Promise<UserSafetyDocument[]> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("user_safety_documents")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("updated_at", { ascending: false });
+        .from('user_safety_documents')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('updated_at', { ascending: false });
 
       if (error) throw error;
       return (data ?? []) as unknown as UserSafetyDocument[];
@@ -99,10 +99,10 @@ export function useAdoptTemplate() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("user_safety_documents")
+        .from('user_safety_documents')
         .insert({
           user_id: user.id,
           template_id: templateId,
@@ -110,12 +110,8 @@ export function useAdoptTemplate() {
           content,
           company_name: companyName ?? null,
           site_address: siteAddress ?? null,
-          status: "Draft",
-          review_date: new Date(
-            Date.now() + 365 * 24 * 60 * 60 * 1000
-          )
-            .toISOString()
-            .split("T")[0],
+          status: 'Draft',
+          review_date: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         })
         .select()
         .single();
@@ -124,17 +120,17 @@ export function useAdoptTemplate() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user-safety-documents"] });
+      queryClient.invalidateQueries({ queryKey: ['user-safety-documents'] });
       toast({
-        title: "Template Adopted",
-        description: "Document has been added to your library.",
+        title: 'Template Adopted',
+        description: 'Document has been added to your library.',
       });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Could not adopt template. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Could not adopt template. Please try again.',
+        variant: 'destructive',
       });
     },
   });
@@ -145,14 +141,11 @@ export function useUpdateUserDocument() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({
-      id,
-      ...updates
-    }: Partial<UserSafetyDocument> & { id: string }) => {
+    mutationFn: async ({ id, ...updates }: Partial<UserSafetyDocument> & { id: string }) => {
       const { data, error } = await supabase
-        .from("user_safety_documents")
+        .from('user_safety_documents')
         .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq("id", id)
+        .eq('id', id)
         .select()
         .single();
 
@@ -160,14 +153,14 @@ export function useUpdateUserDocument() {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user-safety-documents"] });
-      toast({ title: "Document Updated" });
+      queryClient.invalidateQueries({ queryKey: ['user-safety-documents'] });
+      toast({ title: 'Document Updated' });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Could not update document.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Could not update document.',
+        variant: 'destructive',
       });
     },
   });

@@ -1,31 +1,29 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { FileText } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { FileText } from 'lucide-react';
 
 const BusinessPlanTemplate = () => {
   const [businessDetails, setBusinessDetails] = useState({
-    businessName: "",
-    ownerName: "",
-    location: "",
-    services: "",
-    targetMarket: "",
-    uniqueSellingPoint: "",
-    marketAnalysis: "",
-    financialProjections: ""
+    businessName: '',
+    ownerName: '',
+    location: '',
+    services: '',
+    targetMarket: '',
+    uniqueSellingPoint: '',
+    marketAnalysis: '',
+    financialProjections: '',
   });
 
   const updateDetail = (field: string, value: string) => {
-    setBusinessDetails(prev => ({
+    setBusinessDetails((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
-
 
   return (
     <Card className="border-green-500/50 bg-green-500/10">
@@ -42,7 +40,7 @@ const BusinessPlanTemplate = () => {
               <Label className="text-green-200">Business Name</Label>
               <Input
                 value={businessDetails.businessName}
-                onChange={(e) => updateDetail("businessName", e.target.value)}
+                onChange={(e) => updateDetail('businessName', e.target.value)}
                 placeholder="Enter your business name"
                 className="bg-green-500/20 border-green-400/30"
               />
@@ -51,7 +49,7 @@ const BusinessPlanTemplate = () => {
               <Label className="text-green-200">Owner Name</Label>
               <Input
                 value={businessDetails.ownerName}
-                onChange={(e) => updateDetail("ownerName", e.target.value)}
+                onChange={(e) => updateDetail('ownerName', e.target.value)}
                 placeholder="Your full name"
                 className="bg-green-500/20 border-green-400/30"
               />
@@ -60,7 +58,7 @@ const BusinessPlanTemplate = () => {
               <Label className="text-green-200">Location</Label>
               <Input
                 value={businessDetails.location}
-                onChange={(e) => updateDetail("location", e.target.value)}
+                onChange={(e) => updateDetail('location', e.target.value)}
                 placeholder="Operating location"
                 className="bg-green-500/20 border-green-400/30"
               />
@@ -69,7 +67,7 @@ const BusinessPlanTemplate = () => {
               <Label className="text-green-200">Services Offered</Label>
               <Textarea
                 value={businessDetails.services}
-                onChange={(e) => updateDetail("services", e.target.value)}
+                onChange={(e) => updateDetail('services', e.target.value)}
                 placeholder="List your electrical services..."
                 className="bg-green-500/20 border-green-400/30"
                 rows={3}
@@ -82,7 +80,7 @@ const BusinessPlanTemplate = () => {
               <Label className="text-green-200">Target Market</Label>
               <Textarea
                 value={businessDetails.targetMarket}
-                onChange={(e) => updateDetail("targetMarket", e.target.value)}
+                onChange={(e) => updateDetail('targetMarket', e.target.value)}
                 placeholder="Describe your ideal customers..."
                 className="bg-green-500/20 border-green-400/30"
                 rows={3}
@@ -92,7 +90,7 @@ const BusinessPlanTemplate = () => {
               <Label className="text-green-200">Unique Selling Point</Label>
               <Textarea
                 value={businessDetails.uniqueSellingPoint}
-                onChange={(e) => updateDetail("uniqueSellingPoint", e.target.value)}
+                onChange={(e) => updateDetail('uniqueSellingPoint', e.target.value)}
                 placeholder="What makes your business different?"
                 className="bg-green-500/20 border-green-400/30"
                 rows={3}
@@ -102,7 +100,7 @@ const BusinessPlanTemplate = () => {
               <Label className="text-green-200">Market Analysis</Label>
               <Textarea
                 value={businessDetails.marketAnalysis}
-                onChange={(e) => updateDetail("marketAnalysis", e.target.value)}
+                onChange={(e) => updateDetail('marketAnalysis', e.target.value)}
                 placeholder="Local market conditions and opportunities..."
                 className="bg-green-500/20 border-green-400/30"
                 rows={3}
@@ -113,7 +111,8 @@ const BusinessPlanTemplate = () => {
 
         <div className="pt-4 border-t border-green-500/20 text-center">
           <p className="text-green-200 text-sm">
-            Use this template to structure your business plan. Each section helps you think through important aspects of your electrical business.
+            Use this template to structure your business plan. Each section helps you think through
+            important aspects of your electrical business.
           </p>
         </div>
       </CardContent>

@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
+import { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
 import {
   ChevronLeft,
   RotateCcw,
@@ -13,10 +13,10 @@ import {
   AlertTriangle,
   CheckCircle2,
   ArrowUpRight,
-  ArrowDownRight
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+  ArrowDownRight,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface MonthlyData {
   month: string;
@@ -44,11 +44,11 @@ const CashFlowProjector = () => {
     monthlyExpenses: 6000,
     startingCash: 5000,
     largeExpenseMonth: 6,
-    largeExpenseAmount: 3000
+    largeExpenseAmount: 3000,
   });
 
   const updateInput = (field: keyof CashFlowInputs, value: number) => {
-    setInputs(prev => ({ ...prev, [field]: value }));
+    setInputs((prev) => ({ ...prev, [field]: value }));
   };
 
   const resetCalculator = () => {
@@ -58,18 +58,24 @@ const CashFlowProjector = () => {
       monthlyExpenses: 6000,
       startingCash: 5000,
       largeExpenseMonth: 6,
-      largeExpenseAmount: 3000
+      largeExpenseAmount: 3000,
     });
   };
 
   const projections = useMemo((): MonthlyData[] => {
     const months = [
-      { full: "January", short: "Jan" }, { full: "February", short: "Feb" },
-      { full: "March", short: "Mar" }, { full: "April", short: "Apr" },
-      { full: "May", short: "May" }, { full: "June", short: "Jun" },
-      { full: "July", short: "Jul" }, { full: "August", short: "Aug" },
-      { full: "September", short: "Sep" }, { full: "October", short: "Oct" },
-      { full: "November", short: "Nov" }, { full: "December", short: "Dec" }
+      { full: 'January', short: 'Jan' },
+      { full: 'February', short: 'Feb' },
+      { full: 'March', short: 'Mar' },
+      { full: 'April', short: 'Apr' },
+      { full: 'May', short: 'May' },
+      { full: 'June', short: 'Jun' },
+      { full: 'July', short: 'Jul' },
+      { full: 'August', short: 'Aug' },
+      { full: 'September', short: 'Sep' },
+      { full: 'October', short: 'Oct' },
+      { full: 'November', short: 'Nov' },
+      { full: 'December', short: 'Dec' },
     ];
     const seasonalMultipliers = [0.8, 0.85, 0.95, 1.05, 1.1, 1.15, 1.2, 1.1, 1.05, 0.95, 0.85, 0.8];
     let cumulativeCash = inputs.startingCash;
@@ -89,22 +95,22 @@ const CashFlowProjector = () => {
         income: seasonalIncome,
         expenses: monthlyExpenses,
         cashFlow,
-        cumulativeCash
+        cumulativeCash,
       };
     });
   }, [inputs]);
 
-  const minCashFlow = Math.min(...projections.map(p => p.cumulativeCash));
-  const maxCashFlow = Math.max(...projections.map(p => p.cumulativeCash));
+  const minCashFlow = Math.min(...projections.map((p) => p.cumulativeCash));
+  const maxCashFlow = Math.max(...projections.map((p) => p.cumulativeCash));
   const totalIncome = projections.reduce((sum, p) => sum + p.income, 0);
   const totalExpenses = projections.reduce((sum, p) => sum + p.expenses, 0);
   const netCashFlow = totalIncome - totalExpenses;
   const yearEndCash = projections[11].cumulativeCash;
 
   const getStatus = () => {
-    if (minCashFlow < 0) return { color: "red", icon: AlertTriangle, text: "Cash goes negative" };
-    if (minCashFlow < 2000) return { color: "amber", icon: AlertTriangle, text: "Low reserves" };
-    return { color: "green", icon: CheckCircle2, text: "Healthy cash flow" };
+    if (minCashFlow < 0) return { color: 'red', icon: AlertTriangle, text: 'Cash goes negative' };
+    if (minCashFlow < 2000) return { color: 'amber', icon: AlertTriangle, text: 'Low reserves' };
+    return { color: 'green', icon: CheckCircle2, text: 'Healthy cash flow' };
   };
   const status = getStatus();
 
@@ -145,12 +151,18 @@ const CashFlowProjector = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Year-End Cash</p>
-                <p className={`text-3xl sm:text-4xl font-bold mt-1 tabular-nums ${yearEndCash >= 0 ? "text-green-400" : "text-red-400"}`}>
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  Year-End Cash
+                </p>
+                <p
+                  className={`text-3xl sm:text-4xl font-bold mt-1 tabular-nums ${yearEndCash >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                >
                   £{yearEndCash.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                 </p>
               </div>
-              <div className={`p-3 rounded-2xl bg-${status.color}-500/20 border border-${status.color}-500/30`}>
+              <div
+                className={`p-3 rounded-2xl bg-${status.color}-500/20 border border-${status.color}-500/30`}
+              >
                 <status.icon className={`h-6 w-6 text-${status.color}-400`} />
               </div>
             </div>
@@ -160,8 +172,10 @@ const CashFlowProjector = () => {
               ) : (
                 <ArrowDownRight className="h-4 w-4 text-red-400" />
               )}
-              <span className={`text-ios-footnote ${netCashFlow >= 0 ? "text-green-400" : "text-red-400"}`}>
-                £{Math.abs(netCashFlow).toLocaleString()} net {netCashFlow >= 0 ? "gain" : "loss"}
+              <span
+                className={`text-ios-footnote ${netCashFlow >= 0 ? 'text-green-400' : 'text-red-400'}`}
+              >
+                £{Math.abs(netCashFlow).toLocaleString()} net {netCashFlow >= 0 ? 'gain' : 'loss'}
               </span>
             </div>
           </div>
@@ -171,15 +185,21 @@ const CashFlowProjector = () => {
         <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <div className="flex-shrink-0 bg-green-500/10 border border-green-500/30 rounded-2xl p-4 min-w-[120px]">
             <p className="text-ios-caption-1 text-green-400">Income</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">£{(totalIncome/1000).toFixed(0)}k</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              £{(totalIncome / 1000).toFixed(0)}k
+            </p>
           </div>
           <div className="flex-shrink-0 bg-red-500/10 border border-red-500/30 rounded-2xl p-4 min-w-[120px]">
             <p className="text-ios-caption-1 text-red-400">Expenses</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">£{(totalExpenses/1000).toFixed(0)}k</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              £{(totalExpenses / 1000).toFixed(0)}k
+            </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
             <p className="text-ios-caption-1 text-white/50">Lowest</p>
-            <p className={`text-ios-title-3 font-semibold mt-1 ${minCashFlow < 0 ? "text-red-400" : "text-white"}`}>
+            <p
+              className={`text-ios-title-3 font-semibold mt-1 ${minCashFlow < 0 ? 'text-red-400' : 'text-white'}`}
+            >
               £{minCashFlow.toFixed(0)}
             </p>
           </div>
@@ -202,18 +222,22 @@ const CashFlowProjector = () => {
                   transition={{ delay: i * 0.03 }}
                   className={`flex-shrink-0 w-[100px] rounded-2xl p-3 border ${
                     isLowest && minCashFlow < 2000
-                      ? "bg-red-500/10 border-red-500/30"
+                      ? 'bg-red-500/10 border-red-500/30'
                       : isLargeExpense
-                      ? "bg-amber-500/10 border-amber-500/30"
-                      : "bg-white/5 border-white/10"
+                        ? 'bg-amber-500/10 border-amber-500/30'
+                        : 'bg-white/5 border-white/10'
                   }`}
                 >
                   <p className="text-ios-caption-1 text-white/60 font-medium">{proj.monthShort}</p>
-                  <p className={`text-lg font-bold mt-1 tabular-nums ${
-                    proj.cumulativeCash < 0 ? "text-red-400" :
-                    proj.cumulativeCash < 2000 ? "text-amber-400" :
-                    "text-white"
-                  }`}>
+                  <p
+                    className={`text-lg font-bold mt-1 tabular-nums ${
+                      proj.cumulativeCash < 0
+                        ? 'text-red-400'
+                        : proj.cumulativeCash < 2000
+                          ? 'text-amber-400'
+                          : 'text-white'
+                    }`}
+                  >
                     £{(proj.cumulativeCash / 1000).toFixed(1)}k
                   </p>
                   <div className="flex items-center gap-1 mt-1">
@@ -222,8 +246,10 @@ const CashFlowProjector = () => {
                     ) : (
                       <TrendingDown className="h-3 w-3 text-red-400" />
                     )}
-                    <span className={`text-ios-caption-2 ${proj.cashFlow >= 0 ? "text-green-400" : "text-red-400"}`}>
-                      {proj.cashFlow >= 0 ? "+" : ""}£{(proj.cashFlow/1000).toFixed(1)}k
+                    <span
+                      className={`text-ios-caption-2 ${proj.cashFlow >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                    >
+                      {proj.cashFlow >= 0 ? '+' : ''}£{(proj.cashFlow / 1000).toFixed(1)}k
                     </span>
                   </div>
                 </motion.div>
@@ -242,32 +268,32 @@ const CashFlowProjector = () => {
               label="Monthly Income"
               icon={<TrendingUp className="h-5 w-5" />}
               type="number"
-              value={inputs.averageMonthlyIncome || ""}
-              onChange={(e) => updateInput("averageMonthlyIncome", parseFloat(e.target.value) || 0)}
+              value={inputs.averageMonthlyIncome || ''}
+              onChange={(e) => updateInput('averageMonthlyIncome', parseFloat(e.target.value) || 0)}
               hint="Average income"
             />
             <IOSInput
               label="Monthly Expenses"
               icon={<TrendingDown className="h-5 w-5" />}
               type="number"
-              value={inputs.monthlyExpenses || ""}
-              onChange={(e) => updateInput("monthlyExpenses", parseFloat(e.target.value) || 0)}
+              value={inputs.monthlyExpenses || ''}
+              onChange={(e) => updateInput('monthlyExpenses', parseFloat(e.target.value) || 0)}
               hint="Regular costs"
             />
             <IOSInput
               label="Starting Cash"
               icon={<Wallet className="h-5 w-5" />}
               type="number"
-              value={inputs.startingCash || ""}
-              onChange={(e) => updateInput("startingCash", parseFloat(e.target.value) || 0)}
+              value={inputs.startingCash || ''}
+              onChange={(e) => updateInput('startingCash', parseFloat(e.target.value) || 0)}
               hint="Current balance"
             />
             <IOSInput
               label="Seasonal Variation"
               icon={<Percent className="h-5 w-5" />}
               type="number"
-              value={inputs.seasonalVariation || ""}
-              onChange={(e) => updateInput("seasonalVariation", parseFloat(e.target.value) || 0)}
+              value={inputs.seasonalVariation || ''}
+              onChange={(e) => updateInput('seasonalVariation', parseFloat(e.target.value) || 0)}
               hint="Income swing %"
             />
           </div>
@@ -283,37 +309,43 @@ const CashFlowProjector = () => {
               label="Month (1-12)"
               icon={<Calendar className="h-5 w-5" />}
               type="number"
-              value={inputs.largeExpenseMonth || ""}
-              onChange={(e) => updateInput("largeExpenseMonth", parseFloat(e.target.value) || 0)}
+              value={inputs.largeExpenseMonth || ''}
+              onChange={(e) => updateInput('largeExpenseMonth', parseFloat(e.target.value) || 0)}
               hint="When expense occurs"
             />
             <IOSInput
               label="Amount"
               icon={<PoundSterling className="h-5 w-5" />}
               type="number"
-              value={inputs.largeExpenseAmount || ""}
-              onChange={(e) => updateInput("largeExpenseAmount", parseFloat(e.target.value) || 0)}
+              value={inputs.largeExpenseAmount || ''}
+              onChange={(e) => updateInput('largeExpenseAmount', parseFloat(e.target.value) || 0)}
               hint="Additional cost"
             />
           </div>
         </section>
 
         {/* Analysis */}
-        <div className={`rounded-2xl p-4 border ${
-          status.color === "red" ? "bg-red-500/10 border-red-500/30" :
-          status.color === "amber" ? "bg-amber-500/10 border-amber-500/30" :
-          "bg-green-500/10 border-green-500/30"
-        }`}>
+        <div
+          className={`rounded-2xl p-4 border ${
+            status.color === 'red'
+              ? 'bg-red-500/10 border-red-500/30'
+              : status.color === 'amber'
+                ? 'bg-amber-500/10 border-amber-500/30'
+                : 'bg-green-500/10 border-green-500/30'
+          }`}
+        >
           <div className="flex items-start gap-3">
             <status.icon className={`h-5 w-5 text-${status.color}-400 flex-shrink-0 mt-0.5`} />
             <div>
-              <p className={`text-ios-subhead font-medium text-${status.color}-300`}>{status.text}</p>
+              <p className={`text-ios-subhead font-medium text-${status.color}-300`}>
+                {status.text}
+              </p>
               <p className={`text-ios-caption-1 text-${status.color}-200/70 mt-1`}>
                 {minCashFlow < 0
-                  ? "Consider credit facilities or improving payment terms."
+                  ? 'Consider credit facilities or improving payment terms.'
                   : minCashFlow < 2000
-                  ? "Build a larger cash buffer for security."
-                  : "Projections show positive cash throughout the year."}
+                    ? 'Build a larger cash buffer for security.'
+                    : 'Projections show positive cash throughout the year.'}
               </p>
             </div>
           </div>

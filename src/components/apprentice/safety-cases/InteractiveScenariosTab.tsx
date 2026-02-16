@@ -1,13 +1,12 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Target, AlertTriangle, Shield, Sparkles, TrendingUp, Play, BookOpen } from "lucide-react";
-import ScenarioCard from "./ScenarioCard";
-import ScenarioDetail from "./ScenarioDetail";
-import ProgressCard from "./ProgressCard";
-import { useScenarios } from "./useScenarios";
-import SafetyCasesLoading from "./SafetyCasesLoading";
-import SafetyCasesErrorBoundary from "./SafetyCasesErrorBoundary";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Target, AlertTriangle, Shield, Sparkles, TrendingUp, Play, BookOpen } from 'lucide-react';
+import ScenarioCard from './ScenarioCard';
+import ScenarioDetail from './ScenarioDetail';
+import ProgressCard from './ProgressCard';
+import { useScenarios } from './useScenarios';
+import SafetyCasesLoading from './SafetyCasesLoading';
+import SafetyCasesErrorBoundary from './SafetyCasesErrorBoundary';
 
 const InteractiveScenariosTab = () => {
   const {
@@ -24,7 +23,7 @@ const InteractiveScenariosTab = () => {
     handleOptionSelect,
     handleSubmitAnswer,
     handleReset,
-    handleNextScenario
+    handleNextScenario,
   } = useScenarios();
 
   if (error) {
@@ -48,9 +47,10 @@ const InteractiveScenariosTab = () => {
     return <SafetyCasesLoading />;
   }
 
-  const completionPercentage = allScenarios.length > 0
-    ? Math.round((completedScenarios.length / allScenarios.length) * 100)
-    : 0;
+  const completionPercentage =
+    allScenarios.length > 0
+      ? Math.round((completedScenarios.length / allScenarios.length) * 100)
+      : 0;
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -68,7 +68,8 @@ const InteractiveScenariosTab = () => {
         <CardContent className="space-y-6 relative">
           <p className="text-white/70">
             Experience realistic safety scenarios through interactive decision-making exercises.
-            Each scenario is based on real incidents and provides valuable learning outcomes for electrical safety.
+            Each scenario is based on real incidents and provides valuable learning outcomes for
+            electrical safety.
           </p>
 
           {/* Stats Grid */}
@@ -164,11 +165,11 @@ const InteractiveScenariosTab = () => {
               </div>
               <div className="ml-11 space-y-2">
                 {[
-                  "Working at Height scenarios",
-                  "Tool Safety assessments",
-                  "Site Safety protocols",
-                  "Risk Assessment planning",
-                  "Industry-specific scenarios"
+                  'Working at Height scenarios',
+                  'Tool Safety assessments',
+                  'Site Safety protocols',
+                  'Risk Assessment planning',
+                  'Industry-specific scenarios',
                 ].map((item, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm text-white/70">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full flex-shrink-0" />
@@ -187,11 +188,11 @@ const InteractiveScenariosTab = () => {
               </div>
               <div className="ml-11 space-y-2">
                 {[
-                  "Interactive decision making",
-                  "Real-world case studies",
-                  "Progress tracking",
-                  "Detailed feedback",
-                  "Completion status indicators"
+                  'Interactive decision making',
+                  'Real-world case studies',
+                  'Progress tracking',
+                  'Detailed feedback',
+                  'Completion status indicators',
                 ].map((item, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm text-white/70">
                     <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0" />

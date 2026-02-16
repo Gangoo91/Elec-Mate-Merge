@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { JobPackSelector } from "@/components/employer/smart-docs/JobPackSelector";
-import { useJobPacks, useUpdateJobPack } from "@/hooks/useJobPacks";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import type { Section } from "@/pages/employer/EmployerDashboard";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
+import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   Shield,
   Sparkles,
@@ -20,8 +20,8 @@ import {
   AlertTriangle,
   Download,
   FileText,
-  RefreshCw
-} from "lucide-react";
+  RefreshCw,
+} from 'lucide-react';
 
 interface AIRAMSSectionProps {
   onNavigate: (section: Section) => void;
@@ -33,26 +33,30 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
   const { toast } = useToast();
 
   const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
-  const [jobDescription, setJobDescription] = useState("");
-  const [additionalNotes, setAdditionalNotes] = useState("");
+  const [jobDescription, setJobDescription] = useState('');
+  const [additionalNotes, setAdditionalNotes] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [currentStep, setCurrentStep] = useState("");
+  const [currentStep, setCurrentStep] = useState('');
   const [generationJobId, setGenerationJobId] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Get selected job pack data
-  const selectedJobPack = jobPacks.find(jp => jp.id === selectedJobPackId);
+  const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
   // Auto-populate fields when job pack is selected
   useEffect(() => {
     if (selectedJobPack) {
       const description = [
         selectedJobPack.scope,
-        selectedJobPack.hazards?.length ? `Identified hazards: ${selectedJobPack.hazards.join(", ")}` : "",
-        additionalNotes
-      ].filter(Boolean).join("\n\n");
+        selectedJobPack.hazards?.length
+          ? `Identified hazards: ${selectedJobPack.hazards.join(', ')}`
+          : '',
+        additionalNotes,
+      ]
+        .filter(Boolean)
+        .join('\n\n');
       setJobDescription(description);
     }
   }, [selectedJobPack]);
@@ -69,38 +73,38 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
           event: 'UPDATE',
           schema: 'public',
           table: 'rams_generation_jobs',
-          filter: `id=eq.${generationJobId}`
+          filter: `id=eq.${generationJobId}`,
         },
         (payload) => {
           const job = payload.new as any;
           setProgress(job.progress || 0);
-          setCurrentStep(job.current_step || "");
+          setCurrentStep(job.current_step || '');
 
           if (job.status === 'complete') {
             setIsGenerating(false);
             setResult({
               ramsData: job.rams_data,
-              methodData: job.method_data
+              methodData: job.method_data,
             });
             toast({
-              title: "RAMS Generated!",
-              description: "Your risk assessment has been created successfully.",
+              title: 'RAMS Generated!',
+              description: 'Your risk assessment has been created successfully.',
             });
 
             // Update job pack
             if (selectedJobPackId) {
               updateJobPack.mutate({
                 id: selectedJobPackId,
-                data: { rams_generated: true }
+                data: { rams_generated: true },
               });
             }
           } else if (job.status === 'failed') {
             setIsGenerating(false);
-            setError(job.error_message || "Generation failed");
+            setError(job.error_message || 'Generation failed');
             toast({
-              title: "Generation Failed",
-              description: job.error_message || "Something went wrong.",
-              variant: "destructive"
+              title: 'Generation Failed',
+              description: job.error_message || 'Something went wrong.',
+              variant: 'destructive',
             });
           }
         }
@@ -115,16 +119,16 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
   const handleGenerate = async () => {
     if (!jobDescription.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please provide a job description.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please provide a job description.',
+        variant: 'destructive',
       });
       return;
     }
 
     setIsGenerating(true);
     setProgress(0);
-    setCurrentStep("Creating generation job...");
+    setCurrentStep('Creating generation job...');
     setError(null);
     setResult(null);
 
@@ -136,47 +140,46 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
           job_description: jobDescription,
           job_scale: 'Medium',
           project_info: {
-            projectName: selectedJobPack?.title || "Untitled Project",
-            location: selectedJobPack?.location || "",
-            contractor: "",
-            supervisor: "",
-            assessor: "",
-            siteManagerName: "",
-            siteManagerPhone: "",
-            firstAiderName: "",
-            firstAiderPhone: "",
-            safetyOfficerName: "",
-            safetyOfficerPhone: "",
-            assemblyPoint: ""
+            projectName: selectedJobPack?.title || 'Untitled Project',
+            location: selectedJobPack?.location || '',
+            contractor: '',
+            supervisor: '',
+            assessor: '',
+            siteManagerName: '',
+            siteManagerPhone: '',
+            firstAiderName: '',
+            firstAiderPhone: '',
+            safetyOfficerName: '',
+            safetyOfficerPhone: '',
+            assemblyPoint: '',
           },
           status: 'pending',
-          progress: 0
+          progress: 0,
         })
         .select()
         .single();
 
       if (createError || !job) {
-        throw new Error(createError?.message || "Failed to create job");
+        throw new Error(createError?.message || 'Failed to create job');
       }
 
       setGenerationJobId(job.id);
 
       // Trigger the edge function
       const { error: invokeError } = await supabase.functions.invoke('generate-rams', {
-        body: { jobId: job.id }
+        body: { jobId: job.id },
       });
 
       if (invokeError) {
         throw invokeError;
       }
-
     } catch (err: any) {
       setIsGenerating(false);
       setError(err.message);
       toast({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
@@ -199,7 +202,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
     setResult(null);
     setError(null);
     setProgress(0);
-    setCurrentStep("");
+    setCurrentStep('');
     setGenerationJobId(null);
   };
 
@@ -229,7 +232,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
               <JobPackSelector
                 selectedJobPackId={selectedJobPackId}
                 onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate("jobpacks")}
+                onCreateNew={() => onNavigate('jobpacks')}
               />
             </CardContent>
           </Card>
@@ -238,9 +241,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Job Description</CardTitle>
-              <CardDescription>
-                Describe the work to be carried out
-              </CardDescription>
+              <CardDescription>Describe the work to be carried out</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Textarea
@@ -313,12 +314,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                   <div>
                     <h3 className="font-medium text-foreground">Generation Failed</h3>
                     <p className="text-sm text-muted-foreground mt-1">{error}</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="mt-3"
-                      onClick={handleReset}
-                    >
+                    <Button variant="outline" size="sm" className="mt-3" onClick={handleReset}>
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Try Again
                     </Button>
@@ -415,8 +411,8 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
                   <div>
                     <h3 className="font-medium text-foreground mb-1">AI-Powered RAMS</h3>
                     <p className="text-sm text-muted-foreground">
-                      Our AI analyzes your job description and generates a comprehensive
-                      Risk Assessment & Method Statement following HSE guidelines and BS 7671.
+                      Our AI analyzes your job description and generates a comprehensive Risk
+                      Assessment & Method Statement following HSE guidelines and BS 7671.
                     </p>
                     <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
                       <li>• 12-25 identified hazards with control measures</li>

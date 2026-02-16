@@ -1,7 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Clock, TrendingUp, TrendingDown, AlertCircle, CheckCircle, MapPin, Calendar } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import {
+  Clock,
+  TrendingUp,
+  TrendingDown,
+  AlertCircle,
+  CheckCircle,
+  MapPin,
+  Calendar,
+} from 'lucide-react';
 
 interface PricingData {
   id: string;
@@ -43,8 +51,12 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
     if (pricingData.average_price && !isNaN(pricingData.average_price)) {
       return pricingData.average_price;
     }
-    if (pricingData.min_price && pricingData.max_price && 
-        !isNaN(pricingData.min_price) && !isNaN(pricingData.max_price)) {
+    if (
+      pricingData.min_price &&
+      pricingData.max_price &&
+      !isNaN(pricingData.min_price) &&
+      !isNaN(pricingData.max_price)
+    ) {
       return Math.round((pricingData.min_price + pricingData.max_price) / 2);
     }
     return null;
@@ -52,10 +64,14 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
 
   const getComplexityColor = (complexity: string) => {
     switch (complexity.toLowerCase()) {
-      case 'simple': return 'success';
-      case 'standard': return 'default';
-      case 'complex': return 'destructive';
-      default: return 'outline';
+      case 'simple':
+        return 'success';
+      case 'standard':
+        return 'default';
+      case 'complex':
+        return 'destructive';
+      default:
+        return 'outline';
     }
   };
 
@@ -76,14 +92,14 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
   const getDataFreshness = (lastUpdated: string) => {
     const now = new Date();
     const updated = new Date(lastUpdated);
-    
+
     // Handle invalid dates
     if (isNaN(updated.getTime())) {
       return { text: 'Date unknown', color: 'secondary' };
     }
-    
+
     const diffInDays = Math.floor((now.getTime() - updated.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     if (diffInDays === 0) return { text: 'Today', color: 'default' };
     if (diffInDays === 1) return { text: 'Yesterday', color: 'default' };
     if (diffInDays <= 7) return { text: `${diffInDays}d ago`, color: 'default' };
@@ -94,8 +110,10 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
   // Calculate price position within range
   const fallbackAverage = calculateFallbackAverage();
   const priceRange = (pricingData.max_price || 0) - (pricingData.min_price || 0);
-  const avgPosition = priceRange > 0 && fallbackAverage ? 
-    ((fallbackAverage - (pricingData.min_price || 0)) / priceRange) * 100 : 50;
+  const avgPosition =
+    priceRange > 0 && fallbackAverage
+      ? ((fallbackAverage - (pricingData.min_price || 0)) / priceRange) * 100
+      : 50;
 
   const freshness = getDataFreshness(pricingData.last_updated);
 
@@ -105,13 +123,21 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
         <div className="flex flex-col gap-3">
           {/* Header with job type and badges */}
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
-            <CardTitle className="mobile-subheading text-elec-yellow line-clamp-2">{pricingData.job_type}</CardTitle>
+            <CardTitle className="mobile-subheading text-elec-yellow line-clamp-2">
+              {pricingData.job_type}
+            </CardTitle>
             <div className="flex gap-2 flex-wrap">
-              <Badge variant={getComplexityColor(pricingData.complexity_level)} className="mobile-small-text">
+              <Badge
+                variant={getComplexityColor(pricingData.complexity_level)}
+                className="mobile-small-text"
+              >
                 {pricingData.complexity_level}
               </Badge>
               {pricingData.confidence_score && (
-                <Badge variant={getConfidenceColor(pricingData.confidence_score)} className="mobile-small-text">
+                <Badge
+                  variant={getConfidenceColor(pricingData.confidence_score)}
+                  className="mobile-small-text"
+                >
                   {getConfidenceIcon(pricingData.confidence_score)}
                   {pricingData.confidence_score}%
                 </Badge>
@@ -124,7 +150,7 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
               )}
             </div>
           </div>
-          
+
           {/* Enhanced Location Info */}
           <div className="flex items-center gap-2 mobile-small-text text-muted-foreground">
             <MapPin className="h-3 w-3 text-elec-yellow/70" />
@@ -134,18 +160,21 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="pt-0 space-y-4">
         {/* Enhanced Price Display with Visual Bar */}
         <div className="bg-gradient-to-r from-primary/8 via-primary/5 to-primary/8 rounded-xl p-5 border border-primary/15 hover:border-primary/25 transition-all duration-300">
           <div className="text-center space-y-4">
             <div>
-              <div className="mobile-small-text text-muted-foreground uppercase tracking-wider font-semibold mb-2">Average daily rate</div>
+              <div className="mobile-small-text text-muted-foreground uppercase tracking-wider font-semibold mb-2">
+                Average daily rate
+              </div>
               <div className="text-3xl sm:text-4xl font-black text-primary mb-2 tracking-tight">
                 {formatPrice(fallbackAverage)}
               </div>
               <div className="mobile-small-text text-muted-foreground">
-                From {formatPrice(pricingData.min_price)} to {formatPrice(pricingData.max_price)} • {pricingData.unit}
+                From {formatPrice(pricingData.min_price)} to {formatPrice(pricingData.max_price)} •{' '}
+                {pricingData.unit}
               </div>
             </div>
 
@@ -159,7 +188,7 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
                 <div className="relative h-2 bg-muted/30 rounded-full overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full"></div>
                   {fallbackAverage && (
-                    <div 
+                    <div
                       className="absolute top-0 w-1 h-2 bg-primary rounded-full transform -translate-x-0.5 transition-all duration-700"
                       style={{ left: `${Math.min(Math.max(avgPosition, 0), 100)}%` }}
                     />
@@ -192,9 +221,7 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
               {freshness.text}
             </Badge>
           </div>
-          <div className="text-muted-foreground">
-            {pricingData.data_source.replace('_', ' ')}
-          </div>
+          <div className="text-muted-foreground">{pricingData.data_source.replace('_', ' ')}</div>
         </div>
 
         {/* Confidence Score Bar */}
@@ -204,10 +231,7 @@ const EnhancedPricingCard = ({ pricingData }: EnhancedPricingCardProps) => {
               <span className="text-muted-foreground">Data confidence</span>
               <span className="text-elec-yellow">{pricingData.confidence_score}%</span>
             </div>
-            <Progress 
-              value={pricingData.confidence_score} 
-              className="h-1.5"
-            />
+            <Progress value={pricingData.confidence_score} className="h-1.5" />
           </div>
         )}
       </CardContent>

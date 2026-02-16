@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
   Search,
@@ -20,15 +20,24 @@ import {
   Wrench,
   Users,
   FolderOpen,
+  ChevronRight,
+  CheckCircle,
+  Clock,
+  FileCheck,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   useAllSafetyDocuments,
   type DocumentType,
   type SafetyDocument,
 } from '@/hooks/useAllSafetyDocuments';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from '@/hooks/use-toast';
 
 interface DocumentHubProps {
   onBack: () => void;
@@ -112,6 +121,70 @@ const TYPE_CONFIG: Record<
   },
 };
 
+// Status badge styles
+const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }> = {
+  draft: { bg: 'bg-amber-500/15', text: 'text-amber-400', label: 'Draft' },
+  open: { bg: 'bg-blue-500/15', text: 'text-blue-400', label: 'Open' },
+  active: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Active' },
+  in_progress: { bg: 'bg-blue-500/15', text: 'text-blue-400', label: 'In Progress' },
+  submitted: { bg: 'bg-indigo-500/15', text: 'text-indigo-400', label: 'Submitted' },
+  approved: { bg: 'bg-green-500/15', text: 'text-green-400', label: 'Approved' },
+  reviewed: { bg: 'bg-green-500/15', text: 'text-green-400', label: 'Reviewed' },
+  completed: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Completed' },
+  closed: { bg: 'bg-white/10', text: 'text-white', label: 'Closed' },
+  cancelled: { bg: 'bg-red-500/15', text: 'text-red-400', label: 'Cancelled' },
+  expired: { bg: 'bg-red-500/15', text: 'text-red-400', label: 'Expired' },
+  recorded: { bg: 'bg-blue-500/15', text: 'text-blue-400', label: 'Recorded' },
+  scheduled: { bg: 'bg-purple-500/15', text: 'text-purple-400', label: 'Scheduled' },
+  isolated: { bg: 'bg-orange-500/15', text: 'text-orange-400', label: 'Isolated' },
+  re_energised: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', label: 'Re-energised' },
+};
+
+// Table mapping for status updates
+const TABLE_MAP: Partial<Record<DocumentType, string>> = {
+  Permit: 'permits_to_work',
+  COSHH: 'coshh_assessments',
+  Inspection: 'inspection_checklists',
+  Accident: 'accident_records',
+  'Near Miss': 'near_miss_reports',
+  Observation: 'safety_observations',
+  'Site Diary': 'electrician_site_diary',
+  Isolation: 'safe_isolation_records',
+  'Fire Watch': 'fire_watch_records',
+  Equipment: 'safety_equipment',
+  RAMS: 'rams_documents',
+  Briefing: 'team_briefings',
+};
+
+// Approval transitions per document type
+const STATUS_TRANSITIONS: Partial<Record<DocumentType, { from: string; to: string; label: string }[]>> = {
+  Permit: [
+    { from: 'active', to: 'closed', label: 'Close Permit' },
+  ],
+  COSHH: [
+    { from: 'draft', to: 'reviewed', label: 'Mark Reviewed' },
+  ],
+  Inspection: [
+    { from: 'draft', to: 'reviewed', label: 'Mark Reviewed' },
+  ],
+  'Near Miss': [
+    { from: 'open', to: 'in_progress', label: 'Mark In Progress' },
+    { from: 'in_progress', to: 'closed', label: 'Close' },
+    { from: 'open', to: 'closed', label: 'Close' },
+  ],
+  Observation: [
+    { from: 'open', to: 'in_progress', label: 'Mark In Progress' },
+    { from: 'in_progress', to: 'closed', label: 'Close' },
+    { from: 'open', to: 'closed', label: 'Close' },
+  ],
+  RAMS: [
+    { from: 'draft', to: 'approved', label: 'Approve' },
+  ],
+  Accident: [
+    { from: 'recorded', to: 'closed', label: 'Close Record' },
+  ],
+};
+
 const ALL_TYPES: (DocumentType | 'All')[] = [
   'All',
   'Permit',
@@ -147,8 +220,47 @@ function formatRelativeDate(dateStr: string): string {
 export function DocumentHub({ onBack }: DocumentHubProps) {
   const { data: documents = [], isLoading } = useAllSafetyDocuments();
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<DocumentType | 'All'>('All');
+  const [approvalDoc, setApprovalDoc] = useState<SafetyDocument | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleStatusUpdate = useCallback(
+    async (doc: SafetyDocument, newStatus: string) => {
+      const table = TABLE_MAP[doc.type];
+      if (!table) return;
+
+      setIsUpdating(true);
+      try {
+        const { error } = await supabase
+          .from(table)
+          .update({ status: newStatus })
+          .eq('id', doc.sourceId);
+
+        if (error) throw error;
+
+        queryClient.invalidateQueries({ queryKey: ['all-safety-documents'] });
+        toast({ title: 'Status updated', description: `Document marked as ${newStatus}` });
+        setApprovalDoc(null);
+      } catch (err) {
+        toast({
+          title: 'Update failed',
+          description: (err as Error).message,
+          variant: 'destructive',
+        });
+      } finally {
+        setIsUpdating(false);
+      }
+    },
+    [queryClient]
+  );
+
+  const getAvailableTransitions = useCallback((doc: SafetyDocument) => {
+    const transitions = STATUS_TRANSITIONS[doc.type];
+    if (!transitions) return [];
+    return transitions.filter((t) => t.from === doc.status);
+  }, []);
 
   const filtered = useMemo(() => {
     let result = documents;
@@ -297,12 +409,26 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
+                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                         <Badge
                           className={`${config.bg} ${config.colour} ${config.border} border text-[9px] px-1.5 py-0`}
                         >
                           {doc.type}
                         </Badge>
+                        {(() => {
+                          const statusStyle = STATUS_STYLES[doc.status] || {
+                            bg: 'bg-white/10',
+                            text: 'text-white',
+                            label: doc.status,
+                          };
+                          return (
+                            <Badge
+                              className={`${statusStyle.bg} ${statusStyle.text} text-[9px] px-1.5 py-0 border-0`}
+                            >
+                              {statusStyle.label}
+                            </Badge>
+                          );
+                        })()}
                         {doc.hasSignature && (
                           <Check className="h-3 w-3 text-emerald-400 flex-shrink-0" />
                         )}
@@ -320,23 +446,39 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                       </div>
                     </div>
 
-                    {/* Export button */}
-                    {doc.hasPDF && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleExport(doc);
-                        }}
-                        disabled={isThisExporting}
-                        className="flex-shrink-0 w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center touch-manipulation active:scale-[0.95] active:bg-white/[0.1] transition-all disabled:opacity-50"
-                      >
-                        {isThisExporting ? (
-                          <Loader2 className="h-4 w-4 text-white animate-spin" />
-                        ) : (
-                          <Download className="h-4 w-4 text-white" />
-                        )}
-                      </button>
-                    )}
+                    {/* Action buttons */}
+                    <div className="flex flex-col gap-1.5 flex-shrink-0">
+                      {/* Approval button */}
+                      {getAvailableTransitions(doc).length > 0 && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setApprovalDoc(doc);
+                          }}
+                          className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
+                        >
+                          <FileCheck className="h-4 w-4 text-emerald-400" />
+                        </button>
+                      )}
+
+                      {/* Export button */}
+                      {doc.hasPDF && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleExport(doc);
+                          }}
+                          disabled={isThisExporting}
+                          className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center touch-manipulation active:scale-[0.95] active:bg-white/[0.1] transition-all disabled:opacity-50"
+                        >
+                          {isThisExporting ? (
+                            <Loader2 className="h-4 w-4 text-white animate-spin" />
+                          ) : (
+                            <Download className="h-4 w-4 text-white" />
+                          )}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               );
@@ -344,6 +486,40 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
           </div>
         )}
       </div>
+      {/* Approval bottom sheet */}
+      <Sheet open={!!approvalDoc} onOpenChange={() => setApprovalDoc(null)}>
+        <SheetContent side="bottom" className="rounded-t-2xl bg-background border-white/10">
+          <SheetHeader className="pb-4">
+            <SheetTitle className="text-white text-left">Update Status</SheetTitle>
+          </SheetHeader>
+          {approvalDoc && (
+            <div className="space-y-3 pb-6">
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+                <p className="text-sm font-semibold text-white">{approvalDoc.title}</p>
+                <p className="text-xs text-white mt-1">
+                  {approvalDoc.type} — Currently:{' '}
+                  {STATUS_STYLES[approvalDoc.status]?.label || approvalDoc.status}
+                </p>
+              </div>
+              {getAvailableTransitions(approvalDoc).map((transition) => (
+                <Button
+                  key={transition.to}
+                  onClick={() => handleStatusUpdate(approvalDoc, transition.to)}
+                  disabled={isUpdating}
+                  className="w-full h-12 text-base touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white"
+                >
+                  {isUpdating ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                  )}
+                  {transition.label}
+                </Button>
+              ))}
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

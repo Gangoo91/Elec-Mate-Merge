@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertTriangle } from 'lucide-react';
@@ -23,7 +22,7 @@ const EmergencySafetyProcedures = () => {
               <li>• Evacuate if necessary</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-orange-500/10 rounded-lg border border-orange-500/30">
             <h4 className="font-semibold text-orange-400 mb-2">Electric Shock</h4>
             <ul className="text-sm text-gray-300 space-y-1">
@@ -33,7 +32,7 @@ const EmergencySafetyProcedures = () => {
               <li>• Begin first aid if trained</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/30">
             <h4 className="font-semibold text-yellow-400 mb-2">Gas Escape</h4>
             <ul className="text-sm text-gray-300 space-y-1">

@@ -1,14 +1,20 @@
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
-import { SortAsc, SortDesc, Grid, List, Loader2 } from "lucide-react";
-import PremiumMaterialCard from "./PremiumMaterialCard";
-import MaterialListCard from "./MaterialListCard";
-import { MaterialFilterState } from "./MaterialFilters";
-import { MaterialItem } from "@/hooks/useToolsForMaterials";
-import { usePagination } from "@/hooks/usePagination";
-import ProductPagination from "@/components/ui/product-pagination";
+import { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
+import { SortAsc, SortDesc, Grid, List, Loader2 } from 'lucide-react';
+import PremiumMaterialCard from './PremiumMaterialCard';
+import MaterialListCard from './MaterialListCard';
+import { MaterialFilterState } from './MaterialFilters';
+import { MaterialItem } from '@/hooks/useToolsForMaterials';
+import { usePagination } from '@/hooks/usePagination';
+import ProductPagination from '@/components/ui/product-pagination';
 
 interface EnhancedMaterialsGridProps {
   materials: MaterialItem[];
@@ -21,8 +27,8 @@ interface EnhancedMaterialsGridProps {
   isCompareDisabled?: boolean;
 }
 
-type SortOption = "relevance" | "price-low" | "price-high" | "name" | "supplier";
-type ViewMode = "grid" | "list";
+type SortOption = 'relevance' | 'price-low' | 'price-high' | 'name' | 'supplier';
+type ViewMode = 'grid' | 'list';
 
 const EnhancedMaterialsGrid = ({
   materials,
@@ -32,10 +38,10 @@ const EnhancedMaterialsGrid = ({
   onAddToCompare,
   onRemoveFromCompare,
   selectedItems = [],
-  isCompareDisabled = false
+  isCompareDisabled = false,
 }: EnhancedMaterialsGridProps) => {
-  const [sortBy, setSortBy] = useState<SortOption>("relevance");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [sortBy, setSortBy] = useState<SortOption>('relevance');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
 
   // Helper function to parse price
   const parsePrice = (priceStr: string): number => {
@@ -47,11 +53,16 @@ const EnhancedMaterialsGrid = ({
   // Helper function to check price range
   const isInPriceRange = (price: number, range: string): boolean => {
     switch (range) {
-      case "Under £50": return price < 50;
-      case "£50 - £200": return price >= 50 && price <= 200;
-      case "£200 - £500": return price >= 200 && price <= 500;
-      case "Over £500": return price > 500;
-      default: return false;
+      case 'Under £50':
+        return price < 50;
+      case '£50 - £200':
+        return price >= 50 && price <= 200;
+      case '£200 - £500':
+        return price >= 200 && price <= 500;
+      case 'Over £500':
+        return price > 500;
+      default:
+        return false;
     }
   };
 
@@ -61,19 +72,22 @@ const EnhancedMaterialsGrid = ({
 
     // Apply search filter
     if (searchTerm) {
-      result = result.filter(material =>
-        material.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        material.supplier?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        material.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        material.highlights?.some(highlight => 
-          typeof highlight === 'string' && highlight.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+      result = result.filter(
+        (material) =>
+          material.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          material.supplier?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          material.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          material.highlights?.some(
+            (highlight) =>
+              typeof highlight === 'string' &&
+              highlight.toLowerCase().includes(searchTerm.toLowerCase())
+          )
       );
     }
 
     // Apply brand filter
     if (filters.brands.length > 0) {
-      result = result.filter(material => {
+      result = result.filter((material) => {
         const firstWord = material.name.split(' ')[0];
         return filters.brands.includes(firstWord);
       });
@@ -81,25 +95,25 @@ const EnhancedMaterialsGrid = ({
 
     // Apply price range filter
     if (filters.priceRanges.length > 0) {
-      result = result.filter(material => {
+      result = result.filter((material) => {
         const price = parsePrice(material.price);
         if (price === 0) return false;
-        
-        return filters.priceRanges.some(range => isInPriceRange(price, range));
+
+        return filters.priceRanges.some((range) => isInPriceRange(price, range));
       });
     }
 
     // Apply availability filter
     if (filters.availability.length > 0) {
-      result = result.filter(material => 
-        material.stockStatus && filters.availability.includes(material.stockStatus)
+      result = result.filter(
+        (material) => material.stockStatus && filters.availability.includes(material.stockStatus)
       );
     }
 
     // Apply supplier filter
     if (filters.suppliers.length > 0) {
-      result = result.filter(material =>
-        material.supplier && filters.suppliers.includes(material.supplier)
+      result = result.filter(
+        (material) => material.supplier && filters.suppliers.includes(material.supplier)
       );
     }
 
@@ -111,23 +125,23 @@ const EnhancedMaterialsGrid = ({
     const sorted = [...filteredMaterials];
 
     switch (sortBy) {
-      case "price-low":
+      case 'price-low':
         return sorted.sort((a, b) => {
           const priceA = parsePrice(a.price);
           const priceB = parsePrice(b.price);
           return priceA - priceB;
         });
-      case "price-high":
+      case 'price-high':
         return sorted.sort((a, b) => {
           const priceA = parsePrice(a.price);
           const priceB = parsePrice(b.price);
           return priceB - priceA;
         });
-      case "name":
+      case 'name':
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
-      case "supplier":
+      case 'supplier':
         return sorted.sort((a, b) => (a.supplier || '').localeCompare(b.supplier || ''));
-      case "relevance":
+      case 'relevance':
       default:
         // Sort by relevance: sale items first, then by name
         return sorted.sort((a, b) => {
@@ -148,10 +162,10 @@ const EnhancedMaterialsGrid = ({
     startIndex,
     endIndex,
     setCurrentPage,
-    setItemsPerPage
+    setItemsPerPage,
   } = usePagination<MaterialItem>({
     items: sortedMaterials,
-    itemsPerPage: 12
+    itemsPerPage: 12,
   });
 
   if (isLoading) {
@@ -169,26 +183,24 @@ const EnhancedMaterialsGrid = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="text-elec-light">
           <span className="font-semibold">{totalItems}</span> materials found
-          {searchTerm && (
-            <span className="text-text-muted"> for "{searchTerm}"</span>
-          )}
+          {searchTerm && <span className="text-text-muted"> for "{searchTerm}"</span>}
         </div>
 
         <div className="flex items-center gap-3">
           {/* View Mode Toggle */}
           <div className="flex items-center border border-elec-yellow/20 rounded-lg p-1">
             <Button
-              variant={viewMode === "grid" ? "gold" : "ghost"}
+              variant={viewMode === 'grid' ? 'gold' : 'ghost'}
               size="sm"
-              onClick={() => setViewMode("grid")}
+              onClick={() => setViewMode('grid')}
               className="h-10 w-10 px-0 touch-manipulation active:scale-[0.98]"
             >
               <Grid className="h-5 w-5" />
             </Button>
             <Button
-              variant={viewMode === "list" ? "gold" : "ghost"}
+              variant={viewMode === 'list' ? 'gold' : 'ghost'}
               size="sm"
-              onClick={() => setViewMode("list")}
+              onClick={() => setViewMode('list')}
               className="h-10 w-10 px-0 touch-manipulation active:scale-[0.98]"
             >
               <List className="h-5 w-5" />
@@ -246,12 +258,15 @@ const EnhancedMaterialsGrid = ({
         </Card>
       ) : (
         <>
-          <div className={viewMode === "grid"
-            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            : "space-y-4"
-          }>
-            {currentMaterials.map((material, index) => (
-              viewMode === "grid" ? (
+          <div
+            className={
+              viewMode === 'grid'
+                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                : 'space-y-4'
+            }
+          >
+            {currentMaterials.map((material, index) =>
+              viewMode === 'grid' ? (
                 <div
                   key={`${material.id || material.name}-${material.supplier}-${index}`}
                   className="stagger-enter"
@@ -261,9 +276,10 @@ const EnhancedMaterialsGrid = ({
                     item={material}
                     onAddToCompare={onAddToCompare}
                     onRemoveFromCompare={onRemoveFromCompare}
-                    isSelected={selectedItems.some(item =>
-                      (item.id && material.id && item.id === material.id) ||
-                      (item.name === material.name && !item.id && !material.id)
+                    isSelected={selectedItems.some(
+                      (item) =>
+                        (item.id && material.id && item.id === material.id) ||
+                        (item.name === material.name && !item.id && !material.id)
                     )}
                     isCompareDisabled={isCompareDisabled}
                   />
@@ -274,14 +290,15 @@ const EnhancedMaterialsGrid = ({
                   item={material}
                   onAddToCompare={onAddToCompare}
                   onRemoveFromCompare={onRemoveFromCompare}
-                  isSelected={selectedItems.some(item => 
-                    (item.id && material.id && item.id === material.id) ||
-                    (item.name === material.name && !item.id && !material.id)
+                  isSelected={selectedItems.some(
+                    (item) =>
+                      (item.id && material.id && item.id === material.id) ||
+                      (item.name === material.name && !item.id && !material.id)
                   )}
                   isCompareDisabled={isCompareDisabled}
                 />
               )
-            ))}
+            )}
           </div>
 
           {/* Pagination */}

@@ -1,50 +1,70 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Monitor, Globe, Search, Facebook, Instagram, Smartphone, TrendingUp, Users, Target, Star, FileText, BarChart3, MessageSquare, Calendar } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionContent,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+} from '@/components/ui/mobile-accordion';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Monitor,
+  Globe,
+  Search,
+  Facebook,
+  Instagram,
+  Smartphone,
+  TrendingUp,
+  Users,
+  Target,
+  Star,
+  FileText,
+  BarChart3,
+  MessageSquare,
+  Calendar,
+} from 'lucide-react';
 
 const DigitalMarketingTab = () => {
   const isMobile = useIsMobile();
 
   const digitalMetrics = [
     {
-      metric: "Google My Business Impact",
-      data: "3x more enquiries",
+      metric: 'Google My Business Impact',
+      data: '3x more enquiries',
       icon: <Search className="h-5 w-5 text-purple-400" />,
-      detail: "Optimised GMB profiles generate significantly more leads"
+      detail: 'Optimised GMB profiles generate significantly more leads',
     },
     {
-      metric: "Local Search Results",
-      data: "Top 3 positioning achievable",
+      metric: 'Local Search Results',
+      data: 'Top 3 positioning achievable',
       icon: <Target className="h-5 w-5 text-blue-400" />,
-      detail: "75% of users never scroll past first 3 results"
+      detail: '75% of users never scroll past first 3 results',
     },
     {
-      metric: "Social Media ROI",
-      data: "£4.20 return per £1 spent",
+      metric: 'Social Media ROI',
+      data: '£4.20 return per £1 spent',
       icon: <Facebook className="h-5 w-5 text-green-400" />,
-      detail: "Facebook/Instagram ads for UK electrical contractors"
+      detail: 'Facebook/Instagram ads for UK electrical contractors',
     },
     {
-      metric: "Website Conversion Rate",
-      data: "5-12% visitor to enquiry",
+      metric: 'Website Conversion Rate',
+      data: '5-12% visitor to enquiry',
       icon: <Monitor className="h-5 w-5 text-orange-400" />,
-      detail: "Professional electrical contractor websites"
+      detail: 'Professional electrical contractor websites',
     },
     {
-      metric: "Online Review Impact",
-      data: "86% more likely to be chosen",
+      metric: 'Online Review Impact',
+      data: '86% more likely to be chosen',
       icon: <Star className="h-5 w-5 text-yellow-400" />,
-      detail: "Businesses with 4+ star ratings vs unreviewed"
+      detail: 'Businesses with 4+ star ratings vs unreviewed',
     },
     {
-      metric: "Digital Lead Quality",
-      data: "70% higher conversion",
+      metric: 'Digital Lead Quality',
+      data: '70% higher conversion',
       icon: <TrendingUp className="h-5 w-5 text-red-400" />,
-      detail: "Digital leads vs traditional advertising"
-    }
+      detail: 'Digital leads vs traditional advertising',
+    },
   ];
 
   return (
@@ -52,17 +72,24 @@ const DigitalMarketingTab = () => {
       <Alert className="border-purple-400/50 bg-purple-400/10">
         <Monitor className="h-4 w-4 text-purple-400" />
         <AlertDescription className="text-purple-400">
-          Digital marketing can reduce customer acquisition costs by 50-70% compared to traditional advertising methods.
+          Digital marketing can reduce customer acquisition costs by 50-70% compared to traditional
+          advertising methods.
         </AlertDescription>
       </Alert>
 
-      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-3 xl:grid-cols-6'}`}>
+      <div
+        className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-3 xl:grid-cols-6'}`}
+      >
         {digitalMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
+                {metric.metric}
+              </div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                {metric.data}
+              </div>
             </div>
           </Card>
         ))}
@@ -76,16 +103,20 @@ const DigitalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Your website is your digital shopfront - it needs to look professional, load quickly, and convert visitors into customers.
+                Your website is your digital shopfront - it needs to look professional, load
+                quickly, and convert visitors into customers.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Build a professional, SEO-optimised website that ranks locally and converts visitors to customers.</p>
+                    <p className="text-sm">
+                      Build a professional, SEO-optimised website that ranks locally and converts
+                      visitors to customers.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -95,7 +126,7 @@ const DigitalMarketingTab = () => {
                       <li>• Ongoing: Content updates & SEO maintenance</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Impact</h4>
                     <ul className="text-sm space-y-1">
@@ -106,10 +137,12 @@ const DigitalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Essential Website Features</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Essential Website Features
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Mobile-first responsive design</li>
                       <li>• Fast loading speed (under 3 seconds)</li>
@@ -121,7 +154,7 @@ const DigitalMarketingTab = () => {
                       <li>• Service area maps</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Local SEO Essentials</h4>
                     <ul className="text-sm space-y-1">
@@ -133,7 +166,7 @@ const DigitalMarketingTab = () => {
                       <li>• Customer review integration</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Key Performance Indicators</h4>
                     <ul className="text-sm space-y-1">
@@ -157,16 +190,20 @@ const DigitalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Facebook and Instagram advertising offers precise local targeting for electrical contractors with excellent ROI potential.
+                Facebook and Instagram advertising offers precise local targeting for electrical
+                contractors with excellent ROI potential.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Platform Strategy</h4>
-                    <p className="text-sm">Focus on Facebook for lead generation and Instagram for building brand awareness through visual content.</p>
+                    <p className="text-sm">
+                      Focus on Facebook for lead generation and Instagram for building brand
+                      awareness through visual content.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Campaign Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -176,7 +213,7 @@ const DigitalMarketingTab = () => {
                       <li>• Week 4+: Optimise based on performance</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -187,7 +224,7 @@ const DigitalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Content Strategy</h4>
@@ -200,7 +237,7 @@ const DigitalMarketingTab = () => {
                       <li>• Team introduction posts</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Targeting Parameters</h4>
                     <ul className="text-sm space-y-1">
@@ -211,7 +248,7 @@ const DigitalMarketingTab = () => {
                       <li>• Custom audiences: Website visitors</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -235,16 +272,20 @@ const DigitalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Google Local Services Ads appear at the top of search results with the Google Guarantee badge, providing premium visibility.
+                Google Local Services Ads appear at the top of search results with the Google
+                Guarantee badge, providing premium visibility.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Campaign Strategy</h4>
-                    <p className="text-sm">Combine Google Local Services with Search Ads for maximum coverage of local electrical searches.</p>
+                    <p className="text-sm">
+                      Combine Google Local Services with Search Ads for maximum coverage of local
+                      electrical searches.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Setup Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -254,7 +295,7 @@ const DigitalMarketingTab = () => {
                       <li>• Week 4: Launch & initial optimisation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Competitive Advantages</h4>
                     <ul className="text-sm space-y-1">
@@ -265,10 +306,12 @@ const DigitalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Local Services Requirements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Local Services Requirements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Valid Part P certification</li>
                       <li>• Public liability insurance</li>
@@ -277,7 +320,7 @@ const DigitalMarketingTab = () => {
                       <li>• Customer review minimum</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Search Ads Keywords</h4>
                     <ul className="text-sm space-y-1">
@@ -288,7 +331,7 @@ const DigitalMarketingTab = () => {
                       <li>• "EICR certificate [location]"</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Performance Targets</h4>
                     <ul className="text-sm space-y-1">
@@ -312,16 +355,20 @@ const DigitalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Online directories and review platforms are crucial for local SEO and building customer trust in the UK market.
+                Online directories and review platforms are crucial for local SEO and building
+                customer trust in the UK market.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Directory Strategy</h4>
-                    <p className="text-sm">Focus on quality UK directories that electricians actually use and customers trust for finding tradespeople.</p>
+                    <p className="text-sm">
+                      Focus on quality UK directories that electricians actually use and customers
+                      trust for finding tradespeople.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Schedule</h4>
                     <ul className="text-sm space-y-1">
@@ -331,7 +378,7 @@ const DigitalMarketingTab = () => {
                       <li>• Week 4: Review generation campaign launch</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Impact</h4>
                     <ul className="text-sm space-y-1">
@@ -342,7 +389,7 @@ const DigitalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Priority UK Directories</h4>
@@ -356,9 +403,11 @@ const DigitalMarketingTab = () => {
                       <li>• Bark.com (Pay per lead)</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Review Generation Strategy</h4>
+                    <h4 className="font-semibold text-yellow-400 mb-2">
+                      Review Generation Strategy
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Post-job follow-up emails</li>
                       <li>• SMS review requests</li>
@@ -367,7 +416,7 @@ const DigitalMarketingTab = () => {
                       <li>• Professional review management</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -391,16 +440,20 @@ const DigitalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Educational content positions you as the local electrical expert while improving SEO and building customer trust.
+                Educational content positions you as the local electrical expert while improving SEO
+                and building customer trust.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Content Strategy</h4>
-                    <p className="text-sm">Create helpful, educational content that answers common electrical questions while showcasing expertise.</p>
+                    <p className="text-sm">
+                      Create helpful, educational content that answers common electrical questions
+                      while showcasing expertise.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Content Calendar</h4>
                     <ul className="text-sm space-y-1">
@@ -410,7 +463,7 @@ const DigitalMarketingTab = () => {
                       <li>• Week 4: Seasonal safety tips</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">SEO Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -421,10 +474,12 @@ const DigitalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Content Ideas for Electricians</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Content Ideas for Electricians
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• "How to spot dangerous wiring"</li>
                       <li>• "EICR testing: What to expect"</li>
@@ -434,7 +489,7 @@ const DigitalMarketingTab = () => {
                       <li>• "Emergency electrical safety tips"</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Content Formats</h4>
                     <ul className="text-sm space-y-1">
@@ -446,7 +501,7 @@ const DigitalMarketingTab = () => {
                       <li>• Live Q&A sessions</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Content KPIs</h4>
                     <ul className="text-sm space-y-1">
@@ -470,16 +525,20 @@ const DigitalMarketingTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Proper tracking and analytics are essential for measuring ROI and optimising your digital marketing investments.
+                Proper tracking and analytics are essential for measuring ROI and optimising your
+                digital marketing investments.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Analytics Strategy</h4>
-                    <p className="text-sm">Track every customer touchpoint to understand what marketing channels deliver the best ROI.</p>
+                    <p className="text-sm">
+                      Track every customer touchpoint to understand what marketing channels deliver
+                      the best ROI.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Setup Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -489,7 +548,7 @@ const DigitalMarketingTab = () => {
                       <li>• Week 4: Dashboard creation & training</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -500,7 +559,7 @@ const DigitalMarketingTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Essential Tracking Tools</h4>
@@ -513,7 +572,7 @@ const DigitalMarketingTab = () => {
                       <li>• Heat mapping tools (Optional)</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Key Metrics to Track</h4>
                     <ul className="text-sm space-y-1">
@@ -525,7 +584,7 @@ const DigitalMarketingTab = () => {
                       <li>• Return on ad spend (ROAS)</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Monthly Reporting KPIs</h4>
                     <ul className="text-sm space-y-1">

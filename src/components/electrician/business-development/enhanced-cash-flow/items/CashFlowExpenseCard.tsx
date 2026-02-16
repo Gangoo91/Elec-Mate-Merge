@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { ChevronDown, Trash2, PiggyBank } from "lucide-react";
-import { ExpenseCategory } from "@/hooks/use-cash-flow";
-import { CalculatorInput, CalculatorSelect } from "@/components/calculators/shared";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { ChevronDown, Trash2, PiggyBank } from 'lucide-react';
+import { ExpenseCategory } from '@/hooks/use-cash-flow';
+import { CalculatorInput, CalculatorSelect } from '@/components/calculators/shared';
 
 interface CashFlowExpenseCardProps {
   category: ExpenseCategory;
@@ -11,25 +11,21 @@ interface CashFlowExpenseCardProps {
 }
 
 const frequencyOptions = [
-  { value: "monthly", label: "Monthly" },
-  { value: "quarterly", label: "Quarterly" },
-  { value: "annual", label: "Annual" },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'quarterly', label: 'Quarterly' },
+  { value: 'annual', label: 'Annual' },
 ];
 
 const formatCurrency = (n: number) => {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(n);
 };
 
-export const CashFlowExpenseCard = ({
-  category,
-  onUpdate,
-  onRemove,
-}: CashFlowExpenseCardProps) => {
+export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowExpenseCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -61,8 +57,8 @@ export const CashFlowExpenseCard = ({
           </span>
           <ChevronDown
             className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
-              isExpanded && "rotate-180"
+              'h-4 w-4 text-white/40 transition-transform duration-200',
+              isExpanded && 'rotate-180'
             )}
           />
         </div>
@@ -92,19 +88,15 @@ export const CashFlowExpenseCard = ({
               type="text"
               inputMode="decimal"
               value={(category.growth * 100).toString()}
-              onChange={(val) =>
-                onUpdate(category.id, { growth: (parseFloat(val) || 0) / 100 })
-              }
+              onChange={(val) => onUpdate(category.id, { growth: (parseFloat(val) || 0) / 100 })}
             />
-            {(category.frequency === "quarterly" || category.frequency === "annual") && (
+            {(category.frequency === 'quarterly' || category.frequency === 'annual') && (
               <CalculatorInput
                 label="Timing (Month)"
                 type="text"
                 inputMode="numeric"
                 value={(category.timing || 1).toString()}
-                onChange={(val) =>
-                  onUpdate(category.id, { timing: parseInt(val) || 1 })
-                }
+                onChange={(val) => onUpdate(category.id, { timing: parseInt(val) || 1 })}
               />
             )}
           </div>

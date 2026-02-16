@@ -29,12 +29,15 @@ interface StatCardProps {
   className?: string;
 }
 
-const variantStyles: Record<StatVariant, {
-  iconBg: string;
-  iconColor: string;
-  accentColor: string;
-  progressBg: string;
-}> = {
+const variantStyles: Record<
+  StatVariant,
+  {
+    iconBg: string;
+    iconColor: string;
+    accentColor: string;
+    progressBg: string;
+  }
+> = {
   yellow: {
     iconBg: 'bg-elec-yellow/10',
     iconColor: 'text-elec-yellow',
@@ -92,7 +95,8 @@ export function StatCard({
   const isClickable = !!onClick;
 
   // Determine trend direction
-  const trendDirection = trend === undefined ? null : trend > 0 ? 'up' : trend < 0 ? 'down' : 'neutral';
+  const trendDirection =
+    trend === undefined ? null : trend > 0 ? 'up' : trend < 0 ? 'down' : 'neutral';
 
   return (
     <div
@@ -128,30 +132,30 @@ export function StatCard({
           suffix={suffix}
           decimals={decimals}
           formatAsCurrency={formatAsCurrency}
-          className={cn(
-            'text-xl sm:text-2xl font-bold tracking-tight',
-            styles.accentColor
-          )}
+          className={cn('text-xl sm:text-2xl font-bold tracking-tight', styles.accentColor)}
         />
 
         {/* Subtitle */}
-        {subtitle && (
-          <p className="text-[10px] text-white/40 mt-1 truncate">{subtitle}</p>
-        )}
+        {subtitle && <p className="text-[10px] text-white/40 mt-1 truncate">{subtitle}</p>}
 
         {/* Trend indicator */}
         {trendDirection && (
-          <div className={cn(
-            'inline-flex items-center gap-0.5 mt-1 text-[10px] font-medium',
-            trendDirection === 'up' && 'text-green-400',
-            trendDirection === 'down' && 'text-red-400',
-            trendDirection === 'neutral' && 'text-white/60'
-          )}>
+          <div
+            className={cn(
+              'inline-flex items-center gap-0.5 mt-1 text-[10px] font-medium',
+              trendDirection === 'up' && 'text-green-400',
+              trendDirection === 'down' && 'text-red-400',
+              trendDirection === 'neutral' && 'text-white/60'
+            )}
+          >
             {trendDirection === 'up' && <TrendingUp className="h-3 w-3" />}
             {trendDirection === 'down' && <TrendingDown className="h-3 w-3" />}
             {trendDirection === 'neutral' && <Minus className="h-3 w-3" />}
             {trend !== undefined && (
-              <span>{trend > 0 ? '+' : ''}{trend}%</span>
+              <span>
+                {trend > 0 ? '+' : ''}
+                {trend}%
+              </span>
             )}
           </div>
         )}
@@ -193,11 +197,13 @@ export function CompactStat({
   const styles = variantStyles[variant];
 
   return (
-    <div className={cn(
-      'flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-white/[0.03]',
-      'touch-manipulation',
-      className
-    )}>
+    <div
+      className={cn(
+        'flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-white/[0.03]',
+        'touch-manipulation',
+        className
+      )}
+    >
       <Icon className={cn('h-3.5 w-3.5 sm:h-4 sm:w-4', styles.iconColor)} />
       <span className="text-xs sm:text-sm text-white/90">{label}:</span>
       <span className={cn('text-xs sm:text-sm font-semibold', styles.accentColor)}>

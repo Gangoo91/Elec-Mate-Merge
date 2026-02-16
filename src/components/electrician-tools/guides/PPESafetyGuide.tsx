@@ -1,134 +1,133 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Shield, HardHat, AlertTriangle, CheckCircle, Star } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowLeft, Shield, HardHat, AlertTriangle, CheckCircle, Star } from 'lucide-react';
 
 interface PPESafetyGuideProps {
   onBack: () => void;
 }
 
 const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
-  const [selectedWorkType, setSelectedWorkType] = useState<string>("domestic");
+  const [selectedWorkType, setSelectedWorkType] = useState<string>('domestic');
 
   const workTypes = {
-    domestic: { label: "Domestic Work", riskLevel: "Standard" },
-    commercial: { label: "Commercial Sites", riskLevel: "Medium" },
-    industrial: { label: "Industrial/HV", riskLevel: "High" }
+    domestic: { label: 'Domestic Work', riskLevel: 'Standard' },
+    commercial: { label: 'Commercial Sites', riskLevel: 'Medium' },
+    industrial: { label: 'Industrial/HV', riskLevel: 'High' },
   };
 
   const ppeCategories = [
     {
-      category: "Head Protection",
+      category: 'Head Protection',
       mandatory: true,
-      description: "Essential protection for construction sites and industrial environments",
+      description: 'Essential protection for construction sites and industrial environments',
       items: [
         {
-          name: "JSP EVOLite Hard Hat",
-          price: "£12-18",
+          name: 'JSP EVOLite Hard Hat',
+          price: '£12-18',
           rating: 4.8,
-          standards: ["BS EN 397", "Electrical insulation"],
-          features: ["Lightweight", "Adjustable", "Lamp clips"],
-          workTypes: ["domestic", "commercial", "industrial"],
-          image: "⛑️"
+          standards: ['BS EN 397', 'Electrical insulation'],
+          features: ['Lightweight', 'Adjustable', 'Lamp clips'],
+          workTypes: ['domestic', 'commercial', 'industrial'],
+          image: '⛑️',
         },
         {
-          name: "3M SecureFit Hard Hat",
-          price: "£15-25",
+          name: '3M SecureFit Hard Hat',
+          price: '£15-25',
           rating: 4.7,
-          standards: ["BS EN 397", "30kV electrical"],
-          features: ["Pressure diffusion", "Uvicator", "Ratchet suspension"],
-          workTypes: ["commercial", "industrial"],
-          image: "⛑️"
-        }
-      ]
+          standards: ['BS EN 397', '30kV electrical'],
+          features: ['Pressure diffusion', 'Uvicator', 'Ratchet suspension'],
+          workTypes: ['commercial', 'industrial'],
+          image: '⛑️',
+        },
+      ],
     },
     {
-      category: "Eye Protection",
+      category: 'Eye Protection',
       mandatory: true,
-      description: "Impact and UV protection for all electrical work",
+      description: 'Impact and UV protection for all electrical work',
       items: [
         {
-          name: "3M SecureFit Safety Glasses",
-          price: "£8-15",
+          name: '3M SecureFit Safety Glasses',
+          price: '£8-15',
           rating: 4.6,
-          standards: ["BS EN 166", "Impact resistant"],
-          features: ["Anti-fog", "UV protection", "Comfortable"],
-          workTypes: ["domestic", "commercial", "industrial"],
-          image: "🥽"
+          standards: ['BS EN 166', 'Impact resistant'],
+          features: ['Anti-fog', 'UV protection', 'Comfortable'],
+          workTypes: ['domestic', 'commercial', 'industrial'],
+          image: '🥽',
         },
         {
-          name: "Uvex Sportstyle Glasses",
-          price: "£12-20",
+          name: 'Uvex Sportstyle Glasses',
+          price: '£12-20',
           rating: 4.8,
-          standards: ["BS EN 166", "Side protection"],
-          features: ["German quality", "Prescription inserts", "Durable"],
-          workTypes: ["commercial", "industrial"],
-          image: "🥽"
-        }
-      ]
+          standards: ['BS EN 166', 'Side protection'],
+          features: ['German quality', 'Prescription inserts', 'Durable'],
+          workTypes: ['commercial', 'industrial'],
+          image: '🥽',
+        },
+      ],
     },
     {
-      category: "Hand Protection",
+      category: 'Hand Protection',
       mandatory: false,
-      description: "Task-specific gloves for different electrical work scenarios",
+      description: 'Task-specific gloves for different electrical work scenarios',
       items: [
         {
-          name: "Ansell HyFlex Work Gloves",
-          price: "£5-12",
+          name: 'Ansell HyFlex Work Gloves',
+          price: '£5-12',
           rating: 4.5,
-          standards: ["Cut level A", "General handling"],
-          features: ["Dexterous", "Breathable", "Machine washable"],
-          workTypes: ["domestic", "commercial"],
-          image: "🧤"
+          standards: ['Cut level A', 'General handling'],
+          features: ['Dexterous', 'Breathable', 'Machine washable'],
+          workTypes: ['domestic', 'commercial'],
+          image: '🧤',
         },
         {
-          name: "Salisbury Class 0 Electrical Gloves",
-          price: "£35-65",
+          name: 'Salisbury Class 0 Electrical Gloves',
+          price: '£35-65',
           rating: 4.9,
-          standards: ["BS EN 60903", "1000V protection"],
-          features: ["Electrical insulation", "Regular testing required", "Professional grade"],
-          workTypes: ["industrial"],
-          image: "🧤"
-        }
-      ]
+          standards: ['BS EN 60903', '1000V protection'],
+          features: ['Electrical insulation', 'Regular testing required', 'Professional grade'],
+          workTypes: ['industrial'],
+          image: '🧤',
+        },
+      ],
     },
     {
-      category: "Foot Protection",
+      category: 'Foot Protection',
       mandatory: true,
-      description: "Safety boots with electrical hazard protection",
+      description: 'Safety boots with electrical hazard protection',
       items: [
         {
-          name: "Caterpillar Holton S3 Boots",
-          price: "£45-65",
+          name: 'Caterpillar Holton S3 Boots',
+          price: '£45-65',
           rating: 4.6,
-          standards: ["BS EN ISO 20345", "S3 rating"],
-          features: ["Steel toe cap", "Midsole protection", "Water resistant"],
-          workTypes: ["domestic", "commercial", "industrial"],
-          image: "🥾"
+          standards: ['BS EN ISO 20345', 'S3 rating'],
+          features: ['Steel toe cap', 'Midsole protection', 'Water resistant'],
+          workTypes: ['domestic', 'commercial', 'industrial'],
+          image: '🥾',
         },
         {
-          name: "DeWalt Laser Safety Boots",
-          price: "£55-85",
+          name: 'DeWalt Laser Safety Boots',
+          price: '£55-85',
           rating: 4.7,
-          standards: ["S1P rating", "Electrical hazard"],
-          features: ["Composite toe cap", "Anti-slip", "Comfortable"],
-          workTypes: ["commercial", "industrial"],
-          image: "🥾"
-        }
-      ]
-    }
+          standards: ['S1P rating', 'Electrical hazard'],
+          features: ['Composite toe cap', 'Anti-slip', 'Comfortable'],
+          workTypes: ['commercial', 'industrial'],
+          image: '🥾',
+        },
+      ],
+    },
   ];
 
   const getWorkTypeRecommendations = (workType: string) => {
-    return ppeCategories.map(category => ({
-      ...category,
-      recommendedItems: category.items.filter(item => 
-        item.workTypes.includes(workType)
-      )
-    })).filter(category => category.recommendedItems.length > 0);
+    return ppeCategories
+      .map((category) => ({
+        ...category,
+        recommendedItems: category.items.filter((item) => item.workTypes.includes(workType)),
+      }))
+      .filter((category) => category.recommendedItems.length > 0);
   };
 
   const workTypeRecommendations = getWorkTypeRecommendations(selectedWorkType);
@@ -144,8 +143,8 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={onBack}
           className="border-elec-yellow/30 hover:bg-elec-yellow/10"
         >
@@ -154,7 +153,9 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
         </Button>
         <div>
           <h1 className="text-3xl font-bold text-elec-yellow">PPE & Safety Equipment Guide</h1>
-          <p className="text-muted-foreground">Essential personal protective equipment for electrical work</p>
+          <p className="text-muted-foreground">
+            Essential personal protective equipment for electrical work
+          </p>
         </div>
       </div>
 
@@ -176,11 +177,12 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                 {Object.entries(workTypes).map(([key, type]) => (
                   <Button
                     key={key}
-                    variant={selectedWorkType === key ? "default" : "outline"}
+                    variant={selectedWorkType === key ? 'default' : 'outline'}
                     onClick={() => setSelectedWorkType(key)}
-                    className={selectedWorkType === key ? 
-                      "bg-elec-yellow text-black" : 
-                      "border-elec-yellow/30 hover:bg-elec-yellow/10"
+                    className={
+                      selectedWorkType === key
+                        ? 'bg-elec-yellow text-black'
+                        : 'border-elec-yellow/30 hover:bg-elec-yellow/10'
                     }
                   >
                     <div className="text-center">
@@ -210,7 +212,10 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                   <CardContent>
                     <div className="space-y-4">
                       {category.recommendedItems.map((item, itemIndex) => (
-                        <div key={itemIndex} className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+                        <div
+                          key={itemIndex}
+                          className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10"
+                        >
                           <div className="flex items-start gap-3">
                             <div className="text-2xl">{item.image}</div>
                             <div className="flex-1">
@@ -218,7 +223,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                                 <h4 className="font-medium text-foreground">{item.name}</h4>
                                 <span className="text-elec-yellow font-bold">{item.price}</span>
                               </div>
-                              
+
                               <div className="flex items-center gap-2 mb-2">
                                 <div className="flex items-center gap-1">
                                   <Star className="h-3 w-3 text-amber-400 fill-current" />
@@ -226,16 +231,22 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                                 </div>
                                 <div className="flex gap-1">
                                   {item.standards.map((standard, idx) => (
-                                    <Badge key={idx} className="bg-blue-500/20 text-blue-400 text-xs">
+                                    <Badge
+                                      key={idx}
+                                      className="bg-blue-500/20 text-blue-400 text-xs"
+                                    >
                                       {standard}
                                     </Badge>
                                   ))}
                                 </div>
                               </div>
-                              
+
                               <div className="space-y-1 mb-3">
                                 {item.features.map((feature, idx) => (
-                                  <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <div
+                                    key={idx}
+                                    className="flex items-center gap-2 text-xs text-muted-foreground"
+                                  >
                                     <CheckCircle className="h-3 w-3 text-green-400" />
                                     {feature}
                                   </div>
@@ -262,10 +273,12 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                       <div className="text-center">
                         <div className="text-xs text-muted-foreground">Minimum PPE Cost</div>
                         <div className="text-xl font-bold text-elec-yellow">£{totalCost}+</div>
-                        <div className="text-xs text-muted-foreground">for {workTypes[selectedWorkType as keyof typeof workTypes].label}</div>
+                        <div className="text-xs text-muted-foreground">
+                          for {workTypes[selectedWorkType as keyof typeof workTypes].label}
+                        </div>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <h4 className="text-sm font-medium text-foreground">Investment Breakdown:</h4>
                       {workTypeRecommendations.map((category, index) => {
@@ -275,7 +288,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                           return price < minPrice ? item : min;
                         });
                         const cost = parseInt(cheapest.price.split('-')[0].replace('£', ''));
-                        
+
                         return (
                           <div key={index} className="flex justify-between text-xs">
                             <span className="text-muted-foreground">{category.category}:</span>
@@ -303,7 +316,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                         Never work without appropriate PPE. Your safety is worth more than any job.
                       </p>
                     </div>
-                    
+
                     <div className="p-2 bg-amber-500/10 rounded border border-amber-500/20">
                       <div className="flex items-center gap-2 mb-1">
                         <AlertTriangle className="h-3 w-3 text-amber-400" />
@@ -313,7 +326,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                         Replace damaged PPE immediately. Compromised protection is no protection.
                       </p>
                     </div>
-                    
+
                     <div className="p-2 bg-blue-500/10 rounded border border-blue-500/20">
                       <div className="flex items-center gap-2 mb-1">
                         <Shield className="h-3 w-3 text-blue-400" />
@@ -339,7 +352,9 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                    <h4 className="text-blue-300 font-medium text-sm mb-2">Personal Protective Equipment at Work Regulations 1992</h4>
+                    <h4 className="text-blue-300 font-medium text-sm mb-2">
+                      Personal Protective Equipment at Work Regulations 1992
+                    </h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Employers must provide adequate PPE free of charge</li>
                       <li>• Employees must use PPE correctly and report defects</li>
@@ -347,9 +362,11 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                       <li>• Training must be provided on correct use</li>
                     </ul>
                   </div>
-                  
+
                   <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-                    <h4 className="text-green-300 font-medium text-sm mb-2">Construction (Design and Management) Regulations 2015</h4>
+                    <h4 className="text-green-300 font-medium text-sm mb-2">
+                      Construction (Design and Management) Regulations 2015
+                    </h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Hard hats mandatory on construction sites</li>
                       <li>• High-visibility clothing in designated areas</li>
@@ -357,9 +374,11 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                       <li>• Eye protection for specific tasks</li>
                     </ul>
                   </div>
-                  
+
                   <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                    <h4 className="text-purple-300 font-medium text-sm mb-2">Electricity at Work Regulations 1989</h4>
+                    <h4 className="text-purple-300 font-medium text-sm mb-2">
+                      Electricity at Work Regulations 1989
+                    </h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">
                       <li>• Appropriate PPE for electrical work</li>
                       <li>• Insulated tools where required</li>
@@ -382,18 +401,27 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                     All PPE sold in the UK must carry CE marking and meet European standards.
                   </p>
                 </div>
-                
+
                 <div>
                   <h4 className="text-foreground font-medium text-sm mb-2">Key Standards:</h4>
                   <div className="space-y-2">
                     {[
-                      { standard: "BS EN 397", description: "Hard hats and industrial safety helmets" },
-                      { standard: "BS EN 166", description: "Eye protection specifications" },
-                      { standard: "BS EN ISO 20345", description: "Safety footwear requirements" },
-                      { standard: "BS EN 60903", description: "Electrical insulating gloves" },
-                      { standard: "BS EN ISO 20471", description: "High-visibility warning clothing" }
+                      {
+                        standard: 'BS EN 397',
+                        description: 'Hard hats and industrial safety helmets',
+                      },
+                      { standard: 'BS EN 166', description: 'Eye protection specifications' },
+                      { standard: 'BS EN ISO 20345', description: 'Safety footwear requirements' },
+                      { standard: 'BS EN 60903', description: 'Electrical insulating gloves' },
+                      {
+                        standard: 'BS EN ISO 20471',
+                        description: 'High-visibility warning clothing',
+                      },
                     ].map((item, index) => (
-                      <div key={index} className="p-2 bg-elec-dark/30 rounded border border-elec-yellow/10">
+                      <div
+                        key={index}
+                        className="p-2 bg-elec-dark/30 rounded border border-elec-yellow/10"
+                      >
                         <div className="flex justify-between items-start">
                           <Badge className="bg-elec-yellow/20 text-elec-yellow text-xs">
                             {item.standard}
@@ -415,11 +443,15 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
               <Card key={key} className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
                   <CardTitle className="text-foreground">{type.label}</CardTitle>
-                  <Badge className={
-                    type.riskLevel === "Standard" ? "bg-green-500/20 text-green-400" :
-                    type.riskLevel === "Medium" ? "bg-amber-500/20 text-amber-400" :
-                    "bg-red-500/20 text-red-400"
-                  }>
+                  <Badge
+                    className={
+                      type.riskLevel === 'Standard'
+                        ? 'bg-green-500/20 text-green-400'
+                        : type.riskLevel === 'Medium'
+                          ? 'bg-amber-500/20 text-amber-400'
+                          : 'bg-red-500/20 text-red-400'
+                    }
+                  >
                     {type.riskLevel} Risk
                   </Badge>
                 </CardHeader>
@@ -437,24 +469,26 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                         </div>
                       ))}
                     </div>
-                    
+
                     <div className="pt-2 border-t border-elec-yellow/10">
-                      <h4 className="text-sm font-medium text-foreground mb-2">Additional Considerations:</h4>
-                      {key === "domestic" && (
+                      <h4 className="text-sm font-medium text-foreground mb-2">
+                        Additional Considerations:
+                      </h4>
+                      {key === 'domestic' && (
                         <ul className="space-y-1 text-xs text-muted-foreground">
                           <li>• Customer premises - professional appearance</li>
                           <li>• Limited space - compact PPE preferred</li>
                           <li>• Lower voltage work - standard protection</li>
                         </ul>
                       )}
-                      {key === "commercial" && (
+                      {key === 'commercial' && (
                         <ul className="space-y-1 text-xs text-muted-foreground">
                           <li>• Site induction requirements</li>
                           <li>• High-visibility clothing often mandatory</li>
                           <li>• Specific site PPE policies</li>
                         </ul>
                       )}
-                      {key === "industrial" && (
+                      {key === 'industrial' && (
                         <ul className="space-y-1 text-xs text-muted-foreground">
                           <li>• High voltage work - specialised PPE</li>
                           <li>• Arc flash protection may be required</li>
@@ -479,44 +513,53 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                 <div className="space-y-4">
                   {[
                     {
-                      item: "Hard Hats",
-                      daily: "Visual inspection for cracks",
-                      weekly: "Clean and check suspension",
-                      monthly: "Detailed inspection",
-                      annually: "Replace if over 5 years old",
-                      replacement: "3-5 years or after impact"
+                      item: 'Hard Hats',
+                      daily: 'Visual inspection for cracks',
+                      weekly: 'Clean and check suspension',
+                      monthly: 'Detailed inspection',
+                      annually: 'Replace if over 5 years old',
+                      replacement: '3-5 years or after impact',
                     },
                     {
-                      item: "Safety Glasses",
-                      daily: "Clean lenses, check for scratches",
-                      weekly: "Inspect frame and hinges",
-                      monthly: "Replace scratched lenses",
-                      annually: "Full replacement",
-                      replacement: "When scratched or damaged"
+                      item: 'Safety Glasses',
+                      daily: 'Clean lenses, check for scratches',
+                      weekly: 'Inspect frame and hinges',
+                      monthly: 'Replace scratched lenses',
+                      annually: 'Full replacement',
+                      replacement: 'When scratched or damaged',
                     },
                     {
-                      item: "Safety Boots",
-                      daily: "Check sole condition",
-                      weekly: "Clean and condition leather",
-                      monthly: "Inspect laces and eyelets",
-                      annually: "Replace if worn",
-                      replacement: "6-12 months depending on use"
-                    }
+                      item: 'Safety Boots',
+                      daily: 'Check sole condition',
+                      weekly: 'Clean and condition leather',
+                      monthly: 'Inspect laces and eyelets',
+                      annually: 'Replace if worn',
+                      replacement: '6-12 months depending on use',
+                    },
                   ].map((schedule, index) => (
-                    <div key={index} className="p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+                    <div
+                      key={index}
+                      className="p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10"
+                    >
                       <h4 className="text-foreground font-medium text-sm mb-2">{schedule.item}</h4>
                       <div className="space-y-1 text-xs">
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Daily:</span>
-                          <span className="text-foreground text-right flex-1 ml-2">{schedule.daily}</span>
+                          <span className="text-foreground text-right flex-1 ml-2">
+                            {schedule.daily}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Weekly:</span>
-                          <span className="text-foreground text-right flex-1 ml-2">{schedule.weekly}</span>
+                          <span className="text-foreground text-right flex-1 ml-2">
+                            {schedule.weekly}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Replace:</span>
-                          <span className="text-elec-yellow text-right flex-1 ml-2">{schedule.replacement}</span>
+                          <span className="text-elec-yellow text-right flex-1 ml-2">
+                            {schedule.replacement}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -540,7 +583,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                       <li>• Use dedicated PPE storage</li>
                     </ul>
                   </div>
-                  
+
                   <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
                     <h4 className="text-green-300 font-medium text-sm mb-2">Cleaning Guidelines</h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">
@@ -550,7 +593,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                       <li>• Never use harsh chemicals</li>
                     </ul>
                   </div>
-                  
+
                   <div className="p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
                     <h4 className="text-amber-300 font-medium text-sm mb-2">When to Replace</h4>
                     <ul className="space-y-1 text-xs text-muted-foreground">

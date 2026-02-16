@@ -19,14 +19,8 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'fs-m1s3-smoke-deaths',
-    question:
-      'What percentage of fire deaths are caused by smoke inhalation rather than burns?',
-    options: [
-      'Approximately 25%',
-      'Approximately 50%',
-      'Approximately 75%',
-      'Approximately 90%',
-    ],
+    question: 'What percentage of fire deaths are caused by smoke inhalation rather than burns?',
+    options: ['Approximately 25%', 'Approximately 50%', 'Approximately 75%', 'Approximately 90%'],
     correctIndex: 2,
     explanation:
       'Approximately 75% of fire deaths are caused by smoke inhalation, not direct burns. Smoke contains toxic gases including carbon monoxide (CO) and hydrogen cyanide (HCN) that can incapacitate and kill far more quickly than flames. This is why early detection and evacuation are so critical — by the time flames are visible, the smoke layer may already be lethal.',
@@ -35,12 +29,7 @@ const quickCheckQuestions = [
     id: 'fs-m1s3-flashover-temp',
     question:
       'At approximately what ceiling temperature does flashover occur in a compartment fire?',
-    options: [
-      '100-200\u00B0C',
-      '300-400\u00B0C',
-      '500-600\u00B0C',
-      '900-1000\u00B0C',
-    ],
+    options: ['100-200\u00B0C', '300-400\u00B0C', '500-600\u00B0C', '900-1000\u00B0C'],
     correctIndex: 2,
     explanation:
       'Flashover typically occurs when the hot gas layer at ceiling level reaches approximately 500-600\u00B0C. At this temperature, the thermal radiation from the smoke layer is intense enough to ignite all exposed combustible surfaces in the compartment simultaneously. This is a critical transition point beyond which the room becomes unsurvivable.',
@@ -114,22 +103,15 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'At approximately what temperature range does flashover occur at ceiling level?',
-    options: [
-      '200-300\u00B0C',
-      '350-450\u00B0C',
-      '500-600\u00B0C',
-      '800-1000\u00B0C',
-    ],
+    question: 'At approximately what temperature range does flashover occur at ceiling level?',
+    options: ['200-300\u00B0C', '350-450\u00B0C', '500-600\u00B0C', '800-1000\u00B0C'],
     correctAnswer: 2,
     explanation:
       'Flashover occurs when the hot gas (smoke) layer at ceiling level reaches approximately 500-600\u00B0C. At this temperature, the radiant heat flux at floor level exceeds approximately 20 kW/m\u00B2, which is sufficient to ignite all exposed combustible materials in the compartment simultaneously. This transition marks the boundary between a survivable and an unsurvivable fire condition.',
   },
   {
     id: 4,
-    question:
-      'Which of the following is a recognised warning sign of potential backdraught?',
+    question: 'Which of the following is a recognised warning sign of potential backdraught?',
     options: [
       'Bright orange flames visible through windows',
       'Loud crackling and popping sounds from inside the room',
@@ -144,34 +126,22 @@ const quizQuestions = [
     id: 5,
     question:
       'Which fire spread mechanism involves hot gases rising and carrying heat to upper floors and remote areas?',
-    options: [
-      'Conduction',
-      'Convection',
-      'Radiation',
-      'Direct burning',
-    ],
+    options: ['Conduction', 'Convection', 'Radiation', 'Direct burning'],
     correctAnswer: 1,
     explanation:
       'Convection is the transfer of heat through the movement of hot gases and air. In a building fire, hot combustion gases (which can exceed 600\u00B0C) rise and travel along ceilings, through stairwells, lift shafts, service risers and ductwork. This is the primary mechanism by which fire spreads to upper floors. The "stack effect" in tall buildings amplifies convective spread, drawing hot gases upward through vertical shafts. Convection is the most significant fire spread mechanism within buildings.',
   },
   {
     id: 6,
-    question:
-      'During which phase of fire development do the majority of fire casualties occur?',
-    options: [
-      'Ignition phase',
-      'Growth phase',
-      'Fully developed phase',
-      'Decay phase',
-    ],
+    question: 'During which phase of fire development do the majority of fire casualties occur?',
+    options: ['Ignition phase', 'Growth phase', 'Fully developed phase', 'Decay phase'],
     correctAnswer: 1,
     explanation:
       'The majority of fire casualties occur during the growth phase. During this phase, smoke production increases rapidly and the descending smoke layer reduces visibility and introduces toxic gases at head height. Occupants who have not yet evacuated become trapped or incapacitated by smoke inhalation. By the time flashover occurs, the compartment of origin is already unsurvivable — but the growth phase smoke has often spread well beyond that room through corridors and stairwells, affecting people in other parts of the building.',
   },
   {
     id: 7,
-    question:
-      'In the fully developed phase of a fire, what primarily limits the rate of burning?',
+    question: 'In the fully developed phase of a fire, what primarily limits the rate of burning?',
     options: [
       'The type of fuel available',
       'The temperature of the fire',
@@ -186,12 +156,7 @@ const quizQuestions = [
     id: 8,
     question:
       'During the decay phase of a fire, which dangerous phenomenon can occur if a door or window is opened?',
-    options: [
-      'Flashover',
-      'Spontaneous combustion',
-      'Backdraught',
-      'Thermal runaway',
-    ],
+    options: ['Flashover', 'Spontaneous combustion', 'Backdraught', 'Thermal runaway'],
     correctAnswer: 2,
     explanation:
       'During the decay phase, if the fire has been burning in a ventilation-limited state, large volumes of hot, unburnt pyrolysis gases accumulate in the compartment. The fire may appear to be dying down because it has consumed the available oxygen. However, these gases are still above their ignition temperature. If a door or window is opened — introducing fresh oxygen — the gases can ignite explosively in a backdraught (deflagration). This is why the decay phase can be as dangerous as the growth phase, and why untrained persons should never open doors into smoke-filled rooms.',
@@ -253,8 +218,8 @@ export default function FireSafetyModule1Section3() {
                 Developed &rarr; Decay
               </li>
               <li>
-                <strong>Flashover:</strong> 500&ndash;600&deg;C at ceiling &mdash; everything ignites
-                simultaneously
+                <strong>Flashover:</strong> 500&ndash;600&deg;C at ceiling &mdash; everything
+                ignites simultaneously
               </li>
               <li>
                 <strong>Smoke kills:</strong> ~75% of fire deaths from inhalation, not burns
@@ -265,7 +230,8 @@ export default function FireSafetyModule1Section3() {
             <p className="text-rose-400/90 text-base font-medium mb-2">For Electricians</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>Cable routes:</strong> Key fire spread pathway &mdash; fire stopping is critical
+                <strong>Cable routes:</strong> Key fire spread pathway &mdash; fire stopping is
+                critical
               </li>
               <li>
                 <strong>Backdraught:</strong> Never open doors showing warning signs
@@ -309,10 +275,10 @@ export default function FireSafetyModule1Section3() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Fire does not burn at a constant rate. It develops through a series of{' '}
-                <strong>five distinct phases</strong>, each with different characteristics, hazards and
-                implications for fire safety. Understanding these phases is fundamental to
-                understanding why evacuation timelines are so critical and why fire protection measures
-                are designed the way they are.
+                <strong>five distinct phases</strong>, each with different characteristics, hazards
+                and implications for fire safety. Understanding these phases is fundamental to
+                understanding why evacuation timelines are so critical and why fire protection
+                measures are designed the way they are.
               </p>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
@@ -320,12 +286,12 @@ export default function FireSafetyModule1Section3() {
                   The Five Phases of Fire Development
                 </p>
                 <p className="text-sm text-white">
-                  Every compartment fire follows the same general development pattern: <strong>ignition</strong>,{' '}
-                  <strong>growth</strong>, <strong>flashover</strong>,{' '}
+                  Every compartment fire follows the same general development pattern:{' '}
+                  <strong>ignition</strong>, <strong>growth</strong>, <strong>flashover</strong>,{' '}
                   <strong>fully developed</strong>, and <strong>decay</strong>. The time taken to
                   progress through each phase varies depending on fuel type, fuel load, compartment
-                  geometry and ventilation conditions. In a typical domestic room with modern furnishings,
-                  the progression from ignition to flashover can take as little as{' '}
+                  geometry and ventilation conditions. In a typical domestic room with modern
+                  furnishings, the progression from ignition to flashover can take as little as{' '}
                   <strong>3 to 5 minutes</strong>.
                 </p>
               </div>
@@ -339,12 +305,14 @@ export default function FireSafetyModule1Section3() {
                   },
                   {
                     phase: 'Growth',
-                    detail: 'Fire grows exponentially. Smoke layer descends. Most casualties occur here.',
+                    detail:
+                      'Fire grows exponentially. Smoke layer descends. Most casualties occur here.',
                     colour: 'bg-orange-500/20 border-orange-500/30 text-orange-400',
                   },
                   {
                     phase: 'Flashover',
-                    detail: 'All surfaces ignite simultaneously. 500-600\u00B0C at ceiling. Unsurvivable.',
+                    detail:
+                      'All surfaces ignite simultaneously. 500-600\u00B0C at ceiling. Unsurvivable.',
                     colour: 'bg-red-500/20 border-red-500/30 text-red-400',
                   },
                   {
@@ -354,7 +322,8 @@ export default function FireSafetyModule1Section3() {
                   },
                   {
                     phase: 'Decay',
-                    detail: 'Fuel consumed. Temperature drops. Backdraught risk if ventilation-starved.',
+                    detail:
+                      'Fuel consumed. Temperature drops. Backdraught risk if ventilation-starved.',
                     colour: 'bg-rose-500/20 border-rose-500/30 text-rose-400',
                   },
                 ].map((item, i) => (
@@ -367,11 +336,11 @@ export default function FireSafetyModule1Section3() {
 
               <p>
                 The <strong>time-temperature curve</strong> is a graphical representation of this
-                progression. Temperature rises slowly during ignition, accelerates exponentially during
-                growth, spikes sharply at flashover, plateaus during the fully developed phase (limited
-                by oxygen supply), and gradually falls during decay. This curve is used by fire
-                engineers to design structural fire resistance ratings, sprinkler activation times and
-                evacuation strategies.
+                progression. Temperature rises slowly during ignition, accelerates exponentially
+                during growth, spikes sharply at flashover, plateaus during the fully developed
+                phase (limited by oxygen supply), and gradually falls during decay. This curve is
+                used by fire engineers to design structural fire resistance ratings, sprinkler
+                activation times and evacuation strategies.
               </p>
 
               {/* Fire Development Curve Diagram */}
@@ -425,9 +394,7 @@ export default function FireSafetyModule1Section3() {
                       </div>
                     </div>
                     {/* X-axis label */}
-                    <p className="text-center text-[10px] text-white/50 mt-8">
-                      Time &rarr;
-                    </p>
+                    <p className="text-center text-[10px] text-white/50 mt-8">Time &rarr;</p>
                   </div>
                 </div>
                 <p className="text-xs text-white/50 text-center mt-4">
@@ -442,11 +409,11 @@ export default function FireSafetyModule1Section3() {
                   <p className="text-sm font-medium text-orange-400">Critical Fact</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  The majority of fire casualties occur during the <strong>growth phase</strong>, not
-                  during flashover or the fully developed phase. By the time flashover occurs, the
-                  compartment of origin is already unsurvivable &mdash; but smoke from the growth phase
-                  has often spread through corridors and stairwells, trapping and incapacitating
-                  occupants in other parts of the building. This is why{' '}
+                  The majority of fire casualties occur during the <strong>growth phase</strong>,
+                  not during flashover or the fully developed phase. By the time flashover occurs,
+                  the compartment of origin is already unsurvivable &mdash; but smoke from the
+                  growth phase has often spread through corridors and stairwells, trapping and
+                  incapacitating occupants in other parts of the building. This is why{' '}
                   <strong>early detection and immediate evacuation</strong> save lives.
                 </p>
               </div>
@@ -464,11 +431,11 @@ export default function FireSafetyModule1Section3() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The ignition phase is the very beginning of a fire &mdash; the moment when a{' '}
-                <strong>heat source</strong> comes into contact with a <strong>fuel source</strong> in
-                the presence of sufficient <strong>oxygen</strong> to sustain combustion. This is the
-                point at which the fire triangle is completed. Ignition may produce immediate open
-                flame, or it may begin as a smouldering, incipient fire with little or no visible
-                flame.
+                <strong>heat source</strong> comes into contact with a <strong>fuel source</strong>{' '}
+                in the presence of sufficient <strong>oxygen</strong> to sustain combustion. This is
+                the point at which the fire triangle is completed. Ignition may produce immediate
+                open flame, or it may begin as a smouldering, incipient fire with little or no
+                visible flame.
               </p>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
@@ -476,20 +443,21 @@ export default function FireSafetyModule1Section3() {
                   Key Definition &mdash; Incipient / Smouldering Fire
                 </p>
                 <p className="text-sm text-white">
-                  An <strong>incipient fire</strong> (also called a smouldering fire) is a fire in its
-                  earliest stage, where combustion is occurring below the surface or at very low
+                  An <strong>incipient fire</strong> (also called a smouldering fire) is a fire in
+                  its earliest stage, where combustion is occurring below the surface or at very low
                   intensity. Smouldering fires produce smoke and heat but may not produce visible
                   flame for extended periods &mdash; potentially hours. They are particularly common
-                  in electrical installations where <strong>overheated cables in concealed voids</strong>,
-                  overloaded connections or arcing faults generate enough heat to char insulation
-                  without producing open flame.
+                  in electrical installations where{' '}
+                  <strong>overheated cables in concealed voids</strong>, overloaded connections or
+                  arcing faults generate enough heat to char insulation without producing open
+                  flame.
                 </p>
               </div>
 
               <p>
                 Detection at the ignition stage is crucial because the fire can still be controlled
-                or extinguished with minimal effort. However, incipient fires are difficult to detect
-                because they may be hidden within walls, ceilings or equipment.
+                or extinguished with minimal effort. However, incipient fires are difficult to
+                detect because they may be hidden within walls, ceilings or equipment.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -502,19 +470,27 @@ export default function FireSafetyModule1Section3() {
                     <ul className="text-xs text-white/70 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Detect smoke particles in the air &mdash; effective for smouldering fires</span>
+                        <span>
+                          Detect smoke particles in the air &mdash; effective for smouldering fires
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Ionisation type: better for fast-flaming fires with small particles</span>
+                        <span>
+                          Ionisation type: better for fast-flaming fires with small particles
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Optical type: better for smouldering fires with larger particles</span>
+                        <span>
+                          Optical type: better for smouldering fires with larger particles
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Respond during incipient stage &mdash; earliest possible warning</span>
+                        <span>
+                          Respond during incipient stage &mdash; earliest possible warning
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -523,11 +499,15 @@ export default function FireSafetyModule1Section3() {
                     <ul className="text-xs text-white/70 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Respond to temperature rise, not smoke &mdash; less prone to false alarms</span>
+                        <span>
+                          Respond to temperature rise, not smoke &mdash; less prone to false alarms
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Fixed temperature type: activates at a set threshold (e.g. 57&deg;C)</span>
+                        <span>
+                          Fixed temperature type: activates at a set threshold (e.g. 57&deg;C)
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -535,7 +515,10 @@ export default function FireSafetyModule1Section3() {
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Slower response &mdash; fire may have progressed to growth phase before activation</span>
+                        <span>
+                          Slower response &mdash; fire may have progressed to growth phase before
+                          activation
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -548,9 +531,9 @@ export default function FireSafetyModule1Section3() {
                   <p className="text-sm font-medium text-white">Electrician&apos;s Relevance</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  Many electrical fires begin as smouldering, incipient fires. An overheated cable in
-                  a ceiling void, a loose connection generating heat through resistance, or an arcing
-                  fault behind a consumer unit can smoulder for <strong>hours</strong> before
+                  Many electrical fires begin as smouldering, incipient fires. An overheated cable
+                  in a ceiling void, a loose connection generating heat through resistance, or an
+                  arcing fault behind a consumer unit can smoulder for <strong>hours</strong> before
                   producing enough heat or flame to activate detection systems. This is why{' '}
                   <strong>thermal imaging surveys</strong> of electrical installations are valuable
                   &mdash; they can identify hot spots that indicate incipient fire conditions before
@@ -574,10 +557,10 @@ export default function FireSafetyModule1Section3() {
               <p>
                 Once ignition has occurred and the fire has established itself, it enters the{' '}
                 <strong>growth phase</strong>. During this phase, the fire grows{' '}
-                <strong>exponentially</strong> if unchecked &mdash; the rate of heat release increases
-                rapidly as more fuel becomes involved. Flames spread across surfaces, the smoke layer
-                develops at ceiling level and begins to descend, and temperatures within the
-                compartment rise sharply.
+                <strong>exponentially</strong> if unchecked &mdash; the rate of heat release
+                increases rapidly as more fuel becomes involved. Flames spread across surfaces, the
+                smoke layer develops at ceiling level and begins to descend, and temperatures within
+                the compartment rise sharply.
               </p>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
@@ -589,9 +572,9 @@ export default function FireSafetyModule1Section3() {
                   not direct burns. Smoke is a complex mixture of hot gases, vapours and solid
                   particulates produced by incomplete combustion. It kills through a combination of{' '}
                   <strong>toxic poisoning</strong> (carbon monoxide and hydrogen cyanide),{' '}
-                  <strong>asphyxiation</strong> (oxygen depletion), <strong>thermal injury</strong> to
-                  the respiratory tract, and <strong>disorientation</strong> (zero visibility causing
-                  people to become lost or trapped).
+                  <strong>asphyxiation</strong> (oxygen depletion), <strong>thermal injury</strong>{' '}
+                  to the respiratory tract, and <strong>disorientation</strong> (zero visibility
+                  causing people to become lost or trapped).
                 </p>
               </div>
 
@@ -633,9 +616,9 @@ export default function FireSafetyModule1Section3() {
               <p>
                 During the growth phase, the <strong>smoke layer</strong> forms at ceiling level and
                 progressively descends toward the floor. As it descends, visibility at head height
-                drops rapidly &mdash; in a typical room, the smoke layer can reach head height within{' '}
-                <strong>2 to 3 minutes</strong> of ignition. The temperature of the smoke layer
-                increases as the fire grows, and the toxic gas concentration rises with it.
+                drops rapidly &mdash; in a typical room, the smoke layer can reach head height
+                within <strong>2 to 3 minutes</strong> of ignition. The temperature of the smoke
+                layer increases as the fire grows, and the toxic gas concentration rises with it.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -646,9 +629,10 @@ export default function FireSafetyModule1Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Fuel load:</strong> The type and quantity of combustible material in the
-                      room. Modern synthetic furnishings (polyurethane foam, plastics) burn far faster
-                      and produce more toxic smoke than traditional natural materials (wood, cotton).
+                      <strong>Fuel load:</strong> The type and quantity of combustible material in
+                      the room. Modern synthetic furnishings (polyurethane foam, plastics) burn far
+                      faster and produce more toxic smoke than traditional natural materials (wood,
+                      cotton).
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -662,25 +646,25 @@ export default function FireSafetyModule1Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Room geometry:</strong> Smaller rooms with lower ceilings reach flashover
-                      faster because the smoke layer has less volume to fill before heat builds to
-                      critical levels.
+                      <strong>Room geometry:</strong> Smaller rooms with lower ceilings reach
+                      flashover faster because the smoke layer has less volume to fill before heat
+                      builds to critical levels.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Ceiling material:</strong> Combustible ceiling linings (e.g. polystyrene
-                      tiles) can dramatically accelerate fire spread across the ceiling, increasing
-                      the rate of heat release and hastening flashover.
+                      <strong>Ceiling material:</strong> Combustible ceiling linings (e.g.
+                      polystyrene tiles) can dramatically accelerate fire spread across the ceiling,
+                      increasing the rate of heat release and hastening flashover.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong>Suppression systems:</strong> Sprinklers activating during the growth
-                      phase can control or extinguish the fire, preventing flashover entirely. This is
-                      why sprinkler systems save lives.
+                      phase can control or extinguish the fire, preventing flashover entirely. This
+                      is why sprinkler systems save lives.
                     </span>
                   </li>
                 </ul>
@@ -698,11 +682,11 @@ export default function FireSafetyModule1Section3() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Flashover</strong> is the critical transition point in a compartment fire. It
-                is the moment when all exposed combustible surfaces in the room reach their ignition
-                temperature simultaneously and ignite. The fire transitions from a localised,
-                growing fire to a <strong>fully involved compartment fire</strong> in a matter of
-                seconds.
+                <strong>Flashover</strong> is the critical transition point in a compartment fire.
+                It is the moment when all exposed combustible surfaces in the room reach their
+                ignition temperature simultaneously and ignite. The fire transitions from a
+                localised, growing fire to a <strong>fully involved compartment fire</strong> in a
+                matter of seconds.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
@@ -712,11 +696,11 @@ export default function FireSafetyModule1Section3() {
                 <p className="text-sm text-white">
                   Flashover occurs when the hot gas layer at ceiling level reaches approximately{' '}
                   <strong>500&ndash;600&deg;C</strong>. At this temperature, the thermal radiation
-                  from the smoke layer (approximately 20 kW/m&sup2; at floor level) is intense enough
-                  to simultaneously ignite all combustible materials in the compartment &mdash;
-                  furniture, carpet, curtains, wall coverings, and anything else that can burn. The
-                  room transitions from partial involvement to <strong>total involvement</strong> in
-                  seconds.
+                  from the smoke layer (approximately 20 kW/m&sup2; at floor level) is intense
+                  enough to simultaneously ignite all combustible materials in the compartment
+                  &mdash; furniture, carpet, curtains, wall coverings, and anything else that can
+                  burn. The room transitions from partial involvement to{' '}
+                  <strong>total involvement</strong> in seconds.
                 </p>
               </div>
 
@@ -728,10 +712,10 @@ export default function FireSafetyModule1Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Rolling flames across the ceiling:</strong> Flames in the hot gas layer
-                      roll across the ceiling surface, igniting gases as they travel &mdash; this is
-                      called <strong>rollover</strong> or <strong>flameover</strong> and is an
-                      immediate precursor to flashover.
+                      <strong>Rolling flames across the ceiling:</strong> Flames in the hot gas
+                      layer roll across the ceiling surface, igniting gases as they travel &mdash;
+                      this is called <strong>rollover</strong> or <strong>flameover</strong> and is
+                      an immediate precursor to flashover.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -811,7 +795,9 @@ export default function FireSafetyModule1Section3() {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-black/30 rounded-lg p-3">
-                    <p className="text-xs font-bold text-amber-400 mb-1">Fuel-Controlled (Pre-Flashover)</p>
+                    <p className="text-xs font-bold text-amber-400 mb-1">
+                      Fuel-Controlled (Pre-Flashover)
+                    </p>
                     <p className="text-xs text-white/70">
                       During the growth phase, the fire&apos;s intensity is limited by the{' '}
                       <strong>amount and type of fuel</strong> that is currently burning. There is
@@ -820,12 +806,14 @@ export default function FireSafetyModule1Section3() {
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
-                    <p className="text-xs font-bold text-red-400 mb-1">Ventilation-Controlled (Post-Flashover)</p>
+                    <p className="text-xs font-bold text-red-400 mb-1">
+                      Ventilation-Controlled (Post-Flashover)
+                    </p>
                     <p className="text-xs text-white/70">
                       After flashover, all available fuel is burning and there is{' '}
-                      <strong>more fuel than oxygen can support</strong>. The fire&apos;s intensity is
-                      now limited by the rate at which fresh air (oxygen) can enter through openings.
-                      Opening a window increases intensity; closing one reduces it.
+                      <strong>more fuel than oxygen can support</strong>. The fire&apos;s intensity
+                      is now limited by the rate at which fresh air (oxygen) can enter through
+                      openings. Opening a window increases intensity; closing one reduces it.
                     </p>
                   </div>
                 </div>
@@ -840,9 +828,9 @@ export default function FireSafetyModule1Section3() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong>Temperatures:</strong> Compartment temperatures reach{' '}
-                      <strong>800&ndash;1200&deg;C</strong>. Steel begins to lose structural strength
-                      at approximately 550&deg;C and fails at around 700&deg;C (without fire
-                      protection). Concrete can spall and crack above 300&deg;C.
+                      <strong>800&ndash;1200&deg;C</strong>. Steel begins to lose structural
+                      strength at approximately 550&deg;C and fails at around 700&deg;C (without
+                      fire protection). Concrete can spall and crack above 300&deg;C.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -850,8 +838,8 @@ export default function FireSafetyModule1Section3() {
                     <span>
                       <strong>Structural damage:</strong> Prolonged exposure to these temperatures
                       causes structural elements to deform, crack or collapse. This is why building
-                      regulations require minimum fire resistance periods (30, 60, 90 or 120 minutes)
-                      for structural elements.
+                      regulations require minimum fire resistance periods (30, 60, 90 or 120
+                      minutes) for structural elements.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -859,17 +847,17 @@ export default function FireSafetyModule1Section3() {
                     <span>
                       <strong>Fire spread to adjacent compartments:</strong> The intense heat can
                       breach fire-rated barriers through conduction, radiation through windows, or
-                      failure of fire-stopping materials. Flames may emerge from windows and re-enter
-                      the building at higher floors (external fire spread).
+                      failure of fire-stopping materials. Flames may emerge from windows and
+                      re-enter the building at higher floors (external fire spread).
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong>Duration:</strong> The fully developed phase continues until the fuel
-                      load is substantially consumed or the fire service suppresses it. In a standard
-                      office, this may last 30&ndash;60 minutes. In a heavily loaded storage area, it
-                      can last several hours.
+                      load is substantially consumed or the fire service suppresses it. In a
+                      standard office, this may last 30&ndash;60 minutes. In a heavily loaded
+                      storage area, it can last several hours.
                     </span>
                   </li>
                 </ul>
@@ -878,16 +866,19 @@ export default function FireSafetyModule1Section3() {
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
-                  <p className="text-sm font-medium text-orange-400">Implication for Building Design</p>
+                  <p className="text-sm font-medium text-orange-400">
+                    Implication for Building Design
+                  </p>
                 </div>
                 <p className="text-sm text-white/80">
                   The concept of ventilation-controlled burning is the reason why{' '}
-                  <strong>fire compartmentation</strong> is so important in building design. Fire-rated
-                  walls, floors, doors and fire stopping are designed to contain a fully developed fire
-                  within a single compartment for a specified period &mdash; giving occupants time to
-                  evacuate and the fire service time to respond. As an electrician, every time you pass
-                  a cable through a fire-rated wall or floor, you must ensure the{' '}
-                  <strong>fire stopping is properly reinstated</strong> to maintain compartmentation.
+                  <strong>fire compartmentation</strong> is so important in building design.
+                  Fire-rated walls, floors, doors and fire stopping are designed to contain a fully
+                  developed fire within a single compartment for a specified period &mdash; giving
+                  occupants time to evacuate and the fire service time to respond. As an
+                  electrician, every time you pass a cable through a fire-rated wall or floor, you
+                  must ensure the <strong>fire stopping is properly reinstated</strong> to maintain
+                  compartmentation.
                 </p>
               </div>
             </div>
@@ -904,10 +895,10 @@ export default function FireSafetyModule1Section3() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The <strong>decay phase</strong> begins when the available fuel is substantially
-                consumed and the fire&apos;s heat release rate starts to decline. Temperatures in the
-                compartment gradually drop, flames reduce, and the fire appears to be dying down.
-                However, the decay phase can be{' '}
-                <strong>extremely dangerous</strong> due to the risk of <strong>backdraught</strong>.
+                consumed and the fire&apos;s heat release rate starts to decline. Temperatures in
+                the compartment gradually drop, flames reduce, and the fire appears to be dying
+                down. However, the decay phase can be <strong>extremely dangerous</strong> due to
+                the risk of <strong>backdraught</strong>.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
@@ -915,37 +906,36 @@ export default function FireSafetyModule1Section3() {
                   Key Definition &mdash; Backdraught (Backdraft)
                 </p>
                 <p className="text-sm text-white">
-                  A <strong>backdraught</strong> is a type of deflagration &mdash; a rapid combustion
-                  event &mdash; that occurs when fresh air (oxygen) is suddenly introduced into a
-                  compartment where a fire has been burning in a{' '}
+                  A <strong>backdraught</strong> is a type of deflagration &mdash; a rapid
+                  combustion event &mdash; that occurs when fresh air (oxygen) is suddenly
+                  introduced into a compartment where a fire has been burning in a{' '}
                   <strong>ventilation-limited state</strong>. The fire has consumed most of the
                   available oxygen but has continued to produce large volumes of{' '}
-                  <strong>hot, unburnt pyrolysis gases</strong> (fuel vapours from heated materials).
-                  These gases are above their ignition temperature but cannot burn due to insufficient
-                  oxygen. When a door or window is opened, fresh oxygen enters, mixes with the
-                  superheated gases, and <strong>ignition occurs explosively</strong>.
+                  <strong>hot, unburnt pyrolysis gases</strong> (fuel vapours from heated
+                  materials). These gases are above their ignition temperature but cannot burn due
+                  to insufficient oxygen. When a door or window is opened, fresh oxygen enters,
+                  mixes with the superheated gases, and <strong>ignition occurs explosively</strong>
+                  .
                 </p>
               </div>
 
               <p>
-                Backdraught is not a gradual event. It occurs as a sudden, violent blast of flame and
-                hot gases that can project several metres from the opening. The overpressure wave can
-                knock people off their feet, shatter windows and cause structural damage. It is one
-                of the most dangerous phenomena that firefighters and building occupants can
-                encounter.
+                Backdraught is not a gradual event. It occurs as a sudden, violent blast of flame
+                and hot gases that can project several metres from the opening. The overpressure
+                wave can knock people off their feet, shatter windows and cause structural damage.
+                It is one of the most dangerous phenomena that firefighters and building occupants
+                can encounter.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <Eye className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">
-                    Backdraught Warning Signs
-                  </p>
+                  <p className="text-sm font-medium text-red-400">Backdraught Warning Signs</p>
                 </div>
                 <p className="text-sm text-white/80 mb-3">
                   Recognising the warning signs of potential backdraught can save your life. If you
-                  observe any of the following, <strong>do NOT open doors or windows</strong> into the
-                  affected area:
+                  observe any of the following, <strong>do NOT open doors or windows</strong> into
+                  the affected area:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {[
@@ -987,15 +977,15 @@ export default function FireSafetyModule1Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Do NOT open any doors or windows</strong> into the affected compartment
-                      &mdash; this is the action that triggers backdraught.
+                      <strong>Do NOT open any doors or windows</strong> into the affected
+                      compartment &mdash; this is the action that triggers backdraught.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Evacuate the area immediately</strong> and ensure no one else approaches
-                      the room.
+                      <strong>Evacuate the area immediately</strong> and ensure no one else
+                      approaches the room.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1008,9 +998,9 @@ export default function FireSafetyModule1Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Wait for the fire service</strong> &mdash; they have specialist training,
-                      equipment and techniques (such as fog nailing and controlled ventilation) to
-                      manage backdraught situations safely.
+                      <strong>Wait for the fire service</strong> &mdash; they have specialist
+                      training, equipment and techniques (such as fog nailing and controlled
+                      ventilation) to manage backdraught situations safely.
                     </span>
                   </li>
                 </ul>
@@ -1056,11 +1046,15 @@ export default function FireSafetyModule1Section3() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Copper pipes and metallic conduit transferring heat to adjacent rooms</span>
+                      <span>
+                        Copper pipes and metallic conduit transferring heat to adjacent rooms
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Metal cable tray acting as a heat bridge through compartment walls</span>
+                      <span>
+                        Metal cable tray acting as a heat bridge through compartment walls
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -1072,13 +1066,15 @@ export default function FireSafetyModule1Section3() {
                     <p className="text-sm font-medium text-orange-400">Convection</p>
                   </div>
                   <p className="text-sm text-white/80 mb-3">
-                    Heat transfer through the movement of hot gases and air. Hot gases rise and travel
-                    to remote areas through openings, shafts and voids.
+                    Heat transfer through the movement of hot gases and air. Hot gases rise and
+                    travel to remote areas through openings, shafts and voids.
                   </p>
                   <ul className="text-xs text-white/70 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Hot gases rising through stairwells and lift shafts (stack effect)</span>
+                      <span>
+                        Hot gases rising through stairwells and lift shafts (stack effect)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -1098,13 +1094,15 @@ export default function FireSafetyModule1Section3() {
                     <p className="text-sm font-medium text-red-400">Radiation</p>
                   </div>
                   <p className="text-sm text-white/80 mb-3">
-                    Heat transfer through electromagnetic waves (infrared). Does not require a medium
-                    &mdash; heat radiates through air and even through vacuum.
+                    Heat transfer through electromagnetic waves (infrared). Does not require a
+                    medium &mdash; heat radiates through air and even through vacuum.
                   </p>
                   <ul className="text-xs text-white/70 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Heat from the smoke layer igniting surfaces below (flashover mechanism)</span>
+                      <span>
+                        Heat from the smoke layer igniting surfaces below (flashover mechanism)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -1112,7 +1110,9 @@ export default function FireSafetyModule1Section3() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Radiant heat igniting combustible materials several metres from the fire</span>
+                      <span>
+                        Radiant heat igniting combustible materials several metres from the fire
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -1121,7 +1121,9 @@ export default function FireSafetyModule1Section3() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <Flame className="h-5 w-5 text-rose-500" />
-                    <p className="text-sm font-medium text-rose-400">Direct Burning (Flame Contact)</p>
+                    <p className="text-sm font-medium text-rose-400">
+                      Direct Burning (Flame Contact)
+                    </p>
                   </div>
                   <p className="text-sm text-white/80 mb-3">
                     Fire spreads by direct flame impingement on adjacent combustible materials. The
@@ -1130,7 +1132,9 @@ export default function FireSafetyModule1Section3() {
                   <ul className="text-xs text-white/70 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Flames spreading along combustible cable insulation in a cable tray</span>
+                      <span>
+                        Flames spreading along combustible cable insulation in a cable tray
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -1155,8 +1159,8 @@ export default function FireSafetyModule1Section3() {
                   fire, the stack effect dramatically accelerates the upward spread of hot gases and
                   smoke through these vertical pathways. A fire on a lower floor can rapidly fill
                   upper stairwells with lethal smoke, cutting off escape routes. This is why{' '}
-                  <strong>fire doors</strong> on stairwells and <strong>smoke ventilation systems</strong>{' '}
-                  are critical life-safety features.
+                  <strong>fire doors</strong> on stairwells and{' '}
+                  <strong>smoke ventilation systems</strong> are critical life-safety features.
                 </p>
               </div>
 
@@ -1169,37 +1173,37 @@ export default function FireSafetyModule1Section3() {
                   </p>
                 </div>
                 <p className="text-sm text-white/80 mb-3">
-                  Concealed spaces within buildings &mdash; ceiling voids, floor voids, wall cavities,
-                  cable risers, trunking systems and ventilation ducts &mdash; are some of the most
-                  significant pathways for fire spread. Fire can travel unseen through these routes,
-                  bypassing fire-rated walls and floors and emerging in areas far from the original
-                  fire.
+                  Concealed spaces within buildings &mdash; ceiling voids, floor voids, wall
+                  cavities, cable risers, trunking systems and ventilation ducts &mdash; are some of
+                  the most significant pathways for fire spread. Fire can travel unseen through
+                  these routes, bypassing fire-rated walls and floors and emerging in areas far from
+                  the original fire.
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Cable penetrations:</strong> Every hole drilled through a fire-rated wall
-                      or floor for cables or conduit creates a potential fire spread pathway. If not
-                      properly sealed with intumescent fire stopping, fire can travel through the gap
-                      around the cables.
+                      <strong>Cable penetrations:</strong> Every hole drilled through a fire-rated
+                      wall or floor for cables or conduit creates a potential fire spread pathway.
+                      If not properly sealed with intumescent fire stopping, fire can travel through
+                      the gap around the cables.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong>Cable tray and trunking:</strong> PVC cable insulation is combustible and
-                      can propagate flame along its length. Large bundles of cables in a tray can
-                      sustain fire and carry it through compartment barriers.
+                      <strong>Cable tray and trunking:</strong> PVC cable insulation is combustible
+                      and can propagate flame along its length. Large bundles of cables in a tray
+                      can sustain fire and carry it through compartment barriers.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong>Service risers:</strong> Vertical risers that carry cables, pipes and
-                      ducts between floors act as chimneys during a fire, drawing hot gases upward by
-                      convection. Fire-rated collars and intumescent seals at each floor penetration
-                      are essential.
+                      ducts between floors act as chimneys during a fire, drawing hot gases upward
+                      by convection. Fire-rated collars and intumescent seals at each floor
+                      penetration are essential.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1208,8 +1212,8 @@ export default function FireSafetyModule1Section3() {
                       <strong>The electrician&apos;s responsibility:</strong> Regulation 527 of BS
                       7671 requires that wiring passing through building elements (walls, floors,
                       ceilings) must be internally sealed to maintain the fire resistance of those
-                      elements. As an electrician, you must reinstate fire stopping after every cable
-                      installation that passes through a fire-rated barrier.
+                      elements. As an electrician, you must reinstate fire stopping after every
+                      cable installation that passes through a fire-rated barrier.
                     </span>
                   </li>
                 </ul>
@@ -1222,12 +1226,12 @@ export default function FireSafetyModule1Section3() {
                 </div>
                 <p className="text-sm text-white/80">
                   Many of the most devastating building fires in UK history were worsened by fire
-                  spreading through concealed routes where fire stopping had been omitted, damaged or
-                  incorrectly installed. Unsealed cable penetrations, missing fire collars on plastic
-                  pipe penetrations, and breached compartment walls have all been identified as
-                  contributing factors in fatal fire investigations. As an electrician, maintaining
-                  fire compartmentation is not just a regulatory requirement &mdash; it is a{' '}
-                  <strong>life-safety responsibility</strong>.
+                  spreading through concealed routes where fire stopping had been omitted, damaged
+                  or incorrectly installed. Unsealed cable penetrations, missing fire collars on
+                  plastic pipe penetrations, and breached compartment walls have all been identified
+                  as contributing factors in fatal fire investigations. As an electrician,
+                  maintaining fire compartmentation is not just a regulatory requirement &mdash; it
+                  is a <strong>life-safety responsibility</strong>.
                 </p>
               </div>
             </div>

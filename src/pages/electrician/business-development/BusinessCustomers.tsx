@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import {
   Target,
   TrendingUp,
@@ -28,33 +28,39 @@ import {
   ThumbsUp,
   Repeat,
   Gift,
-} from "lucide-react";
-import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
+} from 'lucide-react';
+import {
+  BusinessPageLayout,
+  SectionNav,
+  ContentBlock,
+  DataGrid,
+  InfoList,
+} from '@/components/business-hub';
 
 const BusinessCustomers = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeSection = searchParams.get("section") || "market-research";
+  const activeSection = searchParams.get('section') || 'market-research';
   const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
-    { id: "market-research", label: "Research", icon: Search },
-    { id: "digital-marketing", label: "Digital", icon: Monitor },
-    { id: "traditional-marketing", label: "Traditional", icon: Megaphone },
-    { id: "lead-generation", label: "Leads", icon: Target },
-    { id: "customer-experience", label: "Experience", icon: Users },
-    { id: "retention-growth", label: "Retention", icon: TrendingUp },
+    { id: 'market-research', label: 'Research', icon: Search },
+    { id: 'digital-marketing', label: 'Digital', icon: Monitor },
+    { id: 'traditional-marketing', label: 'Traditional', icon: Megaphone },
+    { id: 'lead-generation', label: 'Leads', icon: Target },
+    { id: 'customer-experience', label: 'Experience', icon: Users },
+    { id: 'retention-growth', label: 'Retention', icon: TrendingUp },
   ];
 
   const keyStats = [
-    { label: "Referral Close Rate", value: "60-80%", sublabel: "Best lead source" },
-    { label: "Marketing Budget", value: "5-10%", sublabel: "Of revenue" },
-    { label: "Customer Lifetime", value: "£2-5k", sublabel: "Average value" },
-    { label: "Retention Target", value: "85%+", sublabel: "Repeat customers" },
+    { label: 'Referral Close Rate', value: '60-80%', sublabel: 'Best lead source' },
+    { label: 'Marketing Budget', value: '5-10%', sublabel: 'Of revenue' },
+    { label: 'Customer Lifetime', value: '£2-5k', sublabel: 'Average value' },
+    { label: 'Retention Target', value: '85%+', sublabel: 'Repeat customers' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sections.map(s => document.getElementById(s.id));
+      const sectionElements = sections.map((s) => document.getElementById(s.id));
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sectionElements.length - 1; i >= 0; i--) {
@@ -66,8 +72,8 @@ const BusinessCustomers = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/customers`;
@@ -110,7 +116,8 @@ const BusinessCustomers = () => {
             summary={
               <p className="text-white">
                 Understanding your local market is essential for targeting the right customers.
-                Research competitor pricing, identify service gaps, and understand customer needs before investing in marketing.
+                Research competitor pricing, identify service gaps, and understand customer needs
+                before investing in marketing.
               </p>
             }
           >
@@ -127,15 +134,21 @@ const BusinessCustomers = () => {
                     <div className="space-y-2">
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-white">Homeowners needing repairs and upgrades</span>
+                        <span className="text-sm text-white">
+                          Homeowners needing repairs and upgrades
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-white">New homebuyers requiring inspections</span>
+                        <span className="text-sm text-white">
+                          New homebuyers requiring inspections
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-white">Landlords with compliance requirements</span>
+                        <span className="text-sm text-white">
+                          Landlords with compliance requirements
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -144,7 +157,9 @@ const BusinessCustomers = () => {
                     <div className="space-y-2">
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-white">Small businesses and retail units</span>
+                        <span className="text-sm text-white">
+                          Small businesses and retail units
+                        </span>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -152,7 +167,9 @@ const BusinessCustomers = () => {
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-white">Construction and development firms</span>
+                        <span className="text-sm text-white">
+                          Construction and development firms
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -163,10 +180,26 @@ const BusinessCustomers = () => {
               <InfoList
                 variant="numbered"
                 items={[
-                  { title: "Identify Competitors", description: "List all electrical businesses within your service area through Google, trade directories, and local advertising" },
-                  { title: "Analyse Pricing", description: "Research competitor pricing through quotes, website information, and industry forums to position competitively" },
-                  { title: "Find Service Gaps", description: "Identify services competitors don't offer or areas they underserve for competitive advantage" },
-                  { title: "Monitor Reviews", description: "Read competitor reviews to understand customer complaints and exceed expectations" },
+                  {
+                    title: 'Identify Competitors',
+                    description:
+                      'List all electrical businesses within your service area through Google, trade directories, and local advertising',
+                  },
+                  {
+                    title: 'Analyse Pricing',
+                    description:
+                      'Research competitor pricing through quotes, website information, and industry forums to position competitively',
+                  },
+                  {
+                    title: 'Find Service Gaps',
+                    description:
+                      "Identify services competitors don't offer or areas they underserve for competitive advantage",
+                  },
+                  {
+                    title: 'Monitor Reviews',
+                    description:
+                      'Read competitor reviews to understand customer complaints and exceed expectations',
+                  },
                 ]}
               />
             </div>
@@ -179,8 +212,9 @@ const BusinessCustomers = () => {
             icon={Monitor}
             summary={
               <p className="text-white">
-                A strong online presence is essential for modern electrical businesses.
-                Over 80% of customers search online before choosing a tradesperson, making digital marketing your highest-ROI channel.
+                A strong online presence is essential for modern electrical businesses. Over 80% of
+                customers search online before choosing a tradesperson, making digital marketing
+                your highest-ROI channel.
               </p>
             }
           >
@@ -193,16 +227,21 @@ const BusinessCustomers = () => {
                     <h4 className="text-base font-semibold text-white">Professional Website</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Your website is your 24/7 sales representative. Invest in a professional, mobile-friendly site.
+                    Your website is your 24/7 sales representative. Invest in a professional,
+                    mobile-friendly site.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Clear service descriptions and pricing</span>
+                      <span className="text-sm text-white">
+                        Clear service descriptions and pricing
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Portfolio of completed work with photos</span>
+                      <span className="text-sm text-white">
+                        Portfolio of completed work with photos
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -210,7 +249,9 @@ const BusinessCustomers = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Easy contact forms and click-to-call</span>
+                      <span className="text-sm text-white">
+                        Easy contact forms and click-to-call
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -220,16 +261,21 @@ const BusinessCustomers = () => {
                     <h4 className="text-base font-semibold text-white">Google Business Profile</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Your Google profile appears in local searches and Google Maps. Optimise it for maximum visibility.
+                    Your Google profile appears in local searches and Google Maps. Optimise it for
+                    maximum visibility.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Complete all profile sections fully</span>
+                      <span className="text-sm text-white">
+                        Complete all profile sections fully
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Add photos of work, team, and vehicles</span>
+                      <span className="text-sm text-white">
+                        Add photos of work, team, and vehicles
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -252,10 +298,26 @@ const BusinessCustomers = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Facebook Business Page", description: "Share project photos, customer testimonials, and seasonal tips. Ideal for domestic customers and community engagement" },
-                    { title: "Instagram Portfolio", description: "Visual showcase of your best work. Before/after photos perform exceptionally well for electrical installations" },
-                    { title: "LinkedIn Presence", description: "Connect with property managers, developers, and commercial clients. Share industry expertise and certifications" },
-                    { title: "Nextdoor Community", description: "Highly effective for local recommendations and community trust-building in specific neighbourhoods" },
+                    {
+                      title: 'Facebook Business Page',
+                      description:
+                        'Share project photos, customer testimonials, and seasonal tips. Ideal for domestic customers and community engagement',
+                    },
+                    {
+                      title: 'Instagram Portfolio',
+                      description:
+                        'Visual showcase of your best work. Before/after photos perform exceptionally well for electrical installations',
+                    },
+                    {
+                      title: 'LinkedIn Presence',
+                      description:
+                        'Connect with property managers, developers, and commercial clients. Share industry expertise and certifications',
+                    },
+                    {
+                      title: 'Nextdoor Community',
+                      description:
+                        'Highly effective for local recommendations and community trust-building in specific neighbourhoods',
+                    },
                   ]}
                 />
               </div>
@@ -289,8 +351,9 @@ const BusinessCustomers = () => {
             icon={Megaphone}
             summary={
               <p className="text-white">
-                Traditional marketing methods still deliver excellent results for local electrical businesses.
-                Vehicle branding, leaflets, and local networking generate highly qualified leads with strong conversion rates.
+                Traditional marketing methods still deliver excellent results for local electrical
+                businesses. Vehicle branding, leaflets, and local networking generate highly
+                qualified leads with strong conversion rates.
               </p>
             }
           >
@@ -303,11 +366,16 @@ const BusinessCustomers = () => {
                     <h4 className="text-base font-semibold text-white">Vehicle Branding</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Your van is a mobile billboard seen by thousands daily. Professional signage builds credibility and generates enquiries.
+                    Your van is a mobile billboard seen by thousands daily. Professional signage
+                    builds credibility and generates enquiries.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">£500-2,000 investment</span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">5+ year lifespan</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      £500-2,000 investment
+                    </span>
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      5+ year lifespan
+                    </span>
                   </div>
                 </div>
                 <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
@@ -316,11 +384,16 @@ const BusinessCustomers = () => {
                     <h4 className="text-base font-semibold text-white">Leaflets & Flyers</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Targeted leaflet drops in specific areas can generate consistent enquiries, especially after completing visible work.
+                    Targeted leaflet drops in specific areas can generate consistent enquiries,
+                    especially after completing visible work.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">1-3% response rate</span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">£0.05-0.15 per drop</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      1-3% response rate
+                    </span>
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      £0.05-0.15 per drop
+                    </span>
                   </div>
                 </div>
               </div>
@@ -334,10 +407,26 @@ const BusinessCustomers = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Trade Referrals", description: "Build relationships with plumbers, builders, decorators, and kitchen fitters for mutual referral arrangements" },
-                    { title: "Estate Agents", description: "Connect with local estate agents for referrals during property sales and electrical inspection requirements" },
-                    { title: "Property Managers", description: "Establish relationships with letting agents and property management companies for regular maintenance work" },
-                    { title: "Business Networks", description: "Join BNI, FSB, or local Chamber of Commerce for structured networking and business referrals" },
+                    {
+                      title: 'Trade Referrals',
+                      description:
+                        'Build relationships with plumbers, builders, decorators, and kitchen fitters for mutual referral arrangements',
+                    },
+                    {
+                      title: 'Estate Agents',
+                      description:
+                        'Connect with local estate agents for referrals during property sales and electrical inspection requirements',
+                    },
+                    {
+                      title: 'Property Managers',
+                      description:
+                        'Establish relationships with letting agents and property management companies for regular maintenance work',
+                    },
+                    {
+                      title: 'Business Networks',
+                      description:
+                        'Join BNI, FSB, or local Chamber of Commerce for structured networking and business referrals',
+                    },
                   ]}
                 />
               </div>
@@ -351,19 +440,27 @@ const BusinessCustomers = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Local newspapers and community magazines</span>
+                    <span className="text-sm text-white">
+                      Local newspapers and community magazines
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Sports club and community sponsorships</span>
+                    <span className="text-sm text-white">
+                      Sports club and community sponsorships
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Trade directories (Checkatrade, Yell)</span>
+                    <span className="text-sm text-white">
+                      Trade directories (Checkatrade, Yell)
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Local radio and community notice boards</span>
+                    <span className="text-sm text-white">
+                      Local radio and community notice boards
+                    </span>
                   </div>
                 </div>
               </div>
@@ -377,8 +474,8 @@ const BusinessCustomers = () => {
             icon={Target}
             summary={
               <p className="text-white">
-                Consistent lead generation ensures a steady pipeline of work.
-                Diversify lead sources to avoid dependency on any single channel and maintain business stability.
+                Consistent lead generation ensures a steady pipeline of work. Diversify lead sources
+                to avoid dependency on any single channel and maintain business stability.
               </p>
             }
           >
@@ -425,10 +522,26 @@ const BusinessCustomers = () => {
               <InfoList
                 variant="numbered"
                 items={[
-                  { title: "Respond Quickly", description: "Aim to respond to all enquiries within 1 hour during business hours. Speed of response significantly impacts conversion" },
-                  { title: "Qualify Leads", description: "Ask key questions upfront: location, job type, timeline, and budget to prioritise your time effectively" },
-                  { title: "Follow Up Consistently", description: "Follow up on quotes within 48 hours. Many jobs are won simply by being persistent when competitors aren't" },
-                  { title: "Track Everything", description: "Use a CRM or spreadsheet to track lead sources, conversion rates, and job values to optimise marketing spend" },
+                  {
+                    title: 'Respond Quickly',
+                    description:
+                      'Aim to respond to all enquiries within 1 hour during business hours. Speed of response significantly impacts conversion',
+                  },
+                  {
+                    title: 'Qualify Leads',
+                    description:
+                      'Ask key questions upfront: location, job type, timeline, and budget to prioritise your time effectively',
+                  },
+                  {
+                    title: 'Follow Up Consistently',
+                    description:
+                      "Follow up on quotes within 48 hours. Many jobs are won simply by being persistent when competitors aren't",
+                  },
+                  {
+                    title: 'Track Everything',
+                    description:
+                      'Use a CRM or spreadsheet to track lead sources, conversion rates, and job values to optimise marketing spend',
+                  },
                 ]}
               />
 
@@ -461,8 +574,9 @@ const BusinessCustomers = () => {
             icon={Users}
             summary={
               <p className="text-white">
-                Exceptional customer experience differentiates your business and generates referrals.
-                Every interaction is an opportunity to impress and build long-term relationships.
+                Exceptional customer experience differentiates your business and generates
+                referrals. Every interaction is an opportunity to impress and build long-term
+                relationships.
               </p>
             }
           >
@@ -476,10 +590,26 @@ const BusinessCustomers = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Professional Appearance", description: "Clean uniforms, branded workwear, and tidy appearance build immediate trust and credibility" },
-                    { title: "Clear Communication", description: "Explain work clearly, provide written quotes, and keep customers informed throughout the job" },
-                    { title: "Respect Their Property", description: "Use dust sheets, clean up thoroughly, and treat customer homes with care and respect" },
-                    { title: "Punctuality", description: "Arrive on time or communicate delays immediately. Being reliable sets you apart from competitors" },
+                    {
+                      title: 'Professional Appearance',
+                      description:
+                        'Clean uniforms, branded workwear, and tidy appearance build immediate trust and credibility',
+                    },
+                    {
+                      title: 'Clear Communication',
+                      description:
+                        'Explain work clearly, provide written quotes, and keep customers informed throughout the job',
+                    },
+                    {
+                      title: 'Respect Their Property',
+                      description:
+                        'Use dust sheets, clean up thoroughly, and treat customer homes with care and respect',
+                    },
+                    {
+                      title: 'Punctuality',
+                      description:
+                        'Arrive on time or communicate delays immediately. Being reliable sets you apart from competitors',
+                    },
                   ]}
                 />
               </div>
@@ -583,8 +713,8 @@ const BusinessCustomers = () => {
             icon={TrendingUp}
             summary={
               <p className="text-white">
-                Retaining existing customers costs 5-10x less than acquiring new ones.
-                Focus on building long-term relationships that generate repeat business and referrals.
+                Retaining existing customers costs 5-10x less than acquiring new ones. Focus on
+                building long-term relationships that generate repeat business and referrals.
               </p>
             }
           >
@@ -598,10 +728,26 @@ const BusinessCustomers = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Annual Safety Checks", description: "Offer annual electrical safety inspections to maintain regular contact and identify upgrade opportunities" },
-                    { title: "Maintenance Reminders", description: "Send reminders for smoke detector testing, RCD checks, and EICR renewals to stay top of mind" },
-                    { title: "Loyalty Benefits", description: "Offer returning customers priority booking, small discounts, or free minor repairs as appreciation" },
-                    { title: "Regular Communication", description: "Send seasonal tips, safety advice, and relevant updates through email newsletters" },
+                    {
+                      title: 'Annual Safety Checks',
+                      description:
+                        'Offer annual electrical safety inspections to maintain regular contact and identify upgrade opportunities',
+                    },
+                    {
+                      title: 'Maintenance Reminders',
+                      description:
+                        'Send reminders for smoke detector testing, RCD checks, and EICR renewals to stay top of mind',
+                    },
+                    {
+                      title: 'Loyalty Benefits',
+                      description:
+                        'Offer returning customers priority booking, small discounts, or free minor repairs as appreciation',
+                    },
+                    {
+                      title: 'Regular Communication',
+                      description:
+                        'Send seasonal tips, safety advice, and relevant updates through email newsletters',
+                    },
                   ]}
                 />
               </div>
@@ -614,16 +760,21 @@ const BusinessCustomers = () => {
                     <h4 className="text-base font-semibold text-white">Referral Programme</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Formalise referrals with a structured programme that rewards customers for recommendations.
+                    Formalise referrals with a structured programme that rewards customers for
+                    recommendations.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">£20-50 credit per successful referral</span>
+                      <span className="text-sm text-white">
+                        £20-50 credit per successful referral
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Discount for the referred customer too</span>
+                      <span className="text-sm text-white">
+                        Discount for the referred customer too
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -637,12 +788,15 @@ const BusinessCustomers = () => {
                     <h4 className="text-base font-semibold text-white">Reviews & Testimonials</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Positive reviews are powerful social proof that influence new customers' decisions.
+                    Positive reviews are powerful social proof that influence new customers'
+                    decisions.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Ask every satisfied customer for a review</span>
+                      <span className="text-sm text-white">
+                        Ask every satisfied customer for a review
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -688,9 +842,10 @@ const BusinessCustomers = () => {
             <div>
               <h3 className="text-base font-semibold text-white mb-2">Remember</h3>
               <p className="text-sm text-white leading-relaxed">
-                Customer acquisition is a marathon, not a sprint. Focus on building genuine relationships,
-                delivering exceptional service, and maintaining consistent marketing efforts. Satisfied
-                customers are your best marketing tool through referrals and testimonials.
+                Customer acquisition is a marathon, not a sprint. Focus on building genuine
+                relationships, delivering exceptional service, and maintaining consistent marketing
+                efforts. Satisfied customers are your best marketing tool through referrals and
+                testimonials.
               </p>
             </div>
           </div>

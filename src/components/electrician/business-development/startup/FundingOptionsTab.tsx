@@ -1,104 +1,114 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { PoundSterling, TrendingUp, Building, Users, ExternalLink, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  PoundSterling,
+  TrendingUp,
+  Building,
+  Users,
+  ExternalLink,
+  CheckCircle,
+} from 'lucide-react';
 
 const FundingOptionsTab = () => {
   const governmentSchemes = [
     {
-      name: "Start Up Loans",
-      amount: "£500 - £25,000",
-      rate: "6% fixed",
-      description: "Government-backed personal loans for new businesses",
-      requirements: ["Business plan required", "Personal guarantee", "Available for up to 3 years"],
-      website: "startuploans.co.uk"
+      name: 'Start Up Loans',
+      amount: '£500 - £25,000',
+      rate: '6% fixed',
+      description: 'Government-backed personal loans for new businesses',
+      requirements: ['Business plan required', 'Personal guarantee', 'Available for up to 3 years'],
+      website: 'startuploans.co.uk',
     },
     {
-      name: "Innovate UK Grants",
-      amount: "£25,000 - £2M",
-      rate: "Grant (no repayment)",
-      description: "Funding for innovative electrical technology projects",
-      requirements: ["Innovation focus", "Technology development", "Job creation potential"],
-      website: "apply-for-innovation-funding.service.gov.uk"
+      name: 'Innovate UK Grants',
+      amount: '£25,000 - £2M',
+      rate: 'Grant (no repayment)',
+      description: 'Funding for innovative electrical technology projects',
+      requirements: ['Innovation focus', 'Technology development', 'Job creation potential'],
+      website: 'apply-for-innovation-funding.service.gov.uk',
     },
     {
-      name: "Help to Grow Scheme",
-      amount: "Up to £5,000",
-      rate: "90% government funded",
-      description: "Management training and development funding",
-      requirements: ["5-249 employees", "2+ years trading", "Growth potential"],
-      website: "help-to-grow.service.gov.uk"
-    }
+      name: 'Help to Grow Scheme',
+      amount: 'Up to £5,000',
+      rate: '90% government funded',
+      description: 'Management training and development funding',
+      requirements: ['5-249 employees', '2+ years trading', 'Growth potential'],
+      website: 'help-to-grow.service.gov.uk',
+    },
   ];
 
   const bankLoans = [
     {
-      bank: "Santander",
-      product: "Business Current Account + Loan",
-      amount: "£1,000 - £250,000",
-      features: ["18 months free banking", "Dedicated business manager", "Online application"],
-      typical_rate: "5.5% - 12.5%"
+      bank: 'Santander',
+      product: 'Business Current Account + Loan',
+      amount: '£1,000 - £250,000',
+      features: ['18 months free banking', 'Dedicated business manager', 'Online application'],
+      typical_rate: '5.5% - 12.5%',
     },
     {
-      bank: "NatWest",
-      product: "Start-Up Business Account",
-      amount: "£1,000 - £500,000",
-      features: ["Free banking for 18 months", "Business mentor support", "Cashflow forecasting tools"],
-      typical_rate: "4.5% - 11.9%"
+      bank: 'NatWest',
+      product: 'Start-Up Business Account',
+      amount: '£1,000 - £500,000',
+      features: [
+        'Free banking for 18 months',
+        'Business mentor support',
+        'Cashflow forecasting tools',
+      ],
+      typical_rate: '4.5% - 11.9%',
     },
     {
-      bank: "HSBC",
-      product: "Business Start-Up Loan",
-      amount: "£1,000 - £30,000",
-      features: ["No arrangement fees", "Flexible repayment", "Business banking package"],
-      typical_rate: "6.9% - 15.9%"
-    }
+      bank: 'HSBC',
+      product: 'Business Start-Up Loan',
+      amount: '£1,000 - £30,000',
+      features: ['No arrangement fees', 'Flexible repayment', 'Business banking package'],
+      typical_rate: '6.9% - 15.9%',
+    },
   ];
 
   const alternativeFunding = [
     {
-      type: "Peer-to-Peer Lending",
-      providers: ["Funding Circle", "Zopa Business"],
-      pros: ["Faster approval", "Competitive rates", "Less paperwork"],
-      cons: ["Variable rates", "Platform fees", "Less personal support"],
-      typical_range: "3.5% - 15%"
+      type: 'Peer-to-Peer Lending',
+      providers: ['Funding Circle', 'Zopa Business'],
+      pros: ['Faster approval', 'Competitive rates', 'Less paperwork'],
+      cons: ['Variable rates', 'Platform fees', 'Less personal support'],
+      typical_range: '3.5% - 15%',
     },
     {
-      type: "Invoice Factoring",
-      providers: ["MarketInvoice", "Bibby Financial Services"],
-      pros: ["Immediate cash flow", "No debt on balance sheet", "Credit protection"],
-      cons: ["Client notification", "Ongoing fees", "Customer relationship impact"],
-      typical_range: "1.5% - 3% per month"
+      type: 'Invoice Factoring',
+      providers: ['MarketInvoice', 'Bibby Financial Services'],
+      pros: ['Immediate cash flow', 'No debt on balance sheet', 'Credit protection'],
+      cons: ['Client notification', 'Ongoing fees', 'Customer relationship impact'],
+      typical_range: '1.5% - 3% per month',
     },
     {
-      type: "Equipment Finance",
-      providers: ["Close Brothers", "Aldermore"],
-      pros: ["Preserve cash flow", "Tax benefits", "Equipment as security"],
-      cons: ["Asset tied up", "Total cost higher", "Depreciation risk"],
-      typical_range: "4% - 12%"
-    }
+      type: 'Equipment Finance',
+      providers: ['Close Brothers', 'Aldermore'],
+      pros: ['Preserve cash flow', 'Tax benefits', 'Equipment as security'],
+      cons: ['Asset tied up', 'Total cost higher', 'Depreciation risk'],
+      typical_range: '4% - 12%',
+    },
   ];
 
   const grantOpportunities = [
     {
-      name: "Local Enterprise Partnership Grants",
-      focus: "Regional business development",
-      amount: "£1,000 - £50,000",
-      eligibility: "Location-specific criteria"
+      name: 'Local Enterprise Partnership Grants',
+      focus: 'Regional business development',
+      amount: '£1,000 - £50,000',
+      eligibility: 'Location-specific criteria',
     },
     {
-      name: "Green Business Grants",
-      focus: "Renewable energy installations",
-      amount: "£5,000 - £100,000",
-      eligibility: "Environmental impact projects"
+      name: 'Green Business Grants',
+      focus: 'Renewable energy installations',
+      amount: '£5,000 - £100,000',
+      eligibility: 'Environmental impact projects',
     },
     {
       name: "Prince's Trust Enterprise Programme",
-      focus: "Young entrepreneurs (18-30)",
-      amount: "£500 - £4,000",
-      eligibility: "Age and circumstance specific"
-    }
+      focus: 'Young entrepreneurs (18-30)',
+      amount: '£500 - £4,000',
+      eligibility: 'Age and circumstance specific',
+    },
   ];
 
   return (
@@ -116,9 +126,7 @@ const FundingOptionsTab = () => {
               <div className="flex items-center justify-between">
                 <h4 className="font-semibold text-foreground">{scheme.name}</h4>
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-green-500/20 text-green-300">
-                    {scheme.amount}
-                  </Badge>
+                  <Badge className="bg-green-500/20 text-green-300">{scheme.amount}</Badge>
                   <Badge variant="outline" className="border-green-400/30 text-green-300">
                     {scheme.rate}
                   </Badge>
@@ -157,9 +165,7 @@ const FundingOptionsTab = () => {
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-semibold text-foreground">{loan.bank}</h4>
-                <Badge className="bg-blue-500/20 text-blue-300">
-                  {loan.typical_rate}
-                </Badge>
+                <Badge className="bg-blue-500/20 text-blue-300">{loan.typical_rate}</Badge>
               </div>
               <h5 className="text-sm font-medium text-blue-300 mb-2">{loan.product}</h5>
               <p className="text-muted-foreground mb-3">Loan amount: {loan.amount}</p>
@@ -188,12 +194,10 @@ const FundingOptionsTab = () => {
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
               <div className="flex items-center justify-between">
                 <h4 className="font-semibold text-foreground">{option.type}</h4>
-                <Badge className="bg-purple-500/20 text-purple-300">
-                  {option.typical_range}
-                </Badge>
+                <Badge className="bg-purple-500/20 text-purple-300">{option.typical_range}</Badge>
               </div>
               <div className="text-sm text-muted-foreground">
-                <strong>Providers:</strong> {option.providers.join(", ")}
+                <strong>Providers:</strong> {option.providers.join(', ')}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
@@ -256,19 +260,22 @@ const FundingOptionsTab = () => {
             <div className="p-3 bg-elec-dark/30 rounded-md">
               <h4 className="font-medium text-foreground mb-2">1. Start Small, Scale Up</h4>
               <p className="text-sm text-muted-foreground">
-                Begin with personal savings and small loans. Build credit history and business track record before seeking larger funding.
+                Begin with personal savings and small loans. Build credit history and business track
+                record before seeking larger funding.
               </p>
             </div>
             <div className="p-3 bg-elec-dark/30 rounded-md">
               <h4 className="font-medium text-foreground mb-2">2. Diversify Funding Sources</h4>
               <p className="text-sm text-muted-foreground">
-                Don't rely on a single funding source. Combine grants, loans, and retained earnings for financial stability.
+                Don't rely on a single funding source. Combine grants, loans, and retained earnings
+                for financial stability.
               </p>
             </div>
             <div className="p-3 bg-elec-dark/30 rounded-md">
               <h4 className="font-medium text-foreground mb-2">3. Maintain Strong Credit</h4>
               <p className="text-sm text-muted-foreground">
-                Keep personal and business credit scores high. This opens more funding options and better interest rates.
+                Keep personal and business credit scores high. This opens more funding options and
+                better interest rates.
               </p>
             </div>
           </div>

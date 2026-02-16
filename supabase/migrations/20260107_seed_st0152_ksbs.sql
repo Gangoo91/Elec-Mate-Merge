@@ -1,5 +1,6 @@
 -- ST0152 Installation and Maintenance Electrician Apprenticeship Standard
--- Knowledge, Skills and Behaviours (KSBs)
+-- Official KSBs from ST0152 v1.0 (Skills England)
+-- Knowledge (K1-K8) and Behaviours (B1-B8) — skills are integrated into knowledge units
 
 -- First, ensure we have the ST0152 qualification
 INSERT INTO qualifications (id, awarding_body, level, title, code, description)
@@ -9,7 +10,7 @@ VALUES (
   'Level 3',
   'Installation and Maintenance Electrician Apprenticeship Standard',
   'ST0152',
-  'Level 3 apprenticeship standard for Installation and Maintenance Electricians. Duration: 42-48 months. End Point Assessment includes practical assessment, multiple choice test, and professional discussion. Routes available: Installation Electrician or Maintenance Electrician.'
+  'Level 3 apprenticeship standard for Installation and Maintenance Electricians. Duration: 42-48 months. End Point Assessment includes AM2S synoptic test (16.5 hours over 2.5 days, 70% practical / 30% theory). Routes available: Installation Electrician or Maintenance Electrician. Skills are integrated into knowledge units — the 5357-23 qualification units deliver both knowledge and practical competence together.'
 )
 ON CONFLICT (id) DO UPDATE SET
   title = EXCLUDED.title,
@@ -21,258 +22,153 @@ ON CONFLICT (id) DO UPDATE SET
 DELETE FROM apprenticeship_ksbs WHERE qualification_id = 'st0152-apprenticeship-00000001';
 
 -- ===================
--- KNOWLEDGE (K1-K15)
+-- KNOWLEDGE (K1-K8)
 -- ===================
 
-INSERT INTO apprenticeship_ksbs (qualification_id, ksb_type, code, title, description, assessment_method, sort_order)
+INSERT INTO apprenticeship_ksbs (qualification_id, ksb_type, code, title, description, assessment_method, route, sort_order)
 VALUES
 -- K1
 ('st0152-apprenticeship-00000001', 'knowledge', 'K1',
- 'Installation, maintenance and repair of electrical installations',
- 'Understand the principles and processes for the installation, maintenance and repair of electrical systems, including switchboards, motors, cables, protective devices, heating, lighting, air conditioning systems, and renewable energy technologies.',
- ARRAY['portfolio', 'test'], 1),
+ 'Termination and connection of conductors, cables and cords',
+ 'Understand and apply methods for terminating and connecting conductors, cables and cords in electrical installations. Delivered through Unit 107 (Understand Terminations and Connections of Conductors) and Unit 118 (Termination and Connection of Conductors).',
+ ARRAY['portfolio', 'test', 'observation'], 'core', 1),
 
 -- K2
 ('st0152-apprenticeship-00000001', 'knowledge', 'K2',
- 'Relevant industry health, safety and environmental requirements',
- 'Understand health and safety legislation (HASAWA, EAW Regulations), risk assessment, safe systems of work, COSHH, manual handling, working at height, and environmental protection requirements.',
- ARRAY['portfolio', 'test'], 2),
+ 'Preparation and installation of wiring systems and equipment',
+ 'Understand and apply practices and procedures for preparing and installing wiring systems and associated equipment. Delivered through Unit 104/004 (Understand Installation of Wiring Systems and Associated Equipment) and Unit 109 (Install Wiring Systems and Associated Equipment).',
+ ARRAY['portfolio', 'test', 'observation'], 'core', 2),
 
 -- K3
 ('st0152-apprenticeship-00000001', 'knowledge', 'K3',
- 'Electrical science and technology',
- 'Understand electrical theory including AC/DC principles, Ohms law, power calculations, magnetism, inductance, capacitance, three-phase systems, and power factor.',
- ARRAY['portfolio', 'test'], 3),
+ 'Inspection, testing, commissioning and certification',
+ 'Understand and apply procedures for initial verification and periodic inspection and testing of electrical installations, including test sequences, instrument use, and completion of certificates (EIC, MEIWC, EICR). Delivered through Unit 312/212 (Principles of Inspection, Testing and Commissioning) and Unit 113 (Inspect, Test and Commission Electrical Systems).',
+ ARRAY['portfolio', 'test', 'observation'], 'core', 3),
 
 -- K4
 ('st0152-apprenticeship-00000001', 'knowledge', 'K4',
- 'Principles, practices and legislation for termination and connection',
- 'Understand methods for terminating and connecting conductors, cables and cords, including cable glands, termination of armoured cables, and requirements of BS 7671.',
- ARRAY['portfolio', 'test'], 4),
+ 'Diagnosing and correcting electrical faults',
+ 'Understand and apply systematic fault diagnosis procedures, use of test instruments, interpretation of results, and methods for fault rectification. Delivered through Unit 114/014 (Understand How to Diagnose and Correct Electrical Faults) and Unit 115 (Diagnose and Correct Electrical Faults).',
+ ARRAY['portfolio', 'test', 'observation'], 'core', 4),
 
 -- K5
 ('st0152-apprenticeship-00000001', 'knowledge', 'K5',
- 'Preparation and installation of wiring systems',
- 'Understand practices and procedures for installing wiring systems including conduit, trunking, cable tray, SWA cables, and associated enclosures.',
- ARRAY['portfolio', 'test'], 5),
+ 'Electrical principles for design, building, installation and maintenance',
+ 'Understand electrical science and principles underpinning the design, building, installation and maintenance of electrical systems, including AC/DC theory, power calculations, magnetism, inductance, capacitance, and three-phase systems. Delivered through Unit 103/003 (Electrical Principles).',
+ ARRAY['portfolio', 'test'], 'core', 5),
 
 -- K6
 ('st0152-apprenticeship-00000001', 'knowledge', 'K6',
- 'Inspection, testing, commissioning and certification',
- 'Understand procedures for initial verification and periodic inspection and testing, including test sequences, instrument use, and completion of certificates (EIC, MEIWC, EICR).',
- ARRAY['portfolio', 'test'], 6),
+ 'Oversee and organise the work environment',
+ 'Understand how to plan, organise and oversee the electrical work environment, including resource management, coordination with other trades, and quality assurance. Delivered through Unit 105/505 (Understand How to Oversee and Organise the Work Environment) and Unit 106 (Oversee and Organise the Work Environment).',
+ ARRAY['portfolio', 'discussion'], 'core', 6),
 
--- K7
+-- K7 (Installation route only)
 ('st0152-apprenticeship-00000001', 'knowledge', 'K7',
- 'Electrical system design',
- 'Understand the principles of electrical system design including load assessment, diversity, cable selection, circuit protection, and compliance with BS 7671.',
- ARRAY['portfolio', 'test'], 7),
+ 'Planning and selection for installation',
+ 'Understand planning and selection processes for electrical installation work, including load assessment, diversity, cable selection, circuit protection, and compliance with BS 7671. Delivered through Unit 105/505 and Unit 109. Installation route only.',
+ ARRAY['portfolio', 'test', 'observation'], 'installation', 7),
 
--- K8
+-- K8 (Maintenance route only)
 ('st0152-apprenticeship-00000001', 'knowledge', 'K8',
- 'Fault diagnosis and rectification',
- 'Understand systematic fault diagnosis procedures, use of test instruments, interpretation of results, and methods for fault rectification.',
- ARRAY['portfolio', 'test'], 8),
-
--- K9
-('st0152-apprenticeship-00000001', 'knowledge', 'K9',
- 'Overseeing and organising the work environment',
- 'Understand how to plan, organise and oversee electrical installation work, including resource management, coordination with other trades, and quality assurance.',
- ARRAY['portfolio', 'discussion'], 9),
-
--- K10
-('st0152-apprenticeship-00000001', 'knowledge', 'K10',
- 'Communication techniques and professional standards',
- 'Understand effective communication methods with clients, colleagues and other stakeholders, and the importance of professional conduct and standards.',
- ARRAY['portfolio', 'discussion'], 10),
-
--- K11
-('st0152-apprenticeship-00000001', 'knowledge', 'K11',
- 'Environmental technology systems',
- 'Understand environmental technology systems including solar PV, electric vehicle charging, heat pumps, and energy management systems.',
- ARRAY['portfolio', 'test'], 11),
-
--- K12
-('st0152-apprenticeship-00000001', 'knowledge', 'K12',
- 'Special locations and installations',
- 'Understand requirements for special locations as defined in BS 7671 including bathrooms, swimming pools, construction sites, and agricultural premises.',
- ARRAY['portfolio', 'test'], 12),
-
--- K13
-('st0152-apprenticeship-00000001', 'knowledge', 'K13',
- 'Motor control and automation',
- 'Understand motor control systems, starting methods, variable speed drives, and basic programmable logic controllers (PLCs).',
- ARRAY['portfolio', 'test'], 13),
-
--- K14
-('st0152-apprenticeship-00000001', 'knowledge', 'K14',
- 'Fire and security systems',
- 'Understand fire alarm and security system installations, including wiring requirements and integration with electrical installations.',
- ARRAY['portfolio', 'test'], 14),
-
--- K15
-('st0152-apprenticeship-00000001', 'knowledge', 'K15',
- 'Relevant industry regulations and standards',
- 'Understand the application of BS 7671, building regulations, and other relevant standards to electrical installations.',
- ARRAY['portfolio', 'test'], 15);
+ 'Planning and preparing to maintain systems',
+ 'Understand planning and preparation for maintaining electrical systems, including scheduled and reactive maintenance procedures, system analysis, and documentation. Delivered through Unit 110 (Maintain Electrical Systems and Equipment). Maintenance route only.',
+ ARRAY['portfolio', 'test', 'observation'], 'maintenance', 8);
 
 -- ===================
--- SKILLS (S1-S12)
+-- BEHAVIOURS (B1-B8)
 -- ===================
 
-INSERT INTO apprenticeship_ksbs (qualification_id, ksb_type, code, title, description, assessment_method, sort_order)
-VALUES
--- S1
-('st0152-apprenticeship-00000001', 'skill', 'S1',
- 'Install electrical systems safely to specification',
- 'Plan, prepare and install electrical wiring systems, equipment and components safely and to customer/client specifications, following BS 7671 requirements.',
- ARRAY['portfolio', 'observation'], 1),
-
--- S2
-('st0152-apprenticeship-00000001', 'skill', 'S2',
- 'Apply safe working practices',
- 'Consistently apply safe working practices including risk assessment, safe isolation, correct PPE usage, and compliance with health and safety requirements.',
- ARRAY['portfolio', 'observation'], 2),
-
--- S3
-('st0152-apprenticeship-00000001', 'skill', 'S3',
- 'Terminate and connect conductors',
- 'Terminate and connect conductors, cables and flexible cords in electrical installations using appropriate techniques and to required standards.',
- ARRAY['portfolio', 'observation'], 3),
-
--- S4
-('st0152-apprenticeship-00000001', 'skill', 'S4',
- 'Install wiring systems and enclosures',
- 'Install a range of wiring systems and enclosures including conduit, trunking, cable tray, and associated accessories.',
- ARRAY['portfolio', 'observation'], 4),
-
--- S5
-('st0152-apprenticeship-00000001', 'skill', 'S5',
- 'Install electrical equipment and components',
- 'Install and connect electrical equipment and components including consumer units, distribution boards, protective devices, and accessories.',
- ARRAY['portfolio', 'observation'], 5),
-
--- S6
-('st0152-apprenticeship-00000001', 'skill', 'S6',
- 'Inspect, test and commission installations',
- 'Conduct inspection, testing and commissioning of electrical installations, complete required tests accurately, and produce appropriate certification.',
- ARRAY['portfolio', 'observation'], 6),
-
--- S7
-('st0152-apprenticeship-00000001', 'skill', 'S7',
- 'Diagnose and rectify faults',
- 'Apply systematic fault diagnosis procedures to locate faults, and rectify faults safely and effectively.',
- ARRAY['portfolio', 'observation'], 7),
-
--- S8
-('st0152-apprenticeship-00000001', 'skill', 'S8',
- 'Maintain electrical systems',
- 'Carry out planned and reactive maintenance on electrical systems and equipment, identifying issues and recommending remedial action.',
- ARRAY['portfolio', 'observation'], 8),
-
--- S9
-('st0152-apprenticeship-00000001', 'skill', 'S9',
- 'Use technical documentation',
- 'Read and interpret technical documentation including drawings, specifications, and manufacturers'' instructions.',
- ARRAY['portfolio', 'discussion'], 9),
-
--- S10
-('st0152-apprenticeship-00000001', 'skill', 'S10',
- 'Communicate effectively',
- 'Communicate effectively with clients, colleagues and other stakeholders using appropriate methods (verbal, written, digital).',
- ARRAY['portfolio', 'discussion'], 10),
-
--- S11
-('st0152-apprenticeship-00000001', 'skill', 'S11',
- 'Complete documentation and records',
- 'Accurately complete required documentation including test certificates, job sheets, handover documents, and work records.',
- ARRAY['portfolio', 'discussion'], 11),
-
--- S12
-('st0152-apprenticeship-00000001', 'skill', 'S12',
- 'Work as part of a team',
- 'Work effectively as part of a team, coordinating with colleagues and other trades to complete work efficiently and safely.',
- ARRAY['portfolio', 'discussion'], 12);
-
--- ===================
--- BEHAVIOURS (B1-B6)
--- ===================
-
-INSERT INTO apprenticeship_ksbs (qualification_id, ksb_type, code, title, description, assessment_method, sort_order)
+INSERT INTO apprenticeship_ksbs (qualification_id, ksb_type, code, title, description, assessment_method, route, sort_order)
 VALUES
 -- B1
 ('st0152-apprenticeship-00000001', 'behaviour', 'B1',
- 'Safety-first mindset',
- 'Prioritise health, safety and welfare of self and others in all work activities. Proactively identify and address safety concerns.',
- ARRAY['portfolio', 'discussion'], 1),
+ 'Work reliably and effectively without close supervision',
+ 'Demonstrate the ability to work independently, manage own time and tasks, and deliver work reliably and effectively without the need for close supervision.',
+ ARRAY['portfolio', 'discussion'], 'core', 1),
 
 -- B2
 ('st0152-apprenticeship-00000001', 'behaviour', 'B2',
- 'Professional integrity',
- 'Demonstrate honesty, reliability and integrity. Take responsibility for own work and actions. Maintain confidentiality where required.',
- ARRAY['portfolio', 'discussion'], 2),
+ 'Accept responsibility for own and others'' work',
+ 'Accept responsibility for the quality and safety of own work and the work of others under their supervision. Take ownership of outcomes.',
+ ARRAY['portfolio', 'discussion'], 'core', 2),
 
 -- B3
 ('st0152-apprenticeship-00000001', 'behaviour', 'B3',
- 'Quality focus',
- 'Committed to producing work of high quality, following standards and specifications. Take pride in workmanship.',
- ARRAY['portfolio', 'discussion'], 3),
+ 'Accept, allocate and supervise technical and other tasks',
+ 'Demonstrate the ability to accept tasks, allocate work to others appropriately, and supervise technical and other tasks to ensure standards are met.',
+ ARRAY['portfolio', 'discussion'], 'core', 3),
 
 -- B4
 ('st0152-apprenticeship-00000001', 'behaviour', 'B4',
- 'Positive attitude',
- 'Demonstrate enthusiasm, motivation and commitment to work. Approach challenges positively and show resilience.',
- ARRAY['portfolio', 'discussion'], 4),
+ 'Use oral, written and electronic communication methods',
+ 'Communicate effectively using oral, written and electronic methods with clients, colleagues and other stakeholders.',
+ ARRAY['portfolio', 'discussion'], 'core', 4),
 
 -- B5
 ('st0152-apprenticeship-00000001', 'behaviour', 'B5',
- 'Self-development',
- 'Take responsibility for own learning and development. Seek feedback and opportunities to improve skills and knowledge.',
- ARRAY['portfolio', 'discussion'], 5),
+ 'Work effectively with colleagues, trades, clients, suppliers and the public',
+ 'Work effectively and build productive relationships with colleagues, other trades, clients, suppliers and the public.',
+ ARRAY['portfolio', 'discussion'], 'core', 5),
 
 -- B6
 ('st0152-apprenticeship-00000001', 'behaviour', 'B6',
- 'Customer focus',
- 'Demonstrate awareness of customer needs and expectations. Provide helpful, courteous service and maintain professional conduct.',
- ARRAY['portfolio', 'discussion'], 6);
+ 'Contribute to sustainable development',
+ 'Demonstrate awareness of environmental impact and contribute to sustainable development through working practices and material choices.',
+ ARRAY['portfolio', 'discussion'], 'core', 6),
 
--- Add qualification categories for ST0152 that align with the KSBs
+-- B7
+('st0152-apprenticeship-00000001', 'behaviour', 'B7',
+ 'Maintain and enhance competence in own area',
+ 'Take responsibility for own continuing professional development. Seek opportunities to maintain and enhance competence in own area of work.',
+ ARRAY['portfolio', 'discussion'], 'core', 7),
+
+-- B8
+('st0152-apprenticeship-00000001', 'behaviour', 'B8',
+ 'Exercise responsibilities in an ethical manner',
+ 'Exercise responsibilities in an ethical manner, demonstrating honesty, integrity and respect for others in all professional activities.',
+ ARRAY['portfolio', 'discussion'], 'core', 8);
+
+-- ====================================
+-- QUALIFICATION CATEGORIES (updated)
+-- ====================================
+
 DELETE FROM qualification_categories WHERE qualification_id = 'st0152-apprenticeship-00000001';
 
 INSERT INTO qualification_categories (
   qualification_id, name, description, icon, color, required_entries, learning_outcomes, assessment_criteria
 ) VALUES
--- Core Technical
+-- Core Technical Knowledge
 ('st0152-apprenticeship-00000001',
  'Core Technical Knowledge',
- 'Demonstrate understanding of electrical installation principles, science, and technology (K1-K8)',
+ 'Demonstrate understanding of electrical installation principles, science, and technology (K1, K2, K5)',
  'Zap',
  '#3b82f6',
  6,
  ARRAY[
-   'Understand electrical science and circuit theory',
-   'Apply knowledge of wiring systems and enclosures',
-   'Understand testing and commissioning procedures',
-   'Know fault diagnosis principles'
+   'Understand electrical science and circuit theory (K5)',
+   'Apply knowledge of wiring systems and enclosures (K2)',
+   'Understand termination and connection methods (K1)',
+   'Apply knowledge of BS 7671 requirements'
  ],
  ARRAY[
    'Evidence of electrical calculations and theory application',
    'Evidence of understanding BS 7671 requirements',
-   'Evidence of testing knowledge and procedures',
-   'Evidence of fault diagnosis methodology'
+   'Evidence of wiring system knowledge',
+   'Evidence of termination and connection competence'
  ]),
 
--- Practical Installation
+-- Practical Installation Skills (route-specific)
 ('st0152-apprenticeship-00000001',
  'Practical Installation Skills',
- 'Demonstrate competence in electrical installation work (S1-S5)',
+ 'Demonstrate competence in electrical installation or maintenance work (K2, K7 installation / K8 maintenance)',
  'Wrench',
  '#10b981',
  8,
  ARRAY[
-   'Install wiring systems safely',
-   'Make correct terminations and connections',
-   'Install equipment and accessories',
+   'Install wiring systems safely (K2)',
+   'Make correct terminations and connections (K1)',
+   'Plan and select for installation (K7) or maintenance (K8)',
    'Apply safe working practices throughout'
  ],
  ARRAY[
@@ -285,55 +181,55 @@ INSERT INTO qualification_categories (
 -- Testing and Fault Diagnosis
 ('st0152-apprenticeship-00000001',
  'Testing and Fault Diagnosis',
- 'Demonstrate competence in inspection, testing, and fault diagnosis (S6-S8, K6, K8)',
+ 'Demonstrate competence in inspection, testing, and fault diagnosis (K3, K4)',
  'Search',
  '#f59e0b',
  5,
  ARRAY[
-   'Conduct initial verification tests',
-   'Complete certification accurately',
-   'Diagnose faults systematically',
-   'Rectify faults safely'
+   'Conduct initial verification tests (K3)',
+   'Complete certification accurately (K3)',
+   'Diagnose faults systematically (K4)',
+   'Rectify faults safely (K4)'
  ],
  ARRAY[
    'Evidence of all required tests being conducted',
    'Evidence of completed EIC/MEIWC/EICR',
    'Evidence of fault diagnosis and rectification',
-   'Evidence of maintenance activities'
+   'Evidence of test instrument competence'
  ]),
 
 -- Professional Competence
 ('st0152-apprenticeship-00000001',
  'Professional Competence',
- 'Demonstrate professional behaviours and communication skills (B1-B6, S9-S12)',
+ 'Demonstrate professional behaviours and work organisation (K6, B1-B8)',
  'Users',
  '#8b5cf6',
  4,
  ARRAY[
-   'Communicate effectively',
-   'Complete documentation accurately',
-   'Work as part of a team',
-   'Demonstrate professional behaviours'
+   'Oversee and organise work effectively (K6)',
+   'Work reliably without close supervision (B1)',
+   'Communicate effectively (B4)',
+   'Demonstrate professional behaviours (B2, B3, B5, B7, B8)'
  ],
  ARRAY[
    'Evidence of effective communication with clients/colleagues',
-   'Evidence of accurate documentation completion',
+   'Evidence of work organisation and planning',
    'Evidence of teamwork and coordination',
    'Evidence of professional conduct and attitudes'
  ]),
 
--- Health and Safety
+-- Health, Safety and Environment
 ('st0152-apprenticeship-00000001',
  'Health, Safety and Environment',
- 'Demonstrate consistent application of health, safety and environmental requirements (K2, S2, B1, K11)',
+ 'Demonstrate consistent application of health, safety and environmental requirements (B1, B6 + Unit 101/102 ACs)',
  'Shield',
  '#ef4444',
  4,
  ARRAY[
    'Apply health and safety legislation',
    'Conduct risk assessments',
-   'Work safely at all times',
-   'Consider environmental impact'
+   'Work safely at all times (B1)',
+   'Contribute to sustainable development (B6)'
  ],
  ARRAY[
    'Evidence of understanding H&S legislation',

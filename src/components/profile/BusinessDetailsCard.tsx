@@ -82,13 +82,15 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
         : 'Not set',
     },
     ...(companyProfile?.company_website
-      ? [{
-          icon: Globe,
-          iconBg: 'bg-cyan-500/15',
-          iconColor: 'text-cyan-400',
-          label: 'Website',
-          value: companyProfile.company_website,
-        }]
+      ? [
+          {
+            icon: Globe,
+            iconBg: 'bg-cyan-500/15',
+            iconColor: 'text-cyan-400',
+            label: 'Website',
+            value: companyProfile.company_website,
+          },
+        ]
       : []),
     {
       icon: Hash,
@@ -128,11 +130,15 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                 key={row.label}
                 className={`flex items-center gap-3 px-4 py-3 ${!isLast ? 'border-b border-white/[0.04]' : ''}`}
               >
-                <div className={`w-8 h-8 rounded-lg ${row.iconBg} flex items-center justify-center flex-shrink-0`}>
+                <div
+                  className={`w-8 h-8 rounded-lg ${row.iconBg} flex items-center justify-center flex-shrink-0`}
+                >
                   <Icon className={`h-4 w-4 ${row.iconColor}`} />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">{row.label}</p>
+                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                    {row.label}
+                  </p>
                   <p className="text-[15px] text-white truncate">{row.value}</p>
                 </div>
               </div>
@@ -142,7 +148,10 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
       </motion.div>
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -163,7 +172,11 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (
@@ -204,7 +217,9 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
               <Input
                 placeholder="SW1A 1AA"
                 value={formData.company_postcode}
-                onChange={(e) => setFormData({ ...formData, company_postcode: e.target.value.toUpperCase() })}
+                onChange={(e) =>
+                  setFormData({ ...formData, company_postcode: e.target.value.toUpperCase() })
+                }
                 className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>

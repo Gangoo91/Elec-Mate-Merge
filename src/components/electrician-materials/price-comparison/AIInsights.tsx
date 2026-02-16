@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Brain, Lightbulb, Package, AlertTriangle, Star, Loader2 } from "lucide-react";
-import { PriceComparisonItem } from "./ProductCard";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Brain, Lightbulb, Package, AlertTriangle, Star, Loader2 } from 'lucide-react';
+import { PriceComparisonItem } from './ProductCard';
 
 export interface AIRecommendation {
   type: 'alternative' | 'bundle' | 'upgrade' | 'warning';
@@ -39,29 +39,39 @@ interface AIInsightsProps {
   onAddMultipleToQuote?: (materials: any[]) => void;
 }
 
-export const AIInsightsComponent = ({ 
-  aiInsights, 
-  isAiAnalyzing, 
-  onAddToQuote, 
-  onAddMultipleToQuote 
+export const AIInsightsComponent = ({
+  aiInsights,
+  isAiAnalyzing,
+  onAddToQuote,
+  onAddMultipleToQuote,
 }: AIInsightsProps) => {
   const getRecommendationIcon = (type: string) => {
     switch (type) {
-      case 'alternative': return Lightbulb;
-      case 'bundle': return Package;
-      case 'upgrade': return Star;
-      case 'warning': return AlertTriangle;
-      default: return Brain;
+      case 'alternative':
+        return Lightbulb;
+      case 'bundle':
+        return Package;
+      case 'upgrade':
+        return Star;
+      case 'warning':
+        return AlertTriangle;
+      default:
+        return Brain;
     }
   };
 
   const getRecommendationColor = (type: string) => {
     switch (type) {
-      case 'alternative': return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
-      case 'bundle': return 'text-purple-400 border-purple-500/30 bg-purple-500/10';
-      case 'upgrade': return 'text-amber-400 border-amber-500/30 bg-amber-500/10';
-      case 'warning': return 'text-red-400 border-red-500/30 bg-red-500/10';
-      default: return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
+      case 'alternative':
+        return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
+      case 'bundle':
+        return 'text-purple-400 border-purple-500/30 bg-purple-500/10';
+      case 'upgrade':
+        return 'text-amber-400 border-amber-500/30 bg-amber-500/10';
+      case 'warning':
+        return 'text-red-400 border-red-500/30 bg-red-500/10';
+      default:
+        return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
     }
   };
 
@@ -71,7 +81,9 @@ export const AIInsightsComponent = ({
         <CardContent className="p-6">
           <div className="flex items-center gap-3 text-blue-400">
             <Loader2 className="h-5 w-5 animate-spin" />
-            <span className="text-sm">AI is analyzing products and generating recommendations...</span>
+            <span className="text-sm">
+              AI is analyzing products and generating recommendations...
+            </span>
           </div>
         </CardContent>
       </Card>
@@ -93,19 +105,27 @@ export const AIInsightsComponent = ({
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400">{aiInsights.summary.totalProducts}</div>
+              <div className="text-2xl font-bold text-blue-400">
+                {aiInsights.summary.totalProducts}
+              </div>
               <div className="text-xs text-muted-foreground">Products Analysed</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-400">{aiInsights.summary.matchedGroups}</div>
+              <div className="text-2xl font-bold text-purple-400">
+                {aiInsights.summary.matchedGroups}
+              </div>
               <div className="text-xs text-muted-foreground">Similar Groups</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-amber-400">{aiInsights.summary.alternatives}</div>
+              <div className="text-2xl font-bold text-amber-400">
+                {aiInsights.summary.alternatives}
+              </div>
               <div className="text-xs text-muted-foreground">Alternatives</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-400">{aiInsights.summary.recommendations}</div>
+              <div className="text-2xl font-bold text-green-400">
+                {aiInsights.summary.recommendations}
+              </div>
               <div className="text-xs text-muted-foreground">Recommendations</div>
             </div>
           </div>
@@ -126,7 +146,10 @@ export const AIInsightsComponent = ({
               {aiInsights.smartMatching.recommendations.slice(0, 3).map((rec, idx) => {
                 const Icon = getRecommendationIcon(rec.type);
                 return (
-                  <div key={idx} className={`p-3 rounded-lg border ${getRecommendationColor(rec.type)}`}>
+                  <div
+                    key={idx}
+                    className={`p-3 rounded-lg border ${getRecommendationColor(rec.type)}`}
+                  >
                     <div className="flex items-start gap-3">
                       <Icon className="h-5 w-5 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
@@ -144,8 +167,8 @@ export const AIInsightsComponent = ({
                         </div>
                       </div>
                       {rec.products && rec.products.length > 0 && onAddMultipleToQuote && (
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="outline"
                           onClick={() => onAddMultipleToQuote(rec.products!)}
                           className="text-xs"
@@ -198,7 +221,10 @@ export const AIInsightsComponent = ({
               {aiInsights.purchaseRecommendations.slice(0, 2).map((rec, idx) => {
                 const Icon = getRecommendationIcon(rec.type);
                 return (
-                  <div key={idx} className="p-3 rounded-lg border border-green-500/20 bg-green-500/5">
+                  <div
+                    key={idx}
+                    className="p-3 rounded-lg border border-green-500/20 bg-green-500/5"
+                  >
                     <div className="flex items-start gap-3">
                       <Icon className="h-4 w-4 mt-1 text-green-400 flex-shrink-0" />
                       <div className="flex-1">

@@ -1,183 +1,232 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Settings, Truck, Smartphone, Calculator, FileText, Clock, Shield, ExternalLink } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Settings,
+  Truck,
+  Smartphone,
+  Calculator,
+  FileText,
+  Clock,
+  Shield,
+  ExternalLink,
+} from 'lucide-react';
 
 const OperationalSetupTab = () => {
   const operationalAreas = [
     {
-      title: "Tools & Equipment",
-      priority: "Essential",
-      cost: "£2,000-5,000",
-      timeframe: "Week 1-2",
+      title: 'Tools & Equipment',
+      priority: 'Essential',
+      cost: '£2,000-5,000',
+      timeframe: 'Week 1-2',
       items: [
-        "Basic hand tools set",
-        "Multimeter & testing equipment",
-        "Power tools (drill, grinder)",
-        "Safety equipment & PPE",
-        "Tool storage solution"
-      ]
+        'Basic hand tools set',
+        'Multimeter & testing equipment',
+        'Power tools (drill, grinder)',
+        'Safety equipment & PPE',
+        'Tool storage solution',
+      ],
     },
     {
-      title: "Vehicle & Transport",
-      priority: "Essential",
-      cost: "£8,000-25,000",
-      timeframe: "Week 2-3",
+      title: 'Vehicle & Transport',
+      priority: 'Essential',
+      cost: '£8,000-25,000',
+      timeframe: 'Week 2-3',
       items: [
-        "Van purchase/lease",
-        "Van insurance",
-        "Vehicle signwriting",
-        "Roof rack & storage",
-        "Fuel cards setup"
-      ]
+        'Van purchase/lease',
+        'Van insurance',
+        'Vehicle signwriting',
+        'Roof rack & storage',
+        'Fuel cards setup',
+      ],
     },
     {
-      title: "Business Systems",
-      priority: "High",
-      cost: "£200-1,000",
-      timeframe: "Week 3-4",
+      title: 'Business Systems',
+      priority: 'High',
+      cost: '£200-1,000',
+      timeframe: 'Week 3-4',
       items: [
-        "Accounting software",
-        "Customer management system",
-        "Invoice & quote software",
-        "Job scheduling app",
-        "Document storage"
-      ]
+        'Accounting software',
+        'Customer management system',
+        'Invoice & quote software',
+        'Job scheduling app',
+        'Document storage',
+      ],
     },
     {
-      title: "Office Setup",
-      priority: "Medium",
-      cost: "£500-2,000",
-      timeframe: "Week 4-6",
+      title: 'Office Setup',
+      priority: 'Medium',
+      cost: '£500-2,000',
+      timeframe: 'Week 4-6',
       items: [
-        "Home office space",
-        "Computer & printer",
-        "Business phone line",
-        "Stationery & forms",
-        "Filing system"
-      ]
-    }
+        'Home office space',
+        'Computer & printer',
+        'Business phone line',
+        'Stationery & forms',
+        'Filing system',
+      ],
+    },
   ];
 
   const softwareTools = [
     {
-      category: "Accounting",
+      category: 'Accounting',
       tools: [
-        { name: "Xero", cost: "£24/month", features: ["Cloud-based", "VAT returns", "Bank feeds", "Mobile app"] },
-        { name: "QuickBooks", cost: "£20/month", features: ["Invoicing", "Expenses", "Reports", "Integration"] },
-        { name: "FreeAgent", cost: "£19/month", features: ["Time tracking", "Projects", "Estimates", "Support"] }
-      ]
+        {
+          name: 'Xero',
+          cost: '£24/month',
+          features: ['Cloud-based', 'VAT returns', 'Bank feeds', 'Mobile app'],
+        },
+        {
+          name: 'QuickBooks',
+          cost: '£20/month',
+          features: ['Invoicing', 'Expenses', 'Reports', 'Integration'],
+        },
+        {
+          name: 'FreeAgent',
+          cost: '£19/month',
+          features: ['Time tracking', 'Projects', 'Estimates', 'Support'],
+        },
+      ],
     },
     {
-      category: "Customer Management",
+      category: 'Customer Management',
       tools: [
-        { name: "HubSpot", cost: "Free-£40/month", features: ["CRM", "Email marketing", "Live chat", "Analytics"] },
-        { name: "Pipedrive", cost: "£12/month", features: ["Pipeline management", "Mobile", "Automation", "Reports"] },
-        { name: "Zoho", cost: "£10/month", features: ["All-in-one", "Customisable", "Integration", "Support"] }
-      ]
+        {
+          name: 'HubSpot',
+          cost: 'Free-£40/month',
+          features: ['CRM', 'Email marketing', 'Live chat', 'Analytics'],
+        },
+        {
+          name: 'Pipedrive',
+          cost: '£12/month',
+          features: ['Pipeline management', 'Mobile', 'Automation', 'Reports'],
+        },
+        {
+          name: 'Zoho',
+          cost: '£10/month',
+          features: ['All-in-one', 'Customisable', 'Integration', 'Support'],
+        },
+      ],
     },
     {
-      category: "Job Management",
+      category: 'Job Management',
       tools: [
-        { name: "ServiceM8", cost: "£29/month", features: ["Job scheduling", "GPS tracking", "Invoicing", "Photos"] },
-        { name: "Tradify", cost: "£39/month", features: ["Quotes", "Jobs", "Invoices", "Stock management"] },
-        { name: "Fergus", cost: "£45/month", features: ["Complete workflow", "Client portal", "Reports", "Mobile"] }
-      ]
-    }
+        {
+          name: 'ServiceM8',
+          cost: '£29/month',
+          features: ['Job scheduling', 'GPS tracking', 'Invoicing', 'Photos'],
+        },
+        {
+          name: 'Tradify',
+          cost: '£39/month',
+          features: ['Quotes', 'Jobs', 'Invoices', 'Stock management'],
+        },
+        {
+          name: 'Fergus',
+          cost: '£45/month',
+          features: ['Complete workflow', 'Client portal', 'Reports', 'Mobile'],
+        },
+      ],
+    },
   ];
 
   const dailyOperations = [
     {
-      time: "6:00 AM",
-      task: "Vehicle checks & loading",
-      duration: "30 mins",
-      description: "Safety checks, load tools and materials for the day"
+      time: '6:00 AM',
+      task: 'Vehicle checks & loading',
+      duration: '30 mins',
+      description: 'Safety checks, load tools and materials for the day',
     },
     {
-      time: "7:00 AM",
-      task: "First job travel",
-      duration: "30-60 mins",
-      description: "Navigate to first customer, review job details"
+      time: '7:00 AM',
+      task: 'First job travel',
+      duration: '30-60 mins',
+      description: 'Navigate to first customer, review job details',
     },
     {
-      time: "8:00 AM",
-      task: "Customer consultation",
-      duration: "15-30 mins",
-      description: "Discuss work, explain process, confirm requirements"
+      time: '8:00 AM',
+      task: 'Customer consultation',
+      duration: '15-30 mins',
+      description: 'Discuss work, explain process, confirm requirements',
     },
     {
-      time: "8:30 AM",
-      task: "Work execution",
-      duration: "2-6 hours",
-      description: "Complete electrical work safely and efficiently"
+      time: '8:30 AM',
+      task: 'Work execution',
+      duration: '2-6 hours',
+      description: 'Complete electrical work safely and efficiently',
     },
     {
-      time: "3:00 PM",
-      task: "Testing & certification",
-      duration: "30-60 mins",
-      description: "Test work, complete certificates, customer handover"
+      time: '3:00 PM',
+      task: 'Testing & certification',
+      duration: '30-60 mins',
+      description: 'Test work, complete certificates, customer handover',
     },
     {
-      time: "4:00 PM",
-      task: "Paperwork & invoicing",
-      duration: "30 mins",
-      description: "Complete job sheets, photos, create invoice"
+      time: '4:00 PM',
+      task: 'Paperwork & invoicing',
+      duration: '30 mins',
+      description: 'Complete job sheets, photos, create invoice',
     },
     {
-      time: "5:00 PM",
-      task: "Next day preparation",
-      duration: "30 mins",
-      description: "Review tomorrow's jobs, order materials if needed"
-    }
+      time: '5:00 PM',
+      task: 'Next day preparation',
+      duration: '30 mins',
+      description: "Review tomorrow's jobs, order materials if needed",
+    },
   ];
 
   const qualityStandards = [
     {
-      area: "Work Quality",
+      area: 'Work Quality',
       standards: [
-        "All work to BS 7671:2018 standards",
-        "Proper testing and certification",
-        "Clean and tidy work practices",
-        "Use of quality materials only"
-      ]
+        'All work to BS 7671:2018 standards',
+        'Proper testing and certification',
+        'Clean and tidy work practices',
+        'Use of quality materials only',
+      ],
     },
     {
-      area: "Customer Service",
+      area: 'Customer Service',
       standards: [
-        "Professional appearance and manner",
-        "Clear communication throughout",
-        "Respect for customer property",
-        "Follow-up after completion"
-      ]
+        'Professional appearance and manner',
+        'Clear communication throughout',
+        'Respect for customer property',
+        'Follow-up after completion',
+      ],
     },
     {
-      area: "Safety",
+      area: 'Safety',
       standards: [
-        "Risk assessments for all jobs",
-        "Proper use of PPE",
-        "Safe isolation procedures",
-        "Incident reporting system"
-      ]
+        'Risk assessments for all jobs',
+        'Proper use of PPE',
+        'Safe isolation procedures',
+        'Incident reporting system',
+      ],
     },
     {
-      area: "Business Practice",
+      area: 'Business Practice',
       standards: [
-        "Transparent pricing structure",
-        "Written quotes for all work",
-        "Proper insurance coverage",
-        "Accurate record keeping"
-      ]
-    }
+        'Transparent pricing structure',
+        'Written quotes for all work',
+        'Proper insurance coverage',
+        'Accurate record keeping',
+      ],
+    },
   ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'Essential': return 'bg-red-500/20 text-red-400';
-      case 'High': return 'bg-amber-500/20 text-amber-400';
-      case 'Medium': return 'bg-blue-500/20 text-blue-400';
-      case 'Low': return 'bg-green-500/20 text-green-400';
-      default: return 'bg-elec-yellow/20 text-elec-yellow';
+      case 'Essential':
+        return 'bg-red-500/20 text-red-400';
+      case 'High':
+        return 'bg-amber-500/20 text-amber-400';
+      case 'Medium':
+        return 'bg-blue-500/20 text-blue-400';
+      case 'Low':
+        return 'bg-green-500/20 text-green-400';
+      default:
+        return 'bg-elec-yellow/20 text-elec-yellow';
     }
   };
 
@@ -259,9 +308,7 @@ const OperationalSetupTab = () => {
                   <CardTitle className="text-foreground text-lg">{area.title}</CardTitle>
                   <p className="text-sm text-muted-foreground">{area.timeframe}</p>
                 </div>
-                <Badge className={getPriorityColor(area.priority)}>
-                  {area.priority}
-                </Badge>
+                <Badge className={getPriorityColor(area.priority)}>{area.priority}</Badge>
               </div>
             </CardHeader>
             <CardContent>
@@ -275,7 +322,10 @@ const OperationalSetupTab = () => {
                   <h5 className="font-medium text-foreground mb-2">Key Items Required:</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {area.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div
+                        key={itemIndex}
+                        className="flex items-center gap-2 text-sm text-muted-foreground"
+                      >
                         <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full" />
                         {item}
                       </div>
@@ -308,7 +358,10 @@ const OperationalSetupTab = () => {
                     </div>
                     <div className="space-y-1">
                       {tool.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <div
+                          key={featureIndex}
+                          className="flex items-center gap-2 text-xs text-muted-foreground"
+                        >
                           <div className="w-1 h-1 bg-blue-400 rounded-full" />
                           {feature}
                         </div>
@@ -362,7 +415,10 @@ const OperationalSetupTab = () => {
                   <h4 className="font-semibold text-foreground mb-2">{standard.area}</h4>
                   <div className="space-y-1">
                     {standard.standards.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-start gap-2 text-xs text-muted-foreground">
+                      <div
+                        key={itemIndex}
+                        className="flex items-start gap-2 text-xs text-muted-foreground"
+                      >
                         <div className="w-1 h-1 bg-amber-400 rounded-full mt-1.5 flex-shrink-0" />
                         {item}
                       </div>

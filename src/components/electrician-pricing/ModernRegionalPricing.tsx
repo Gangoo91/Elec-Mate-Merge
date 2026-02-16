@@ -1,27 +1,33 @@
-import { useState, useEffect, useCallback } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  MapPin, 
-  Search, 
-  Info, 
-  Loader2, 
-  TrendingUp, 
-  Users, 
+import { useState, useEffect, useCallback } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  MapPin,
+  Search,
+  Info,
+  Loader2,
+  TrendingUp,
+  Users,
   Clock,
   Star,
   Zap,
   X,
-  Filter
-} from "lucide-react";
-import RealMarketInsights from "./RealMarketInsights";
-import { supabase } from "@/integrations/supabase/client";
-import { useJobTypes } from "@/hooks/useJobTypes";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import ModernSubmitPage from "./ModernSubmitPage";
+  Filter,
+} from 'lucide-react';
+import RealMarketInsights from './RealMarketInsights';
+import { supabase } from '@/integrations/supabase/client';
+import { useJobTypes } from '@/hooks/useJobTypes';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import ModernSubmitPage from './ModernSubmitPage';
 
 interface RegionalPricingData {
   id: string;
@@ -48,21 +54,19 @@ interface PostcodeDistrict {
 
 // Convert snake_case to Title Case
 const formatJobType = (jobType: string): string => {
-  return jobType
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
+  return jobType.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 };
 
 const ModernRegionalPricing = () => {
   const { data: jobTypes, isLoading: jobTypesLoading } = useJobTypes();
-  const [searchLocation, setSearchLocation] = useState("");
-  const [selectedJobType, setSelectedJobType] = useState("all");
+  const [searchLocation, setSearchLocation] = useState('');
+  const [selectedJobType, setSelectedJobType] = useState('all');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState<RegionalPricingData[]>([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [communityStats, setCommunityStats] = useState<any>(null);
-  
+
   // New state for inline suggestions
   const [searchSuggestions, setSearchSuggestions] = useState<PostcodeDistrict[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -70,12 +74,12 @@ const ModernRegionalPricing = () => {
 
   // Popular locations for quick access
   const popularLocations = [
-    { code: "M1", name: "Manchester" },
-    { code: "SW1", name: "Westminster" },
-    { code: "B1", name: "Birmingham" },
-    { code: "LS1", name: "Leeds" },
-    { code: "G1", name: "Glasgow" },
-    { code: "E1", name: "East London" }
+    { code: 'M1', name: 'Manchester' },
+    { code: 'SW1', name: 'Westminster' },
+    { code: 'B1', name: 'Birmingham' },
+    { code: 'LS1', name: 'Leeds' },
+    { code: 'G1', name: 'Glasgow' },
+    { code: 'E1', name: 'East London' },
   ];
 
   // Debounced search for suggestions
@@ -95,25 +99,27 @@ const ModernRegionalPricing = () => {
         .limit(8);
 
       if (error) throw error;
-      
+
       const suggestions = (data || []).map((item: any) => ({
         district_code: item.area_code || query,
         region: item.region || 'UK',
         county: item.county || '',
-        local_authority: item.local_authority || ''
+        local_authority: item.local_authority || '',
       }));
-      
+
       setSearchSuggestions(suggestions);
       setShowSuggestions(suggestions.length > 0);
     } catch (error) {
       console.error('Error fetching suggestions:', error);
       // Fallback to simple suggestions
-      setSearchSuggestions([{
-        district_code: query.toUpperCase(),
-        region: 'UK',
-        county: '',
-        local_authority: 'Search for this location'
-      }]);
+      setSearchSuggestions([
+        {
+          district_code: query.toUpperCase(),
+          region: 'UK',
+          county: '',
+          local_authority: 'Search for this location',
+        },
+      ]);
       setShowSuggestions(true);
     } finally {
       setIsFetchingSuggestions(false);
@@ -145,25 +151,24 @@ const ModernRegionalPricing = () => {
           location: searchLocation.trim(),
           jobType: selectedJobType === 'all' ? null : selectedJobType,
           includeNearby: true,
-          maxDistance: 10
-        }
+          maxDistance: 10,
+        },
       });
 
       if (error) throw error;
 
       setSearchResults(data.results || []);
-      
-      const communityVerified = data.results?.filter(
-        (r: any) => r.pricing_data_sources?.source_type === 'community'
-      ).length || 0;
-      
+
+      const communityVerified =
+        data.results?.filter((r: any) => r.pricing_data_sources?.source_type === 'community')
+          .length || 0;
+
       setCommunityStats({
         total: data.results?.length || 0,
         communityVerified,
         location: data.search_metadata,
-        isApproximate: data.search_metadata?.search_strategy !== 'exact_postcode'
+        isApproximate: data.search_metadata?.search_strategy !== 'exact_postcode',
       });
-
     } catch (error: any) {
       console.error('Search error:', error);
       setSearchError(error.message || 'Failed to search pricing data');
@@ -184,8 +189,8 @@ const ModernRegionalPricing = () => {
   };
 
   const clearSearch = () => {
-    setSearchLocation("");
-    setSelectedJobType("all");
+    setSearchLocation('');
+    setSelectedJobType('all');
     setSearchResults([]);
     setSearchPerformed(false);
     setSearchError(null);
@@ -193,7 +198,11 @@ const ModernRegionalPricing = () => {
     setShowSuggestions(false);
   };
 
-  const formatPrice = (price: number | null | undefined, unit: string, currency: string = 'GBP') => {
+  const formatPrice = (
+    price: number | null | undefined,
+    unit: string,
+    currency: string = 'GBP'
+  ) => {
     if (price === null || price === undefined || isNaN(price)) {
       return 'Price TBC';
     }
@@ -211,14 +220,14 @@ const ModernRegionalPricing = () => {
   const getDataFreshness = (lastUpdated: string) => {
     const now = new Date();
     const updated = new Date(lastUpdated);
-    
+
     // Handle invalid dates
     if (isNaN(updated.getTime())) {
       return { text: 'Date unknown', color: 'secondary' };
     }
-    
+
     const diffInDays = Math.floor((now.getTime() - updated.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     if (diffInDays === 0) return { text: 'Today', color: 'default' };
     if (diffInDays === 1) return { text: 'Yesterday', color: 'default' };
     if (diffInDays <= 7) return { text: `${diffInDays}d ago`, color: 'default' };
@@ -228,35 +237,41 @@ const ModernRegionalPricing = () => {
 
   const getComplexityColor = (level: string) => {
     switch (level?.toLowerCase()) {
-      case 'basic': 
-      case 'simple': 
+      case 'basic':
+      case 'simple':
         return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-      case 'standard': 
-      case 'medium': 
+      case 'standard':
+      case 'medium':
         return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'complex': 
-      case 'advanced': 
+      case 'complex':
+      case 'advanced':
         return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'expert': 
-      case 'specialist': 
+      case 'expert':
+      case 'specialist':
         return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: 
+      default:
         return 'bg-muted/20 text-muted-foreground border-muted/30';
     }
   };
 
   const renderPricingCard = (item: RegionalPricingData) => {
-    const fallbackAverage = item.average_price || calculateFallbackAverage(item.min_price, item.max_price);
+    const fallbackAverage =
+      item.average_price || calculateFallbackAverage(item.min_price, item.max_price);
     const priceRange = (item.max_price || 0) - (item.min_price || 0);
-    const avgPosition = priceRange > 0 && fallbackAverage ? 
-      ((fallbackAverage - (item.min_price || 0)) / priceRange) * 100 : 50;
+    const avgPosition =
+      priceRange > 0 && fallbackAverage
+        ? ((fallbackAverage - (item.min_price || 0)) / priceRange) * 100
+        : 50;
     const freshness = getDataFreshness(item.last_updated);
 
     return (
-      <Card key={item.id} className="group relative overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-card/90 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1">
+      <Card
+        key={item.id}
+        className="group relative overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-card/90 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1"
+      >
         {/* Subtle background pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none"></div>
-        
+
         <CardContent className="relative p-6 space-y-6">
           {/* Header Section */}
           <div className="space-y-3">
@@ -273,7 +288,9 @@ const ModernRegionalPricing = () => {
                 </div>
               </div>
               <div className="flex flex-wrap gap-1.5 items-start">
-                <Badge className={`text-xs font-medium ${getComplexityColor(item.complexity_level)}`}>
+                <Badge
+                  className={`text-xs font-medium ${getComplexityColor(item.complexity_level)}`}
+                >
                   {item.complexity_level}
                 </Badge>
               </div>
@@ -292,14 +309,14 @@ const ModernRegionalPricing = () => {
             <div className="text-center space-y-4">
               {/* Main Price */}
               <div>
-                <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-2">Starting from</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-2">
+                  Starting from
+                </div>
                 <div className="text-3xl font-black text-primary mb-2 tracking-tight">
                   {formatPrice(item.min_price, '')}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  {fallbackAverage && (
-                    <>Avg: {formatPrice(fallbackAverage, '')} • </>
-                  )}
+                  {fallbackAverage && <>Avg: {formatPrice(fallbackAverage, '')} • </>}
                   {item.unit}
                 </div>
               </div>
@@ -314,7 +331,7 @@ const ModernRegionalPricing = () => {
                   <div className="relative h-2 bg-muted/30 rounded-full overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full"></div>
                     {fallbackAverage && (
-                      <div 
+                      <div
                         className="absolute top-0 w-1 h-2 bg-primary rounded-full transform -translate-x-0.5 transition-all duration-700"
                         style={{ left: `${Math.min(Math.max(avgPosition, 0), 100)}%` }}
                       />
@@ -335,9 +352,15 @@ const ModernRegionalPricing = () => {
             <div className="flex items-center gap-3">
               <Badge variant="secondary" className="text-xs">
                 {item.data_source === 'community' ? (
-                  <><Users className="h-3 w-3 mr-1" />Community</>
+                  <>
+                    <Users className="h-3 w-3 mr-1" />
+                    Community
+                  </>
                 ) : (
-                  <><TrendingUp className="h-3 w-3 mr-1" />Market</>
+                  <>
+                    <TrendingUp className="h-3 w-3 mr-1" />
+                    Market
+                  </>
                 )}
               </Badge>
               <Badge variant={freshness.color as any} className="text-xs">
@@ -361,12 +384,10 @@ const ModernRegionalPricing = () => {
       <div className="bg-gradient-to-br from-primary/5 via-background to-accent/5 border-b">
         <div className="mobile-container py-8 sm:py-12">
           <div className="text-center mb-8">
-            <h1 className="mobile-heading gradient-text mb-4">
-              UK Regional Electrical Pricing
-            </h1>
+            <h1 className="mobile-heading gradient-text mb-4">UK Regional Electrical Pricing</h1>
             <p className="mobile-text text-muted-foreground max-w-2xl mx-auto">
-              Discover accurate electrical job pricing for any UK location. Get instant market rates,
-              community-verified prices, and detailed regional insights.
+              Discover accurate electrical job pricing for any UK location. Get instant market
+              rates, community-verified prices, and detailed regional insights.
             </p>
           </div>
 
@@ -384,7 +405,10 @@ const ModernRegionalPricing = () => {
                       value={searchLocation}
                       onChange={(e) => setSearchLocation(e.target.value)}
                       placeholder="Enter UK postcode or location (e.g., M1, Birmingham, London)..."
-                      className={cn("h-14 text-lg bg-background/50 border-muted/40 focus:border-primary/60", !searchLocation && "pl-12")}
+                      className={cn(
+                        'h-14 text-lg bg-background/50 border-muted/40 focus:border-primary/60',
+                        !searchLocation && 'pl-12'
+                      )}
                       onFocus={() => {
                         if (searchSuggestions.length > 0) {
                           setShowSuggestions(true);
@@ -424,7 +448,9 @@ const ModernRegionalPricing = () => {
                           {isFetchingSuggestions ? (
                             <div className="p-4 text-center">
                               <Loader2 className="h-4 w-4 animate-spin mx-auto mb-2" />
-                              <p className="text-sm text-muted-foreground">Searching locations...</p>
+                              <p className="text-sm text-muted-foreground">
+                                Searching locations...
+                              </p>
                             </div>
                           ) : (
                             <div className="max-h-48 overflow-y-auto">
@@ -439,7 +465,9 @@ const ModernRegionalPricing = () => {
                                       <MapPin className="h-3.5 w-3.5 text-primary flex-shrink-0" />
                                     </div>
                                     <div>
-                                      <p className="font-medium text-sm">{suggestion.district_code}</p>
+                                      <p className="font-medium text-sm">
+                                        {suggestion.district_code}
+                                      </p>
                                       <p className="text-xs text-muted-foreground">
                                         {suggestion.local_authority}, {suggestion.region}
                                       </p>
@@ -490,7 +518,8 @@ const ModernRegionalPricing = () => {
                           Loading...
                         </SelectItem>
                       ) : (
-                        jobTypes?.byCategory && Object.entries(jobTypes.byCategory).map(([category, jobs]) => (
+                        jobTypes?.byCategory &&
+                        Object.entries(jobTypes.byCategory).map(([category, jobs]) => (
                           <div key={category}>
                             <div className="px-2 py-1 text-xs font-medium text-primary/80 bg-accent/30 sticky top-0">
                               {category}
@@ -509,7 +538,7 @@ const ModernRegionalPricing = () => {
 
                 {/* Search Button */}
                 <div className="flex gap-3 pt-2">
-                  <Button 
+                  <Button
                     onClick={handleSearch}
                     disabled={!searchLocation.trim() || isSearching}
                     className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -526,9 +555,9 @@ const ModernRegionalPricing = () => {
                       </>
                     )}
                   </Button>
-                  
+
                   {searchPerformed && (
-                    <Button 
+                    <Button
                       onClick={clearSearch}
                       variant="outline"
                       className="h-12 px-6 border-primary/30 hover:bg-primary/10"
@@ -559,18 +588,22 @@ const ModernRegionalPricing = () => {
                     Results for {communityStats.location?.postcode_district || searchLocation}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {communityStats.isApproximate ? "Expanded regional search" : "Exact postcode match"}
+                    {communityStats.isApproximate
+                      ? 'Expanded regional search'
+                      : 'Exact postcode match'}
                   </p>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="text-center p-3 rounded-lg bg-background/50">
                   <p className="text-2xl font-bold text-primary">{communityStats.total}</p>
                   <p className="text-xs text-muted-foreground">Total Records</p>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-background/50">
-                  <p className="text-2xl font-bold text-accent">{communityStats.communityVerified}</p>
+                  <p className="text-2xl font-bold text-accent">
+                    {communityStats.communityVerified}
+                  </p>
                   <p className="text-xs text-muted-foreground">Community Verified</p>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-background/50">
@@ -581,8 +614,11 @@ const ModernRegionalPricing = () => {
                   <p className="text-xs text-muted-foreground">Data Accuracy</p>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-background/50">
-                  <Badge variant={communityStats.isApproximate ? "secondary" : "default"} className="mb-2">
-                    {communityStats.isApproximate ? "Regional" : "Exact"}
+                  <Badge
+                    variant={communityStats.isApproximate ? 'secondary' : 'default'}
+                    className="mb-2"
+                  >
+                    {communityStats.isApproximate ? 'Regional' : 'Exact'}
                   </Badge>
                   <p className="text-xs text-muted-foreground">Match Type</p>
                 </div>
@@ -604,17 +640,13 @@ const ModernRegionalPricing = () => {
           searchResults.length > 0 ? (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="mobile-subheading">
-                  Pricing Results ({searchResults.length})
-                </h2>
+                <h2 className="mobile-subheading">Pricing Results ({searchResults.length})</h2>
                 <Button variant="outline" size="sm" onClick={clearSearch}>
                   Clear Search
                 </Button>
               </div>
-              
-              <div className="grid gap-4 sm:gap-6">
-                {searchResults.map(renderPricingCard)}
-              </div>
+
+              <div className="grid gap-4 sm:gap-6">{searchResults.map(renderPricingCard)}</div>
             </div>
           ) : (
             <Card className="text-center py-12">
@@ -639,21 +671,23 @@ const ModernRegionalPricing = () => {
               </div>
               <h3 className="mobile-subheading mb-4">Ready to Find Pricing?</h3>
               <p className="mobile-text text-muted-foreground mb-6 max-w-md mx-auto">
-                Enter a UK postcode or location above to discover accurate electrical job pricing
-                in your area. Our data includes market rates and community-verified prices.
+                Enter a UK postcode or location above to discover accurate electrical job pricing in
+                your area. Our data includes market rates and community-verified prices.
               </p>
               <div className="flex flex-wrap justify-center gap-2">
-                {['Consumer Unit', 'Socket Installation', 'Light Fitting', 'EV Charger'].map(jobType => (
-                  <Button
-                    key={jobType}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setSelectedJobType(jobType)}
-                    className="border-primary/30 hover:bg-primary/10"
-                  >
-                    {jobType}
-                  </Button>
-                ))}
+                {['Consumer Unit', 'Socket Installation', 'Light Fitting', 'EV Charger'].map(
+                  (jobType) => (
+                    <Button
+                      key={jobType}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSelectedJobType(jobType)}
+                      className="border-primary/30 hover:bg-primary/10"
+                    >
+                      {jobType}
+                    </Button>
+                  )
+                )}
               </div>
             </CardContent>
           </Card>
@@ -676,11 +710,11 @@ const ModernRegionalPricing = () => {
                 Contribute Data
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="insights" className="mt-8">
               <RealMarketInsights />
             </TabsContent>
-            
+
             <TabsContent value="contribute" className="mt-8">
               <ModernSubmitPage />
             </TabsContent>

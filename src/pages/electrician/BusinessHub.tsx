@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
-  Briefcase,
   Calculator,
   FileText,
   Package,
@@ -12,88 +13,141 @@ import {
   Users,
   Wrench,
   Receipt,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { BusinessCard } from "@/components/business-hub";
+  ChevronDown,
+  ChevronUp,
+  BarChart3,
+  Briefcase,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
+import { useBusinessHubData } from '@/hooks/useBusinessHubData';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+};
 
 const BusinessHub = () => {
   const navigate = useNavigate();
+  const [insightsOpen, setInsightsOpen] = useState(false);
 
-  // Primary business tools — daily use
-  const dailyTools = [
+  const {
+    revenue,
+    paidThisMonth,
+    outstanding,
+    overdueAmount,
+    winRate,
+    quotes,
+    invoices,
+    isLoading,
+    lastUpdated,
+    refresh,
+    formatCurrency,
+  } = useBusinessHubData();
+
+  // Money In
+  const moneyInTools = [
     {
       id: 1,
-      title: "Quotes",
-      description: "Create & manage quotes",
+      title: 'Quotes',
+      description: 'Create & manage quotes',
       icon: FileText,
-      link: "/electrician/quotes",
+      link: '/electrician/quotes',
+      gradient: 'from-emerald-400 to-green-500',
     },
     {
       id: 2,
-      title: "Invoices",
-      description: "Billing & payments",
+      title: 'Invoices',
+      description: 'Billing & payments',
       icon: PoundSterling,
-      link: "/electrician/invoices",
+      link: '/electrician/invoices',
+      gradient: 'from-emerald-400 to-teal-500',
     },
     {
       id: 3,
-      title: "Customers",
-      description: "Client management",
-      icon: Users,
-      link: "/customers",
-    },
-    {
-      id: 4,
-      title: "Expenses",
-      description: "Receipts & mileage",
-      icon: Receipt,
-      link: "/electrician/expenses",
-    },
-    {
-      id: 5,
-      title: "Live Pricing",
-      description: "Market rates & pricing",
+      title: 'Live Pricing',
+      description: 'Market rates & pricing',
       icon: PoundSterling,
-      link: "/electrician/live-pricing",
+      link: '/electrician/live-pricing',
+      gradient: 'from-emerald-400 to-cyan-500',
     },
   ];
 
-  // Business growth & management tools
-  const growthTools = [
+  // Money Out
+  const moneyOutTools = [
     {
-      id: 6,
-      title: "Start & Grow",
-      description: "Business development guides and strategies",
-      icon: TrendingUp,
-      link: "/electrician/business-development",
+      id: 4,
+      title: 'Expenses',
+      description: 'Receipts & mileage',
+      icon: Receipt,
+      link: '/electrician/expenses',
+      gradient: 'from-red-400 to-rose-500',
     },
     {
+      id: 5,
+      title: 'Materials',
+      description: 'Stock and inventory management',
+      icon: Package,
+      link: '/electrician/materials',
+      gradient: 'from-red-400 to-orange-500',
+    },
+  ];
+
+  // Customers
+  const customerTools = [
+    {
+      id: 6,
+      title: 'Customers',
+      description: 'Client management',
+      icon: Users,
+      link: '/customers',
+      gradient: 'from-blue-400 to-cyan-500',
+    },
+  ];
+
+  // Growth
+  const growthTools = [
+    {
       id: 7,
-      title: "Business Calculators",
-      description: "Financial planning and costing tools",
-      icon: Calculator,
-      link: "/electrician/business-development/tools",
+      title: 'Start & Grow',
+      description: 'Business development guides and strategies',
+      icon: TrendingUp,
+      link: '/electrician/business-development',
+      gradient: 'from-yellow-400 to-amber-500',
     },
     {
       id: 8,
-      title: "Materials",
-      description: "Stock and inventory management",
-      icon: Package,
-      link: "/electrician/materials",
+      title: 'Business Calculators',
+      description: 'Financial planning and costing tools',
+      icon: Calculator,
+      link: '/electrician/business-development/tools',
+      gradient: 'from-yellow-400 to-orange-500',
     },
     {
       id: 9,
-      title: "Tools",
-      description: "Equipment tracking and management",
+      title: 'Tools',
+      description: 'Equipment tracking and management',
       icon: Wrench,
-      link: "/electrician/tools",
+      link: '/electrician/tools',
+      gradient: 'from-yellow-400 to-lime-500',
     },
     {
       id: 10,
-      title: "Business Admin",
-      description: "Documents, staff and analytics",
+      title: 'Business Admin',
+      description: 'Documents, staff and analytics',
       icon: Cog,
-      link: "/electrician/business-admin",
+      link: '/electrician/business-admin',
+      gradient: 'from-yellow-400 to-amber-500',
       comingSoon: true,
     },
   ];
@@ -101,7 +155,7 @@ const BusinessHub = () => {
   const canonical = `${window.location.origin}/electrician/business`;
 
   return (
-    <div className="bg-[#1a1a1a] animate-fade-in">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       <Helmet>
         <title>Business Hub for Electricians | Quotes, Invoices & More</title>
         <meta
@@ -111,68 +165,117 @@ const BusinessHub = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center h-14 sm:h-16">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-2">
+          <div className="flex items-center h-11">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => navigate("/electrician")}
-              className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
+              onClick={() => navigate('/electrician')}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="flex-1">
-              <h1 className="text-lg sm:text-xl font-bold text-white">Business Hub</h1>
-            </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* Hero Section */}
-      <section className="border-b border-white/10 bg-gradient-to-b from-elec-yellow/10 to-[#1a1a1a]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-          <div className="flex flex-col sm:flex-row items-center gap-5">
-            <div className="p-4 bg-elec-yellow/15 rounded-2xl border border-elec-yellow/20">
-              <Briefcase className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />
-            </div>
-            <div className="text-center sm:text-left">
-              <p className="text-base sm:text-lg text-white/70 max-w-2xl">
-                Quotes, invoices, customers, expenses and everything you need to run your electrical business
-              </p>
-            </div>
+      {/* Main Content */}
+      <motion.main
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="px-4 py-4 space-y-6"
+      >
+        {/* Hero — Centred Title */}
+        <motion.div variants={itemVariants} className="flex flex-col items-center text-center pt-2 pb-1">
+          <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+            <Briefcase className="h-7 w-7 text-elec-yellow" />
           </div>
-        </div>
-      </section>
+          <h1 className="text-xl font-bold text-white">Business Hub</h1>
+          <p className="text-sm text-white mt-1">Quotes, invoices & business tools</p>
+        </motion.div>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
-        {/* Daily Business Tools */}
-        <section>
-          <div className="flex items-center gap-2 mb-4 px-1">
-            <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Daily Tools</h2>
+        {/* KPI Strip */}
+        <motion.div variants={itemVariants}>
+          <BusinessKPIStrip
+            paidThisMonth={paidThisMonth}
+            outstanding={outstanding}
+            overdueAmount={overdueAmount}
+            winRate={winRate}
+            isLoading={isLoading}
+            formatCurrency={formatCurrency}
+          />
+        </motion.div>
+
+        {/* Money In */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <h2 className="text-base font-bold text-white">Money In</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {dailyTools.map((card) => (
+          <div className="space-y-2">
+            {moneyInTools.map((card) => (
               <BusinessCard
                 key={card.id}
                 title={card.title}
                 description={card.description}
                 icon={card.icon}
                 href={card.link}
+                gradient={card.gradient}
               />
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* Growth & Management */}
-        <section>
-          <div className="flex items-center gap-2 mb-4 px-1">
-            <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Grow Your Business</h2>
+        {/* Money Out */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-red-400" />
+            <h2 className="text-base font-bold text-white">Money Out</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            {moneyOutTools.map((card) => (
+              <BusinessCard
+                key={card.id}
+                title={card.title}
+                description={card.description}
+                icon={card.icon}
+                href={card.link}
+                gradient={card.gradient}
+              />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Customers */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+            <h2 className="text-base font-bold text-white">Customers</h2>
+          </div>
+          <div className="space-y-2">
+            {customerTools.map((card) => (
+              <BusinessCard
+                key={card.id}
+                title={card.title}
+                description={card.description}
+                icon={card.icon}
+                href={card.link}
+                gradient={card.gradient}
+              />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Grow Your Business */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+            <h2 className="text-base font-bold text-white">Grow Your Business</h2>
+          </div>
+          <div className="space-y-2">
             {growthTools.map((card) => (
               <BusinessCard
                 key={card.id}
@@ -180,20 +283,58 @@ const BusinessHub = () => {
                 description={card.description}
                 icon={card.icon}
                 href={card.link}
+                gradient={card.gradient}
                 comingSoon={card.comingSoon}
               />
             ))}
           </div>
-        </section>
+        </motion.section>
+
+        {/* Business Insights — collapsed by default */}
+        <motion.div variants={itemVariants}>
+          <Collapsible open={insightsOpen} onOpenChange={setInsightsOpen}>
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
+                    <BarChart3 className="h-5 w-5 text-black" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[15px] font-bold text-white">Business Insights</p>
+                    <p className="text-[13px] text-white">
+                      {formatCurrency(revenue)} revenue
+                    </p>
+                  </div>
+                </div>
+                {insightsOpen ? (
+                  <ChevronUp className="h-5 w-5 text-white" />
+                ) : (
+                  <ChevronDown className="h-5 w-5 text-white" />
+                )}
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-4">
+              <QuoteInvoiceAnalytics
+                quotes={quotes}
+                invoices={invoices}
+                formatCurrency={formatCurrency}
+                lastUpdated={lastUpdated}
+                onRefresh={refresh}
+                isLoading={isLoading}
+              />
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
 
         {/* Disclaimer */}
-        <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-          <p className="text-xs text-white/50 leading-relaxed">
-            The information provided is for general guidance only and does not constitute financial, legal, or business advice.
-            Always consult with qualified professionals regarding your specific business circumstances.
+        <motion.div variants={itemVariants} className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08]">
+          <p className="text-xs text-white leading-relaxed">
+            The information provided is for general guidance only and does not constitute financial,
+            legal, or business advice. Always consult with qualified professionals regarding your
+            specific business circumstances.
           </p>
-        </div>
-      </main>
+        </motion.div>
+      </motion.main>
     </div>
   );
 };

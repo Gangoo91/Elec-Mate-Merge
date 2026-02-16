@@ -350,6 +350,8 @@ function StepWorkflow({ record, onBack }: { record: SafeIsolationRecordType; onB
             ...(data?.voltageReadings ? { voltageReadings: data.voltageReadings } : {}),
             ...(data?.lockOffNumber ? { lockOffNumber: data.lockOffNumber } : {}),
             ...(data?.provingUnitSerial ? { provingUnitSerial: data.provingUnitSerial } : {}),
+            ...(data?.instrumentModel ? { instrumentModel: data.instrumentModel } : {}),
+            ...(data?.instrumentSerial ? { instrumentSerial: data.instrumentSerial } : {}),
           }
         : s
     );

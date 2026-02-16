@@ -3,10 +3,10 @@
  * Generates risk assessments using RAG + GPT-5 Mini
  */
 
-import { 
-  searchHealthSafetyKnowledge, 
+import {
+  searchHealthSafetyKnowledge,
   searchRegulationsIntelligence,
-  callOpenAI
+  callOpenAI,
 } from '../_shared/rams-rag.ts';
 
 const HEALTH_SAFETY_TOOL = {
@@ -29,17 +29,29 @@ const HEALTH_SAFETY_TOOL = {
               severity: { type: 'number', minimum: 1, maximum: 5 },
               riskScore: { type: 'number' },
               riskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
-              controlMeasure: { 
+              controlMeasure: {
                 type: 'string',
-                description: 'MUST include sections: PRIMARY ACTION: ELIMINATE: SUBSTITUTE: ENGINEER CONTROLS: ADMINISTRATIVE CONTROLS: VERIFICATION: COMPETENCY REQUIREMENT: EQUIPMENT STANDARDS: REGULATION:'
+                description:
+                  'MUST include sections: PRIMARY ACTION: ELIMINATE: SUBSTITUTE: ENGINEER CONTROLS: ADMINISTRATIVE CONTROLS: VERIFICATION: COMPETENCY REQUIREMENT: EQUIPMENT STANDARDS: REGULATION:',
               },
               residualRisk: { type: 'number', minimum: 1, maximum: 25 },
               residualRiskLevel: { type: 'string' },
               linkedToStep: { type: 'number' },
-              regulation: { type: 'string' }
+              regulation: { type: 'string' },
             },
-            required: ['id', 'hazard', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualRisk', 'residualRiskLevel', 'linkedToStep']
-          }
+            required: [
+              'id',
+              'hazard',
+              'likelihood',
+              'severity',
+              'riskScore',
+              'riskLevel',
+              'controlMeasure',
+              'residualRisk',
+              'residualRiskLevel',
+              'linkedToStep',
+            ],
+          },
         },
         ppe: {
           type: 'array',
@@ -51,24 +63,24 @@ const HEALTH_SAFETY_TOOL = {
               ppeType: { type: 'string' },
               standard: { type: 'string' },
               mandatory: { type: 'boolean' },
-              purpose: { type: 'string' }
+              purpose: { type: 'string' },
             },
-            required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose']
-          }
+            required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose'],
+          },
         },
         emergencyProcedures: {
           type: 'array',
           minItems: 5,
-          items: { type: 'string' }
+          items: { type: 'string' },
         },
         complianceRegulations: {
           type: 'array',
-          items: { type: 'string' }
-        }
+          items: { type: 'string' },
+        },
       },
-      required: ['hazards', 'ppe', 'emergencyProcedures', 'complianceRegulations']
-    }
-  }
+      required: ['hazards', 'ppe', 'emergencyProcedures', 'complianceRegulations'],
+    },
+  },
 };
 
 const SYSTEM_PROMPT = `You are a UK Health & Safety Expert specialising in electrical installations.
@@ -119,40 +131,43 @@ export async function generateHealthSafety(
 ): Promise<any> {
   console.log('🩺 Health & Safety Agent starting...');
   const startTime = Date.now();
-  
+
   if (onProgress) await onProgress(0, 'Health & Safety: Starting analysis...');
-  
+
   // STEP 1: RAG - Use shared regulations if provided, otherwise search
   console.log('🔍 Fetching RAG knowledge...');
   if (onProgress) await onProgress(5, 'Health & Safety: Searching regulations...');
-  
+
   const ragStart = Date.now();
-  
+
   // PHASE 2 FIX: Add progress heartbeats during RAG
   const ragProgressCallback = async (msg: string) => {
     if (onProgress) await onProgress(8, `Health & Safety: ${msg}`);
   };
-  
-  const regulations = sharedRegulations || await searchRegulationsIntelligence(query, ragProgressCallback);
+
+  const regulations =
+    sharedRegulations || (await searchRegulationsIntelligence(query, ragProgressCallback));
   const hsKnowledge = await searchHealthSafetyKnowledge(query, ragProgressCallback);
   const ragDuration = Date.now() - ragStart;
-  
-  console.log(`✅ RAG complete: ${hsKnowledge.length} H&S docs, ${regulations.length} regulations (${ragDuration}ms)`);
+
+  console.log(
+    `✅ RAG complete: ${hsKnowledge.length} H&S docs, ${regulations.length} regulations (${ragDuration}ms)`
+  );
   if (onProgress) await onProgress(15, 'Health & Safety: Analysing hazards with AI...');
-  
+
   // STEP 2: Build context
   const ragContext = `
 HEALTH & SAFETY KNOWLEDGE (${hsKnowledge.length} sources):
-${hsKnowledge.map(d => `- ${d.topic || d.content}: ${d.guidance || d.description || ''}`).join('\n')}
+${hsKnowledge.map((d) => `- ${d.topic || d.content}: ${d.guidance || d.description || ''}`).join('\n')}
 
 REGULATIONS (${regulations.length} sources):
-${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.primary_topic}`).join('\n')}
+${regulations.map((r) => `- ${r.regulation_number || r.id}: ${r.content || r.primary_topic}`).join('\n')}
   `.trim();
-  
+
   // STEP 3: Generate with GPT-5 Mini
   console.log('🤖 Calling GPT-5 Mini...');
   if (onProgress) await onProgress(25, 'Health & Safety: Analysing hazards...');
-  
+
   // PHASE 5 FIX: Add heartbeat during AI call
   const aiStart = Date.now();
   const aiHeartbeat = setInterval(async () => {
@@ -164,20 +179,20 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
       );
     }
   }, 10000); // Every 10 seconds
-  
+
   let response: any;
   try {
     response = await callOpenAI({
       model: 'gpt-5-mini-2025-08-07',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        { 
-          role: 'user', 
-          content: `Generate a risk assessment for: ${query}\n\nProject: ${projectDetails.projectName}\nLocation: ${projectDetails.location}\n\nContext:\n${ragContext}` 
-        }
+        {
+          role: 'user',
+          content: `Generate a risk assessment for: ${query}\n\nProject: ${projectDetails.projectName}\nLocation: ${projectDetails.location}\n\nContext:\n${ragContext}`,
+        },
       ],
       tools: [HEALTH_SAFETY_TOOL],
-      tool_choice: { type: 'function', function: { name: 'generate_risk_assessment' } }
+      tool_choice: { type: 'function', function: { name: 'generate_risk_assessment' } },
     });
   } finally {
     // Always clear heartbeat, even if OpenAI call fails or times out
@@ -185,23 +200,25 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   }
 
   const aiDuration = Date.now() - aiStart;
-  
+
   if (!response.toolCalls?.[0]) {
     throw new Error('No tool call in response');
   }
-  
+
   if (onProgress) await onProgress(90, 'Health & Safety: Parsing results...');
   const result = JSON.parse(response.toolCalls[0].function.arguments);
-  
-  console.log(`✅ Health & Safety complete: ${result.hazards.length} hazards, ${result.ppe.length} PPE (${aiDuration}ms)`);
+
+  console.log(
+    `✅ Health & Safety complete: ${result.hazards.length} hazards, ${result.ppe.length} PPE (${aiDuration}ms)`
+  );
   if (onProgress) await onProgress(100, 'Health & Safety: Complete!');
-  
+
   return {
     ...result,
     _ragStats: {
       hsKnowledgeDocs: hsKnowledge.length,
       regulationsDocs: regulations.length,
-      totalDocs: hsKnowledge.length + regulations.length
-    }
+      totalDocs: hsKnowledge.length + regulations.length,
+    },
   };
 }

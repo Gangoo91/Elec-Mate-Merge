@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import {
   ArrowLeft,
   TrendingUp,
@@ -9,9 +9,9 @@ import {
   HandHelping,
   Calculator,
   CreditCard,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { BusinessCard } from "@/components/business-hub";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { BusinessCard } from '@/components/business-hub';
 
 const BusinessDevelopment = () => {
   const navigate = useNavigate();
@@ -19,59 +19,59 @@ const BusinessDevelopment = () => {
   const businessSections = [
     {
       id: 1,
-      title: "Starting a Business",
-      description: "Essential guidance for establishing your electrical contracting business",
+      title: 'Starting a Business',
+      description: 'Essential guidance for establishing your electrical contracting business',
       icon: Briefcase,
-      link: "/electrician/business-development/startup",
+      link: '/electrician/business-development/startup',
     },
     {
       id: 2,
-      title: "Onboarding Apprentices",
-      description: "Best practices for recruiting, mentoring and developing apprentices",
+      title: 'Onboarding Apprentices',
+      description: 'Best practices for recruiting, mentoring and developing apprentices',
       icon: GraduationCap,
-      link: "/electrician/business-development/apprentices",
+      link: '/electrician/business-development/apprentices',
     },
     {
       id: 3,
-      title: "Onboarding Electricians",
-      description: "Strategies for recruiting, integrating and retaining qualified electricians",
+      title: 'Onboarding Electricians',
+      description: 'Strategies for recruiting, integrating and retaining qualified electricians',
       icon: UserCheck,
-      link: "/electrician/business-development/electricians",
+      link: '/electrician/business-development/electricians',
     },
     {
       id: 4,
-      title: "Growing Your Business",
-      description: "Strategies for expanding, from marketing to diversifying services",
+      title: 'Growing Your Business',
+      description: 'Strategies for expanding, from marketing to diversifying services',
       icon: TrendingUp,
-      link: "/electrician/business-development/growth",
+      link: '/electrician/business-development/growth',
     },
     {
       id: 5,
-      title: "Customer Acquisition",
-      description: "Effective methods to attract and retain clients for your services",
+      title: 'Customer Acquisition',
+      description: 'Effective methods to attract and retain clients for your services',
       icon: HandHelping,
-      link: "/electrician/business-development/customers",
+      link: '/electrician/business-development/customers',
     },
     {
       id: 6,
-      title: "Tax & Finances",
-      description: "Financial management, tax obligations, and accounting best practices",
+      title: 'Tax & Finances',
+      description: 'Financial management, tax obligations, and accounting best practices',
       icon: Calculator,
-      link: "/electrician/business-development/tax-finances",
+      link: '/electrician/business-development/tax-finances',
     },
     {
       id: 7,
-      title: "Debt Recovery",
-      description: "Strategies for managing late payments and protecting your cash flow",
+      title: 'Debt Recovery',
+      description: 'Strategies for managing late payments and protecting your cash flow',
       icon: CreditCard,
-      link: "/electrician/business-development/debt-recovery",
+      link: '/electrician/business-development/debt-recovery',
     },
     {
       id: 8,
-      title: "Business Calculators",
-      description: "Professional calculators for job costing and business planning",
+      title: 'Business Calculators',
+      description: 'Professional calculators for job costing and business planning',
       icon: Calculator,
-      link: "/electrician/business-development/tools",
+      link: '/electrician/business-development/tools',
     },
   ];
 
@@ -95,7 +95,7 @@ const BusinessDevelopment = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => navigate("/electrician/business")}
+              onClick={() => navigate('/electrician/business')}
               className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
@@ -143,8 +143,9 @@ const BusinessDevelopment = () => {
         {/* Disclaimer */}
         <div className="mt-8 p-4 rounded-2xl bg-white/5 border border-white/10">
           <p className="text-xs text-white/50 leading-relaxed">
-            The information provided is for general guidance only and does not constitute financial, legal, or business advice.
-            Always consult with qualified professionals regarding your specific business circumstances.
+            The information provided is for general guidance only and does not constitute financial,
+            legal, or business advice. Always consult with qualified professionals regarding your
+            specific business circumstances.
           </p>
         </div>
       </main>

@@ -1,52 +1,53 @@
-import { serve, corsHeaders } from "../_shared/deps.ts";
-import { handleError, ValidationError } from "../_shared/errors.ts";
-import { withRetry, RetryPresets } from "../_shared/retry.ts";
-import { withTimeout, Timeouts } from "../_shared/timeout.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { serve, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 const extractSchema = {
-  type: "object",
+  type: 'object',
   properties: {
     products: {
-      type: "array",
+      type: 'array',
       items: {
-        type: "object",
+        type: 'object',
         properties: {
-          name: { type: "string" },
-          price: { type: "string" },
-          brand: { type: "string" },
-          image: { type: "string" },
-          productUrl: { type: "string" },
-          inStock: { type: "boolean" }
+          name: { type: 'string' },
+          price: { type: 'string' },
+          brand: { type: 'string' },
+          image: { type: 'string' },
+          productUrl: { type: 'string' },
+          inStock: { type: 'boolean' },
         },
-        required: ["name", "price"]
-      }
-    }
+        required: ['name', 'price'],
+      },
+    },
   },
-  required: ["products"]
+  required: ['products'],
 };
 
 async function scrapeFromScrewfix(logger: any) {
   const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
-  
+
   if (!FIRECRAWL_API_KEY) {
     throw new ValidationError('FIRECRAWL_API_KEY not found');
   }
 
-  const url = "https://api.firecrawl.dev/v2/scrape";
+  const url = 'https://api.firecrawl.dev/v2/scrape';
 
   const options = {
-    method: "POST",
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${FIRECRAWL_API_KEY}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      url: "https://www.screwfix.com/c/electrical-lighting/cables/cat850003",
-      formats: ["markdown"],
+      url: 'https://www.screwfix.com/c/electrical-lighting/cables/cat850003',
+      formats: ['markdown'],
       extract: {
         schema: extractSchema,
-        prompt: "Extract all electrical cable products from this Screwfix page. For each product include the name, price (in GBP with £ symbol), brand, image URL, product page URL, and stock availability. Only extract actual products, not navigation items or ads."
+        prompt:
+          'Extract all electrical cable products from this Screwfix page. For each product include the name, price (in GBP with £ symbol), brand, image URL, product page URL, and stock availability. Only extract actual products, not navigation items or ads.',
       },
       onlyMainContent: true,
       timeout: 60000,
@@ -56,11 +57,7 @@ async function scrapeFromScrewfix(logger: any) {
   try {
     logger.info('Starting Firecrawl scrape from Screwfix (extract mode)');
     const response = await withRetry(
-      () => withTimeout(
-        fetch(url, options),
-        70000,
-        'Firecrawl materials scrape'
-      ),
+      () => withTimeout(fetch(url, options), 70000, 'Firecrawl materials scrape'),
       RetryPresets.STANDARD
     );
 
@@ -71,11 +68,11 @@ async function scrapeFromScrewfix(logger: any) {
     }
 
     const data = await response.json();
-    
-    logger.info('Firecrawl response received', { 
+
+    logger.info('Firecrawl response received', {
       success: data.success,
       hasExtract: !!data.data?.extract,
-      extractKeys: data.data?.extract ? Object.keys(data.data.extract) : []
+      extractKeys: data.data?.extract ? Object.keys(data.data.extract) : [],
     });
 
     if (!data.success) {
@@ -97,15 +94,15 @@ async function scrapeFromScrewfix(logger: any) {
       inStock: product.inStock !== false,
       image: product.image,
       view_product_url: product.productUrl,
-      category: 'Electrical Cables'
+      category: 'Electrical Cables',
     }));
 
     logger.info('Extracted products successfully', { count: products.length });
     return products;
   } catch (error) {
-    logger.error('Error scraping from Screwfix', { 
+    logger.error('Error scraping from Screwfix', {
       error: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined
+      stack: error instanceof Error ? error.stack : undefined,
     });
     return [];
   }
@@ -121,12 +118,9 @@ serve(async (req) => {
 
   try {
     logger.info('Simple materials scraper invoked');
-    
-    const materials = await logger.time(
-      'Materials scraping',
-      () => scrapeFromScrewfix(logger)
-    );
-    
+
+    const materials = await logger.time('Materials scraping', () => scrapeFromScrewfix(logger));
+
     logger.info('Retrieved electrical materials from Screwfix', { count: materials.length });
 
     // Transform to consistent format
@@ -139,26 +133,25 @@ serve(async (req) => {
       productUrl: item.view_product_url,
       inStock: item.inStock !== false,
       description: item.description,
-      brand: item.brand
+      brand: item.brand,
     }));
 
     return new Response(
-      JSON.stringify({ 
-        materials: formattedMaterials, 
+      JSON.stringify({
+        materials: formattedMaterials,
         count: formattedMaterials.length,
-        requestId 
-      }), 
+        requestId,
+      }),
       {
-        headers: { 
+        headers: {
           ...corsHeaders,
-          'Content-Type': 'application/json' 
+          'Content-Type': 'application/json',
         },
       }
     );
-
   } catch (error) {
-    logger.error('Simple materials scraper error', { 
-      error: error instanceof Error ? error.message : String(error) 
+    logger.error('Simple materials scraper error', {
+      error: error instanceof Error ? error.message : String(error),
     });
     return handleError(error);
   }

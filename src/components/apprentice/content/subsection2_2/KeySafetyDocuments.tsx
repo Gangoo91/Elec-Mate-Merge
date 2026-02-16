@@ -1,20 +1,17 @@
-
-import React from "react";
+import React from 'react';
 
 const KeySafetyDocuments = () => {
   return (
     <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
       <h2 className="text-xl font-semibold text-elec-yellow mb-4">Key Safety Documents</h2>
-      
+
       <div className="space-y-4">
-        <p className="text-white">
-          Core documentation required for electrical work includes:
-        </p>
-        
+        <p className="text-white">Core documentation required for electrical work includes:</p>
+
         <h3 className="font-semibold text-white mt-6 mb-2">Risk Assessments</h3>
         <p className="text-white mb-4">
-          Risk assessments are legally required documents that identify hazards, evaluate risks, and determine control measures for specific tasks.
-          They must be:
+          Risk assessments are legally required documents that identify hazards, evaluate risks, and
+          determine control measures for specific tasks. They must be:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-white mb-6">
           <li>Task-specific rather than generic</li>
@@ -27,8 +24,9 @@ const KeySafetyDocuments = () => {
 
         <h3 className="font-semibold text-white mt-6 mb-2">Method Statements</h3>
         <p className="text-white mb-4">
-          Method statements outline the step-by-step procedure for completing work safely. They complement risk assessments by providing detailed instructions on how to implement control measures.
-          Effective method statements include:
+          Method statements outline the step-by-step procedure for completing work safely. They
+          complement risk assessments by providing detailed instructions on how to implement control
+          measures. Effective method statements include:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-white mb-6">
           <li>Detailed sequence of operations</li>
@@ -40,41 +38,73 @@ const KeySafetyDocuments = () => {
           <li>Isolation procedures for electrical work</li>
         </ul>
 
-        <h3 className="font-semibold text-white mt-6 mb-2 text-elec-yellow">RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations)</h3>
+        <h3 className="font-semibold text-white mt-6 mb-2 text-elec-yellow">
+          RIDDOR (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations)
+        </h3>
         <p className="text-white mb-4">
-          RIDDOR places a legal duty on employers, self-employed people, and those in control of premises to report specific workplace incidents to the Health and Safety Executive (HSE).
+          RIDDOR places a legal duty on employers, self-employed people, and those in control of
+          premises to report specific workplace incidents to the Health and Safety Executive (HSE).
         </p>
         <div className="bg-white/10 border border-elec-yellow/30 rounded p-4 mb-6">
           <h4 className="font-medium text-elec-yellow mb-2">What must be reported under RIDDOR:</h4>
           <ul className="list-disc pl-6 space-y-2 text-white">
-            <li><span className="font-medium text-white">Deaths</span> - All deaths arising from work activities</li>
-            <li><span className="font-medium text-white">Specified injuries</span> - Including fractures, amputations, serious burns, loss of sight, and injuries requiring hospital admission for more than 24 hours</li>
-            <li><span className="font-medium text-white">Over 7-day injuries</span> - When a worker is away from work or unable to perform their normal duties for more than 7 consecutive days</li>
-            <li><span className="font-medium text-white">Occupational diseases</span> - Including carpal tunnel syndrome, occupational dermatitis, and hand-arm vibration syndrome</li>
-            <li><span className="font-medium text-white">Dangerous occurrences</span> - Near-miss events with potential to cause serious injury</li>
-            <li><span className="font-medium text-white">Gas incidents</span> - Including gas leaks, fires, or explosions connected to gas installations</li>
+            <li>
+              <span className="font-medium text-white">Deaths</span> - All deaths arising from work
+              activities
+            </li>
+            <li>
+              <span className="font-medium text-white">Specified injuries</span> - Including
+              fractures, amputations, serious burns, loss of sight, and injuries requiring hospital
+              admission for more than 24 hours
+            </li>
+            <li>
+              <span className="font-medium text-white">Over 7-day injuries</span> - When a worker is
+              away from work or unable to perform their normal duties for more than 7 consecutive
+              days
+            </li>
+            <li>
+              <span className="font-medium text-white">Occupational diseases</span> - Including
+              carpal tunnel syndrome, occupational dermatitis, and hand-arm vibration syndrome
+            </li>
+            <li>
+              <span className="font-medium text-white">Dangerous occurrences</span> - Near-miss
+              events with potential to cause serious injury
+            </li>
+            <li>
+              <span className="font-medium text-white">Gas incidents</span> - Including gas leaks,
+              fires, or explosions connected to gas installations
+            </li>
           </ul>
         </div>
         <p className="text-white mb-4">
           For electrical work, examples of reportable dangerous occurrences include:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-white mb-6">
-          <li>Electric shock or burn incidents that lead to unconsciousness or require resuscitation</li>
-          <li>Electrical short circuit or overload causing fire or explosion with significant damage</li>
+          <li>
+            Electric shock or burn incidents that lead to unconsciousness or require resuscitation
+          </li>
+          <li>
+            Electrical short circuit or overload causing fire or explosion with significant damage
+          </li>
           <li>Accidental release of any substance that could cause serious injury or death</li>
           <li>Collapse or failure of load-bearing parts of lifting equipment</li>
         </ul>
         <p className="text-white mb-6">
-          <span className="font-medium text-white">RIDDOR Reporting Timeframes:</span><br/>
-          - Fatal and specified injuries: Report without delay (telephone) and within 10 days (online)<br/>
-          - Over 7-day injuries: Report within 15 days<br/>
-          - Occupational diseases: Report as soon as diagnosed<br/>
-          - Dangerous occurrences: Report without delay
+          <span className="font-medium text-white">RIDDOR Reporting Timeframes:</span>
+          <br />
+          - Fatal and specified injuries: Report without delay (telephone) and within 10 days
+          (online)
+          <br />
+          - Over 7-day injuries: Report within 15 days
+          <br />
+          - Occupational diseases: Report as soon as diagnosed
+          <br />- Dangerous occurrences: Report without delay
         </p>
 
         <h3 className="font-semibold text-white mt-6 mb-2">Equipment Inspection Records</h3>
         <p className="text-white mb-4">
-          Regular inspection of tools and equipment is essential for electrical safety. Documentation must track:
+          Regular inspection of tools and equipment is essential for electrical safety.
+          Documentation must track:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-white mb-6">
           <li>Unique identification numbers for each piece of equipment</li>
@@ -88,7 +118,8 @@ const KeySafetyDocuments = () => {
 
         <h3 className="font-semibold text-white mt-6 mb-2">Training Records</h3>
         <p className="text-white mb-4">
-          Documentation of worker training and competence is critical for demonstrating due diligence and compliance:
+          Documentation of worker training and competence is critical for demonstrating due
+          diligence and compliance:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-white mb-6">
           <li>Qualifications and certifications</li>

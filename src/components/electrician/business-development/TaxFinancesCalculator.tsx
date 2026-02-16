@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
-import { Switch } from "@/components/ui/switch";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
+import { Switch } from '@/components/ui/switch';
 import {
   ChevronLeft,
   RotateCcw,
@@ -17,10 +17,10 @@ import {
   Target,
   Lightbulb,
   AlertTriangle,
-  Calendar
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+  Calendar,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface TaxInputs {
   annualRevenue: number;
@@ -44,24 +44,24 @@ const TaxFinancesCalculator = () => {
     toolsEquipment: 3600,
     insuranceCosts: 2400,
     professionalFees: 1800,
-    businessType: "sole_trader",
+    businessType: 'sole_trader',
     vatRegistered: true,
     pensionContributions: 0,
-    savingsGoal: 10000
+    savingsGoal: 10000,
   });
 
   const [expandedSections, setExpandedSections] = useState({
     expenses: true,
     setup: false,
-    insights: false
+    insights: false,
   });
 
   const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const updateInput = (field: keyof TaxInputs, value: number | string | boolean) => {
-    setInputs(prev => ({ ...prev, [field]: value }));
+    setInputs((prev) => ({ ...prev, [field]: value }));
   };
 
   const resetCalculator = () => {
@@ -72,15 +72,20 @@ const TaxFinancesCalculator = () => {
       toolsEquipment: 3600,
       insuranceCosts: 2400,
       professionalFees: 1800,
-      businessType: "sole_trader",
+      businessType: 'sole_trader',
       vatRegistered: true,
       pensionContributions: 0,
-      savingsGoal: 10000
+      savingsGoal: 10000,
     });
   };
 
   // Calculations
-  const totalExpenses = inputs.materialCosts + inputs.vehicleExpenses + inputs.toolsEquipment + inputs.insuranceCosts + inputs.professionalFees;
+  const totalExpenses =
+    inputs.materialCosts +
+    inputs.vehicleExpenses +
+    inputs.toolsEquipment +
+    inputs.insuranceCosts +
+    inputs.professionalFees;
   const taxableProfit = inputs.annualRevenue - totalExpenses;
   const personalAllowance = 12570;
 
@@ -88,10 +93,10 @@ const TaxFinancesCalculator = () => {
     const taxableIncome = Math.max(0, taxableProfit - personalAllowance);
     let incomeTax = 0;
     if (taxableIncome > 50270) {
-      incomeTax += (taxableIncome - 50270) * 0.40;
-      incomeTax += (50270 - personalAllowance) * 0.20;
+      incomeTax += (taxableIncome - 50270) * 0.4;
+      incomeTax += (50270 - personalAllowance) * 0.2;
     } else if (taxableIncome > 0) {
-      incomeTax += taxableIncome * 0.20;
+      incomeTax += taxableIncome * 0.2;
     }
     return incomeTax;
   };
@@ -108,18 +113,18 @@ const TaxFinancesCalculator = () => {
     return ni;
   };
 
-  const vatDue = inputs.vatRegistered ? (inputs.annualRevenue * 0.20) - (totalExpenses * 0.20) : 0;
+  const vatDue = inputs.vatRegistered ? inputs.annualRevenue * 0.2 - totalExpenses * 0.2 : 0;
   const incomeTax = calculateIncomeTax();
   const nationalInsurance = calculateNationalInsurance();
   const totalTax = incomeTax + nationalInsurance + (inputs.vatRegistered ? vatDue : 0);
   const netIncome = taxableProfit - totalTax;
   const monthlyNet = netIncome / 12;
-  const savingsRate = monthlyNet > 0 ? ((inputs.savingsGoal / 12) / monthlyNet) * 100 : 0;
+  const savingsRate = monthlyNet > 0 ? (inputs.savingsGoal / 12 / monthlyNet) * 100 : 0;
 
   const businessTypes = [
-    { value: "sole_trader", label: "Sole Trader" },
-    { value: "limited_company", label: "Limited Company" },
-    { value: "partnership", label: "Partnership" }
+    { value: 'sole_trader', label: 'Sole Trader' },
+    { value: 'limited_company', label: 'Limited Company' },
+    { value: 'partnership', label: 'Partnership' },
   ];
 
   return (
@@ -159,13 +164,17 @@ const TaxFinancesCalculator = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Net Income</p>
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  Net Income
+                </p>
                 <p className="text-3xl sm:text-4xl font-bold text-green-400 mt-1 tabular-nums">
                   £{netIncome.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Total Tax</p>
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  Total Tax
+                </p>
                 <p className="text-2xl font-bold text-red-400 mt-1 tabular-nums">
                   £{totalTax.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                 </p>
@@ -178,11 +187,15 @@ const TaxFinancesCalculator = () => {
               </div>
               <div className="bg-white/10 rounded-xl p-2 text-center">
                 <p className="text-ios-caption-2 text-white/50">Expenses</p>
-                <p className="text-ios-body font-semibold text-white">£{totalExpenses.toLocaleString()}</p>
+                <p className="text-ios-body font-semibold text-white">
+                  £{totalExpenses.toLocaleString()}
+                </p>
               </div>
               <div className="bg-white/10 rounded-xl p-2 text-center">
                 <p className="text-ios-caption-2 text-white/50">Profit</p>
-                <p className="text-ios-body font-semibold text-white">£{taxableProfit.toLocaleString()}</p>
+                <p className="text-ios-body font-semibold text-white">
+                  £{taxableProfit.toLocaleString()}
+                </p>
               </div>
             </div>
           </div>
@@ -192,11 +205,15 @@ const TaxFinancesCalculator = () => {
         <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
             <p className="text-ios-caption-1 text-white/50">Income Tax</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">£{incomeTax.toFixed(0)}</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              £{incomeTax.toFixed(0)}
+            </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
             <p className="text-ios-caption-1 text-white/50">NI</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">£{nationalInsurance.toFixed(0)}</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              £{nationalInsurance.toFixed(0)}
+            </p>
           </div>
           {inputs.vatRegistered && (
             <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
@@ -204,15 +221,27 @@ const TaxFinancesCalculator = () => {
               <p className="text-ios-title-3 font-semibold text-white mt-1">£{vatDue.toFixed(0)}</p>
             </div>
           )}
-          <div className={`flex-shrink-0 rounded-2xl p-4 min-w-[120px] border ${
-            savingsRate > 20 ? "bg-green-500/10 border-green-500/30" :
-            savingsRate > 10 ? "bg-amber-500/10 border-amber-500/30" :
-            "bg-red-500/10 border-red-500/30"
-          }`}>
+          <div
+            className={`flex-shrink-0 rounded-2xl p-4 min-w-[120px] border ${
+              savingsRate > 20
+                ? 'bg-green-500/10 border-green-500/30'
+                : savingsRate > 10
+                  ? 'bg-amber-500/10 border-amber-500/30'
+                  : 'bg-red-500/10 border-red-500/30'
+            }`}
+          >
             <p className="text-ios-caption-1 text-white/50">Save Rate</p>
-            <p className={`text-ios-title-3 font-semibold mt-1 ${
-              savingsRate > 20 ? "text-green-400" : savingsRate > 10 ? "text-amber-400" : "text-red-400"
-            }`}>{savingsRate.toFixed(0)}%</p>
+            <p
+              className={`text-ios-title-3 font-semibold mt-1 ${
+                savingsRate > 20
+                  ? 'text-green-400'
+                  : savingsRate > 10
+                    ? 'text-amber-400'
+                    : 'text-red-400'
+              }`}
+            >
+              {savingsRate.toFixed(0)}%
+            </p>
           </div>
         </div>
 
@@ -226,8 +255,8 @@ const TaxFinancesCalculator = () => {
               label="Annual Revenue"
               icon={<TrendingUp className="h-5 w-5" />}
               type="number"
-              value={inputs.annualRevenue || ""}
-              onChange={(e) => updateInput("annualRevenue", Number(e.target.value) || 0)}
+              value={inputs.annualRevenue || ''}
+              onChange={(e) => updateInput('annualRevenue', Number(e.target.value) || 0)}
               hint="Total income before expenses"
             />
           </div>
@@ -236,7 +265,7 @@ const TaxFinancesCalculator = () => {
         {/* Expenses Section - Collapsible */}
         <section>
           <button
-            onClick={() => toggleSection("expenses")}
+            onClick={() => toggleSection('expenses')}
             className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
           >
             <p className="text-ios-footnote text-white/50 uppercase tracking-wide">
@@ -253,7 +282,7 @@ const TaxFinancesCalculator = () => {
             {expandedSections.expenses && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
               >
@@ -262,36 +291,36 @@ const TaxFinancesCalculator = () => {
                     label="Materials & Stock"
                     icon={<Package className="h-5 w-5" />}
                     type="number"
-                    value={inputs.materialCosts || ""}
-                    onChange={(e) => updateInput("materialCosts", Number(e.target.value) || 0)}
+                    value={inputs.materialCosts || ''}
+                    onChange={(e) => updateInput('materialCosts', Number(e.target.value) || 0)}
                   />
                   <IOSInput
                     label="Vehicle Expenses"
                     icon={<Car className="h-5 w-5" />}
                     type="number"
-                    value={inputs.vehicleExpenses || ""}
-                    onChange={(e) => updateInput("vehicleExpenses", Number(e.target.value) || 0)}
+                    value={inputs.vehicleExpenses || ''}
+                    onChange={(e) => updateInput('vehicleExpenses', Number(e.target.value) || 0)}
                   />
                   <IOSInput
                     label="Tools & Equipment"
                     icon={<Wrench className="h-5 w-5" />}
                     type="number"
-                    value={inputs.toolsEquipment || ""}
-                    onChange={(e) => updateInput("toolsEquipment", Number(e.target.value) || 0)}
+                    value={inputs.toolsEquipment || ''}
+                    onChange={(e) => updateInput('toolsEquipment', Number(e.target.value) || 0)}
                   />
                   <IOSInput
                     label="Insurance"
                     icon={<Shield className="h-5 w-5" />}
                     type="number"
-                    value={inputs.insuranceCosts || ""}
-                    onChange={(e) => updateInput("insuranceCosts", Number(e.target.value) || 0)}
+                    value={inputs.insuranceCosts || ''}
+                    onChange={(e) => updateInput('insuranceCosts', Number(e.target.value) || 0)}
                   />
                   <IOSInput
                     label="Professional Fees"
                     icon={<Briefcase className="h-5 w-5" />}
                     type="number"
-                    value={inputs.professionalFees || ""}
-                    onChange={(e) => updateInput("professionalFees", Number(e.target.value) || 0)}
+                    value={inputs.professionalFees || ''}
+                    onChange={(e) => updateInput('professionalFees', Number(e.target.value) || 0)}
                   />
                 </div>
               </motion.div>
@@ -302,7 +331,7 @@ const TaxFinancesCalculator = () => {
         {/* Business Setup - Collapsible */}
         <section>
           <button
-            onClick={() => toggleSection("setup")}
+            onClick={() => toggleSection('setup')}
             className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
           >
             <p className="text-ios-footnote text-white/50 uppercase tracking-wide">
@@ -319,7 +348,7 @@ const TaxFinancesCalculator = () => {
             {expandedSections.setup && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
                 className="space-y-4"
@@ -331,19 +360,29 @@ const TaxFinancesCalculator = () => {
                     {businessTypes.map((type) => (
                       <button
                         key={type.value}
-                        onClick={() => updateInput("businessType", type.value)}
+                        onClick={() => updateInput('businessType', type.value)}
                         className={`p-3 rounded-xl border text-center transition-all touch-manipulation active:scale-[0.98] ${
                           inputs.businessType === type.value
-                            ? "bg-elec-yellow/20 border-elec-yellow/50"
-                            : "bg-white/5 border-white/10"
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50'
+                            : 'bg-white/5 border-white/10'
                         }`}
                       >
-                        <Building2 className={`h-5 w-5 mx-auto mb-1 ${
-                          inputs.businessType === type.value ? "text-elec-yellow" : "text-white/50"
-                        }`} />
-                        <p className={`text-ios-caption-1 ${
-                          inputs.businessType === type.value ? "text-elec-yellow" : "text-white/70"
-                        }`}>{type.label}</p>
+                        <Building2
+                          className={`h-5 w-5 mx-auto mb-1 ${
+                            inputs.businessType === type.value
+                              ? 'text-elec-yellow'
+                              : 'text-white/50'
+                          }`}
+                        />
+                        <p
+                          className={`text-ios-caption-1 ${
+                            inputs.businessType === type.value
+                              ? 'text-elec-yellow'
+                              : 'text-white/70'
+                          }`}
+                        >
+                          {type.label}
+                        </p>
                       </button>
                     ))}
                   </div>
@@ -358,7 +397,7 @@ const TaxFinancesCalculator = () => {
                     </div>
                     <Switch
                       checked={inputs.vatRegistered}
-                      onCheckedChange={(checked) => updateInput("vatRegistered", checked)}
+                      onCheckedChange={(checked) => updateInput('vatRegistered', checked)}
                       className="data-[state=checked]:bg-elec-yellow"
                     />
                   </div>
@@ -370,16 +409,18 @@ const TaxFinancesCalculator = () => {
                     label="Annual Pension"
                     icon={<PiggyBank className="h-5 w-5" />}
                     type="number"
-                    value={inputs.pensionContributions || ""}
-                    onChange={(e) => updateInput("pensionContributions", Number(e.target.value) || 0)}
+                    value={inputs.pensionContributions || ''}
+                    onChange={(e) =>
+                      updateInput('pensionContributions', Number(e.target.value) || 0)
+                    }
                     hint="Tax-efficient savings"
                   />
                   <IOSInput
                     label="Savings Goal"
                     icon={<Target className="h-5 w-5" />}
                     type="number"
-                    value={inputs.savingsGoal || ""}
-                    onChange={(e) => updateInput("savingsGoal", Number(e.target.value) || 0)}
+                    value={inputs.savingsGoal || ''}
+                    onChange={(e) => updateInput('savingsGoal', Number(e.target.value) || 0)}
                     hint="Annual target"
                   />
                 </div>
@@ -391,7 +432,7 @@ const TaxFinancesCalculator = () => {
         {/* Insights - Collapsible */}
         <section>
           <button
-            onClick={() => toggleSection("insights")}
+            onClick={() => toggleSection('insights')}
             className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
           >
             <p className="text-ios-footnote text-white/50 uppercase tracking-wide flex items-center gap-2">
@@ -409,7 +450,7 @@ const TaxFinancesCalculator = () => {
             {expandedSections.insights && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
                 className="space-y-4"
@@ -440,13 +481,15 @@ const TaxFinancesCalculator = () => {
                   </div>
                   <div className="space-y-2">
                     {[
-                      { date: "31 Jan", event: "Self-assessment deadline" },
-                      { date: "31 Jul", event: "Payment on account" },
-                      { date: "Quarterly", event: "VAT returns due" }
+                      { date: '31 Jan', event: 'Self-assessment deadline' },
+                      { date: '31 Jul', event: 'Payment on account' },
+                      { date: 'Quarterly', event: 'VAT returns due' },
                     ].map((item, i) => (
                       <div key={i} className="flex justify-between items-center">
                         <span className="text-ios-caption-1 text-white/70">{item.event}</span>
-                        <span className="text-ios-caption-1 font-medium text-elec-yellow">{item.date}</span>
+                        <span className="text-ios-caption-1 font-medium text-elec-yellow">
+                          {item.date}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -459,7 +502,8 @@ const TaxFinancesCalculator = () => {
                     <div>
                       <p className="text-ios-subhead font-medium text-amber-300">Reminder</p>
                       <p className="text-ios-caption-1 text-amber-200/70 mt-1">
-                        Keep receipts for 6 years. This calculator provides estimates only - consult an accountant for tax advice.
+                        Keep receipts for 6 years. This calculator provides estimates only - consult
+                        an accountant for tax advice.
                       </p>
                     </div>
                   </div>

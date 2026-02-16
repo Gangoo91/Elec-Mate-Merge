@@ -1,18 +1,17 @@
-
-import React, { useEffect, useState } from "react";
-import { SubsectionProps } from "../../types";
-import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
+import React, { useEffect, useState } from 'react';
+import { SubsectionProps } from '../../types';
+import { Card, CardContent } from '@/components/ui/card';
+import { toast } from '@/hooks/use-toast';
 
 interface HealthSafetySubsectionProps extends SubsectionProps {
   subsectionType: string;
 }
 
-const HealthSafetySubsection = ({ 
-  subsectionId, 
-  isCompleted, 
-  markAsComplete, 
-  subsectionType 
+const HealthSafetySubsection = ({
+  subsectionId,
+  isCompleted,
+  markAsComplete,
+  subsectionType,
 }: HealthSafetySubsectionProps) => {
   // Dynamic import to prevent reference errors
   const [Component, setComponent] = React.useState<React.ComponentType<any> | null>(null);
@@ -20,36 +19,36 @@ const HealthSafetySubsection = ({
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
-    console.log("HealthSafetySubsection - Loading component for type:", subsectionType);
+    console.log('HealthSafetySubsection - Loading component for type:', subsectionType);
     setIsLoading(true);
     setLoadError(false);
-    
+
     // First try the new folder structure
     import(`../../../content/subsection${subsectionType}/index`)
-      .then(module => {
-        console.log("Successfully loaded from new path structure");
+      .then((module) => {
+        console.log('Successfully loaded from new path structure');
         setComponent(() => module.default);
         setIsLoading(false);
       })
-      .catch(error => {
-        console.error("Failed to load from new path structure:", error);
-        
+      .catch((error) => {
+        console.error('Failed to load from new path structure:', error);
+
         // Fallback to old file structure
         import(`../../../content/Subsection${subsectionType}`)
-          .then(module => {
-            console.log("Successfully loaded from old path structure");
+          .then((module) => {
+            console.log('Successfully loaded from old path structure');
             setComponent(() => module.default);
             setIsLoading(false);
           })
-          .catch(secondError => {
-            console.error("All import attempts failed:", secondError);
+          .catch((secondError) => {
+            console.error('All import attempts failed:', secondError);
             setComponent(null);
             setIsLoading(false);
             setLoadError(true);
             toast({
-              title: "Content Load Error",
-              description: "Failed to load the subsection content. Please try again later.",
-              variant: "destructive"
+              title: 'Content Load Error',
+              description: 'Failed to load the subsection content. Please try again later.',
+              variant: 'destructive',
             });
           });
       });
@@ -59,7 +58,9 @@ const HealthSafetySubsection = ({
     return (
       <div className="p-6 text-center animate-pulse">
         <p className="text-white font-medium">Loading content...</p>
-        <p className="text-xs text-white mt-2">Please wait while we load your learning materials.</p>
+        <p className="text-xs text-white mt-2">
+          Please wait while we load your learning materials.
+        </p>
       </div>
     );
   }
@@ -69,13 +70,20 @@ const HealthSafetySubsection = ({
       <div className="p-6 text-center bg-red-900/10 border border-red-600/30 rounded-md">
         <p className="text-white">Failed to load content</p>
         <p className="text-xs text-white mt-2">
-          There was an issue loading this section. This might be due to a technical problem or missing content.
+          There was an issue loading this section. This might be due to a technical problem or
+          missing content.
         </p>
       </div>
     );
   }
 
-  return <Component subsectionId={subsectionId} isCompleted={isCompleted} markAsComplete={markAsComplete} />;
+  return (
+    <Component
+      subsectionId={subsectionId}
+      isCompleted={isCompleted}
+      markAsComplete={markAsComplete}
+    />
+  );
 };
 
 export default HealthSafetySubsection;

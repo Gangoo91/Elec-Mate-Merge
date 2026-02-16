@@ -44,11 +44,7 @@ export const generateRAMSPDF = (data: RAMSData): jsPDF => {
   doc.text('Identified Hazards & Control Measures', 15, yPos);
   yPos += 8;
 
-  const hazardRows = data.hazards.map(h => [
-    h.hazard,
-    h.risk,
-    h.controls.join('\n')
-  ]);
+  const hazardRows = data.hazards.map((h) => [h.hazard, h.risk, h.controls.join('\n')]);
 
   autoTable(doc, {
     startY: yPos,
@@ -60,8 +56,8 @@ export const generateRAMSPDF = (data: RAMSData): jsPDF => {
     columnStyles: {
       0: { cellWidth: 50 },
       1: { cellWidth: 30 },
-      2: { cellWidth: 90 }
-    }
+      2: { cellWidth: 90 },
+    },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 12;
@@ -74,7 +70,7 @@ export const generateRAMSPDF = (data: RAMSData): jsPDF => {
 
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  data.ppe.forEach(item => {
+  data.ppe.forEach((item) => {
     doc.text(`• ${item}`, 20, yPos);
     yPos += 6;
   });
@@ -90,7 +86,7 @@ export const generateRAMSPDF = (data: RAMSData): jsPDF => {
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    data.emergencyProcedures.forEach(proc => {
+    data.emergencyProcedures.forEach((proc) => {
       doc.text(`• ${proc}`, 20, yPos);
       yPos += 6;
     });

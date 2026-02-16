@@ -21,16 +21,16 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
 
   const handleSaveRiskAssessment = () => {
     setIsEditingRiskAssessment(false);
-    toast.success("Risk assessment changes saved");
+    toast.success('Risk assessment changes saved');
   };
 
   const handleCancelRiskAssessment = () => {
     setEditableData((prev: any) => ({
       ...prev,
-      hazards: originalData.current.hazards
+      hazards: originalData.current.hazards,
     }));
     setIsEditingRiskAssessment(false);
-    toast.info("Changes cancelled");
+    toast.info('Changes cancelled');
   };
 
   const handleUpdateHazard = (index: number, field: string, value: any) => {
@@ -44,21 +44,24 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
   const handleDeleteHazard = (index: number) => {
     setEditableData((prev: any) => ({
       ...prev,
-      hazards: prev.hazards.filter((_: any, i: number) => i !== index)
+      hazards: prev.hazards.filter((_: any, i: number) => i !== index),
     }));
   };
 
   const handleAddHazard = () => {
     setEditableData((prev: any) => ({
       ...prev,
-      hazards: [...prev.hazards, {
-        hazard: 'New Hazard',
-        likelihood: 3,
-        severity: 3,
-        riskScore: 9,
-        controlMeasure: '',
-        regulation: ''
-      }]
+      hazards: [
+        ...prev.hazards,
+        {
+          hazard: 'New Hazard',
+          likelihood: 3,
+          severity: 3,
+          riskScore: 9,
+          controlMeasure: '',
+          regulation: '',
+        },
+      ],
     }));
   };
 
@@ -73,19 +76,22 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
   const handleDeletePPE = (index: number) => {
     setEditableData((prev: any) => ({
       ...prev,
-      ppe: prev.ppe.filter((_: any, i: number) => i !== index)
+      ppe: prev.ppe.filter((_: any, i: number) => i !== index),
     }));
   };
 
   const handleAddPPE = () => {
     setEditableData((prev: any) => ({
       ...prev,
-      ppe: [...prev.ppe, {
-        ppeType: 'New PPE Item',
-        standard: 'BS EN',
-        purpose: '',
-        mandatory: false
-      }]
+      ppe: [
+        ...prev.ppe,
+        {
+          ppeType: 'New PPE Item',
+          standard: 'BS EN',
+          purpose: '',
+          mandatory: false,
+        },
+      ],
     }));
   };
 
@@ -100,7 +106,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
   const handleDeleteProcedure = (index: number) => {
     setEditableData((prev: any) => ({
       ...prev,
-      emergencyProcedures: prev.emergencyProcedures.filter((_: any, i: number) => i !== index)
+      emergencyProcedures: prev.emergencyProcedures.filter((_: any, i: number) => i !== index),
     }));
   };
 
@@ -109,7 +115,10 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       const newProcedures = [...prev.emergencyProcedures];
       const targetIndex = direction === 'up' ? index - 1 : index + 1;
       if (targetIndex < 0 || targetIndex >= newProcedures.length) return prev;
-      [newProcedures[index], newProcedures[targetIndex]] = [newProcedures[targetIndex], newProcedures[index]];
+      [newProcedures[index], newProcedures[targetIndex]] = [
+        newProcedures[targetIndex],
+        newProcedures[index],
+      ];
       return { ...prev, emergencyProcedures: newProcedures };
     });
   };
@@ -117,7 +126,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
   const handleAddProcedure = () => {
     setEditableData((prev: any) => ({
       ...prev,
-      emergencyProcedures: [...prev.emergencyProcedures, 'New emergency procedure']
+      emergencyProcedures: [...prev.emergencyProcedures, 'New emergency procedure'],
     }));
   };
 
@@ -127,23 +136,28 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
 
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(editableData, null, 2));
-    toast.success("Copied to clipboard");
+    toast.success('Copied to clipboard');
   };
 
   const handleExportPDF = async () => {
-    const loadingToast = toast.loading("Generating professional PDF...");
-    
+    const loadingToast = toast.loading('Generating professional PDF...');
+
     try {
       const { supabase } = await import('@/integrations/supabase/client');
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       // Try PDF Monkey first
-      const { data: pdfResult, error } = await supabase.functions.invoke('generate-health-safety-pdf', {
-        body: {
-          healthSafetyData: editableData,
-          userId: user?.id
+      const { data: pdfResult, error } = await supabase.functions.invoke(
+        'generate-health-safety-pdf',
+        {
+          body: {
+            healthSafetyData: editableData,
+            userId: user?.id,
+          },
         }
-      });
+      );
 
       if (error) throw error;
 
@@ -151,10 +165,10 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       if (pdfResult?.useFallback) {
         console.log('Using jsPDF fallback:', pdfResult.message);
         toast.dismiss(loadingToast);
-        
+
         // Fallback to jsPDF
         const { generateRiskAssessmentPDF } = require('@/utils/pdf-generators/risk-assessment-pdf');
-        
+
         const pdfData = {
           projectName: editableData.projectName || 'Untitled Project',
           location: editableData.location || 'Not specified',
@@ -164,20 +178,22 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
           hazards: editableData.hazards || [],
           requiredPPE: editableData.ppe?.map((p: any) => p.ppeType) || [],
           emergencyProcedures: editableData.emergencyProcedures || [],
-          notes: editableData.notes
+          notes: editableData.notes,
         };
-        
+
         const pdf = generateRiskAssessmentPDF(pdfData);
-        pdf.save(`Risk-Assessment-${editableData.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
-        
-        toast.success("PDF exported successfully (basic format)");
+        pdf.save(
+          `Risk-Assessment-${editableData.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`
+        );
+
+        toast.success('PDF exported successfully (basic format)');
         return;
       }
 
       // Success with PDF Monkey
       if (pdfResult?.success && pdfResult?.downloadUrl) {
         toast.dismiss(loadingToast);
-        
+
         // Trigger download
         const link = document.createElement('a');
         link.href = pdfResult.downloadUrl;
@@ -185,15 +201,15 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        
-        toast.success("Professional PDF exported successfully");
+
+        toast.success('Professional PDF exported successfully');
       } else {
         throw new Error('PDF generation failed');
       }
     } catch (error) {
       toast.dismiss(loadingToast);
       console.error('PDF generation error:', error);
-      toast.error("Failed to export PDF");
+      toast.error('Failed to export PDF');
     }
   };
 
@@ -207,12 +223,16 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
               <Shield className="h-7 w-7 text-foreground" />
             </div>
             <div className="flex-1">
-              <h3 className="text-2xl font-bold text-foreground mb-1">Safety Documentation Results</h3>
-              <p className="text-sm text-muted-foreground">Comprehensive risk assessment and safety procedures</p>
+              <h3 className="text-2xl font-bold text-foreground mb-1">
+                Safety Documentation Results
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Comprehensive risk assessment and safety procedures
+              </p>
             </div>
             <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 variant="outline"
                 onClick={handleCopy}
                 className="touch-manipulation"
@@ -220,8 +240,8 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
                 <Copy className="h-4 w-4 mr-2" />
                 Copy
               </Button>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 variant="ghost"
                 onClick={onStartOver}
                 className="touch-manipulation"
@@ -260,11 +280,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
                     <Save className="h-4 w-4 mr-1" />
                     Save
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={handleCancelRiskAssessment}
-                  >
+                  <Button size="sm" variant="outline" onClick={handleCancelRiskAssessment}>
                     <X className="h-4 w-4 mr-1" />
                     Cancel
                   </Button>
@@ -283,20 +299,16 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
           </CardHeader>
           <CardContent className="space-y-3">
             {editableData.hazards.map((hazard: any, idx: number) => (
-              <EnhancedHazardCard 
-                key={idx} 
-                hazard={hazard} 
+              <EnhancedHazardCard
+                key={idx}
+                hazard={hazard}
                 index={idx}
                 onUpdate={handleUpdateHazard}
                 onDelete={handleDeleteHazard}
               />
             ))}
             {isEditingRiskAssessment && (
-              <Button 
-                onClick={handleAddHazard}
-                variant="outline"
-                className="w-full"
-              >
+              <Button onClick={handleAddHazard} variant="outline" className="w-full">
                 Add Hazard
               </Button>
             )}
@@ -305,7 +317,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       )}
 
       {/* PPE Requirements - Enhanced Grid */}
-      <PPERequirementsGrid 
+      <PPERequirementsGrid
         ppeItems={editableData?.ppe || []}
         onUpdate={(updatedPPE) => {
           setEditableData((prev: any) => ({ ...prev, ppe: updatedPPE }));
@@ -313,7 +325,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       />
 
       {/* Emergency Procedures - Enhanced Section */}
-      <EmergencyProceduresSection 
+      <EmergencyProceduresSection
         procedures={editableData?.emergencyProcedures || []}
         onUpdate={handleUpdateProcedure}
         onDelete={handleDeleteProcedure}
@@ -335,11 +347,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
 
       {/* Generate PDF Button at Bottom */}
       <div className="pt-4 border-t">
-        <Button 
-          onClick={handleExportPDF}
-          className="w-full h-12 text-base font-semibold"
-          size="lg"
-        >
+        <Button onClick={handleExportPDF} className="w-full h-12 text-base font-semibold" size="lg">
           <Download className="h-5 w-5 mr-2" />
           Generate PDF
         </Button>

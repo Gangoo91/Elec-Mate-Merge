@@ -40,9 +40,13 @@ export const useRAMSNotifications = () => {
     }
   };
 
-  const showCompletionNotification = ({ jobId, projectName, onNotificationClick }: RAMSNotificationOptions) => {
+  const showCompletionNotification = ({
+    jobId,
+    projectName,
+    onNotificationClick,
+  }: RAMSNotificationOptions) => {
     const title = '✅ Your RAMS Document is Ready';
-    const body = projectName 
+    const body = projectName
       ? `Risk assessment and method statement for "${projectName}" completed successfully`
       : 'Your risk assessment and method statement completed successfully';
 
@@ -55,7 +59,7 @@ export const useRAMSNotifications = () => {
           badge: '/favicon.ico',
           tag: `rams-${jobId}`,
           requireInteraction: false,
-          silent: false
+          silent: false,
         });
 
         notification.onclick = () => {
@@ -66,7 +70,7 @@ export const useRAMSNotifications = () => {
 
         // Auto-close after 10 seconds
         setTimeout(() => notification.close(), 10000);
-        
+
         return;
       } catch (error) {
         console.error('Failed to show notification:', error);
@@ -78,26 +82,28 @@ export const useRAMSNotifications = () => {
       title,
       description: body,
       variant: 'success',
-      duration: 8000
+      duration: 8000,
     });
   };
 
-  const showErrorNotification = ({ 
-    jobId, 
-    projectName, 
-    errorMessage 
+  const showErrorNotification = ({
+    jobId,
+    projectName,
+    errorMessage,
   }: Omit<RAMSNotificationOptions, 'onNotificationClick'> & { errorMessage?: string }) => {
     const title = '⚠️ RAMS Generation Failed';
-    const body = errorMessage || (projectName 
-      ? `Failed to generate RAMS for "${projectName}". Please try again.`
-      : 'Failed to generate RAMS document. Please try again.');
+    const body =
+      errorMessage ||
+      (projectName
+        ? `Failed to generate RAMS for "${projectName}". Please try again.`
+        : 'Failed to generate RAMS document. Please try again.');
 
     // Always use toast for errors (more visible)
     toast({
       title,
       description: body,
       variant: 'destructive',
-      duration: 10000
+      duration: 10000,
     });
   };
 
@@ -105,6 +111,6 @@ export const useRAMSNotifications = () => {
     permission,
     requestPermission,
     showCompletionNotification,
-    showErrorNotification
+    showErrorNotification,
   };
 };

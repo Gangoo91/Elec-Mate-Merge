@@ -25,7 +25,11 @@ export function useAdminMessages() {
   const queryClient = useQueryClient();
 
   // Fetch all messages where user is sender or recipient
-  const { data: messages, isLoading, refetch } = useQuery({
+  const {
+    data: messages,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['admin-messages', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
@@ -167,7 +171,7 @@ export function useAdminMessages() {
   });
 
   // Calculate unread (only messages TO the user, not FROM the user)
-  const unreadMessages = messages?.filter(m => m.recipient_id === user?.id && !m.read_at) || [];
+  const unreadMessages = messages?.filter((m) => m.recipient_id === user?.id && !m.read_at) || [];
   const unreadCount = unreadMessages.length;
 
   // Check if user is admin
@@ -212,7 +216,8 @@ export function useAdminConversations() {
       // Get unique users who have messaged
       const { data, error } = await supabase
         .from('admin_messages')
-        .select(`
+        .select(
+          `
           id,
           sender_id,
           recipient_id,
@@ -222,7 +227,8 @@ export function useAdminConversations() {
           created_at,
           sender:profiles!admin_messages_sender_id_fkey(id, full_name, avatar_url, role),
           recipient:profiles!admin_messages_recipient_id_fkey(id, full_name, avatar_url, role)
-        `)
+        `
+        )
         .order('created_at', { ascending: false });
 
       if (error) {

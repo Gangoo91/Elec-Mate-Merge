@@ -1,14 +1,14 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { ExternalLink, TrendingDown, Star } from "lucide-react";
+} from '@/components/ui/carousel';
+import { ExternalLink, TrendingDown, Star } from 'lucide-react';
 
 interface MaterialDeal {
   id: string | number;
@@ -33,17 +33,18 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
 
   const getProductUrl = (deal: MaterialDeal) => {
     if (deal.productUrl) return deal.productUrl;
-    
+
     // Fallback search URLs
-    const supplier = (deal.supplier || "").toLowerCase();
+    const supplier = (deal.supplier || '').toLowerCase();
     const term = encodeURIComponent(deal.name);
-    
-    if (supplier.includes("screwfix")) return `https://www.screwfix.com/search?search=${term}`;
-    if (supplier.includes("city")) return `https://www.cef.co.uk/search?q=${term}`;
-    if (supplier.includes("electricaldirect")) return `https://www.electricaldirect.co.uk/search?query=${term}`;
-    if (supplier.includes("toolstation")) return `https://www.toolstation.com/search?q=${term}`;
-    
-    return "#";
+
+    if (supplier.includes('screwfix')) return `https://www.screwfix.com/search?search=${term}`;
+    if (supplier.includes('city')) return `https://www.cef.co.uk/search?q=${term}`;
+    if (supplier.includes('electricaldirect'))
+      return `https://www.electricaldirect.co.uk/search?query=${term}`;
+    if (supplier.includes('toolstation')) return `https://www.toolstation.com/search?q=${term}`;
+
+    return '#';
   };
 
   return (
@@ -52,9 +53,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <TrendingDown className="h-5 w-5 text-elec-yellow" />
-          <h2 className="text-xl font-semibold text-elec-light">
-            Top Discounts
-          </h2>
+          <h2 className="text-xl font-semibold text-elec-light">Top Discounts</h2>
         </div>
         <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
           Save up to {deals[0]?.discount}%
@@ -79,7 +78,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
                       }}
                     />
                   </div>
-                  
+
                   {/* Compact badges */}
                   <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between">
                     <Badge className="bg-background/90 text-foreground border-border text-[10px] px-1.5 py-0.5">
@@ -97,8 +96,13 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
                   {/* Compact supplier and stock */}
                   <div className="flex items-center justify-between text-xs mb-2">
                     <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-                      <span className="font-medium text-foreground text-[10px]">{deal.supplier || 'Supplier'}</span>
+                      <div
+                        className="w-2 h-2 bg-elec-yellow"
+                        style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
+                      ></div>
+                      <span className="font-medium text-foreground text-[10px]">
+                        {deal.supplier || 'Supplier'}
+                      </span>
                     </div>
                     {deal.stockStatus && (
                       <span className="text-green-400 text-[10px]">{deal.stockStatus}</span>
@@ -133,8 +137,8 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
                     </div>
 
                     {/* Compact button */}
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       onClick={() => window.open(getProductUrl(deal), '_blank')}
                       className="w-full h-7 text-[10px] border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors px-2"
                     >

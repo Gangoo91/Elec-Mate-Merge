@@ -1,45 +1,45 @@
-import { ArrowLeft, Flame, Shield, FileText, ClipboardCheck } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Flame, Shield, FileText, ClipboardCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Fire Extinguisher Types",
+    title: 'Fire Extinguisher Types',
     icon: Flame,
     description:
-      "Water, foam, CO\u2082, dry powder, wet chemical \u2014 colour codes, suitable fire classes, operation, and placement requirements",
+      'Water, foam, CO\u2082, dry powder, wet chemical \u2014 colour codes, suitable fire classes, operation, and placement requirements',
   },
   {
     id: 2,
-    title: "Fire Blankets & Hose Reels",
+    title: 'Fire Blankets & Hose Reels',
     icon: Shield,
     description:
-      "When to use fire blankets, BS EN 1869, fixed hose reels, maintenance requirements, and limitations",
+      'When to use fire blankets, BS EN 1869, fixed hose reels, maintenance requirements, and limitations',
   },
   {
     id: 3,
-    title: "Incident Reporting & Investigation",
+    title: 'Incident Reporting & Investigation',
     icon: FileText,
     description:
-      "RIDDOR requirements for fires, incident investigation, root cause analysis, lessons learned, and record keeping",
+      'RIDDOR requirements for fires, incident investigation, root cause analysis, lessons learned, and record keeping',
   },
   {
     id: 4,
-    title: "Post-Incident Procedures",
+    title: 'Post-Incident Procedures',
     icon: ClipboardCheck,
     description:
-      "Scene preservation, liaising with fire service and insurers, reinstatement, review of fire risk assessment, and updating emergency plans",
+      'Scene preservation, liaising with fire service and insurers, reinstatement, review of fire risk assessment, and updating emergency plans',
   },
 ];
 
 export default function FireSafetyModule5() {
   useSEO({
-    title: "Module 5: Firefighting Equipment & Incident Response | Fire Safety & Fire Marshal",
+    title: 'Module 5: Firefighting Equipment & Incident Response | Fire Safety & Fire Marshal',
     description:
-      "Learn about fire extinguisher types and colour codes, fire blankets and hose reels, incident reporting under RIDDOR, and post-incident procedures.",
+      'Learn about fire extinguisher types and colour codes, fire blankets and hose reels, incident reporting under RIDDOR, and post-incident procedures.',
   });
 
   return (
@@ -76,9 +76,9 @@ export default function FireSafetyModule5() {
               Firefighting Equipment & Incident Response
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Understand the different types of fire extinguishers and their colour codes, learn when
-              to use fire blankets and hose reels, and master incident reporting, investigation, and
-              post-incident procedures.
+              Understand the different types of fire extinguishers and their colour codes, learn
+              when to use fire blankets and hose reels, and master incident reporting,
+              investigation, and post-incident procedures.
             </p>
           </div>
 

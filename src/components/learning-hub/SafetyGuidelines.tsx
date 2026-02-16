@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,10 +13,14 @@ const SafetyGuidelines = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'Critical': return 'text-red-400 bg-red-400/10';
-      case 'Essential': return 'text-orange-400 bg-orange-400/10';
-      case 'Required': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-white/80 bg-gray-400/10';
+      case 'Critical':
+        return 'text-red-400 bg-red-400/10';
+      case 'Essential':
+        return 'text-orange-400 bg-orange-400/10';
+      case 'Required':
+        return 'text-blue-400 bg-blue-400/10';
+      default:
+        return 'text-white/80 bg-gray-400/10';
     }
   };
 
@@ -43,7 +46,9 @@ const SafetyGuidelines = () => {
                 </div>
                 <div className="flex-grow">
                   <h4 className="font-medium text-foreground">{topic.title}</h4>
-                  <span className={`text-xs font-medium ${getPriorityColor(topic.priority).split(' ')[0]}`}>
+                  <span
+                    className={`text-xs font-medium ${getPriorityColor(topic.priority).split(' ')[0]}`}
+                  >
                     {topic.priority}
                   </span>
                 </div>

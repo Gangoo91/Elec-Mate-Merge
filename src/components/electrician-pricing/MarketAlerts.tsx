@@ -1,12 +1,11 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, Info } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Bell, Info } from 'lucide-react';
 
 interface Alert {
   id: number;
   message: string;
   date: string;
-  type: "warning" | "info";
+  type: 'warning' | 'info';
 }
 
 interface MarketAlertsProps {
@@ -25,15 +24,17 @@ const MarketAlerts = ({ alerts }: MarketAlertsProps) => {
       <CardContent>
         <div className="space-y-3">
           {alerts.map((alert) => (
-            <div 
-              key={alert.id} 
+            <div
+              key={alert.id}
               className={`flex items-start p-3 rounded-md text-sm ${
-                alert.type === "warning" ? "bg-amber-500/10" : "bg-blue-500/10"
+                alert.type === 'warning' ? 'bg-amber-500/10' : 'bg-blue-500/10'
               }`}
             >
-              <Info className={`h-5 w-5 mr-2 flex-shrink-0 ${
-                alert.type === "warning" ? "text-amber-400" : "text-blue-400"
-              }`} />
+              <Info
+                className={`h-5 w-5 mr-2 flex-shrink-0 ${
+                  alert.type === 'warning' ? 'text-amber-400' : 'text-blue-400'
+                }`}
+              />
               <div>
                 <p className="mb-1">{alert.message}</p>
                 <span className="text-xs text-muted-foreground">{alert.date}</span>

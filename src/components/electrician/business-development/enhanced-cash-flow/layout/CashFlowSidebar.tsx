@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 import {
   TrendingUp,
   TrendingDown,
@@ -10,8 +10,8 @@ import {
   FileText,
   Copy,
   Download,
-} from "lucide-react";
-import { FinancialMetrics } from "@/hooks/use-cash-flow";
+} from 'lucide-react';
+import { FinancialMetrics } from '@/hooks/use-cash-flow';
 
 interface Scenario {
   id: string;
@@ -19,7 +19,7 @@ interface Scenario {
 }
 
 interface Insight {
-  type: "warning" | "info" | "success";
+  type: 'warning' | 'info' | 'success';
   message: string;
   priority: number;
 }
@@ -37,9 +37,9 @@ interface CashFlowSidebarProps {
 }
 
 const formatCurrency = (n: number) => {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(n);
@@ -60,7 +60,7 @@ export const CashFlowSidebar = ({
   const isHealthy = financialMetrics.minBalance >= 0;
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       {/* Financial Health Summary */}
       <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-4">
         <div className="flex items-center gap-2">
@@ -70,7 +70,7 @@ export const CashFlowSidebar = ({
             <AlertTriangle className="h-5 w-5 text-red-400" />
           )}
           <h3 className="font-semibold text-white">
-            {isHealthy ? "Healthy Cash Flow" : "Cash Flow Warning"}
+            {isHealthy ? 'Healthy Cash Flow' : 'Cash Flow Warning'}
           </h3>
         </div>
 
@@ -103,10 +103,10 @@ export const CashFlowSidebar = ({
 
           <div
             className={cn(
-              "p-3 rounded-xl border",
+              'p-3 rounded-xl border',
               financialMetrics.netProfit >= 0
-                ? "bg-green-500/10 border-green-500/20"
-                : "bg-red-500/10 border-red-500/20"
+                ? 'bg-green-500/10 border-green-500/20'
+                : 'bg-red-500/10 border-red-500/20'
             )}
           >
             <div className="flex items-center gap-1.5 mb-1">
@@ -123,19 +123,17 @@ export const CashFlowSidebar = ({
 
           <div
             className={cn(
-              "p-3 rounded-xl border",
+              'p-3 rounded-xl border',
               financialMetrics.minBalance >= 0
-                ? "bg-blue-500/10 border-blue-500/20"
-                : "bg-red-500/10 border-red-500/20"
+                ? 'bg-blue-500/10 border-blue-500/20'
+                : 'bg-red-500/10 border-red-500/20'
             )}
           >
             <div className="flex items-center gap-1.5 mb-1">
               <PiggyBank className="h-3.5 w-3.5 text-amber-400" />
               <span className="text-xs text-amber-400">Cash Runway</span>
             </div>
-            <p className="text-lg font-bold text-white">
-              {financialMetrics.cashRunway} mo
-            </p>
+            <p className="text-lg font-bold text-white">{financialMetrics.cashRunway} mo</p>
             <p className="text-xs text-white/50">
               Min: {formatCurrency(financialMetrics.minBalance)}
             </p>
@@ -152,10 +150,10 @@ export const CashFlowSidebar = ({
               key={scenario.id}
               onClick={() => onScenarioChange(scenario.id)}
               className={cn(
-                "px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200",
+                'px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200',
                 selectedScenario === scenario.id
-                  ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                  : "bg-white/5 text-white/60 border border-white/10 hover:bg-white/10"
+                  ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                  : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
               )}
             >
               {scenario.name}
@@ -204,13 +202,12 @@ export const CashFlowSidebar = ({
               <div
                 key={index}
                 className={cn(
-                  "p-2.5 rounded-lg text-xs border",
-                  insight.type === "warning" &&
-                    "bg-amber-500/10 border-amber-500/20 text-amber-300",
-                  insight.type === "success" &&
-                    "bg-green-500/10 border-green-500/20 text-green-300",
-                  insight.type === "info" &&
-                    "bg-blue-500/10 border-blue-500/20 text-blue-300"
+                  'p-2.5 rounded-lg text-xs border',
+                  insight.type === 'warning' &&
+                    'bg-amber-500/10 border-amber-500/20 text-amber-300',
+                  insight.type === 'success' &&
+                    'bg-green-500/10 border-green-500/20 text-green-300',
+                  insight.type === 'info' && 'bg-blue-500/10 border-blue-500/20 text-blue-300'
                 )}
               >
                 {insight.message}

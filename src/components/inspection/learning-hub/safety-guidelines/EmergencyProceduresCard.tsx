@@ -15,8 +15,8 @@ const EmergencyProceduresCard = () => {
         'If unable to isolate, use non-conductive material to separate casualty',
         'Check for consciousness and breathing',
         'Call 999 immediately',
-        'Begin CPR if qualified and necessary'
-      ]
+        'Begin CPR if qualified and necessary',
+      ],
     },
     {
       type: 'Electrical Fire',
@@ -29,8 +29,8 @@ const EmergencyProceduresCard = () => {
         'NEVER use water on electrical fires',
         'Evacuate area if fire cannot be controlled',
         'Call 999 Fire Service',
-        'Ventilate area after extinguishing'
-      ]
+        'Ventilate area after extinguishing',
+      ],
     },
     {
       type: 'Arc Flash Incident',
@@ -43,9 +43,9 @@ const EmergencyProceduresCard = () => {
         'Cool burns with cold water for 20 minutes',
         'Remove clothing/jewellery unless stuck to skin',
         'Cover burns with clean, non-fluffy material',
-        'Monitor for shock and breathing difficulties'
-      ]
-    }
+        'Monitor for shock and breathing difficulties',
+      ],
+    },
   ];
 
   const firstAidBasics = [
@@ -54,7 +54,7 @@ const EmergencyProceduresCard = () => {
     { action: 'Check Breathing', instruction: 'Look, listen, feel for 10 seconds' },
     { action: 'Call for Help', instruction: 'Dial 999, request ambulance' },
     { action: 'Begin CPR', instruction: '30 chest compressions, 2 rescue breaths' },
-    { action: 'Continue', instruction: 'Until help arrives or casualty recovers' }
+    { action: 'Continue', instruction: 'Until help arrives or casualty recovers' },
   ];
 
   return (
@@ -79,14 +79,18 @@ const EmergencyProceduresCard = () => {
                 <div className="flex items-center gap-3 mb-3">
                   <IconComponent className={`h-5 w-5 ${emergency.color}`} />
                   <h5 className="font-medium text-foreground">{emergency.type}</h5>
-                  <span className={`text-xs px-2 py-1 rounded font-bold ${emergency.color.replace('text-', 'bg-').replace('-400', '-400/20')} border ${emergency.color.replace('text-', 'border-').replace('-400', '-400/40')}`}>
+                  <span
+                    className={`text-xs px-2 py-1 rounded font-bold ${emergency.color.replace('text-', 'bg-').replace('-400', '-400/20')} border ${emergency.color.replace('text-', 'border-').replace('-400', '-400/40')}`}
+                  >
                     {emergency.priority}
                   </span>
                 </div>
                 <div className="space-y-2">
                   {emergency.steps.map((step, stepIndex) => (
                     <div key={stepIndex} className="flex items-start gap-3 text-sm">
-                      <span className={`w-5 h-5 rounded-full bg-muted flex items-center justify-center text-xs font-bold ${emergency.color} flex-shrink-0`}>
+                      <span
+                        className={`w-5 h-5 rounded-full bg-muted flex items-center justify-center text-xs font-bold ${emergency.color} flex-shrink-0`}
+                      >
                         {stepIndex + 1}
                       </span>
                       <span className="text-gray-300">{step}</span>

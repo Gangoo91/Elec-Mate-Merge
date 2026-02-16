@@ -1,15 +1,17 @@
-
-import { Helmet } from "react-helmet";
-import SafetyResourcesCard from "@/components/electrician/safety-shares/SafetyResourcesCard";
-import { Shield } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Helmet } from 'react-helmet';
+import SafetyResourcesCard from '@/components/electrician/safety-shares/SafetyResourcesCard';
+import { Shield } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const SafetyResources = () => {
   return (
     <div className="bg-elec-dark text-white ">
       <Helmet>
         <title>Safety Resources - Elec-Mate</title>
-        <meta name="description" content="Essential safety guides, toolbox talks, and training materials" />
+        <meta
+          name="description"
+          content="Essential safety guides, toolbox talks, and training materials"
+        />
       </Helmet>
 
       <div className="space-y-6 animate-fade-in px-4 py-4  max-w-7xl mx-auto">
@@ -20,7 +22,9 @@ const SafetyResources = () => {
               <Shield className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">Safety Resources</h1>
+              <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">
+                Safety Resources
+              </h1>
               <p className="text-muted-foreground">
                 Essential safety guides, toolbox talks, and training materials
               </p>

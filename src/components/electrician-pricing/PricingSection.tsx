@@ -1,15 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import PriceItem from "./PriceItem";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import PriceItem from './PriceItem';
 
 interface PriceMetric {
   id: number;
   name: string;
   value: string;
   change: string;
-  trend: "up" | "down" | "neutral";
+  trend: 'up' | 'down' | 'neutral';
   badge?: string;
   suppliers?: string[];
   subItems?: PriceMetric[];
@@ -26,15 +26,15 @@ interface PricingSectionProps {
   compareCategory?: string;
 }
 
-const PricingSection = ({ 
-  title, 
-  icon, 
-  prices, 
-  isExpanded, 
-  onToggle, 
+const PricingSection = ({
+  title,
+  icon,
+  prices,
+  isExpanded,
+  onToggle,
   limit = 3,
   showCompareButton = false,
-  compareCategory
+  compareCategory,
 }: PricingSectionProps) => {
   const navigate = useNavigate();
   const displayPrices = isExpanded ? prices : prices.slice(0, limit);
@@ -56,7 +56,7 @@ const PricingSection = ({
           {title}
         </CardTitle>
       </CardHeader>
-      
+
       <CardContent className="space-y-3">
         {displayPrices.map((price) => (
           <PriceItem
@@ -71,7 +71,7 @@ const PricingSection = ({
             suppliers={price.suppliers}
           />
         ))}
-        
+
         <div className="flex gap-2 mt-4">
           {hasMore && (
             <Button
@@ -81,7 +81,11 @@ const PricingSection = ({
               onClick={onToggle}
             >
               <div className="flex items-center gap-2">
-                {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                {isExpanded ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
                 {isExpanded ? 'Show Less' : `Show All (${prices.length})`}
               </div>
             </Button>

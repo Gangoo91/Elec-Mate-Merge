@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   ExternalLink,
   Plus,
@@ -11,12 +11,12 @@ import {
   Package,
   Shield,
   Cable,
-} from "lucide-react";
-import { MaterialItem } from "@/hooks/useToolsForMaterials";
+} from 'lucide-react';
+import { MaterialItem } from '@/hooks/useToolsForMaterials';
 
 interface PremiumMaterialCardProps {
   item: MaterialItem;
-  variant?: "default" | "compact";
+  variant?: 'default' | 'compact';
   onAddToCompare?: (item: MaterialItem) => void;
   onRemoveFromCompare?: (itemId: string) => void;
   isSelected?: boolean;
@@ -25,7 +25,7 @@ interface PremiumMaterialCardProps {
 
 const PremiumMaterialCard = ({
   item,
-  variant = "default",
+  variant = 'default',
   onAddToCompare,
   onRemoveFromCompare,
   isSelected = false,
@@ -35,7 +35,7 @@ const PremiumMaterialCard = ({
 
   // Extract cable-specific information
   const getCableInfo = () => {
-    const name = (item.name || "").toLowerCase();
+    const name = (item.name || '').toLowerCase();
     const info: {
       type?: string;
       size?: string;
@@ -46,12 +46,12 @@ const PremiumMaterialCard = ({
     } = {};
 
     // Cable type detection
-    if (name.includes("twin") && name.includes("earth")) info.type = "Twin & Earth";
-    else if (name.includes("swa")) info.type = "SWA Armoured";
-    else if (name.includes("flex") || name.includes("flexible")) info.type = "Flexible";
-    else if (name.includes("cat6") || name.includes("cat5")) info.type = "Data Cable";
-    else if (name.includes("coax")) info.type = "Coaxial";
-    else if (name.includes("fire")) info.type = "Fire Resistant";
+    if (name.includes('twin') && name.includes('earth')) info.type = 'Twin & Earth';
+    else if (name.includes('swa')) info.type = 'SWA Armoured';
+    else if (name.includes('flex') || name.includes('flexible')) info.type = 'Flexible';
+    else if (name.includes('cat6') || name.includes('cat5')) info.type = 'Data Cable';
+    else if (name.includes('coax')) info.type = 'Coaxial';
+    else if (name.includes('fire')) info.type = 'Fire Resistant';
 
     // Size detection
     const sizeMatch = name.match(/(\d+(?:\.\d+)?)\s*mm(?:2|²)?/);
@@ -66,19 +66,19 @@ const PremiumMaterialCard = ({
     if (coreMatch) info.cores = `${coreMatch[1]} core`;
 
     // Voltage rating
-    if (name.includes("1kv") || name.includes("1000v")) info.voltage = "1kV";
-    else if (name.includes("300/500v")) info.voltage = "300/500V";
-    else if (name.includes("450/750v")) info.voltage = "450/750V";
+    if (name.includes('1kv') || name.includes('1000v')) info.voltage = '1kV';
+    else if (name.includes('300/500v')) info.voltage = '300/500V';
+    else if (name.includes('450/750v')) info.voltage = '450/750V';
 
     // Standards
-    if (name.includes("bs6724") || name.includes("6724")) info.standard = "BS6724";
-    else if (name.includes("bs7671") || name.includes("7671")) info.standard = "BS7671";
+    if (name.includes('bs6724') || name.includes('6724')) info.standard = 'BS6724';
+    else if (name.includes('bs7671') || name.includes('7671')) info.standard = 'BS7671';
 
     return info;
   };
 
   const cableInfo = getCableInfo();
-  const isCable = (item.category || "").toLowerCase().includes("cable") || cableInfo.type;
+  const isCable = (item.category || '').toLowerCase().includes('cable') || cableInfo.type;
 
   // Generate features from highlights or cable info
   const getFeatures = () => {
@@ -92,8 +92,8 @@ const PremiumMaterialCard = ({
       if (cableInfo.cores) features.push(cableInfo.cores);
       if (cableInfo.standard) features.push(`${cableInfo.standard} compliant`);
     } else {
-      features.push("High quality electrical component");
-      features.push("BS7671 compliant");
+      features.push('High quality electrical component');
+      features.push('BS7671 compliant');
     }
 
     return features.slice(0, 2);
@@ -103,7 +103,7 @@ const PremiumMaterialCard = ({
 
   // Generate product URL
   const getProductUrl = () => {
-    const supplier = (item.supplier || "").toLowerCase();
+    const supplier = (item.supplier || '').toLowerCase();
     const term = encodeURIComponent(item.name);
 
     if (item.productUrl) {
@@ -115,34 +115,36 @@ const PremiumMaterialCard = ({
       }
     }
 
-    if (supplier.includes("screwfix")) return `https://www.screwfix.com/search?search=${term}`;
-    if (supplier.includes("toolstation")) return `https://www.toolstation.com/search?q=${term}`;
-    if (supplier.includes("city") || supplier.includes("cef")) return `https://www.cef.co.uk/search?q=${term}`;
-    if (supplier.includes("electricaldirect")) return `https://www.electricaldirect.co.uk/search?query=${term}`;
+    if (supplier.includes('screwfix')) return `https://www.screwfix.com/search?search=${term}`;
+    if (supplier.includes('toolstation')) return `https://www.toolstation.com/search?q=${term}`;
+    if (supplier.includes('city') || supplier.includes('cef'))
+      return `https://www.cef.co.uk/search?q=${term}`;
+    if (supplier.includes('electricaldirect'))
+      return `https://www.electricaldirect.co.uk/search?query=${term}`;
 
-    return "#";
+    return '#';
   };
 
   // Normalize image
   const imageSrc = useMemo(() => {
-    if (imageError) return "/placeholder.svg";
+    if (imageError) return '/placeholder.svg';
     const src = item.image;
-    if (!src) return "/placeholder.svg";
-    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) return `/${src}`;
+    if (!src) return '/placeholder.svg';
+    if (!/^https?:\/\//i.test(src) && !src.startsWith('/')) return `/${src}`;
     return src;
   }, [item.image, imageError]);
 
   // Calculate discount
   const discount = useMemo(() => {
     if (!item.isOnSale || !item.salePrice) return null;
-    const original = parseFloat((item.price || "0").replace(/[£,]/g, ""));
-    const sale = parseFloat((item.salePrice || "0").replace(/[£,]/g, ""));
+    const original = parseFloat((item.price || '0').replace(/[£,]/g, ''));
+    const sale = parseFloat((item.salePrice || '0').replace(/[£,]/g, ''));
     if (original <= 0) return null;
     return Math.round(((original - sale) / original) * 100);
   }, [item.price, item.salePrice, item.isOnSale]);
 
   // Compact variant
-  if (variant === "compact") {
+  if (variant === 'compact') {
     return (
       <div className="group relative rounded-xl border border-border/50 bg-gradient-to-br from-elec-gray to-elec-card overflow-hidden touch-manipulation active:scale-[0.98] active:border-primary/40 sm:hover:border-primary/40 transition-all duration-300">
         {/* Sale Badge */}
@@ -170,13 +172,9 @@ const PremiumMaterialCard = ({
             {item.name}
           </h4>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-sm font-bold text-primary">
-              {item.salePrice || item.price}
-            </span>
+            <span className="text-sm font-bold text-primary">{item.salePrice || item.price}</span>
             {item.isOnSale && item.salePrice && (
-              <span className="text-xs text-muted-foreground line-through">
-                {item.price}
-              </span>
+              <span className="text-xs text-muted-foreground line-through">{item.price}</span>
             )}
           </div>
         </div>
@@ -197,11 +195,9 @@ const PremiumMaterialCard = ({
       )}
 
       {/* Low Stock Badge */}
-      {item.stockStatus === "Low Stock" && (
+      {item.stockStatus === 'Low Stock' && (
         <div className="absolute top-3 left-3 z-10">
-          <Badge className="bg-amber-500/90 text-white text-xs font-semibold">
-            Low Stock
-          </Badge>
+          <Badge className="bg-amber-500/90 text-white text-xs font-semibold">Low Stock</Badge>
         </div>
       )}
 
@@ -241,10 +237,7 @@ const PremiumMaterialCard = ({
       <div className="p-4 space-y-3">
         {/* Brand */}
         {item.brand && (
-          <Badge
-            variant="outline"
-            className="bg-white/5 border-white/10 text-xs"
-          >
+          <Badge variant="outline" className="bg-white/5 border-white/10 text-xs">
             <Award className="h-3 w-3 mr-1" />
             {item.brand}
           </Badge>
@@ -294,13 +287,9 @@ const PremiumMaterialCard = ({
         {/* Price Section */}
         <div className="pt-3 border-t border-white/10 space-y-3">
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold text-primary">
-              {item.salePrice || item.price}
-            </span>
+            <span className="text-xl font-bold text-primary">{item.salePrice || item.price}</span>
             {item.isOnSale && item.salePrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                {item.price}
-              </span>
+              <span className="text-sm text-muted-foreground line-through">{item.price}</span>
             )}
             <span className="text-xs text-muted-foreground">inc. VAT</span>
           </div>
@@ -311,7 +300,7 @@ const PremiumMaterialCard = ({
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                window.open(getProductUrl(), "_blank");
+                window.open(getProductUrl(), '_blank');
               }}
               className="flex-1 h-11 rounded-xl bg-primary hover:bg-primary/90 font-semibold touch-manipulation active:scale-[0.98]"
             >

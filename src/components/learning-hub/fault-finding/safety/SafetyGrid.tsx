@@ -7,7 +7,7 @@ import {
   Lock,
   AlertTriangle,
   BookOpen,
-  ClipboardCheck
+  ClipboardCheck,
 } from 'lucide-react';
 import { safetyTopics, SafetyTopic } from '../data/faultFindingData';
 import { cn } from '@/lib/utils';
@@ -20,8 +20,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const itemVariants = {
@@ -29,37 +29,37 @@ const itemVariants = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 500, damping: 30 },
+  },
 };
 
 const getCategoryConfig = (category: string, priority: string) => {
   const iconMap: Record<string, React.ElementType> = {
-    'safety': Shield,
-    'equipment': HardHat,
-    'procedures': Lock,
-    'emergency': AlertTriangle,
-    'legal': BookOpen,
-    'assessment': ClipboardCheck
+    safety: Shield,
+    equipment: HardHat,
+    procedures: Lock,
+    emergency: AlertTriangle,
+    legal: BookOpen,
+    assessment: ClipboardCheck,
   };
 
   const colorMap: Record<string, string> = {
-    'critical': 'bg-red-500',
-    'high': 'bg-orange-500',
-    'essential': 'bg-amber-500'
+    critical: 'bg-red-500',
+    high: 'bg-orange-500',
+    essential: 'bg-amber-500',
   };
 
   return {
     icon: iconMap[category] || Shield,
-    iconBg: colorMap[priority] || 'bg-amber-500'
+    iconBg: colorMap[priority] || 'bg-amber-500',
   };
 };
 
 const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
   // Group by priority
-  const criticalTopics = safetyTopics.filter(t => t.priority === 'critical');
-  const highTopics = safetyTopics.filter(t => t.priority === 'high');
-  const essentialTopics = safetyTopics.filter(t => t.priority === 'essential');
+  const criticalTopics = safetyTopics.filter((t) => t.priority === 'critical');
+  const highTopics = safetyTopics.filter((t) => t.priority === 'high');
+  const essentialTopics = safetyTopics.filter((t) => t.priority === 'essential');
 
   const renderTopic = (topic: SafetyTopic) => {
     const config = getCategoryConfig(topic.category, topic.priority);
@@ -72,16 +72,16 @@ const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
         onClick={() => onSelectTopic(topic.id)}
         className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
       >
-        <div className={cn(
-          "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
-          config.iconBg
-        )}>
+        <div
+          className={cn(
+            'w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0',
+            config.iconBg
+          )}
+        >
           <Icon className="h-5 w-5 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-[15px] font-medium text-white leading-tight">
-            {topic.title}
-          </h3>
+          <h3 className="text-[15px] font-medium text-white leading-tight">{topic.title}</h3>
           <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
             {topic.description}
           </p>
@@ -94,12 +94,7 @@ const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
   };
 
   return (
-    <motion.div
-      className="space-y-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
+    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Critical */}
       {criticalTopics.length > 0 && (
         <div>

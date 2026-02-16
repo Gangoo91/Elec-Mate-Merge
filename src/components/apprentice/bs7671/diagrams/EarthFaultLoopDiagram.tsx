@@ -1,6 +1,5 @@
-
-import { Zap, Target, Shield, AlertCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Zap, Target, Shield, AlertCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface EarthFaultLoopDiagramProps {
   systemType?: string;
@@ -10,7 +9,7 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
   return (
     <div className="space-y-4">
       <div className="text-sm text-indigo-200 mb-4">
-        Earth fault loop impedance (Zs) testing for {systemType || "standard"} electrical systems
+        Earth fault loop impedance (Zs) testing for {systemType || 'standard'} electrical systems
       </div>
 
       {/* Zs Concept Diagram */}
@@ -20,9 +19,7 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
           Earth Fault Loop Path
         </h4>
         <div className="space-y-3">
-          <div className="text-xs text-blue-100">
-            Zs = Ze + (R1 + R2) where:
-          </div>
+          <div className="text-xs text-blue-100">Zs = Ze + (R1 + R2) where:</div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
             <div className="bg-blue-500/20 p-2 rounded">
               <div className="font-medium text-blue-300">Ze</div>
@@ -49,19 +46,27 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs text-green-100">Origin (Consumer Unit):</span>
-            <Badge variant="outline" className="text-green-300 border-green-400/30">Measure Ze</Badge>
+            <Badge variant="outline" className="text-green-300 border-green-400/30">
+              Measure Ze
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-xs text-green-100">Each Socket Outlet:</span>
-            <Badge variant="outline" className="text-green-300 border-green-400/30">Measure Zs</Badge>
+            <Badge variant="outline" className="text-green-300 border-green-400/30">
+              Measure Zs
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-xs text-green-100">Fixed Equipment:</span>
-            <Badge variant="outline" className="text-green-300 border-green-400/30">Measure Zs</Badge>
+            <Badge variant="outline" className="text-green-300 border-green-400/30">
+              Measure Zs
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-xs text-green-100">Distribution Boards:</span>
-            <Badge variant="outline" className="text-green-300 border-green-400/30">Measure Zs</Badge>
+            <Badge variant="outline" className="text-green-300 border-green-400/30">
+              Measure Zs
+            </Badge>
           </div>
         </div>
       </div>
@@ -142,7 +147,8 @@ const EarthFaultLoopDiagram = ({ systemType }: EarthFaultLoopDiagramProps) => {
         <div className="text-xs text-red-200">
           <div className="mb-2">If = 0.8 × Uo / Zs</div>
           <div className="text-red-100">
-            Where If = fault current, Uo = nominal voltage to earth (230V), Zs = measured loop impedance
+            Where If = fault current, Uo = nominal voltage to earth (230V), Zs = measured loop
+            impedance
           </div>
         </div>
       </div>

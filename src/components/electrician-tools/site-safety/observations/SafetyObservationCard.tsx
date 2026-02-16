@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { LocationAutoFill } from '../common/LocationAutoFill';
-import { Textarea } from '@/components/ui/textarea';
+import { SmartTextarea } from '../common/SmartTextarea';
 import {
   Select,
   SelectContent,
@@ -22,7 +22,11 @@ import { ObservationFeed } from './ObservationFeed';
 import { SafetyEmptyState } from '../common/SafetyEmptyState';
 import { SafetySkeletonLoader } from '../common/SafetySkeletonLoader';
 import { SafetyPhotoCapture } from '../common/SafetyPhotoCapture';
+import { SignaturePad } from '../common/SignaturePad';
 import { useHaptic } from '@/hooks/useHaptic';
+import { SaveAsTemplateSheet } from '../common/SaveAsTemplateSheet';
+import { LoadTemplateSheet } from '../common/LoadTemplateSheet';
+import { OBSERVATION_STANDARD_TEMPLATES } from '@/data/site-safety/observation-templates';
 
 interface SafetyObservationCardProps {
   onBack: () => void;
@@ -43,6 +47,28 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
   const [severity, setSeverity] = useState<ObservationSeverity | ''>('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
+  // Observer signature state
+  const [observerSigName, setObserverSigName] = useState('');
+  const [observerSigDate, setObserverSigDate] = useState('');
+  const [observerSigDataUrl, setObserverSigDataUrl] = useState('');
+
+  // Template state
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
+  const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+
+  const getTemplateData = () => ({
+    observationType,
+    category,
+    severity,
+  });
+
+  const handleLoadTemplate = (data: Record<string, unknown>) => {
+    if (data.observationType) setObservationType(data.observationType as 'positive' | 'improvement_needed');
+    if (data.category) setCategory(data.category as string);
+    if (data.severity) setSeverity(data.severity as ObservationSeverity);
+    if (data.description) setDescription(data.description as string);
+  };
+
   const { data: observations = [], isLoading } = useSafetyObservations();
   const createObservation = useCreateObservation();
 
@@ -59,6 +85,8 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       location: location.trim() || undefined,
       severity: severity || undefined,
       photos: photoUrls,
+      observer_signature: observerSigDataUrl || undefined,
+      observer_name: observerSigName || undefined,
     });
 
     haptic.success();
@@ -71,6 +99,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
     setSeverity('');
     setObservationType('positive');
     setPhotoUrls([]);
+    setObserverSigName('');
+    setObserverSigDate('');
+    setObserverSigDataUrl('');
   };
 
   const tabs: { key: TabKey; label: string }[] = [
@@ -123,6 +154,15 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               transition={{ duration: 0.2 }}
               className="px-4 pt-4 space-y-4"
             >
+              {/* Load Template */}
+              <button
+                type="button"
+                onClick={() => setShowLoadTemplate(true)}
+                className="w-full h-10 flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Load from Template
+              </button>
+
               {/* Observation Type Toggle */}
               <div>
                 <label className="block text-sm font-medium text-white mb-2">
@@ -215,9 +255,9 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               {/* Description */}
               <div>
                 <label className="block text-sm font-medium text-white mb-1">Description</label>
-                <Textarea
+                <SmartTextarea
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={setDescription}
                   placeholder="Describe what you observed..."
                   className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
                 />
@@ -234,8 +274,19 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
               {/* Photos */}
               <SafetyPhotoCapture photos={photoUrls} onPhotosChange={setPhotoUrls} />
 
-              {/* Submit */}
-              <div className="pb-8 pt-2">
+              {/* Observer Signature */}
+              <SignaturePad
+                label="Observer Signature"
+                name={observerSigName}
+                date={observerSigDate}
+                signatureDataUrl={observerSigDataUrl}
+                onSignatureChange={setObserverSigDataUrl}
+                onNameChange={setObserverSigName}
+                onDateChange={setObserverSigDate}
+              />
+
+              {/* Submit + Save Template */}
+              <div className="pb-8 pt-2 space-y-2">
                 <button
                   onClick={handleSubmit}
                   disabled={!canSubmit || createObservation.isPending}
@@ -249,6 +300,13 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
                   ) : (
                     'Log Observation'
                   )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowSaveTemplate(true)}
+                  className="w-full h-10 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  Save as Template
                 </button>
               </div>
             </motion.div>
@@ -279,6 +337,20 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
           )}
         </AnimatePresence>
       </div>
+
+      <SaveAsTemplateSheet
+        open={showSaveTemplate}
+        onOpenChange={setShowSaveTemplate}
+        moduleType="observation"
+        getTemplateData={getTemplateData}
+      />
+      <LoadTemplateSheet
+        open={showLoadTemplate}
+        onOpenChange={setShowLoadTemplate}
+        moduleType="observation"
+        onLoad={handleLoadTemplate}
+        standardTemplates={OBSERVATION_STANDARD_TEMPLATES}
+      />
     </div>
   );
 }

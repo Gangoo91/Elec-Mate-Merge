@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // BS 6004 Table 8: Twin and Earth Cable CPC Sizes
@@ -14,28 +15,35 @@ const TWIN_EARTH_CPC_SIZES: Record<string, string> = {
   '6.0': '2.5',
   '10.0': '4.0',
   '16.0': '6.0',
-  '25.0': '6.0'
+  '25.0': '6.0',
 };
 
 // Correct CPC size for Twin & Earth cables per BS 6004
-function correctCPCSize(cableSize: string, cpcSize: string, cableType: string): { 
-  correctedCPC: string; 
+function correctCPCSize(
+  cableSize: string,
+  cpcSize: string,
+  cableType: string
+): {
+  correctedCPC: string;
   wasCorrection: boolean;
   originalCPC: string;
 } {
   const lowerCableType = cableType.toLowerCase();
-  const isTwinEarth = lowerCableType.includes('twin') || 
-                      lowerCableType.includes('t&e') || 
-                      lowerCableType.includes('t and e') ||
-                      lowerCableType.includes('twin and earth');
-  
+  const isTwinEarth =
+    lowerCableType.includes('twin') ||
+    lowerCableType.includes('t&e') ||
+    lowerCableType.includes('t and e') ||
+    lowerCableType.includes('twin and earth');
+
   if (!isTwinEarth) {
     return { correctedCPC: cpcSize, wasCorrection: false, originalCPC: cpcSize };
   }
 
   const correctCPC = TWIN_EARTH_CPC_SIZES[cableSize];
   if (correctCPC && correctCPC !== cpcSize) {
-    console.log(`⚠️ SAFETY CORRECTION: ${cableSize}mm² T&E has ${correctCPC}mm² CPC (was incorrectly ${cpcSize}mm² per BS 6004 Table 8)`);
+    console.log(
+      `⚠️ SAFETY CORRECTION: ${cableSize}mm² T&E has ${correctCPC}mm² CPC (was incorrectly ${cpcSize}mm² per BS 6004 Table 8)`
+    );
     return { correctedCPC: correctCPC, wasCorrection: true, originalCPC: cpcSize };
   }
 
@@ -50,7 +58,7 @@ serve(async (req) => {
   try {
     const { structuredCircuit, designerResponse, projectName } = await req.json();
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
-    
+
     if (!geminiKey) {
       throw new Error('GEMINI_API_KEY not configured');
     }
@@ -72,24 +80,28 @@ serve(async (req) => {
         circuitName: structuredCircuit.name || `Circuit ${structuredCircuit.circuitNumber}`,
         cableLength: structuredCircuit.cableLength || 15,
         rcdProtected: structuredCircuit.rcdProtected || false,
-        fullResponse: JSON.stringify(structuredCircuit)
+        fullResponse: JSON.stringify(structuredCircuit),
       };
-      
+
       // Apply CPC correction for Twin & Earth cables
       const { correctedCPC, wasCorrection, originalCPC } = correctCPCSize(
         circuitInfo.cableSize,
         circuitInfo.cpcSize,
         circuitInfo.cableType
       );
-      
+
       if (wasCorrection) {
-        console.log(`✅ CORRECTED: ${circuitInfo.cableSize}mm² ${circuitInfo.cableType} CPC from ${originalCPC}mm² to ${correctedCPC}mm² (BS 6004 Table 8)`);
+        console.log(
+          `✅ CORRECTED: ${circuitInfo.cableSize}mm² ${circuitInfo.cableType} CPC from ${originalCPC}mm² to ${correctedCPC}mm² (BS 6004 Table 8)`
+        );
         circuitInfo.cpcSize = correctedCPC;
       }
-      
+
       // Validation: Ensure critical specs match
       if (structuredCircuit.cableSize && circuitInfo.cpcSize) {
-        console.log(`✅ Validated: ${structuredCircuit.cableSize}mm² cable with ${circuitInfo.cpcSize}mm² CPC`);
+        console.log(
+          `✅ Validated: ${structuredCircuit.cableSize}mm² cable with ${circuitInfo.cpcSize}mm² CPC`
+        );
       }
     } else if (designerResponse) {
       console.log('⚠️ No structured data, extracting from text');
@@ -97,13 +109,13 @@ serve(async (req) => {
     } else {
       throw new Error('No circuit data provided (need structuredCircuit or designerResponse)');
     }
-    
+
     // Generate single-line diagram
     const singleLineDiagram = await generateDiagram({
       type: 'single-line',
       circuitInfo,
       projectName,
-      geminiKey
+      geminiKey,
     });
 
     // Generate detailed circuit schematic
@@ -111,7 +123,7 @@ serve(async (req) => {
       type: 'schematic',
       circuitInfo,
       projectName,
-      geminiKey
+      geminiKey,
     });
 
     const diagrams = [
@@ -119,36 +131,40 @@ serve(async (req) => {
         type: 'single-line',
         title: 'Single Line Diagram',
         imageUrl: singleLineDiagram,
-        description: 'BS 7671 compliant single-line representation showing main protection, distribution, and circuit layout'
+        description:
+          'BS 7671 compliant single-line representation showing main protection, distribution, and circuit layout',
       },
       {
         type: 'schematic',
         title: 'Circuit Schematic',
         imageUrl: schematicDiagram,
-        description: 'Detailed circuit schematic with cable sizes, protection devices, and load connections'
-      }
+        description:
+          'Detailed circuit schematic with cable sizes, protection devices, and load connections',
+      },
     ];
 
     return new Response(JSON.stringify({ diagrams }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('❌ Circuit diagram generation error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Failed to generate diagrams';
     const errorDetails = error instanceof Error ? error.stack : 'No stack trace';
-    
+
     console.error('Error details:', errorDetails);
-    
-    return new Response(JSON.stringify({ 
-      error: errorMessage,
-      details: errorDetails,
-      diagrams: [],
-      timestamp: new Date().toISOString()
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+
+    return new Response(
+      JSON.stringify({
+        error: errorMessage,
+        details: errorDetails,
+        diagrams: [],
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
@@ -158,35 +174,44 @@ function extractCircuitInfo(designerResponse: string) {
   const protectionMatch = designerResponse.match(/(\d+)A\s*(MCB|RCBO|RCD)/i);
   const voltageMatch = designerResponse.match(/(\d+)V/);
   const loadMatch = designerResponse.match(/(\d+\.?\d*)\s*(kW|W)/i);
-  const circuitTypeMatch = designerResponse.match(/(socket|lighting|shower|cooker|immersion|heating)/i);
-  
+  const circuitTypeMatch = designerResponse.match(
+    /(socket|lighting|shower|cooker|immersion|heating)/i
+  );
+
   return {
     cableSize: cableSizeMatch ? cableSizeMatch[1] : '2.5',
-    protection: protectionMatch ? `${protectionMatch[1]}A ${protectionMatch[2].toUpperCase()}` : '32A MCB',
+    protection: protectionMatch
+      ? `${protectionMatch[1]}A ${protectionMatch[2].toUpperCase()}`
+      : '32A MCB',
     voltage: voltageMatch ? voltageMatch[1] : '230',
     load: loadMatch ? `${loadMatch[1]}${loadMatch[2]}` : '3kW',
     circuitType: circuitTypeMatch ? circuitTypeMatch[1] : 'socket',
-    fullResponse: designerResponse
+    fullResponse: designerResponse,
   };
 }
 
-async function generateDiagram({ type, circuitInfo, projectName, lovableApiKey }: {
+async function generateDiagram({
+  type,
+  circuitInfo,
+  projectName,
+  lovableApiKey,
+}: {
   type: 'single-line' | 'schematic';
   circuitInfo: any;
   projectName: string;
   lovableApiKey: string;
 }): Promise<string> {
-  
-  const prompt = type === 'single-line' 
-    ? buildSingleLinePrompt(circuitInfo, projectName)
-    : buildSchematicPrompt(circuitInfo, projectName);
+  const prompt =
+    type === 'single-line'
+      ? buildSingleLinePrompt(circuitInfo, projectName)
+      : buildSchematicPrompt(circuitInfo, projectName);
 
   console.log(`🎨 Generating ${type} diagram with Lovable AI...`);
 
   const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${lovableApiKey}`,
+      Authorization: `Bearer ${lovableApiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -194,10 +219,10 @@ async function generateDiagram({ type, circuitInfo, projectName, lovableApiKey }
       messages: [
         {
           role: 'user',
-          content: prompt
-        }
+          content: prompt,
+        },
       ],
-      modalities: ['image', 'text']
+      modalities: ['image', 'text'],
     }),
   });
 

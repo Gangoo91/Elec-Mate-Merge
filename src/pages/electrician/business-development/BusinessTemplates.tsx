@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import {
   FileText,
   Download,
@@ -20,31 +20,37 @@ import {
   Wrench,
   AlertTriangle,
   Star,
-} from "lucide-react";
-import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
+} from 'lucide-react';
+import {
+  BusinessPageLayout,
+  SectionNav,
+  ContentBlock,
+  DataGrid,
+  InfoList,
+} from '@/components/business-hub';
 
 const BusinessTemplates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeSection = searchParams.get("section") || "quotes-invoices";
+  const activeSection = searchParams.get('section') || 'quotes-invoices';
   const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
-    { id: "quotes-invoices", label: "Quotes", icon: Receipt },
-    { id: "contracts", label: "Contracts", icon: FileCheck },
-    { id: "operations", label: "Operations", icon: ClipboardList },
-    { id: "hr-safety", label: "HR & Safety", icon: Shield },
+    { id: 'quotes-invoices', label: 'Quotes', icon: Receipt },
+    { id: 'contracts', label: 'Contracts', icon: FileCheck },
+    { id: 'operations', label: 'Operations', icon: ClipboardList },
+    { id: 'hr-safety', label: 'HR & Safety', icon: Shield },
   ];
 
   const keyStats = [
-    { label: "Template Types", value: "20+", sublabel: "Essential documents" },
-    { label: "Time Saved", value: "5+ hrs", sublabel: "Per week" },
-    { label: "Professional", value: "100%", sublabel: "Industry standard" },
-    { label: "Customisable", value: "Yes", sublabel: "Your branding" },
+    { label: 'Template Types', value: '20+', sublabel: 'Essential documents' },
+    { label: 'Time Saved', value: '5+ hrs', sublabel: 'Per week' },
+    { label: 'Professional', value: '100%', sublabel: 'Industry standard' },
+    { label: 'Customisable', value: 'Yes', sublabel: 'Your branding' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sections.map(s => document.getElementById(s.id));
+      const sectionElements = sections.map((s) => document.getElementById(s.id));
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sectionElements.length - 1; i >= 0; i--) {
@@ -56,8 +62,8 @@ const BusinessTemplates = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/templates`;
@@ -99,8 +105,8 @@ const BusinessTemplates = () => {
             icon={Receipt}
             summary={
               <p className="text-white">
-                Professional quotes and invoices are essential for winning work and getting paid on time.
-                Clear, detailed documentation builds trust and reduces disputes.
+                Professional quotes and invoices are essential for winning work and getting paid on
+                time. Clear, detailed documentation builds trust and reduces disputes.
               </p>
             }
           >
@@ -117,41 +123,72 @@ const BusinessTemplates = () => {
                       <h5 className="text-sm font-semibold text-white">Domestic Quote Template</h5>
                       <Star className="h-4 w-4 text-yellow-400" />
                     </div>
-                    <p className="text-sm text-white mb-3">Standard quote for residential electrical work with itemised pricing and terms.</p>
+                    <p className="text-sm text-white mb-3">
+                      Standard quote for residential electrical work with itemised pricing and
+                      terms.
+                    </p>
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">PDF</span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">Word</span>
+                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                        PDF
+                      </span>
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                        Word
+                      </span>
                     </div>
                   </div>
                   <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex items-start justify-between mb-2">
-                      <h5 className="text-sm font-semibold text-white">Commercial Quote Template</h5>
+                      <h5 className="text-sm font-semibold text-white">
+                        Commercial Quote Template
+                      </h5>
                       <Star className="h-4 w-4 text-yellow-400" />
                     </div>
-                    <p className="text-sm text-white mb-3">Detailed quote for business clients with project breakdown and payment schedules.</p>
+                    <p className="text-sm text-white mb-3">
+                      Detailed quote for business clients with project breakdown and payment
+                      schedules.
+                    </p>
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">PDF</span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">Word</span>
+                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                        PDF
+                      </span>
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                        Word
+                      </span>
                     </div>
                   </div>
                   <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex items-start justify-between mb-2">
                       <h5 className="text-sm font-semibold text-white">EICR Quote Template</h5>
                     </div>
-                    <p className="text-sm text-white mb-3">Specific quote for Electrical Installation Condition Reports with testing scope.</p>
+                    <p className="text-sm text-white mb-3">
+                      Specific quote for Electrical Installation Condition Reports with testing
+                      scope.
+                    </p>
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">PDF</span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">Word</span>
+                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                        PDF
+                      </span>
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                        Word
+                      </span>
                     </div>
                   </div>
                   <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex items-start justify-between mb-2">
-                      <h5 className="text-sm font-semibold text-white">EV Charger Quote Template</h5>
+                      <h5 className="text-sm font-semibold text-white">
+                        EV Charger Quote Template
+                      </h5>
                     </div>
-                    <p className="text-sm text-white mb-3">Specialised quote for EV charging point installation with grant details.</p>
+                    <p className="text-sm text-white mb-3">
+                      Specialised quote for EV charging point installation with grant details.
+                    </p>
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">PDF</span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">Word</span>
+                      <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                        PDF
+                      </span>
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                        Word
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -166,10 +203,25 @@ const BusinessTemplates = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Standard Invoice", description: "Professional invoice with your logo, payment terms, and bank details. VAT and non-VAT versions available" },
-                    { title: "Itemised Invoice", description: "Detailed breakdown of labour, materials, and additional charges for transparency" },
-                    { title: "Staged Invoice", description: "For larger projects with multiple payment milestones and progress tracking" },
-                    { title: "Credit Note", description: "For refunds or adjustments to previously issued invoices" },
+                    {
+                      title: 'Standard Invoice',
+                      description:
+                        'Professional invoice with your logo, payment terms, and bank details. VAT and non-VAT versions available',
+                    },
+                    {
+                      title: 'Itemised Invoice',
+                      description:
+                        'Detailed breakdown of labour, materials, and additional charges for transparency',
+                    },
+                    {
+                      title: 'Staged Invoice',
+                      description:
+                        'For larger projects with multiple payment milestones and progress tracking',
+                    },
+                    {
+                      title: 'Credit Note',
+                      description: 'For refunds or adjustments to previously issued invoices',
+                    },
                   ]}
                 />
               </div>
@@ -183,7 +235,9 @@ const BusinessTemplates = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Your business details and registration</span>
+                    <span className="text-sm text-white">
+                      Your business details and registration
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -217,8 +271,8 @@ const BusinessTemplates = () => {
             icon={FileCheck}
             summary={
               <p className="text-white">
-                Proper contracts protect both you and your customers. Clear terms and conditions reduce disputes
-                and ensure you have legal recourse if things go wrong.
+                Proper contracts protect both you and your customers. Clear terms and conditions
+                reduce disputes and ensure you have legal recourse if things go wrong.
               </p>
             }
           >
@@ -231,7 +285,8 @@ const BusinessTemplates = () => {
                     <h4 className="text-base font-semibold text-white">Terms & Conditions</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Comprehensive T&Cs covering payment, liability, warranties, and dispute resolution.
+                    Comprehensive T&Cs covering payment, liability, warranties, and dispute
+                    resolution.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
@@ -282,10 +337,25 @@ const BusinessTemplates = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Variation Order Form", description: "Document changes to original scope with pricing and customer approval signatures" },
-                    { title: "Completion Certificate", description: "Formal confirmation of job completion with customer sign-off and snag list" },
-                    { title: "Warranty Registration", description: "Template for registering warranties with manufacturers and customers" },
-                    { title: "Data Protection Notice", description: "GDPR-compliant privacy notice for customer data handling" },
+                    {
+                      title: 'Variation Order Form',
+                      description:
+                        'Document changes to original scope with pricing and customer approval signatures',
+                    },
+                    {
+                      title: 'Completion Certificate',
+                      description:
+                        'Formal confirmation of job completion with customer sign-off and snag list',
+                    },
+                    {
+                      title: 'Warranty Registration',
+                      description:
+                        'Template for registering warranties with manufacturers and customers',
+                    },
+                    {
+                      title: 'Data Protection Notice',
+                      description: 'GDPR-compliant privacy notice for customer data handling',
+                    },
                   ]}
                 />
               </div>
@@ -299,8 +369,8 @@ const BusinessTemplates = () => {
             icon={ClipboardList}
             summary={
               <p className="text-white">
-                Streamline your daily operations with checklists, job sheets, and tracking templates.
-                Good systems save time and ensure nothing falls through the cracks.
+                Streamline your daily operations with checklists, job sheets, and tracking
+                templates. Good systems save time and ensure nothing falls through the cracks.
               </p>
             }
           >
@@ -314,19 +384,27 @@ const BusinessTemplates = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
                     <h5 className="text-sm font-semibold text-white mb-2">Job Sheet Template</h5>
-                    <p className="text-sm text-white">Record work details, materials used, time spent, and customer signature</p>
+                    <p className="text-sm text-white">
+                      Record work details, materials used, time spent, and customer signature
+                    </p>
                   </div>
                   <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
                     <h5 className="text-sm font-semibold text-white mb-2">Site Survey Form</h5>
-                    <p className="text-sm text-white">Capture site details, existing installation info, and access requirements</p>
+                    <p className="text-sm text-white">
+                      Capture site details, existing installation info, and access requirements
+                    </p>
                   </div>
                   <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
                     <h5 className="text-sm font-semibold text-white mb-2">Daily Timesheet</h5>
-                    <p className="text-sm text-white">Track time allocation across multiple jobs for accurate billing</p>
+                    <p className="text-sm text-white">
+                      Track time allocation across multiple jobs for accurate billing
+                    </p>
                   </div>
                   <div className="p-4 rounded-lg bg-white/[0.03] border border-white/10">
                     <h5 className="text-sm font-semibold text-white mb-2">Materials Log</h5>
-                    <p className="text-sm text-white">Record materials used per job for inventory and cost tracking</p>
+                    <p className="text-sm text-white">
+                      Record materials used per job for inventory and cost tracking
+                    </p>
                   </div>
                 </div>
               </div>
@@ -340,10 +418,26 @@ const BusinessTemplates = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Pre-Job Checklist", description: "Ensure you have all tools, materials, and information before arriving on site" },
-                    { title: "Installation Completion Checklist", description: "Step-by-step verification that all work meets standards before sign-off" },
-                    { title: "Vehicle Stock Checklist", description: "Weekly check of van stock levels to ensure you're always prepared" },
-                    { title: "Tool Calibration Tracker", description: "Log for tracking test equipment calibration dates and certificates" },
+                    {
+                      title: 'Pre-Job Checklist',
+                      description:
+                        'Ensure you have all tools, materials, and information before arriving on site',
+                    },
+                    {
+                      title: 'Installation Completion Checklist',
+                      description:
+                        'Step-by-step verification that all work meets standards before sign-off',
+                    },
+                    {
+                      title: 'Vehicle Stock Checklist',
+                      description:
+                        "Weekly check of van stock levels to ensure you're always prepared",
+                    },
+                    {
+                      title: 'Tool Calibration Tracker',
+                      description:
+                        'Log for tracking test equipment calibration dates and certificates',
+                    },
                   ]}
                 />
               </div>
@@ -381,8 +475,8 @@ const BusinessTemplates = () => {
             icon={Shield}
             summary={
               <p className="text-white">
-                Essential documents for managing employees, apprentices, and maintaining workplace safety.
-                Compliance with employment and health & safety law is mandatory.
+                Essential documents for managing employees, apprentices, and maintaining workplace
+                safety. Compliance with employment and health & safety law is mandatory.
               </p>
             }
           >
@@ -396,10 +490,26 @@ const BusinessTemplates = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Employment Contract Template", description: "Standard employment contract covering terms, duties, pay, and benefits. Compliant with UK employment law" },
-                    { title: "Apprenticeship Agreement", description: "Formal agreement for apprentice placements including training commitments and supervision" },
-                    { title: "Subcontractor Agreement", description: "Contract for self-employed subcontractors covering scope, rates, and CIS requirements" },
-                    { title: "Employee Handbook Template", description: "Policies covering conduct, absence, grievance, and disciplinary procedures" },
+                    {
+                      title: 'Employment Contract Template',
+                      description:
+                        'Standard employment contract covering terms, duties, pay, and benefits. Compliant with UK employment law',
+                    },
+                    {
+                      title: 'Apprenticeship Agreement',
+                      description:
+                        'Formal agreement for apprentice placements including training commitments and supervision',
+                    },
+                    {
+                      title: 'Subcontractor Agreement',
+                      description:
+                        'Contract for self-employed subcontractors covering scope, rates, and CIS requirements',
+                    },
+                    {
+                      title: 'Employee Handbook Template',
+                      description:
+                        'Policies covering conduct, absence, grievance, and disciplinary procedures',
+                    },
                   ]}
                 />
               </div>
@@ -414,7 +524,9 @@ const BusinessTemplates = () => {
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Generic electrical work risk assessment</span>
+                      <span className="text-sm text-white">
+                        Generic electrical work risk assessment
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -426,7 +538,9 @@ const BusinessTemplates = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Site-specific risk assessment template</span>
+                      <span className="text-sm text-white">
+                        Site-specific risk assessment template
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -494,9 +608,9 @@ const BusinessTemplates = () => {
             <div>
               <h3 className="text-base font-semibold text-white mb-2">Templates Coming Soon</h3>
               <p className="text-sm text-white leading-relaxed">
-                We're currently developing downloadable versions of all these templates. They'll be available
-                in Word, Excel, and PDF formats, fully customisable with your business branding. Check back soon
-                or sign up for notifications when they're ready.
+                We're currently developing downloadable versions of all these templates. They'll be
+                available in Word, Excel, and PDF formats, fully customisable with your business
+                branding. Check back soon or sign up for notifications when they're ready.
               </p>
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import {
   TrendingUp,
   Target,
@@ -27,33 +27,39 @@ import {
   DollarSign,
   Clock,
   Briefcase,
-} from "lucide-react";
-import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
+} from 'lucide-react';
+import {
+  BusinessPageLayout,
+  SectionNav,
+  ContentBlock,
+  DataGrid,
+  InfoList,
+} from '@/components/business-hub';
 
 const BusinessGrowth = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeSection = searchParams.get("section") || "growth-strategies";
+  const activeSection = searchParams.get('section') || 'growth-strategies';
   const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
-    { id: "growth-strategies", label: "Growth", icon: Target },
-    { id: "pricing", label: "Pricing", icon: PoundSterling },
-    { id: "marketing", label: "Marketing", icon: Megaphone },
-    { id: "services", label: "Services", icon: Wrench },
-    { id: "operations", label: "Operations", icon: Settings },
-    { id: "financial", label: "Financial", icon: BarChart3 },
+    { id: 'growth-strategies', label: 'Growth', icon: Target },
+    { id: 'pricing', label: 'Pricing', icon: PoundSterling },
+    { id: 'marketing', label: 'Marketing', icon: Megaphone },
+    { id: 'services', label: 'Services', icon: Wrench },
+    { id: 'operations', label: 'Operations', icon: Settings },
+    { id: 'financial', label: 'Financial', icon: BarChart3 },
   ];
 
   const keyStats = [
-    { label: "Revenue Growth", value: "15-25%", sublabel: "Annual target" },
-    { label: "Market ROI", value: "150-300%", sublabel: "With strategic planning" },
-    { label: "Productivity", value: "200-400%", sublabel: "Team scaling efficiency" },
-    { label: "Value Increase", value: "£50-200k", sublabel: "Annual business value" },
+    { label: 'Revenue Growth', value: '15-25%', sublabel: 'Annual target' },
+    { label: 'Market ROI', value: '150-300%', sublabel: 'With strategic planning' },
+    { label: 'Productivity', value: '200-400%', sublabel: 'Team scaling efficiency' },
+    { label: 'Value Increase', value: '£50-200k', sublabel: 'Annual business value' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sections.map(s => document.getElementById(s.id));
+      const sectionElements = sections.map((s) => document.getElementById(s.id));
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sectionElements.length - 1; i >= 0; i--) {
@@ -65,8 +71,8 @@ const BusinessGrowth = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/growth`;
@@ -108,8 +114,9 @@ const BusinessGrowth = () => {
             icon={Target}
             summary={
               <p className="text-white">
-                Strategic growth planning can increase business value by 200-400% over 2-3 years with proper execution.
-                Focus on market expansion, team development, digital transformation, and financial planning for sustainable growth.
+                Strategic growth planning can increase business value by 200-400% over 2-3 years
+                with proper execution. Focus on market expansion, team development, digital
+                transformation, and financial planning for sustainable growth.
               </p>
             }
           >
@@ -121,19 +128,36 @@ const BusinessGrowth = () => {
                     <MapPin className="h-5 w-5 text-yellow-400" />
                   </div>
                   <div>
-                    <h4 className="text-base font-semibold text-white">Market Expansion Strategy</h4>
-                    <p className="text-sm text-white mt-1">6-18 months timeline • £15,000-50,000 investment • 150-300% expected ROI</p>
+                    <h4 className="text-base font-semibold text-white">
+                      Market Expansion Strategy
+                    </h4>
+                    <p className="text-sm text-white mt-1">
+                      6-18 months timeline • £15,000-50,000 investment • 150-300% expected ROI
+                    </p>
                   </div>
                 </div>
                 <p className="text-sm text-white mb-4">
-                  Expand into new geographical areas and market segments for sustainable revenue growth.
+                  Expand into new geographical areas and market segments for sustainable revenue
+                  growth.
                 </p>
                 <InfoList
                   variant="numbered"
                   items={[
-                    { title: "Research & Analysis (1-2 months)", description: "Analyse local market demand, identify underserved areas within 50-mile radius, research commercial vs domestic opportunities" },
-                    { title: "Strategic Planning (2-3 months)", description: "Develop expansion strategy, calculate investment requirements and expected ROI, establish local partnerships" },
-                    { title: "Market Entry (3-12 months)", description: "Launch targeted digital marketing, establish local business relationships, hire qualified staff, monitor performance" },
+                    {
+                      title: 'Research & Analysis (1-2 months)',
+                      description:
+                        'Analyse local market demand, identify underserved areas within 50-mile radius, research commercial vs domestic opportunities',
+                    },
+                    {
+                      title: 'Strategic Planning (2-3 months)',
+                      description:
+                        'Develop expansion strategy, calculate investment requirements and expected ROI, establish local partnerships',
+                    },
+                    {
+                      title: 'Market Entry (3-12 months)',
+                      description:
+                        'Launch targeted digital marketing, establish local business relationships, hire qualified staff, monitor performance',
+                    },
                   ]}
                 />
               </div>
@@ -145,8 +169,13 @@ const BusinessGrowth = () => {
                     <Users className="h-5 w-5 text-yellow-400" />
                   </div>
                   <div>
-                    <h4 className="text-base font-semibold text-white">Strategic Team Development</h4>
-                    <p className="text-sm text-white mt-1">3-24 months timeline • £25,000-100,000 investment • 200-400% productivity return</p>
+                    <h4 className="text-base font-semibold text-white">
+                      Strategic Team Development
+                    </h4>
+                    <p className="text-sm text-white mt-1">
+                      3-24 months timeline • £25,000-100,000 investment • 200-400% productivity
+                      return
+                    </p>
                   </div>
                 </div>
                 <p className="text-sm text-white mb-4">
@@ -155,9 +184,21 @@ const BusinessGrowth = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Workforce Assessment", description: "Assess current team capacity and skills, identify future requirements for growth targets" },
-                    { title: "Strategic Recruitment", description: "Recruit qualified electricians and apprentices, establish subcontractor partnerships" },
-                    { title: "Team Development", description: "Continuous skills training, performance management, career progression pathways" },
+                    {
+                      title: 'Workforce Assessment',
+                      description:
+                        'Assess current team capacity and skills, identify future requirements for growth targets',
+                    },
+                    {
+                      title: 'Strategic Recruitment',
+                      description:
+                        'Recruit qualified electricians and apprentices, establish subcontractor partnerships',
+                    },
+                    {
+                      title: 'Team Development',
+                      description:
+                        'Continuous skills training, performance management, career progression pathways',
+                    },
                   ]}
                 />
               </div>
@@ -169,8 +210,12 @@ const BusinessGrowth = () => {
                     <Smartphone className="h-5 w-5 text-yellow-400" />
                   </div>
                   <div>
-                    <h4 className="text-base font-semibold text-white">Digital Business Transformation</h4>
-                    <p className="text-sm text-white mt-1">3-12 months timeline • £10,000-30,000 investment • 250-500% efficiency return</p>
+                    <h4 className="text-base font-semibold text-white">
+                      Digital Business Transformation
+                    </h4>
+                    <p className="text-sm text-white mt-1">
+                      3-12 months timeline • £10,000-30,000 investment • 250-500% efficiency return
+                    </p>
                   </div>
                 </div>
                 <p className="text-sm text-white mb-4">
@@ -179,9 +224,21 @@ const BusinessGrowth = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Digital Project Management", description: "Implement project management and CRM systems for improved efficiency" },
-                    { title: "Mobile Workforce Management", description: "Set up mobile tools for scheduling, job tracking, and real-time updates" },
-                    { title: "Smart Technology Offerings", description: "Integrate smart home and IoT installation services for premium revenue" },
+                    {
+                      title: 'Digital Project Management',
+                      description:
+                        'Implement project management and CRM systems for improved efficiency',
+                    },
+                    {
+                      title: 'Mobile Workforce Management',
+                      description:
+                        'Set up mobile tools for scheduling, job tracking, and real-time updates',
+                    },
+                    {
+                      title: 'Smart Technology Offerings',
+                      description:
+                        'Integrate smart home and IoT installation services for premium revenue',
+                    },
                   ]}
                 />
               </div>
@@ -195,19 +252,27 @@ const BusinessGrowth = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Government green energy infrastructure programmes</span>
+                    <span className="text-sm text-white/90">
+                      Government green energy infrastructure programmes
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">EV charging network expansion opportunities</span>
+                    <span className="text-sm text-white/90">
+                      EV charging network expansion opportunities
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Smart home technology adoption surge</span>
+                    <span className="text-sm text-white/90">
+                      Smart home technology adoption surge
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Apprenticeship Levy utilisation for training</span>
+                    <span className="text-sm text-white/90">
+                      Apprenticeship Levy utilisation for training
+                    </span>
                   </div>
                 </div>
               </div>
@@ -221,8 +286,9 @@ const BusinessGrowth = () => {
             icon={PoundSterling}
             summary={
               <p className="text-white">
-                Strategic pricing optimisation can increase profit margins by 15-35% while maintaining competitive market position.
-                UK average electrician rates range from £40-85/hour depending on region and specialisation.
+                Strategic pricing optimisation can increase profit margins by 15-35% while
+                maintaining competitive market position. UK average electrician rates range from
+                £40-85/hour depending on region and specialisation.
               </p>
             }
           >
@@ -273,11 +339,16 @@ const BusinessGrowth = () => {
                     <h4 className="text-base font-semibold text-white">Cost-Plus Pricing</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Build sustainable pricing based on true costs plus desired profit margin. Calculate hourly labour costs including NI, pension, and benefits.
+                    Build sustainable pricing based on true costs plus desired profit margin.
+                    Calculate hourly labour costs including NI, pension, and benefits.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">10-25% margin improvement</span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">Low risk</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      10-25% margin improvement
+                    </span>
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      Low risk
+                    </span>
                   </div>
                 </div>
                 <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
@@ -286,11 +357,16 @@ const BusinessGrowth = () => {
                     <h4 className="text-base font-semibold text-white">Value-Based Pricing</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Price based on customer value received rather than just costs incurred. Quantify benefits like safety, compliance, and efficiency.
+                    Price based on customer value received rather than just costs incurred. Quantify
+                    benefits like safety, compliance, and efficiency.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">20-50% price premium</span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">Medium risk</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      20-50% price premium
+                    </span>
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      Medium risk
+                    </span>
                   </div>
                 </div>
               </div>
@@ -299,9 +375,21 @@ const BusinessGrowth = () => {
               <InfoList
                 variant="checklist"
                 items={[
-                  { title: "Specialisation Premium", description: "Smart home automation, commercial renewable energy, emergency services command 25-50% above standard rates" },
-                  { title: "Service Excellence", description: "Comprehensive warranties, transparent communication, 24/7 support justify premium positioning" },
-                  { title: "Technology Enhancement", description: "Thermal imaging, drone inspections, IoT monitoring create efficiency gains of 20-35%" },
+                  {
+                    title: 'Specialisation Premium',
+                    description:
+                      'Smart home automation, commercial renewable energy, emergency services command 25-50% above standard rates',
+                  },
+                  {
+                    title: 'Service Excellence',
+                    description:
+                      'Comprehensive warranties, transparent communication, 24/7 support justify premium positioning',
+                  },
+                  {
+                    title: 'Technology Enhancement',
+                    description:
+                      'Thermal imaging, drone inspections, IoT monitoring create efficiency gains of 20-35%',
+                  },
                 ]}
               />
             </div>
@@ -314,8 +402,9 @@ const BusinessGrowth = () => {
             icon={Megaphone}
             summary={
               <p className="text-white">
-                Effective marketing combines digital presence with traditional networking to generate consistent leads.
-                Most successful electrical businesses allocate 5-10% of revenue to marketing efforts.
+                Effective marketing combines digital presence with traditional networking to
+                generate consistent leads. Most successful electrical businesses allocate 5-10% of
+                revenue to marketing efforts.
               </p>
             }
           >
@@ -329,10 +418,26 @@ const BusinessGrowth = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Professional Website", description: "Mobile-optimised site with clear services, pricing, and contact information. Include portfolio and testimonials." },
-                    { title: "Google Business Profile", description: "Fully optimised profile with photos, services, hours, and regular post updates. Respond to all reviews." },
-                    { title: "Social Media Presence", description: "Facebook and Instagram for project showcases. LinkedIn for commercial clients and networking." },
-                    { title: "Local SEO", description: "Target location-specific keywords, build local citations, and encourage customer reviews." },
+                    {
+                      title: 'Professional Website',
+                      description:
+                        'Mobile-optimised site with clear services, pricing, and contact information. Include portfolio and testimonials.',
+                    },
+                    {
+                      title: 'Google Business Profile',
+                      description:
+                        'Fully optimised profile with photos, services, hours, and regular post updates. Respond to all reviews.',
+                    },
+                    {
+                      title: 'Social Media Presence',
+                      description:
+                        'Facebook and Instagram for project showcases. LinkedIn for commercial clients and networking.',
+                    },
+                    {
+                      title: 'Local SEO',
+                      description:
+                        'Target location-specific keywords, build local citations, and encourage customer reviews.',
+                    },
                   ]}
                 />
               </div>
@@ -346,10 +451,26 @@ const BusinessGrowth = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Trade Partnerships", description: "Build referral relationships with builders, plumbers, property managers, and estate agents" },
-                    { title: "Vehicle Branding", description: "Professional van signage and wraps provide constant visibility throughout your service area" },
-                    { title: "Local Business Groups", description: "Join BNI, Chamber of Commerce, and trade associations for networking opportunities" },
-                    { title: "Customer Referral Programme", description: "Incentivise existing customers to refer new business with discounts or credits" },
+                    {
+                      title: 'Trade Partnerships',
+                      description:
+                        'Build referral relationships with builders, plumbers, property managers, and estate agents',
+                    },
+                    {
+                      title: 'Vehicle Branding',
+                      description:
+                        'Professional van signage and wraps provide constant visibility throughout your service area',
+                    },
+                    {
+                      title: 'Local Business Groups',
+                      description:
+                        'Join BNI, Chamber of Commerce, and trade associations for networking opportunities',
+                    },
+                    {
+                      title: 'Customer Referral Programme',
+                      description:
+                        'Incentivise existing customers to refer new business with discounts or credits',
+                    },
                   ]}
                 />
               </div>
@@ -383,8 +504,9 @@ const BusinessGrowth = () => {
             icon={Wrench}
             summary={
               <p className="text-white">
-                Expand your service offerings to increase revenue per customer and reduce dependency on single service types.
-                High-growth areas include renewable energy, smart home technology, and commercial maintenance contracts.
+                Expand your service offerings to increase revenue per customer and reduce dependency
+                on single service types. High-growth areas include renewable energy, smart home
+                technology, and commercial maintenance contracts.
               </p>
             }
           >
@@ -397,20 +519,27 @@ const BusinessGrowth = () => {
                     <h4 className="text-base font-semibold text-white">Renewable Energy</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Solar PV installation, battery storage systems, and EV charging infrastructure represent the fastest-growing segments in UK electrical work.
+                    Solar PV installation, battery storage systems, and EV charging infrastructure
+                    represent the fastest-growing segments in UK electrical work.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Solar PV: £8,000-15,000 average job value</span>
+                      <span className="text-sm text-white">
+                        Solar PV: £8,000-15,000 average job value
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">EV charging: £800-2,500 per installation</span>
+                      <span className="text-sm text-white">
+                        EV charging: £800-2,500 per installation
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Battery storage: £5,000-12,000 per system</span>
+                      <span className="text-sm text-white">
+                        Battery storage: £5,000-12,000 per system
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -420,20 +549,27 @@ const BusinessGrowth = () => {
                     <h4 className="text-base font-semibold text-white">Smart Home Technology</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Automated lighting, security systems, and integrated home management systems offer recurring revenue opportunities.
+                    Automated lighting, security systems, and integrated home management systems
+                    offer recurring revenue opportunities.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Smart lighting: £1,500-5,000 per property</span>
+                      <span className="text-sm text-white">
+                        Smart lighting: £1,500-5,000 per property
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Security systems: £2,000-8,000 installation</span>
+                      <span className="text-sm text-white">
+                        Security systems: £2,000-8,000 installation
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Maintenance contracts: £200-500/year recurring</span>
+                      <span className="text-sm text-white">
+                        Maintenance contracts: £200-500/year recurring
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -448,10 +584,26 @@ const BusinessGrowth = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Maintenance Contracts", description: "Regular inspection and maintenance agreements provide predictable recurring revenue of £5,000-50,000/year per client" },
-                    { title: "Fit-Out Work", description: "Office and retail electrical installations offer £10,000-100,000+ project values with repeat client potential" },
-                    { title: "Emergency Response", description: "24/7 commercial emergency call-out services command premium rates and build client loyalty" },
-                    { title: "Energy Audits", description: "Energy efficiency assessments and LED upgrades for commercial clients with typical ROI of 2-4 years" },
+                    {
+                      title: 'Maintenance Contracts',
+                      description:
+                        'Regular inspection and maintenance agreements provide predictable recurring revenue of £5,000-50,000/year per client',
+                    },
+                    {
+                      title: 'Fit-Out Work',
+                      description:
+                        'Office and retail electrical installations offer £10,000-100,000+ project values with repeat client potential',
+                    },
+                    {
+                      title: 'Emergency Response',
+                      description:
+                        '24/7 commercial emergency call-out services command premium rates and build client loyalty',
+                    },
+                    {
+                      title: 'Energy Audits',
+                      description:
+                        'Energy efficiency assessments and LED upgrades for commercial clients with typical ROI of 2-4 years',
+                    },
                   ]}
                 />
               </div>
@@ -465,19 +617,27 @@ const BusinessGrowth = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">MCS certification for solar PV installations</span>
+                    <span className="text-sm text-white/90">
+                      MCS certification for solar PV installations
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">OZEV approved installer for EV charging</span>
+                    <span className="text-sm text-white/90">
+                      OZEV approved installer for EV charging
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Part P certification for domestic work</span>
+                    <span className="text-sm text-white/90">
+                      Part P certification for domestic work
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">City & Guilds 2919 for EV charging</span>
+                    <span className="text-sm text-white/90">
+                      City & Guilds 2919 for EV charging
+                    </span>
                   </div>
                 </div>
               </div>
@@ -491,8 +651,9 @@ const BusinessGrowth = () => {
             icon={Settings}
             summary={
               <p className="text-white">
-                Streamlined operations increase profitability by reducing waste, improving productivity, and enhancing customer satisfaction.
-                Top performers achieve 85%+ utilisation rates and 95%+ first-time fix rates.
+                Streamlined operations increase profitability by reducing waste, improving
+                productivity, and enhancing customer satisfaction. Top performers achieve 85%+
+                utilisation rates and 95%+ first-time fix rates.
               </p>
             }
           >
@@ -526,10 +687,26 @@ const BusinessGrowth = () => {
                 <InfoList
                   variant="numbered"
                   items={[
-                    { title: "Job Management Software", description: "Track jobs from quote to completion with scheduling, invoicing, and customer communication integrated" },
-                    { title: "Inventory Management", description: "Monitor stock levels, automate reordering, and track material costs per job for accurate pricing" },
-                    { title: "Time Tracking", description: "Capture accurate time per job for profitability analysis and billing accuracy" },
-                    { title: "Quality Control", description: "Standardised checklists, photo documentation, and customer sign-off procedures" },
+                    {
+                      title: 'Job Management Software',
+                      description:
+                        'Track jobs from quote to completion with scheduling, invoicing, and customer communication integrated',
+                    },
+                    {
+                      title: 'Inventory Management',
+                      description:
+                        'Monitor stock levels, automate reordering, and track material costs per job for accurate pricing',
+                    },
+                    {
+                      title: 'Time Tracking',
+                      description:
+                        'Capture accurate time per job for profitability analysis and billing accuracy',
+                    },
+                    {
+                      title: 'Quality Control',
+                      description:
+                        'Standardised checklists, photo documentation, and customer sign-off procedures',
+                    },
                   ]}
                 />
               </div>
@@ -544,15 +721,21 @@ const BusinessGrowth = () => {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Optimise travel routes to reduce windscreen time</span>
+                      <span className="text-sm text-white">
+                        Optimise travel routes to reduce windscreen time
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Pre-stage materials for common job types</span>
+                      <span className="text-sm text-white">
+                        Pre-stage materials for common job types
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Use mobile apps for on-site documentation</span>
+                      <span className="text-sm text-white">
+                        Use mobile apps for on-site documentation
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -564,15 +747,21 @@ const BusinessGrowth = () => {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Automated appointment reminders and updates</span>
+                      <span className="text-sm text-white">
+                        Automated appointment reminders and updates
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Professional uniforms and branded materials</span>
+                      <span className="text-sm text-white">
+                        Professional uniforms and branded materials
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400" />
-                      <span className="text-sm text-white">Post-job follow-up and review requests</span>
+                      <span className="text-sm text-white">
+                        Post-job follow-up and review requests
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -587,8 +776,9 @@ const BusinessGrowth = () => {
             icon={BarChart3}
             summary={
               <p className="text-white">
-                Sound financial management ensures sustainable growth and business stability.
-                Target gross margins of 35-50% and net margins of 8-15% for a healthy electrical contracting business.
+                Sound financial management ensures sustainable growth and business stability. Target
+                gross margins of 35-50% and net margins of 8-15% for a healthy electrical
+                contracting business.
               </p>
             }
           >
@@ -640,10 +830,26 @@ const BusinessGrowth = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Deposit Collection", description: "Collect 25-50% deposits on larger jobs to improve cash flow and reduce risk" },
-                    { title: "Invoice Promptly", description: "Send invoices same day as job completion with clear payment terms (14-30 days)" },
-                    { title: "Chase Payments", description: "Systematic follow-up process for overdue payments including phone calls and statements" },
-                    { title: "Operating Reserve", description: "Maintain 3-6 months operating expenses in reserve for stability" },
+                    {
+                      title: 'Deposit Collection',
+                      description:
+                        'Collect 25-50% deposits on larger jobs to improve cash flow and reduce risk',
+                    },
+                    {
+                      title: 'Invoice Promptly',
+                      description:
+                        'Send invoices same day as job completion with clear payment terms (14-30 days)',
+                    },
+                    {
+                      title: 'Chase Payments',
+                      description:
+                        'Systematic follow-up process for overdue payments including phone calls and statements',
+                    },
+                    {
+                      title: 'Operating Reserve',
+                      description:
+                        'Maintain 3-6 months operating expenses in reserve for stability',
+                    },
                   ]}
                 />
               </div>
@@ -657,19 +863,27 @@ const BusinessGrowth = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Access green energy grants and incentive schemes</span>
+                    <span className="text-sm text-white/90">
+                      Access green energy grants and incentive schemes
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Claim R&D tax credits for innovation</span>
+                    <span className="text-sm text-white/90">
+                      Claim R&D tax credits for innovation
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Establish business credit facilities early</span>
+                    <span className="text-sm text-white/90">
+                      Establish business credit facilities early
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">Reinvest 10-20% of profits for growth</span>
+                    <span className="text-sm text-white/90">
+                      Reinvest 10-20% of profits for growth
+                    </span>
                   </div>
                 </div>
               </div>
@@ -686,9 +900,10 @@ const BusinessGrowth = () => {
             <div>
               <h3 className="text-base font-semibold text-white mb-2">Remember</h3>
               <p className="text-sm text-white leading-relaxed">
-                Growing a successful electrical business requires patience, strategic planning, and consistent
-                execution. Focus on building strong relationships, maintaining high-quality standards, and
-                adapting to market changes. Sustainable growth of 15-25% annually is achievable with the right approach.
+                Growing a successful electrical business requires patience, strategic planning, and
+                consistent execution. Focus on building strong relationships, maintaining
+                high-quality standards, and adapting to market changes. Sustainable growth of 15-25%
+                annually is achievable with the right approach.
               </p>
             </div>
           </div>

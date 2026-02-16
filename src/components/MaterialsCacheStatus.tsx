@@ -16,29 +16,29 @@ export const MaterialsCacheStatus = () => {
     setIsRefreshing(true);
     try {
       const result = await refreshMaterialsCache();
-      
+
       if (result.success) {
         toast({
-          title: "Cache Refresh Started",
+          title: 'Cache Refresh Started',
           description: `Successfully triggered cache update for ${result.data?.results?.length || 0} categories`,
           duration: 5000,
         });
-        
+
         // Refresh cache status after update
         await loadCacheStatus();
       } else {
         toast({
-          title: "Cache Refresh Failed",
+          title: 'Cache Refresh Failed',
           description: result.error,
-          variant: "destructive",
+          variant: 'destructive',
           duration: 5000,
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to refresh materials cache",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to refresh materials cache',
+        variant: 'destructive',
         duration: 5000,
       });
     } finally {
@@ -80,20 +80,11 @@ export const MaterialsCacheStatus = () => {
           <h3 className="text-lg font-semibold">Materials Cache Status</h3>
         </div>
         <div className="flex gap-2">
-          <Button
-            onClick={loadCacheStatus}
-            variant="outline"
-            size="sm"
-            disabled={isLoading}
-          >
+          <Button onClick={loadCacheStatus} variant="outline" size="sm" disabled={isLoading}>
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh Status
           </Button>
-          <Button
-            onClick={handleRefreshCache}
-            disabled={isRefreshing}
-            size="sm"
-          >
+          <Button onClick={handleRefreshCache} disabled={isRefreshing} size="sm">
             <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
             {isRefreshing ? 'Updating...' : 'Update Cache'}
           </Button>
@@ -107,30 +98,30 @@ export const MaterialsCacheStatus = () => {
               <Card key={index} className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium capitalize">{entry.category}</h4>
-                  <Badge 
+                  <Badge
                     variant={
                       entry.update_status === 'completed' && !isExpired(entry.expires_at)
                         ? 'default'
                         : entry.update_status === 'error'
-                        ? 'destructive'
-                        : 'secondary'
+                          ? 'destructive'
+                          : 'secondary'
                     }
                   >
                     {entry.update_status}
                   </Badge>
                 </div>
-                
+
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Database className="h-3 w-3" />
                     <span>{entry.total_products} materials</span>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <Clock className="h-3 w-3" />
                     <span>Updated: {formatDate(entry.created_at)}</span>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <AlertCircle className="h-3 w-3" />
                     <span className={isExpired(entry.expires_at) ? 'text-red-500' : ''}>
@@ -141,7 +132,7 @@ export const MaterialsCacheStatus = () => {
               </Card>
             ))}
           </div>
-          
+
           <div className="text-sm text-muted-foreground">
             <p>📅 Automatic updates scheduled every Sunday at 2 AM UTC</p>
             <p>🧹 Expired cache entries are cleaned up daily at 3 AM UTC</p>

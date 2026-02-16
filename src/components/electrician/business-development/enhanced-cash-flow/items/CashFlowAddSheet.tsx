@@ -1,15 +1,10 @@
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { X, Plus, Wallet, PiggyBank } from "lucide-react";
-import { CalculatorInput, CalculatorSelect } from "@/components/calculators/shared";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { X, Plus, Wallet, PiggyBank } from 'lucide-react';
+import { CalculatorInput, CalculatorSelect } from '@/components/calculators/shared';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
-type ItemType = "income" | "expense";
+type ItemType = 'income' | 'expense';
 
 interface CashFlowAddSheetProps {
   open: boolean;
@@ -19,31 +14,26 @@ interface CashFlowAddSheetProps {
 }
 
 const incomeFrequencyOptions = [
-  { value: "monthly", label: "Monthly" },
-  { value: "quarterly", label: "Quarterly" },
-  { value: "seasonal", label: "Seasonal" },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'quarterly', label: 'Quarterly' },
+  { value: 'seasonal', label: 'Seasonal' },
 ];
 
 const expenseFrequencyOptions = [
-  { value: "monthly", label: "Monthly" },
-  { value: "quarterly", label: "Quarterly" },
-  { value: "annual", label: "Annual" },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'quarterly', label: 'Quarterly' },
+  { value: 'annual', label: 'Annual' },
 ];
 
-export const CashFlowAddSheet = ({
-  open,
-  onOpenChange,
-  type,
-  onAdd,
-}: CashFlowAddSheetProps) => {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [frequency, setFrequency] = useState("monthly");
-  const [paymentDelayDays, setPaymentDelayDays] = useState("14");
-  const [growth, setGrowth] = useState("5");
+export const CashFlowAddSheet = ({ open, onOpenChange, type, onAdd }: CashFlowAddSheetProps) => {
+  const [name, setName] = useState('');
+  const [amount, setAmount] = useState('');
+  const [frequency, setFrequency] = useState('monthly');
+  const [paymentDelayDays, setPaymentDelayDays] = useState('14');
+  const [growth, setGrowth] = useState('5');
   const [variable, setVariable] = useState(true);
 
-  const isIncome = type === "income";
+  const isIncome = type === 'income';
 
   const handleSubmit = () => {
     if (!name || !amount) return;
@@ -67,35 +57,33 @@ export const CashFlowAddSheet = ({
     }
 
     // Reset form
-    setName("");
-    setAmount("");
-    setFrequency("monthly");
-    setPaymentDelayDays("14");
-    setGrowth(isIncome ? "5" : "3");
+    setName('');
+    setAmount('');
+    setFrequency('monthly');
+    setPaymentDelayDays('14');
+    setGrowth(isIncome ? '5' : '3');
     setVariable(true);
     onOpenChange(false);
   };
 
-  const canSubmit = name.trim() !== "" && parseFloat(amount) > 0;
+  const canSubmit = name.trim() !== '' && parseFloat(amount) > 0;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="bg-card border-white/10 rounded-t-2xl max-h-[85vh] overflow-y-auto">
+      <SheetContent
+        side="bottom"
+        className="bg-card border-white/10 rounded-t-2xl max-h-[85vh] overflow-y-auto"
+      >
         <SheetHeader className="pb-4">
           <SheetTitle className="flex items-center gap-3 text-white">
-            <div
-              className={cn(
-                "p-2 rounded-lg",
-                isIncome ? "bg-green-500/10" : "bg-red-500/10"
-              )}
-            >
+            <div className={cn('p-2 rounded-lg', isIncome ? 'bg-green-500/10' : 'bg-red-500/10')}>
               {isIncome ? (
                 <Wallet className="h-5 w-5 text-green-400" />
               ) : (
                 <PiggyBank className="h-5 w-5 text-red-400" />
               )}
             </div>
-            Add {isIncome ? "Income Stream" : "Expense"}
+            Add {isIncome ? 'Income Stream' : 'Expense'}
           </SheetTitle>
         </SheetHeader>
 
@@ -105,7 +93,7 @@ export const CashFlowAddSheet = ({
             type="text"
             value={name}
             onChange={setName}
-            placeholder={isIncome ? "e.g., Regular Contracts" : "e.g., Van Insurance"}
+            placeholder={isIncome ? 'e.g., Regular Contracts' : 'e.g., Van Insurance'}
           />
 
           <CalculatorInput
@@ -174,16 +162,16 @@ export const CashFlowAddSheet = ({
             onClick={handleSubmit}
             disabled={!canSubmit}
             className={cn(
-              "flex-1 h-12 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors",
+              'flex-1 h-12 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors',
               canSubmit
                 ? isIncome
-                  ? "bg-green-500 text-white hover:bg-green-600"
-                  : "bg-red-500 text-white hover:bg-red-600"
-                : "bg-white/10 text-white/30 cursor-not-allowed"
+                  ? 'bg-green-500 text-white hover:bg-green-600'
+                  : 'bg-red-500 text-white hover:bg-red-600'
+                : 'bg-white/10 text-white/30 cursor-not-allowed'
             )}
           >
             <Plus className="h-4 w-4" />
-            Add {isIncome ? "Income" : "Expense"}
+            Add {isIncome ? 'Income' : 'Expense'}
           </button>
         </div>
       </SheetContent>

@@ -3,8 +3,8 @@
 export { generateRAMSPDF, generateRAMSPDFPreview } from './rams-pdf-professional';
 
 // Method Statement PDF generation
-export { 
-  generateMethodStatementPDF, 
-  generateMethodStatementPDFPreview, 
-  downloadMethodStatementPDF 
+export {
+  generateMethodStatementPDF,
+  generateMethodStatementPDFPreview,
+  downloadMethodStatementPDF,
 } from './method-statement-pdf';

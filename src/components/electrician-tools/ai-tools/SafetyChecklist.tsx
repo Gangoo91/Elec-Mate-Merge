@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ShieldAlert, CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
 
 const SafetyChecklist = () => {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
@@ -12,14 +12,14 @@ const SafetyChecklist = () => {
     { id: 'ppe', label: 'Appropriate PPE available and worn' },
     { id: 'cable', label: 'Correct cable size calculated' },
     { id: 'protection', label: 'Protection device rating verified' },
-    { id: 'rcd', label: 'RCD protection confirmed if required' }
+    { id: 'rcd', label: 'RCD protection confirmed if required' },
   ];
 
-  const allChecked = safetyItems.every(item => checkedItems[item.id]);
+  const allChecked = safetyItems.every((item) => checkedItems[item.id]);
   const checkedCount = Object.values(checkedItems).filter(Boolean).length;
 
   const toggleItem = (id: string) => {
-    setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
+    setCheckedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
@@ -30,9 +30,7 @@ const SafetyChecklist = () => {
             <ShieldAlert className="h-5 w-5 flex-shrink-0" />
             Pre-Work Safety Checklist
           </CardTitle>
-          {allChecked && (
-            <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-500" />
-          )}
+          {allChecked && <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-500" />}
         </div>
         <p className="text-xs sm:text-sm text-muted-foreground mt-1">
           {checkedCount}/{safetyItems.length} items checked

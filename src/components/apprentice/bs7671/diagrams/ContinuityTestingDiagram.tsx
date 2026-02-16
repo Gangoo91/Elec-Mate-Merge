@@ -1,17 +1,19 @@
-
-import { Cable, Zap, CheckCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Cable, Zap, CheckCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface ContinuityTestingDiagramProps {
   systemType?: string;
   installationType?: string;
 }
 
-const ContinuityTestingDiagram = ({ systemType, installationType }: ContinuityTestingDiagramProps) => {
+const ContinuityTestingDiagram = ({
+  systemType,
+  installationType,
+}: ContinuityTestingDiagramProps) => {
   return (
     <div className="space-y-4">
       <div className="text-sm text-indigo-200 mb-4">
-        R1+R2 Continuity Testing Setup for {installationType || "standard"} installation
+        R1+R2 Continuity Testing Setup for {installationType || 'standard'} installation
       </div>
 
       {/* MFT Setup */}
@@ -49,11 +51,15 @@ const ContinuityTestingDiagram = ({ systemType, installationType }: ContinuityTe
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs text-green-100">Consumer Unit End:</span>
-            <Badge variant="outline" className="text-red-300 border-red-400/30">Red Lead → Line Terminal</Badge>
+            <Badge variant="outline" className="text-red-300 border-red-400/30">
+              Red Lead → Line Terminal
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-xs text-green-100">Circuit End:</span>
-            <Badge variant="outline" className="text-black-300 border-white/30">Black Lead → Earth Terminal</Badge>
+            <Badge variant="outline" className="text-black-300 border-white/30">
+              Black Lead → Earth Terminal
+            </Badge>
           </div>
           <div className="text-xs text-green-200 bg-green-500/10 p-2 rounded">
             <CheckCircle className="h-3 w-3 inline mr-1" />
@@ -69,26 +75,66 @@ const ContinuityTestingDiagram = ({ systemType, installationType }: ContinuityTe
           <div className="space-y-2">
             <h5 className="font-medium text-purple-300">Step 1: End-to-End</h5>
             <div className="space-y-1">
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">L-L</Badge>
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">N-N</Badge>
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">E-E</Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                L-L
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                N-N
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                E-E
+              </Badge>
             </div>
             <p className="text-purple-100">Values should be similar</p>
           </div>
           <div className="space-y-2">
             <h5 className="font-medium text-purple-300">Step 2: Cross-Connect</h5>
             <div className="space-y-1">
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">L1-N2</Badge>
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">L2-N1</Badge>
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">Similar for E</Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                L1-N2
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                L2-N1
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                Similar for E
+              </Badge>
             </div>
             <p className="text-purple-100">Detects spurs and breaks</p>
           </div>
           <div className="space-y-2">
             <h5 className="font-medium text-purple-300">Step 3: R1+R2 Test</h5>
             <div className="space-y-1">
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">L-E at CU</Badge>
-              <Badge variant="outline" className="text-purple-200 border-purple-400/30 block text-center">Test each outlet</Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                L-E at CU
+              </Badge>
+              <Badge
+                variant="outline"
+                className="text-purple-200 border-purple-400/30 block text-center"
+              >
+                Test each outlet
+              </Badge>
             </div>
             <p className="text-purple-100">Record all readings</p>
           </div>

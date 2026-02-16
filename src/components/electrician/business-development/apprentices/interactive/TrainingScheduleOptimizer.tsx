@@ -1,16 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Target, CheckCircle, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Clock, Target, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
 
 const TrainingScheduleOptimiser = () => {
-  const [businessType, setBusinessType] = useState("");
-  const [seasonality, setSeasonality] = useState("");
-  const [workloadPeak, setWorkloadPeak] = useState("");
+  const [businessType, setBusinessType] = useState('');
+  const [seasonality, setSeasonality] = useState('');
+  const [workloadPeak, setWorkloadPeak] = useState('');
   const [apprenticeCount, setApprenticeCount] = useState(1);
   const [results, setResults] = useState(null);
 
@@ -19,14 +25,19 @@ const TrainingScheduleOptimiser = () => {
 
     // Training modules based on industry best practices
     const coreModules = [
-      { name: "Health & Safety Fundamentals", duration: 2, priority: "critical", timing: "immediate" },
-      { name: "Basic Electrical Theory", duration: 4, priority: "critical", timing: "weeks 1-4" },
-      { name: "Hand Tools & Equipment", duration: 3, priority: "high", timing: "weeks 2-5" },
-      { name: "Basic Installation", duration: 6, priority: "high", timing: "weeks 5-11" },
-      { name: "Testing & Inspection", duration: 4, priority: "medium", timing: "weeks 8-12" },
-      { name: "Customer Service", duration: 2, priority: "medium", timing: "weeks 6-8" },
-      { name: "Digital Portfolio", duration: 1, priority: "high", timing: "week 1" },
-      { name: "Regulations (BS 7671)", duration: 8, priority: "critical", timing: "weeks 4-12" }
+      {
+        name: 'Health & Safety Fundamentals',
+        duration: 2,
+        priority: 'critical',
+        timing: 'immediate',
+      },
+      { name: 'Basic Electrical Theory', duration: 4, priority: 'critical', timing: 'weeks 1-4' },
+      { name: 'Hand Tools & Equipment', duration: 3, priority: 'high', timing: 'weeks 2-5' },
+      { name: 'Basic Installation', duration: 6, priority: 'high', timing: 'weeks 5-11' },
+      { name: 'Testing & Inspection', duration: 4, priority: 'medium', timing: 'weeks 8-12' },
+      { name: 'Customer Service', duration: 2, priority: 'medium', timing: 'weeks 6-8' },
+      { name: 'Digital Portfolio', duration: 1, priority: 'high', timing: 'week 1' },
+      { name: 'Regulations (BS 7671)', duration: 8, priority: 'critical', timing: 'weeks 4-12' },
     ];
 
     // Seasonal adjustments
@@ -34,60 +45,60 @@ const TrainingScheduleOptimiser = () => {
     let optimalPeriods = [];
     let avoidPeriods = [];
 
-    if (seasonality === "summer-peak") {
-      optimalPeriods = ["September-November", "January-March"];
-      avoidPeriods = ["June-August"];
-      scheduleRecommendations.push("Front-load theoretical training in quieter months");
-      scheduleRecommendations.push("Utilise summer for practical on-site experience");
-    } else if (seasonality === "winter-peak") {
-      optimalPeriods = ["April-June", "September-October"];
-      avoidPeriods = ["November-February"];
-      scheduleRecommendations.push("Schedule college blocks during busy winter periods");
-      scheduleRecommendations.push("Maximize hands-on training in moderate weather");
+    if (seasonality === 'summer-peak') {
+      optimalPeriods = ['September-November', 'January-March'];
+      avoidPeriods = ['June-August'];
+      scheduleRecommendations.push('Front-load theoretical training in quieter months');
+      scheduleRecommendations.push('Utilise summer for practical on-site experience');
+    } else if (seasonality === 'winter-peak') {
+      optimalPeriods = ['April-June', 'September-October'];
+      avoidPeriods = ['November-February'];
+      scheduleRecommendations.push('Schedule college blocks during busy winter periods');
+      scheduleRecommendations.push('Maximize hands-on training in moderate weather');
     }
 
     // Business type specific adjustments
     let businessSpecificTips = [];
-    if (businessType === "domestic") {
+    if (businessType === 'domestic') {
       businessSpecificTips = [
-        "Focus on customer interaction skills early",
-        "Emphasize neat installation practices",
-        "Include consumer unit and domestic wiring specialisation",
-        "Schedule evening/weekend training options"
+        'Focus on customer interaction skills early',
+        'Emphasize neat installation practices',
+        'Include consumer unit and domestic wiring specialisation',
+        'Schedule evening/weekend training options',
       ];
-    } else if (businessType === "commercial") {
+    } else if (businessType === 'commercial') {
       businessSpecificTips = [
-        "Prioritize three-phase systems training",
-        "Include commercial installation techniques",
-        "Focus on project management skills",
-        "Emphasize team working and site safety"
+        'Prioritize three-phase systems training',
+        'Include commercial installation techniques',
+        'Focus on project management skills',
+        'Emphasize team working and site safety',
       ];
-    } else if (businessType === "industrial") {
+    } else if (businessType === 'industrial') {
       businessSpecificTips = [
-        "Advanced motor control systems",
-        "Industrial safety protocols",
-        "Maintenance and fault-finding emphasis",
-        "Shift pattern training considerations"
+        'Advanced motor control systems',
+        'Industrial safety protocols',
+        'Maintenance and fault-finding emphasis',
+        'Shift pattern training considerations',
       ];
     }
 
     // Weekly schedule optimization
     const weeklySchedule = {
-      monday: { onJob: 8, college: 0, notes: "Start week with practical application" },
-      tuesday: { onJob: 8, college: 0, notes: "Continue practical work" },
-      wednesday: { onJob: 4, college: 4, notes: "Mid-week theory session" },
+      monday: { onJob: 8, college: 0, notes: 'Start week with practical application' },
+      tuesday: { onJob: 8, college: 0, notes: 'Continue practical work' },
+      wednesday: { onJob: 4, college: 4, notes: 'Mid-week theory session' },
       thursday: { onJob: 8, college: 0, notes: "Apply Wednesday's learning" },
-      friday: { onJob: 4, college: 4, notes: "Week review and planning" }
+      friday: { onJob: 4, college: 4, notes: 'Week review and planning' },
     };
 
     // Multiple apprentices considerations
     let teamTrainingOptions = [];
     if (apprenticeCount > 1) {
       teamTrainingOptions = [
-        "Stagger college days to maintain workforce",
-        "Peer learning opportunities",
-        "Group theoretical sessions for cost efficiency",
-        "Buddy system for practical training"
+        'Stagger college days to maintain workforce',
+        'Peer learning opportunities',
+        'Group theoretical sessions for cost efficiency',
+        'Buddy system for practical training',
       ];
     }
 
@@ -98,7 +109,7 @@ const TrainingScheduleOptimiser = () => {
       avoidPeriods,
       businessSpecificTips,
       weeklySchedule,
-      teamTrainingOptions
+      teamTrainingOptions,
     });
   };
 
@@ -188,19 +199,29 @@ const TrainingScheduleOptimiser = () => {
                 </h4>
                 <div className="space-y-2">
                   {results.coreModules.map((module, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-elec-dark/50 rounded">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 bg-elec-dark/50 rounded"
+                    >
                       <div className="flex items-center gap-3">
-                        <CheckCircle className={`h-4 w-4 ${
-                          module.priority === 'critical' ? 'text-red-400' :
-                          module.priority === 'high' ? 'text-amber-400' : 'text-green-400'
-                        }`} />
+                        <CheckCircle
+                          className={`h-4 w-4 ${
+                            module.priority === 'critical'
+                              ? 'text-red-400'
+                              : module.priority === 'high'
+                                ? 'text-amber-400'
+                                : 'text-green-400'
+                          }`}
+                        />
                         <span className="text-foreground">{module.name}</span>
-                        <Badge 
-                          variant="outline" 
+                        <Badge
+                          variant="outline"
                           className={`text-xs ${
-                            module.priority === 'critical' ? 'border-red-400/30 text-red-300' :
-                            module.priority === 'high' ? 'border-amber-400/30 text-amber-300' : 
-                            'border-green-400/30 text-green-300'
+                            module.priority === 'critical'
+                              ? 'border-red-400/30 text-red-300'
+                              : module.priority === 'high'
+                                ? 'border-amber-400/30 text-amber-300'
+                                : 'border-green-400/30 text-green-300'
                           }`}
                         >
                           {module.priority}
@@ -247,7 +268,10 @@ const TrainingScheduleOptimiser = () => {
                 <h4 className="font-semibold text-foreground mb-3">Optimized Weekly Schedule</h4>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
                   {Object.entries(results.weeklySchedule).map(([day, schedule]: [string, any]) => (
-                    <div key={day} className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <div
+                      key={day}
+                      className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg"
+                    >
                       <div className="font-medium text-green-300 capitalize">{day}</div>
                       <div className="text-sm text-green-200">
                         On-job: {schedule.onJob}h<br />
@@ -261,10 +285,15 @@ const TrainingScheduleOptimiser = () => {
 
               {/* Business-Specific Tips */}
               <div>
-                <h4 className="font-semibold text-foreground mb-3">Business-Specific Training Focus</h4>
+                <h4 className="font-semibold text-foreground mb-3">
+                  Business-Specific Training Focus
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {results.businessSpecificTips.map((tip, index) => (
-                    <div key={index} className="p-2 bg-purple-500/10 border border-purple-500/30 rounded text-sm text-purple-200">
+                    <div
+                      key={index}
+                      className="p-2 bg-purple-500/10 border border-purple-500/30 rounded text-sm text-purple-200"
+                    >
                       {tip}
                     </div>
                   ))}
@@ -274,10 +303,15 @@ const TrainingScheduleOptimiser = () => {
               {/* Team Training Options */}
               {apprenticeCount > 1 && (
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">Multiple Apprentices Strategy</h4>
+                  <h4 className="font-semibold text-foreground mb-3">
+                    Multiple Apprentices Strategy
+                  </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {results.teamTrainingOptions.map((option, index) => (
-                      <div key={index} className="p-2 bg-amber-500/10 border border-amber-500/30 rounded text-sm text-amber-200">
+                      <div
+                        key={index}
+                        className="p-2 bg-amber-500/10 border border-amber-500/30 rounded text-sm text-amber-200"
+                      >
                         {option}
                       </div>
                     ))}

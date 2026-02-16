@@ -1,18 +1,35 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertTriangle, Clock, MapPin, ExternalLink, Bell, Search, Filter, Bookmark, Star, Eye, ThumbsUp } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  AlertTriangle,
+  Clock,
+  MapPin,
+  ExternalLink,
+  Bell,
+  Search,
+  Filter,
+  Bookmark,
+  Star,
+  Eye,
+  ThumbsUp,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SafetyAlert {
   id: string;
   title: string;
   description: string;
-  severity: "critical" | "high" | "medium" | "low";
+  severity: 'critical' | 'high' | 'medium' | 'low';
   location: string;
   datePosted: string;
   source: string;
@@ -24,78 +41,83 @@ interface SafetyAlert {
 }
 
 const EnhancedSafetyAlertsCard = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSeverity, setSelectedSeverity] = useState("all");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSeverity, setSelectedSeverity] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [alerts, setAlerts] = useState<SafetyAlert[]>([
     {
-      id: "1",
-      title: "Faulty RCD Units - Immediate Action Required",
-      description: "Defective RCD units identified in specific batch numbers. Check your installations immediately.",
-      severity: "critical",
-      location: "UK Wide",
-      datePosted: "2024-06-14",
-      source: "HSE",
-      category: "Product Recall",
+      id: '1',
+      title: 'Faulty RCD Units - Immediate Action Required',
+      description:
+        'Defective RCD units identified in specific batch numbers. Check your installations immediately.',
+      severity: 'critical',
+      location: 'UK Wide',
+      datePosted: '2024-06-14',
+      source: 'HSE',
+      category: 'Product Recall',
       views: 3421,
       likes: 89,
       bookmarked: false,
-      rating: 4.8
+      rating: 4.8,
     },
     {
-      id: "2",
-      title: "New Arc Flash Protection Requirements",
-      description: "Updated guidance on arc flash protection for commercial installations above 415V.",
-      severity: "high",
-      location: "England & Wales",
-      datePosted: "2024-06-13",
-      source: "IET",
-      category: "Regulation Update",
+      id: '2',
+      title: 'New Arc Flash Protection Requirements',
+      description:
+        'Updated guidance on arc flash protection for commercial installations above 415V.',
+      severity: 'high',
+      location: 'England & Wales',
+      datePosted: '2024-06-13',
+      source: 'IET',
+      category: 'Regulation Update',
       views: 2156,
       likes: 67,
       bookmarked: true,
-      rating: 4.6
+      rating: 4.6,
     },
     {
-      id: "3",
-      title: "Cable Installation Safety Notice",
-      description: "Best practices for underground cable installation following recent incidents.",
-      severity: "medium",
-      location: "Scotland",
-      datePosted: "2024-06-12",
-      source: "SELECT",
-      category: "Safety Guidance",
+      id: '3',
+      title: 'Cable Installation Safety Notice',
+      description: 'Best practices for underground cable installation following recent incidents.',
+      severity: 'medium',
+      location: 'Scotland',
+      datePosted: '2024-06-12',
+      source: 'SELECT',
+      category: 'Safety Guidance',
       views: 1834,
       likes: 45,
       bookmarked: false,
-      rating: 4.4
-    }
+      rating: 4.4,
+    },
   ]);
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case "critical": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "high": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "medium": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "low": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      case 'critical':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'high':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      case 'medium':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'low':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
 
   const toggleBookmark = (alertId: string) => {
-    setAlerts(prev => prev.map(alert => 
-      alert.id === alertId 
-        ? { ...alert, bookmarked: !alert.bookmarked }
-        : alert
-    ));
+    setAlerts((prev) =>
+      prev.map((alert) =>
+        alert.id === alertId ? { ...alert, bookmarked: !alert.bookmarked } : alert
+      )
+    );
   };
 
   const handleLike = (alertId: string) => {
-    setAlerts(prev => prev.map(alert => 
-      alert.id === alertId 
-        ? { ...alert, likes: alert.likes + 1 }
-        : alert
-    ));
+    setAlerts((prev) =>
+      prev.map((alert) => (alert.id === alertId ? { ...alert, likes: alert.likes + 1 } : alert))
+    );
   };
 
   const renderStars = (rating: number) => {
@@ -103,20 +125,19 @@ const EnhancedSafetyAlertsCard = () => {
       <Star
         key={i}
         className={`h-3 w-3 ${
-          i < Math.floor(rating)
-            ? "text-yellow-400 fill-current"
-            : "text-gray-600"
+          i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-600'
         }`}
       />
     ));
   };
 
-  const filteredAlerts = alerts.filter(alert => {
-    const matchesSearch = alert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         alert.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesSeverity = selectedSeverity === "all" || alert.severity === selectedSeverity;
-    const matchesCategory = selectedCategory === "all" || alert.category === selectedCategory;
-    
+  const filteredAlerts = alerts.filter((alert) => {
+    const matchesSearch =
+      alert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      alert.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSeverity = selectedSeverity === 'all' || alert.severity === selectedSeverity;
+    const matchesCategory = selectedCategory === 'all' || alert.category === selectedCategory;
+
     return matchesSearch && matchesSeverity && matchesCategory;
   });
 
@@ -125,7 +146,9 @@ const EnhancedSafetyAlertsCard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Enhanced Safety Alerts</h2>
-          <p className="text-muted-foreground">Interactive safety alerts with ratings, bookmarks, and real-time tracking</p>
+          <p className="text-muted-foreground">
+            Interactive safety alerts with ratings, bookmarks, and real-time tracking
+          </p>
         </div>
         <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
           <Bell className="h-4 w-4 mr-2" />
@@ -145,7 +168,7 @@ const EnhancedSafetyAlertsCard = () => {
                 placeholder="Search alerts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn("bg-elec-dark/50 border-elec-yellow/30", !searchQuery && "pl-10")}
+                className={cn('bg-elec-dark/50 border-elec-yellow/30', !searchQuery && 'pl-10')}
               />
             </div>
             <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
@@ -196,20 +219,16 @@ const EnhancedSafetyAlertsCard = () => {
                       <span className="text-xs text-muted-foreground ml-1">({alert.rating})</span>
                     </div>
                   </div>
-                  <CardTitle className="text-foreground text-lg mb-2">
-                    {alert.title}
-                  </CardTitle>
-                  <p className="text-gray-300 text-sm mb-3">
-                    {alert.description}
-                  </p>
+                  <CardTitle className="text-foreground text-lg mb-2">{alert.title}</CardTitle>
+                  <p className="text-gray-300 text-sm mb-3">{alert.description}</p>
                 </div>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
+                <Button
+                  size="sm"
+                  variant="ghost"
                   onClick={() => toggleBookmark(alert.id)}
-                  className={alert.bookmarked ? "text-elec-yellow" : "text-gray-400"}
+                  className={alert.bookmarked ? 'text-elec-yellow' : 'text-gray-400'}
                 >
-                  <Bookmark className={`h-4 w-4 ${alert.bookmarked ? "fill-current" : ""}`} />
+                  <Bookmark className={`h-4 w-4 ${alert.bookmarked ? 'fill-current' : ''}`} />
                 </Button>
               </div>
             </CardHeader>
@@ -262,7 +281,10 @@ const EnhancedSafetyAlertsCard = () => {
       )}
 
       <div className="text-center pt-4">
-        <Button variant="outline" className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10">
+        <Button
+          variant="outline"
+          className="border-elec-yellow/30 text-foreground hover:bg-elec-yellow/10"
+        >
           Load More Alerts
         </Button>
       </div>

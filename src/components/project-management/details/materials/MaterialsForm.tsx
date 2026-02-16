@@ -1,13 +1,12 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
-import { ProjectMaterial } from "@/types/project";
-import { toast } from "@/hooks/use-toast";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Plus } from 'lucide-react';
+import { ProjectMaterial } from '@/types/project';
+import { toast } from '@/hooks/use-toast';
+import { v4 as uuidv4 } from 'uuid';
 
 type MaterialsFormProps = {
   onAddMaterial: (material: ProjectMaterial) => void;
@@ -17,15 +16,15 @@ export const MaterialsForm = ({ onAddMaterial }: MaterialsFormProps) => {
   const [newMaterial, setNewMaterial] = useState<Omit<ProjectMaterial, 'id' | 'total'>>({
     name: '',
     quantity: 1,
-    unitCost: 0
+    unitCost: 0,
   });
 
   const handleAddMaterial = () => {
     if (!newMaterial.name) {
       toast({
-        title: "Material Name Required",
-        description: "Please provide a name for the material.",
-        variant: "destructive",
+        title: 'Material Name Required',
+        description: 'Please provide a name for the material.',
+        variant: 'destructive',
       });
       return;
     }
@@ -35,7 +34,7 @@ export const MaterialsForm = ({ onAddMaterial }: MaterialsFormProps) => {
       name: newMaterial.name,
       quantity: newMaterial.quantity,
       unitCost: newMaterial.unitCost,
-      total: newMaterial.quantity * newMaterial.unitCost
+      total: newMaterial.quantity * newMaterial.unitCost,
     };
 
     onAddMaterial(material);
@@ -44,11 +43,11 @@ export const MaterialsForm = ({ onAddMaterial }: MaterialsFormProps) => {
     setNewMaterial({
       name: '',
       quantity: 1,
-      unitCost: 0
+      unitCost: 0,
     });
 
     toast({
-      title: "Material Added",
+      title: 'Material Added',
       description: `${material.name} has been added to the project.`,
     });
   };
@@ -76,7 +75,9 @@ export const MaterialsForm = ({ onAddMaterial }: MaterialsFormProps) => {
               id="quantity"
               type="number"
               value={newMaterial.quantity}
-              onChange={(e) => setNewMaterial({ ...newMaterial, quantity: parseFloat(e.target.value) || 0 })}
+              onChange={(e) =>
+                setNewMaterial({ ...newMaterial, quantity: parseFloat(e.target.value) || 0 })
+              }
               className="w-full h-11 text-base touch-manipulation"
             />
           </div>
@@ -86,7 +87,9 @@ export const MaterialsForm = ({ onAddMaterial }: MaterialsFormProps) => {
               id="unitCost"
               type="number"
               value={newMaterial.unitCost}
-              onChange={(e) => setNewMaterial({ ...newMaterial, unitCost: parseFloat(e.target.value) || 0 })}
+              onChange={(e) =>
+                setNewMaterial({ ...newMaterial, unitCost: parseFloat(e.target.value) || 0 })
+              }
               className="w-full h-11 text-base touch-manipulation"
             />
           </div>

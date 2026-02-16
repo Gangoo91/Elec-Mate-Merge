@@ -33,12 +33,16 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Lock-off/tag-out procedures with personal padlocks',
       'Use appropriate PPE: insulated gloves (class 0 minimum)',
       'Maintain safe working distances from live parts',
-      'Ensure emergency procedures are communicated to all personnel'
+      'Ensure emergency procedures are communicated to all personnel',
     ],
     ppe: ['Insulated gloves (Class 0)', 'Safety boots', 'Arc flash protection', 'Safety glasses'],
     regulations: ['BS 7671:2018+A3:2024', 'IET Code of Practice', 'HSE GS38'],
-    furtherActions: ['Annual PPE inspection', 'Voltage detector calibration', 'Emergency response training'],
-    icon: 'Zap'
+    furtherActions: [
+      'Annual PPE inspection',
+      'Voltage detector calibration',
+      'Emergency response training',
+    ],
+    icon: 'Zap',
   },
   {
     id: 'consumer-unit-upgrade',
@@ -56,12 +60,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Verify earthing arrangements meet current standards',
       'Test all RCDs and MCBs before energisation',
       'Use temporary supply arrangements if required',
-      'Complete electrical installation certificate'
+      'Complete electrical installation certificate',
     ],
     ppe: ['Arc flash suit', 'Insulated tools', 'Safety helmet', 'Insulated gloves'],
     regulations: ['BS 7671:2018+A3:2024', 'Part P Building Regulations', 'IET Guidance Note 3'],
     furtherActions: ['Schedule inspection and testing', 'Customer handover documentation'],
-    icon: 'Home'
+    icon: 'Home',
   },
   {
     id: 'ev-charging-install',
@@ -79,12 +83,16 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Install Type A RCD protection (30mA)',
       'Ensure adequate earthing and bonding',
       'Use appropriate cable sizing for load',
-      'Install emergency stop facility where required'
+      'Install emergency stop facility where required',
     ],
     ppe: ['Standard electrical PPE', 'Safety boots', 'Hard hat', 'High-vis vest'],
-    regulations: ['BS 7671:2018+A3:2024', 'IET Code of Practice for EV Charging', 'OLEV Grant Scheme Requirements'],
+    regulations: [
+      'BS 7671:2018+A3:2024',
+      'IET Code of Practice for EV Charging',
+      'OLEV Grant Scheme Requirements',
+    ],
     furtherActions: ['Commission and test installation', 'Register with local authority'],
-    icon: 'Car'
+    icon: 'Car',
   },
   {
     id: 'working-height',
@@ -102,12 +110,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Maintain three points of contact when using ladders',
       'Use safety harnesses and fall arrest systems',
       'Implement edge protection where required',
-      'Regular equipment inspection and certification'
+      'Regular equipment inspection and certification',
     ],
     ppe: ['Safety harness', 'Hard hat', 'Safety boots', 'High-vis clothing'],
     regulations: ['Work at Height Regulations 2005', 'HSE Guidance HSG33', 'IPAF guidance'],
     furtherActions: ['Equipment inspection certificates', 'MEWP operator training'],
-    icon: 'Ladder'
+    icon: 'Ladder',
   },
   {
     id: 'solar-pv-install',
@@ -125,12 +133,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Install DC isolators in accessible locations',
       'Ensure proper earthing and bonding of metalwork',
       'Use MC4 connectors for all DC connections',
-      'Install generation meter and export limitation if required'
+      'Install generation meter and export limitation if required',
     ],
     ppe: ['Fall arrest harness', 'Hard hat', 'Cut-resistant gloves', 'Safety boots'],
     regulations: ['BS 7671:2018+A3:2024', 'MCS Installation Standards', 'G99 Grid Code'],
     furtherActions: ['MCS certification', 'DNO notification', 'Insurance documentation'],
-    icon: 'Sun'
+    icon: 'Sun',
   },
   {
     id: 'manual-handling',
@@ -148,12 +156,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Team lifting for items over 25kg',
       'Proper lifting techniques - bend knees, keep back straight',
       'Use cut-resistant gloves for sharp materials',
-      'Clear pathways and good lighting'
+      'Clear pathways and good lighting',
     ],
     ppe: ['Cut-resistant gloves', 'Safety boots', 'Back support belt (if required)'],
     regulations: ['Manual Handling Operations Regulations 1992', 'HSE Guidance HSG115'],
     furtherActions: ['Manual handling training', 'Risk assessment review'],
-    icon: 'Package'
+    icon: 'Package',
   },
   {
     id: 'pat-testing',
@@ -171,12 +179,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Follow IET Code of Practice testing procedures',
       'Visual inspection before electrical testing',
       'Apply appropriate test labels and documentation',
-      'Maintain test equipment calibration records'
+      'Maintain test equipment calibration records',
     ],
     ppe: ['Standard electrical PPE', 'Safety glasses'],
     regulations: ['IET Code of Practice for PAT', 'Electricity at Work Regulations 1989'],
     furtherActions: ['Equipment calibration certificates', 'Test result database'],
-    icon: 'TestTube'
+    icon: 'TestTube',
   },
   {
     id: 'eicr-inspection',
@@ -194,12 +202,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Follow safe testing procedures for live testing',
       'Obtain permission before testing (commercial premises)',
       'Document all observations and test results',
-      'Provide clear recommendations for remedial work'
+      'Provide clear recommendations for remedial work',
     ],
     ppe: ['Insulated gloves', 'Safety glasses', 'Arc flash protection'],
     regulations: ['BS 7671:2018+A3:2024', 'IET Guidance Note 3', 'Landlord & Tenant Act'],
     furtherActions: ['Schedule remedial work', 'Certificate registration'],
-    icon: 'ClipboardCheck'
+    icon: 'ClipboardCheck',
   },
   {
     id: 'fault-finding',
@@ -217,12 +225,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Isolate circuits where possible for repair work',
       'Use insulated tools for live work',
       'Have emergency procedures in place',
-      'Work with competent assistant where required'
+      'Work with competent assistant where required',
     ],
     ppe: ['Arc flash suit', 'Insulated gloves', 'Insulated tools', 'Safety glasses'],
     regulations: ['Electricity at Work Regulations 1989', 'HSE GS38', 'BS 7671:2018+A3:2024'],
     furtherActions: ['Update circuit documentation', 'Schedule follow-up testing'],
-    icon: 'Search'
+    icon: 'Search',
   },
   {
     id: 'hot-work',
@@ -240,12 +248,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Remove combustible materials from work area',
       'Have appropriate fire extinguishers available',
       'Maintain fire watch during and after hot work',
-      'Ensure adequate ventilation'
+      'Ensure adequate ventilation',
     ],
     ppe: ['Fire-resistant clothing', 'Safety glasses', 'Heat-resistant gloves'],
     regulations: ['HSE HSG140 Safe use of work equipment', 'DSEAR Regulations'],
     furtherActions: ['Hot work permit documentation', 'Fire watch logs'],
-    icon: 'Flame'
+    icon: 'Flame',
   },
   {
     id: 'chemical-exposure',
@@ -263,12 +271,17 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Use appropriate chemical-resistant gloves',
       'Ensure adequate ventilation in work areas',
       'Have eye wash facilities available',
-      'Store chemicals according to manufacturer instructions'
+      'Store chemicals according to manufacturer instructions',
     ],
-    ppe: ['Chemical-resistant gloves', 'Safety glasses', 'Respiratory protection', 'Protective clothing'],
+    ppe: [
+      'Chemical-resistant gloves',
+      'Safety glasses',
+      'Respiratory protection',
+      'Protective clothing',
+    ],
     regulations: ['COSHH Regulations 2002', 'HSE Guidance HSG97'],
     furtherActions: ['COSHH assessments', 'Health surveillance if required'],
-    icon: 'Beaker'
+    icon: 'Beaker',
   },
   {
     id: 'cable-pulling',
@@ -286,12 +299,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Ensure adequate workforce for manual pulls',
       'Use proper pulling lubricants to reduce friction',
       'Install cable supports at appropriate intervals',
-      'Check cable integrity after installation'
+      'Check cable integrity after installation',
     ],
     ppe: ['Work gloves', 'Safety boots', 'Hard hat', 'High-vis clothing'],
     regulations: ['Manual Handling Operations Regulations 1992', 'BS 7671:2018+A3:2024'],
     furtherActions: ['Cable test certificates', 'Installation documentation'],
-    icon: 'Cable'
+    icon: 'Cable',
   },
   {
     id: 'noise-exposure',
@@ -309,12 +322,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Take regular breaks from noisy activities',
       'Monitor noise levels with sound meter if required',
       'Use low-noise tools where available',
-      'Coordinate noisy work to minimise exposure'
+      'Coordinate noisy work to minimise exposure',
     ],
     ppe: ['Ear defenders', 'Ear plugs', 'Noise-reducing headsets'],
     regulations: ['Control of Noise at Work Regulations 2005', 'HSE Guidance L108'],
     furtherActions: ['Audiometric testing', 'Noise exposure records'],
-    icon: 'Volume2'
+    icon: 'Volume2',
   },
   {
     id: 'confined-space',
@@ -332,12 +345,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Test atmosphere for oxygen, flammable gases, toxic substances',
       'Establish emergency rescue procedures',
       'Use communication systems (radios, attendant)',
-      'Have trained attendant outside confined space'
+      'Have trained attendant outside confined space',
     ],
     ppe: ['Gas detection equipment', 'Breathing apparatus', 'Harness and retrieval lines'],
     regulations: ['Confined Spaces Regulations 1997', 'HSE ACOP L101'],
     furtherActions: ['Gas monitoring records', 'Emergency rescue training'],
-    icon: 'Home'
+    icon: 'Home',
   },
   {
     id: 'fire-alarm-install',
@@ -355,12 +368,12 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Implement temporary fire safety measures during installation',
       'Follow BS 5839 design and installation standards',
       'Commission system in stages to maintain protection',
-      'Provide comprehensive system documentation'
+      'Provide comprehensive system documentation',
     ],
     ppe: ['Standard electrical PPE', 'High-vis clothing'],
     regulations: ['BS 5839-1:2017', 'Regulatory Reform (Fire Safety) Order 2005'],
     furtherActions: ['System commissioning certificates', 'User training'],
-    icon: 'Shield'
+    icon: 'Shield',
   },
   {
     id: 'tool-safety',
@@ -378,20 +391,20 @@ export const ramsTemplates: RAMSTemplate[] = [
       'PAT test all portable electrical tools annually',
       'Store tools properly in designated locations',
       'Train personnel in correct tool usage',
-      'Remove defective tools from service immediately'
+      'Remove defective tools from service immediately',
     ],
     ppe: ['Cut-resistant gloves', 'Safety glasses', 'Dust masks'],
     regulations: ['PUWER Regulations 1998', 'Electricity at Work Regulations 1989'],
     furtherActions: ['Tool inspection logs', 'PAT testing certificates'],
-    icon: 'Wrench'
-  }
+    icon: 'Wrench',
+  },
 ];
 
 export const getTemplatesByCategory = (category?: string): RAMSTemplate[] => {
   if (!category) return ramsTemplates;
-  return ramsTemplates.filter(template => template.category === category);
+  return ramsTemplates.filter((template) => template.category === category);
 };
 
 export const getTemplateById = (id: string): RAMSTemplate | undefined => {
-  return ramsTemplates.find(template => template.id === id);
+  return ramsTemplates.find((template) => template.id === id);
 };

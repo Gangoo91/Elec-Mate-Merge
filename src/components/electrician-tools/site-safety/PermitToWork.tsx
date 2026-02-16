@@ -12,7 +12,7 @@ import { DraftRecoveryBanner } from './common/DraftRecoveryBanner';
 import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { SmartTextarea } from './common/SmartTextarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -65,6 +65,8 @@ import {
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
 import { useShowMore } from '@/hooks/useShowMore';
+import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
+import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 
 // ─── Types ───
 
@@ -146,10 +148,11 @@ const PERMIT_TYPES: {
       'Steel toe-cap boots',
     ],
     defaultPrecautions: [
-      'Remove combustible materials within 10m',
-      'Fire extinguisher within 2m',
-      'Fire watch for 60 minutes after completion',
-      'Check area above, below and behind work area',
+      'Remove combustible materials within 10m radius \u2014 BS 9999',
+      'Fire extinguisher (CO\u2082 or dry powder) within 2m \u2014 RRO 2005',
+      'Fire watch for minimum 60 minutes after completion \u2014 HSG168',
+      'Check area above, below and behind work area for fire spread risk',
+      'Smoke/heat detectors isolated with permit from fire alarm panel \u2014 BS 5839-1',
     ],
   },
   {
@@ -167,10 +170,11 @@ const PERMIT_TYPES: {
       'Communication equipment',
     ],
     defaultPrecautions: [
-      'Continuous gas monitoring',
-      'Rescue plan in place',
-      'Standby person at entry point',
-      'Forced ventilation if required',
+      'Continuous atmospheric monitoring (O\u2082, LEL, CO, H\u2082S) \u2014 Confined Spaces Regs 1997',
+      'Written rescue plan in place before entry \u2014 ACOP L101',
+      'Trained standby person at entry point with communication equipment',
+      'Forced ventilation if natural ventilation inadequate',
+      'Entry permit time-limited; re-test atmosphere if work paused >30 min',
     ],
   },
   {
@@ -193,10 +197,11 @@ const PERMIT_TYPES: {
       'Insulated tools',
     ],
     defaultPrecautions: [
-      'Prove dead at point of work',
-      'Lock-off with personal padlock',
-      'Danger tags applied',
-      'Voltage indicator proved before and after use',
+      'Prove dead at point of work using 3-point test \u2014 GS38',
+      'Lock-off with personal padlock and unique key \u2014 BS 7671 Reg 537.2',
+      'Danger tags applied at all points of isolation \u2014 EAWR 1989 Reg 12',
+      'Voltage indicator proved on known live source before AND after test \u2014 GS38',
+      'All sources of supply identified including back-feeds, UPS, generators',
     ],
   },
   {
@@ -219,10 +224,11 @@ const PERMIT_TYPES: {
       'Tool tethers',
     ],
     defaultPrecautions: [
-      'Guard rails and toe boards in place',
-      'Check weather conditions',
-      'Exclusion zone below',
-      'Rescue plan in place',
+      'Guard rails (min 950mm), mid-rails, and toe boards in place \u2014 WAH Regs 2005 Sch 2',
+      'Check weather conditions \u2014 cease work in winds >40 mph or heavy rain',
+      'Exclusion zone below marked with barriers and signage \u2014 CDM 2015',
+      'Rescue plan in place and communicated to all operatives \u2014 WAH Regs 2005 Reg 4',
+      'All access equipment inspected before use \u2014 INDG401',
     ],
   },
   {
@@ -240,10 +246,11 @@ const PERMIT_TYPES: {
     ],
     defaultPPE: ['Hard hat', 'Hi-vis vest', 'Steel toe-cap boots', 'Gloves'],
     defaultPrecautions: [
-      'CAT & Genny scan completed',
-      'Service drawings reviewed',
-      'Trench support/battering in place',
-      'Barriers and warning signs around excavation',
+      'CAT & Genny scan completed and results recorded \u2014 HSG47',
+      'Up-to-date service drawings obtained from all utility providers \u2014 PAS 128',
+      'Trench support/battering in place for excavations >1.2m \u2014 CDM 2015',
+      'Barriers, edge protection, and warning signs around excavation \u2014 CDM 2015 Reg 22',
+      'Hand-dig within 500mm of identified services \u2014 HSG47',
     ],
   },
 ];
@@ -509,6 +516,37 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [ppeRequired, setPpeRequired] = useState<string[]>([]);
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
+  // ─── Template state ───
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
+  const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+
+  const getTemplateData = () => ({
+    type: selectedType,
+    title: formData.title,
+    description: formData.description,
+    emergency_procedures: formData.emergency_procedures,
+    duration_hours: formData.duration_hours,
+    hazards,
+    precautions,
+    ppeRequired,
+  });
+
+  const handleLoadTemplate = (data: Record<string, unknown>) => {
+    if (data.type) setSelectedType(data.type as PermitType);
+    if (data.title || data.description || data.emergency_procedures || data.duration_hours) {
+      setFormData((prev) => ({
+        ...prev,
+        ...(data.title && { title: data.title as string }),
+        ...(data.description && { description: data.description as string }),
+        ...(data.emergency_procedures && { emergency_procedures: data.emergency_procedures as string }),
+        ...(data.duration_hours && { duration_hours: data.duration_hours as number }),
+      }));
+    }
+    if (data.hazards) setHazards(data.hazards as PermitHazard[]);
+    if (data.precautions) setPrecautions(data.precautions as string[]);
+    if (data.ppeRequired) setPpeRequired(data.ppeRequired as string[]);
+  };
+
   // ─── Draft persistence ───
   const permitDraftData = useMemo(
     () => ({
@@ -702,6 +740,13 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         return (
           <div className="space-y-3">
             <h3 className="text-base font-bold text-white px-1">Select Permit Type</h3>
+            <button
+              type="button"
+              onClick={() => setShowLoadTemplate(true)}
+              className="w-full h-10 flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
+            >
+              Load from Template
+            </button>
             {PERMIT_TYPES.map((type) => {
               const Icon = type.icon;
               return (
@@ -751,9 +796,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
               />
               <div>
                 <Label className="text-white text-sm">Description of Work</Label>
-                <Textarea
+                <SmartTextarea
                   value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  onChange={(val) => setFormData({ ...formData, description: val })}
                   className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                   placeholder="Describe the work to be carried out..."
                 />
@@ -835,9 +880,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
             <div className="mt-4">
               <Label className="text-white text-sm">Emergency Procedures</Label>
-              <Textarea
+              <SmartTextarea
                 value={formData.emergency_procedures}
-                onChange={(e) => setFormData({ ...formData, emergency_procedures: e.target.value })}
+                onChange={(val) => setFormData({ ...formData, emergency_procedures: val })}
                 className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                 placeholder="Emergency procedures specific to this permit..."
               />
@@ -915,9 +960,9 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
               <div>
                 <Label className="text-white text-sm">Additional Notes</Label>
-                <Textarea
+                <SmartTextarea
                   value={formData.additional_notes}
-                  onChange={(e) => setFormData({ ...formData, additional_notes: e.target.value })}
+                  onChange={(val) => setFormData({ ...formData, additional_notes: val })}
                   className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                   placeholder="Any additional notes or conditions..."
                 />
@@ -1162,7 +1207,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
 
             {/* Footer */}
             {wizardStep > 0 && (
-              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+              <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))] space-y-2">
                 <Button
                   onClick={() => {
                     if (wizardStep < 3) {
@@ -1176,6 +1221,15 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 >
                   {wizardStep === 3 ? 'Issue Permit' : 'Continue'}
                 </Button>
+                {wizardStep === 3 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowSaveTemplate(true)}
+                    className="w-full h-10 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    Save as Template
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -1388,58 +1442,58 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                         </div>
                       </div>
                     )}
-                  </div>
 
-                  {/* Audit Trail */}
-                  <div className="px-4 py-3">
-                    <AuditTimeline recordType="permit" recordId={viewingPermit.id} />
-                  </div>
-
-                  {/* Approval */}
-                  {viewingPermit.approval_status !== 'not_required' && (
-                    <div className="px-4 py-3">
-                      <ApprovalInfoCard
-                        status={viewingPermit.approval_status}
-                        approvedBy={viewingPermit.approved_by}
-                        approvedAt={viewingPermit.approved_at}
-                        comments={viewingPermit.approval_comments}
-                        approvalSignature={viewingPermit.approval_signature}
-                      />
+                    {/* Audit Trail */}
+                    <div>
+                      <AuditTimeline recordType="permit" recordId={viewingPermit.id} />
                     </div>
-                  )}
 
-                  {/* Approval actions */}
-                  <div className="px-4 py-1 space-y-2">
-                    {viewingPermit.status === 'active' &&
-                      viewingPermit.approval_status === 'not_required' && (
+                    {/* Approval */}
+                    {viewingPermit.approval_status !== 'not_required' && (
+                      <div>
+                        <ApprovalInfoCard
+                          status={viewingPermit.approval_status}
+                          approvedBy={viewingPermit.approved_by}
+                          approvedAt={viewingPermit.approved_at}
+                          comments={viewingPermit.approval_comments}
+                          approvalSignature={viewingPermit.approval_signature}
+                        />
+                      </div>
+                    )}
+
+                    {/* Approval actions */}
+                    <div className="space-y-2">
+                      {viewingPermit.status === 'active' &&
+                        viewingPermit.approval_status === 'not_required' && (
+                          <button
+                            onClick={() =>
+                              requestApproval.mutate({
+                                table: 'permits_to_work',
+                                recordId: viewingPermit.id,
+                              })
+                            }
+                            disabled={requestApproval.isPending}
+                            className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+                          >
+                            <Shield className="h-4 w-4" />
+                            Request Supervisor Approval
+                          </button>
+                        )}
+
+                      {viewingPermit.approval_status === 'pending' && (
                         <button
-                          onClick={() =>
-                            requestApproval.mutate({
-                              table: 'permits_to_work',
-                              recordId: viewingPermit.id,
-                            })
-                          }
-                          disabled={requestApproval.isPending}
-                          className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+                          onClick={() => setShowApprovalSheet(true)}
+                          className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
                         >
                           <Shield className="h-4 w-4" />
-                          Request Supervisor Approval
+                          Review and Approve
                         </button>
                       )}
-
-                    {viewingPermit.approval_status === 'pending' && (
-                      <button
-                        onClick={() => setShowApprovalSheet(true)}
-                        className="w-full h-11 px-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all"
-                      >
-                        <Shield className="h-4 w-4" />
-                        Review and Approve
-                      </button>
-                    )}
+                    </div>
                   </div>
 
-                  {/* Actions */}
-                  <div className="px-4 py-3 border-t border-white/10 flex gap-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+                  {/* Actions — sticky footer outside scroll container */}
+                  <div className="flex-shrink-0 px-4 py-3 border-t border-white/10 flex gap-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                     <Button
                       onClick={() => exportPDF('permit', viewingPermit.id)}
                       disabled={isExporting && exportingId === viewingPermit.id}
@@ -1562,6 +1616,19 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
           recordTitle={viewingPermit.title}
         />
       )}
+
+      <SaveAsTemplateSheet
+        open={showSaveTemplate}
+        onOpenChange={setShowSaveTemplate}
+        moduleType="permit"
+        getTemplateData={getTemplateData}
+      />
+      <LoadTemplateSheet
+        open={showLoadTemplate}
+        onOpenChange={setShowLoadTemplate}
+        moduleType="permit"
+        onLoad={handleLoadTemplate}
+      />
     </div>
   );
 }

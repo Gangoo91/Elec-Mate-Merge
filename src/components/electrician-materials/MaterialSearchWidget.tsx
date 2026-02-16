@@ -1,51 +1,46 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Search, Filter, MapPin, Clock, Zap, Building2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Search, Filter, MapPin, Clock, Zap, Building2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const MaterialSearchWidget = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   const quickSearches = [
-    "Twin & Earth 2.5mm",
-    "Consumer Units",
-    "LED Downlights", 
-    "MCB Type B",
-    "RCD 30mA",
-    "SWA Cable",
-    "Emergency Lighting",
-    "Fire Rated Downlights"
+    'Twin & Earth 2.5mm',
+    'Consumer Units',
+    'LED Downlights',
+    'MCB Type B',
+    'RCD 30mA',
+    'SWA Cable',
+    'Emergency Lighting',
+    'Fire Rated Downlights',
   ];
 
   const filterOptions = [
-    { id: "in-stock", label: "In Stock", icon: "📦" },
-    { id: "next-day", label: "Next Day Delivery", icon: "🚚" },
-    { id: "local", label: "Local Supplier", icon: "📍" },
-    { id: "trade-price", label: "Trade Price", icon: "💷" },
-    { id: "brand-verified", label: "Brand Verified", icon: "✓" },
-    { id: "eco-friendly", label: "Eco-Friendly", icon: "🌱" }
+    { id: 'in-stock', label: 'In Stock', icon: '📦' },
+    { id: 'next-day', label: 'Next Day Delivery', icon: '🚚' },
+    { id: 'local', label: 'Local Supplier', icon: '📍' },
+    { id: 'trade-price', label: 'Trade Price', icon: '💷' },
+    { id: 'brand-verified', label: 'Brand Verified', icon: '✓' },
+    { id: 'eco-friendly', label: 'Eco-Friendly', icon: '🌱' },
   ];
 
-  const popularLocations = [
-    "London", "Manchester", "Birmingham", "Leeds", "Glasgow", "Bristol"
-  ];
+  const popularLocations = ['London', 'Manchester', 'Birmingham', 'Leeds', 'Glasgow', 'Bristol'];
 
   const toggleFilter = (filterId: string) => {
-    setSelectedFilters(prev => 
-      prev.includes(filterId) 
-        ? prev.filter(f => f !== filterId)
-        : [...prev, filterId]
+    setSelectedFilters((prev) =>
+      prev.includes(filterId) ? prev.filter((f) => f !== filterId) : [...prev, filterId]
     );
   };
 
   const handleSearch = () => {
-    console.log("Searching for:", { searchQuery, selectedFilters, selectedLocation });
+    console.log('Searching for:', { searchQuery, selectedFilters, selectedLocation });
     // Implementation would go here
   };
 
@@ -66,12 +61,12 @@ const MaterialSearchWidget = () => {
             )}
             <Input
               placeholder="Search by product name, code, brand, or description..."
-              className={cn("bg-elec-dark/50 border-elec-yellow/30", !searchQuery && "pl-10")}
+              className={cn('bg-elec-dark/50 border-elec-yellow/30', !searchQuery && 'pl-10')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <Button 
+          <Button
             onClick={handleSearch}
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 px-6"
           >
@@ -87,9 +82,9 @@ const MaterialSearchWidget = () => {
           </h4>
           <div className="flex flex-wrap gap-2">
             {quickSearches.map((search) => (
-              <Badge 
+              <Badge
                 key={search}
-                variant="outline" 
+                variant="outline"
                 className="cursor-pointer hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow active:scale-[0.98] transition-all touch-manipulation"
                 onClick={() => setSearchQuery(search)}
               >
@@ -107,13 +102,13 @@ const MaterialSearchWidget = () => {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {filterOptions.map((filter) => (
-              <Badge 
+              <Badge
                 key={filter.id}
-                variant={selectedFilters.includes(filter.id) ? "default" : "outline"}
+                variant={selectedFilters.includes(filter.id) ? 'default' : 'outline'}
                 className={`cursor-pointer transition-all text-center justify-center py-2 ${
                   selectedFilters.includes(filter.id)
-                    ? "bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow"
+                    ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                    : 'hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow'
                 }`}
                 onClick={() => toggleFilter(filter.id)}
               >
@@ -132,15 +127,15 @@ const MaterialSearchWidget = () => {
           </h4>
           <div className="flex flex-wrap gap-2">
             {popularLocations.map((location) => (
-              <Badge 
+              <Badge
                 key={location}
-                variant={selectedLocation === location ? "default" : "outline"}
+                variant={selectedLocation === location ? 'default' : 'outline'}
                 className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
                   selectedLocation === location
-                    ? "bg-elec-yellow text-black"
-                    : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow"
+                    ? 'bg-elec-yellow text-black'
+                    : 'hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow'
                 }`}
-                onClick={() => setSelectedLocation(selectedLocation === location ? "" : location)}
+                onClick={() => setSelectedLocation(selectedLocation === location ? '' : location)}
               >
                 {location}
               </Badge>

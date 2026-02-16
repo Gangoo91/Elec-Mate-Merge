@@ -7,16 +7,16 @@ interface AgentProgressIndicatorProps {
   currentAgent?: string;
 }
 
-export const AgentProgressIndicator = ({ 
-  elapsedTime, 
+export const AgentProgressIndicator = ({
+  elapsedTime,
   estimatedTime,
-  currentAgent 
+  currentAgent,
 }: AgentProgressIndicatorProps) => {
   const [dots, setDots] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDots(prev => prev.length >= 3 ? '' : prev + '.');
+      setDots((prev) => (prev.length >= 3 ? '' : prev + '.'));
     }, 500);
     return () => clearInterval(interval);
   }, []);
@@ -56,20 +56,14 @@ export const AgentProgressIndicator = ({
       </div>
       <div className="flex-1 bg-card border border-border rounded-lg p-4 shadow-sm">
         <div className="flex items-center justify-between mb-2">
-          <p className={`font-medium ${getProgressColor()}`}>
-            {getProgressMessage()}
-          </p>
-          <span className="text-sm text-muted-foreground">
-            {formatTime(elapsedTime)}
-          </span>
+          <p className={`font-medium ${getProgressColor()}`}>{getProgressMessage()}</p>
+          <span className="text-sm text-muted-foreground">{formatTime(elapsedTime)}</span>
         </div>
-        
+
         {currentAgent && (
-          <p className="text-sm text-muted-foreground">
-            Consulting {currentAgent}...
-          </p>
+          <p className="text-sm text-muted-foreground">Consulting {currentAgent}...</p>
         )}
-        
+
         {estimatedTime && estimatedTime > elapsedTime && (
           <div className="mt-2">
             <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
@@ -77,7 +71,7 @@ export const AgentProgressIndicator = ({
               <span>~{formatTime(estimatedTime - elapsedTime)} remaining</span>
             </div>
             <div className="w-full bg-muted rounded-full h-1.5">
-              <div 
+              <div
                 className="bg-primary h-1.5 rounded-full transition-all duration-500"
                 style={{ width: `${Math.min((elapsedTime / estimatedTime) * 100, 95)}%` }}
               />

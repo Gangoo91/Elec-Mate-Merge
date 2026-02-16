@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import {
   Shield,
   FileText,
@@ -24,31 +24,37 @@ import {
   MessageSquare,
   Zap,
   ClipboardCheck,
-} from "lucide-react";
-import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
+} from 'lucide-react';
+import {
+  BusinessPageLayout,
+  SectionNav,
+  ContentBlock,
+  DataGrid,
+  InfoList,
+} from '@/components/business-hub';
 
 const DebtRecovery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeSection = searchParams.get("section") || "prevention";
+  const activeSection = searchParams.get('section') || 'prevention';
   const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
-    { id: "prevention", label: "Prevention", icon: Shield },
-    { id: "process", label: "Recovery", icon: FileText },
-    { id: "legal", label: "Legal Options", icon: Scale },
-    { id: "protection", label: "Protection", icon: Lock },
+    { id: 'prevention', label: 'Prevention', icon: Shield },
+    { id: 'process', label: 'Recovery', icon: FileText },
+    { id: 'legal', label: 'Legal Options', icon: Scale },
+    { id: 'protection', label: 'Protection', icon: Lock },
   ];
 
   const keyStats = [
-    { label: "Late Payment Rate", value: "45%", sublabel: "UK SME average" },
-    { label: "Recovery Window", value: "90 days", sublabel: "Best success rate" },
-    { label: "Small Claims Limit", value: "£10,000", sublabel: "No solicitor needed" },
-    { label: "Statutory Interest", value: "8%+", sublabel: "Above BoE base rate" },
+    { label: 'Late Payment Rate', value: '45%', sublabel: 'UK SME average' },
+    { label: 'Recovery Window', value: '90 days', sublabel: 'Best success rate' },
+    { label: 'Small Claims Limit', value: '£10,000', sublabel: 'No solicitor needed' },
+    { label: 'Statutory Interest', value: '8%+', sublabel: 'Above BoE base rate' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sections.map(s => document.getElementById(s.id));
+      const sectionElements = sections.map((s) => document.getElementById(s.id));
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sectionElements.length - 1; i >= 0; i--) {
@@ -60,8 +66,8 @@ const DebtRecovery = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const canonical = `${window.location.origin}/electrician/business-development/debt-recovery`;
@@ -103,8 +109,9 @@ const DebtRecovery = () => {
             icon={Shield}
             summary={
               <p className="text-white">
-                The best debt recovery strategy is prevention. Strong terms, clear communication, and deposit collection
-                significantly reduce the risk of non-payment before work begins.
+                The best debt recovery strategy is prevention. Strong terms, clear communication,
+                and deposit collection significantly reduce the risk of non-payment before work
+                begins.
               </p>
             }
           >
@@ -118,10 +125,26 @@ const DebtRecovery = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Clear Written Quotes", description: "Detailed quotes with scope, pricing, and payment terms. Get customer signature or email confirmation before starting" },
-                    { title: "Collect Deposits", description: "Request 25-50% deposits on jobs over £500. This secures commitment and covers your material costs" },
-                    { title: "Stage Payments", description: "Break larger projects into milestones with payments due at each stage. Never get too far ahead financially" },
-                    { title: "Payment Terms in Writing", description: "State payment terms clearly: 'Payment due within 14 days of completion' or 'Payment on completion'" },
+                    {
+                      title: 'Clear Written Quotes',
+                      description:
+                        'Detailed quotes with scope, pricing, and payment terms. Get customer signature or email confirmation before starting',
+                    },
+                    {
+                      title: 'Collect Deposits',
+                      description:
+                        'Request 25-50% deposits on jobs over £500. This secures commitment and covers your material costs',
+                    },
+                    {
+                      title: 'Stage Payments',
+                      description:
+                        'Break larger projects into milestones with payments due at each stage. Never get too far ahead financially',
+                    },
+                    {
+                      title: 'Payment Terms in Writing',
+                      description:
+                        "State payment terms clearly: 'Payment due within 14 days of completion' or 'Payment on completion'",
+                    },
                   ]}
                 />
               </div>
@@ -164,7 +187,9 @@ const DebtRecovery = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Run basic credit check for large jobs</span>
+                      <span className="text-sm text-white">
+                        Run basic credit check for large jobs
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -213,8 +238,8 @@ const DebtRecovery = () => {
             icon={FileText}
             summary={
               <p className="text-white">
-                Act quickly when payments are overdue. The longer a debt ages, the harder it becomes to collect.
-                Follow a systematic process that escalates at defined intervals.
+                Act quickly when payments are overdue. The longer a debt ages, the harder it becomes
+                to collect. Follow a systematic process that escalates at defined intervals.
               </p>
             }
           >
@@ -228,11 +253,31 @@ const DebtRecovery = () => {
                 <InfoList
                   variant="numbered"
                   items={[
-                    { title: "Day 1 - Payment Due", description: "Send invoice reminder on due date. Friendly tone: 'Your invoice is now due - please arrange payment'" },
-                    { title: "Day 7 - First Follow-up", description: "Phone call and email. Ask if there are any issues with the invoice. Request payment date commitment" },
-                    { title: "Day 14 - Second Follow-up", description: "Formal written reminder. State intent to add statutory interest if not paid within 7 days" },
-                    { title: "Day 21 - Final Notice", description: "Letter before action. Final opportunity to pay before legal proceedings begin" },
-                    { title: "Day 28+ - Legal Action", description: "Small claims court for under £10k, or debt collection agency. Add statutory interest and costs" },
+                    {
+                      title: 'Day 1 - Payment Due',
+                      description:
+                        "Send invoice reminder on due date. Friendly tone: 'Your invoice is now due - please arrange payment'",
+                    },
+                    {
+                      title: 'Day 7 - First Follow-up',
+                      description:
+                        'Phone call and email. Ask if there are any issues with the invoice. Request payment date commitment',
+                    },
+                    {
+                      title: 'Day 14 - Second Follow-up',
+                      description:
+                        'Formal written reminder. State intent to add statutory interest if not paid within 7 days',
+                    },
+                    {
+                      title: 'Day 21 - Final Notice',
+                      description:
+                        'Letter before action. Final opportunity to pay before legal proceedings begin',
+                    },
+                    {
+                      title: 'Day 28+ - Legal Action',
+                      description:
+                        'Small claims court for under £10k, or debt collection agency. Add statutory interest and costs',
+                    },
                   ]}
                 />
               </div>
@@ -271,7 +316,9 @@ const DebtRecovery = () => {
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Clear subject line with invoice number</span>
+                      <span className="text-sm text-white">
+                        Clear subject line with invoice number
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -279,11 +326,15 @@ const DebtRecovery = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Include bank details for easy payment</span>
+                      <span className="text-sm text-white">
+                        Include bank details for easy payment
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">State clear deadline and consequences</span>
+                      <span className="text-sm text-white">
+                        State clear deadline and consequences
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -296,7 +347,8 @@ const DebtRecovery = () => {
                   Offering Payment Plans
                 </h4>
                 <p className="text-sm text-white mb-3">
-                  If a customer is struggling but willing to pay, consider a payment plan. Getting something is better than nothing.
+                  If a customer is struggling but willing to pay, consider a payment plan. Getting
+                  something is better than nothing.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
@@ -327,8 +379,9 @@ const DebtRecovery = () => {
             icon={Scale}
             summary={
               <p className="text-white">
-                When informal recovery fails, legal options are available. Small claims court handles debts up to £10,000
-                without needing a solicitor. For larger amounts, consider professional legal advice.
+                When informal recovery fails, legal options are available. Small claims court
+                handles debts up to £10,000 without needing a solicitor. For larger amounts,
+                consider professional legal advice.
               </p>
             }
           >
@@ -341,16 +394,21 @@ const DebtRecovery = () => {
                     <h4 className="text-base font-semibold text-white">Small Claims Court</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    For debts up to £10,000. Simple online process, no solicitor needed, low court fees.
+                    For debts up to £10,000. Simple online process, no solicitor needed, low court
+                    fees.
                   </p>
                   <div className="space-y-2 mb-4">
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">File claim online via Money Claim Online</span>
+                      <span className="text-sm text-white">
+                        File claim online via Money Claim Online
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Court fees £35-455 depending on amount</span>
+                      <span className="text-sm text-white">
+                        Court fees £35-455 depending on amount
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -358,7 +416,9 @@ const DebtRecovery = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">Up to £10,000</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      Up to £10,000
+                    </span>
                   </div>
                 </div>
                 <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10">
@@ -376,15 +436,21 @@ const DebtRecovery = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Higher costs but larger claims possible</span>
+                      <span className="text-sm text-white">
+                        Higher costs but larger claims possible
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Consider solicitor for complex cases</span>
+                      <span className="text-sm text-white">
+                        Consider solicitor for complex cases
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">Over £10,000</span>
+                    <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
+                      Over £10,000
+                    </span>
                   </div>
                 </div>
               </div>
@@ -396,7 +462,8 @@ const DebtRecovery = () => {
                   Statutory Interest & Costs
                 </h4>
                 <p className="text-sm text-white mb-4">
-                  Under the Late Payment of Commercial Debts Act 1998, you can claim statutory interest and fixed debt recovery costs on overdue B2B invoices.
+                  Under the Late Payment of Commercial Debts Act 1998, you can claim statutory
+                  interest and fixed debt recovery costs on overdue B2B invoices.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
@@ -404,14 +471,18 @@ const DebtRecovery = () => {
                       <span className="text-sm font-medium text-white">Statutory Interest</span>
                       <span className="text-xs text-yellow-400">8% + BoE base rate</span>
                     </div>
-                    <p className="text-sm text-white/90">Currently 13.25% annually (5.25% base + 8%)</p>
+                    <p className="text-sm text-white/90">
+                      Currently 13.25% annually (5.25% base + 8%)
+                    </p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Fixed Recovery Costs</span>
                       <span className="text-xs text-yellow-400">£40-100</span>
                     </div>
-                    <p className="text-sm text-white/90">Based on debt value (£40 under £1k, £70 £1k-10k, £100 over £10k)</p>
+                    <p className="text-sm text-white/90">
+                      Based on debt value (£40 under £1k, £70 £1k-10k, £100 over £10k)
+                    </p>
                   </div>
                 </div>
               </div>
@@ -423,7 +494,8 @@ const DebtRecovery = () => {
                   Debt Collection Agencies
                 </h4>
                 <p className="text-sm text-white mb-3">
-                  Third-party debt collectors can recover debts on your behalf. They typically charge 10-25% commission on amounts recovered.
+                  Third-party debt collectors can recover debts on your behalf. They typically
+                  charge 10-25% commission on amounts recovered.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
@@ -454,8 +526,9 @@ const DebtRecovery = () => {
             icon={Lock}
             summary={
               <p className="text-white">
-                Protect your business from bad debts through proper contracts, insurance, and credit management.
-                Prevention and diversification are your best defences against cash flow crises.
+                Protect your business from bad debts through proper contracts, insurance, and credit
+                management. Prevention and diversification are your best defences against cash flow
+                crises.
               </p>
             }
           >
@@ -469,10 +542,26 @@ const DebtRecovery = () => {
                 <InfoList
                   variant="checklist"
                   items={[
-                    { title: "Written Terms & Conditions", description: "Clear T&Cs covering payment terms, interest on late payments, and dispute resolution" },
-                    { title: "Retention of Title Clause", description: "Materials remain your property until paid for. Allows recovery if customer doesn't pay" },
-                    { title: "Variation Clause", description: "Clear process for agreeing and pricing additional work beyond original scope" },
-                    { title: "Dispute Resolution", description: "Define process for handling disputes before they escalate to legal action" },
+                    {
+                      title: 'Written Terms & Conditions',
+                      description:
+                        'Clear T&Cs covering payment terms, interest on late payments, and dispute resolution',
+                    },
+                    {
+                      title: 'Retention of Title Clause',
+                      description:
+                        "Materials remain your property until paid for. Allows recovery if customer doesn't pay",
+                    },
+                    {
+                      title: 'Variation Clause',
+                      description:
+                        'Clear process for agreeing and pricing additional work beyond original scope',
+                    },
+                    {
+                      title: 'Dispute Resolution',
+                      description:
+                        'Define process for handling disputes before they escalate to legal action',
+                    },
                   ]}
                 />
               </div>
@@ -485,7 +574,8 @@ const DebtRecovery = () => {
                     <h4 className="text-base font-semibold text-white">Trade Credit Insurance</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Protects against customer insolvency or prolonged non-payment. Worth considering for larger commercial contracts.
+                    Protects against customer insolvency or prolonged non-payment. Worth considering
+                    for larger commercial contracts.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
@@ -508,7 +598,8 @@ const DebtRecovery = () => {
                     <h4 className="text-base font-semibold text-white">Invoice Finance</h4>
                   </div>
                   <p className="text-sm text-white mb-3">
-                    Release cash tied up in unpaid invoices. Lender advances 80-90% immediately, rest when customer pays.
+                    Release cash tied up in unpaid invoices. Lender advances 80-90% immediately,
+                    rest when customer pays.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
@@ -517,11 +608,15 @@ const DebtRecovery = () => {
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">No personal security usually required</span>
+                      <span className="text-sm text-white">
+                        No personal security usually required
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-white">Can include credit control services</span>
+                      <span className="text-sm text-white">
+                        Can include credit control services
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -556,7 +651,9 @@ const DebtRecovery = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">No single customer over 20% of revenue</span>
+                    <span className="text-sm text-white">
+                      No single customer over 20% of revenue
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
@@ -564,11 +661,15 @@ const DebtRecovery = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Multiple revenue streams and services</span>
+                    <span className="text-sm text-white">
+                      Multiple revenue streams and services
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">Regular review of customer payment history</span>
+                    <span className="text-sm text-white">
+                      Regular review of customer payment history
+                    </span>
                   </div>
                 </div>
               </div>
@@ -585,9 +686,9 @@ const DebtRecovery = () => {
             <div>
               <h3 className="text-base font-semibold text-white mb-2">Legal Considerations</h3>
               <p className="text-sm text-white leading-relaxed mb-3">
-                Ensure your debt recovery practices comply with UK law, including the Late Payment of
-                Commercial Debts (Interest) Act 1998 and Consumer Credit Act regulations. Seek legal advice
-                for debts over £10,000 or complex disputes.
+                Ensure your debt recovery practices comply with UK law, including the Late Payment
+                of Commercial Debts (Interest) Act 1998 and Consumer Credit Act regulations. Seek
+                legal advice for debts over £10,000 or complex disputes.
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="px-2 py-1 text-xs rounded-lg bg-yellow-400/10 text-yellow-400 border border-yellow-400/20">

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
 import {
   ChevronLeft,
   RotateCcw,
@@ -14,10 +14,10 @@ import {
   CheckCircle2,
   ChevronDown,
   Info,
-  Zap
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+  Zap,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface BusinessInputs {
   hourlyRate: number;
@@ -34,13 +34,13 @@ const BusinessCalculator = () => {
     hoursPerWeek: 35,
     weeksPerYear: 48,
     monthlyExpenses: 3000,
-    materialMarkup: 20
+    materialMarkup: 20,
   });
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
 
   const updateInput = (field: keyof BusinessInputs, value: number) => {
-    setInputs(prev => ({ ...prev, [field]: value }));
+    setInputs((prev) => ({ ...prev, [field]: value }));
   };
 
   const resetCalculator = () => {
@@ -49,7 +49,7 @@ const BusinessCalculator = () => {
       hoursPerWeek: 35,
       weeksPerYear: 48,
       monthlyExpenses: 3000,
-      materialMarkup: 20
+      materialMarkup: 20,
     });
   };
 
@@ -64,9 +64,9 @@ const BusinessCalculator = () => {
   const profitMargin = annualRevenue > 0 ? (annualProfit / annualRevenue) * 100 : 0;
 
   const getStatus = () => {
-    if (profitMargin > 25) return { color: "green", icon: CheckCircle2, text: "Excellent margin" };
-    if (profitMargin > 15) return { color: "amber", icon: TrendingUp, text: "Good margin" };
-    return { color: "red", icon: AlertTriangle, text: "Needs improvement" };
+    if (profitMargin > 25) return { color: 'green', icon: CheckCircle2, text: 'Excellent margin' };
+    if (profitMargin > 15) return { color: 'amber', icon: TrendingUp, text: 'Good margin' };
+    return { color: 'red', icon: AlertTriangle, text: 'Needs improvement' };
   };
   const status = getStatus();
 
@@ -107,21 +107,29 @@ const BusinessCalculator = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Annual Profit</p>
-                <p className={`text-3xl sm:text-4xl font-bold mt-1 tabular-nums ${
-                  annualProfit >= 0 ? "text-white" : "text-red-400"
-                }`}>
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  Annual Profit
+                </p>
+                <p
+                  className={`text-3xl sm:text-4xl font-bold mt-1 tabular-nums ${
+                    annualProfit >= 0 ? 'text-white' : 'text-red-400'
+                  }`}
+                >
                   £{annualProfit.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                 </p>
               </div>
-              <div className={`p-3 rounded-2xl bg-${status.color}-500/20 border border-${status.color}-500/30`}>
+              <div
+                className={`p-3 rounded-2xl bg-${status.color}-500/20 border border-${status.color}-500/30`}
+              >
                 <status.icon className={`h-6 w-6 text-${status.color}-400`} />
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className={`text-ios-footnote ${
-                profitMargin > 15 ? "text-green-400" : "text-amber-400"
-              }`}>
+              <span
+                className={`text-ios-footnote ${
+                  profitMargin > 15 ? 'text-green-400' : 'text-amber-400'
+                }`}
+              >
                 {profitMargin.toFixed(1)}% profit margin • {status.text}
               </span>
             </div>
@@ -166,24 +174,24 @@ const BusinessCalculator = () => {
               label="Hourly Rate"
               icon={<PoundSterling className="h-5 w-5" />}
               type="number"
-              value={inputs.hourlyRate || ""}
-              onChange={(e) => updateInput("hourlyRate", parseFloat(e.target.value) || 0)}
+              value={inputs.hourlyRate || ''}
+              onChange={(e) => updateInput('hourlyRate', parseFloat(e.target.value) || 0)}
               hint="Charge-out rate"
             />
             <IOSInput
               label="Billable Hours/Week"
               icon={<Clock className="h-5 w-5" />}
               type="number"
-              value={inputs.hoursPerWeek || ""}
-              onChange={(e) => updateInput("hoursPerWeek", parseFloat(e.target.value) || 0)}
+              value={inputs.hoursPerWeek || ''}
+              onChange={(e) => updateInput('hoursPerWeek', parseFloat(e.target.value) || 0)}
               hint="Hours you can bill"
             />
             <IOSInput
               label="Working Weeks/Year"
               icon={<Calendar className="h-5 w-5" />}
               type="number"
-              value={inputs.weeksPerYear || ""}
-              onChange={(e) => updateInput("weeksPerYear", parseFloat(e.target.value) || 0)}
+              value={inputs.weeksPerYear || ''}
+              onChange={(e) => updateInput('weeksPerYear', parseFloat(e.target.value) || 0)}
               hint="After holidays"
             />
           </div>
@@ -199,16 +207,16 @@ const BusinessCalculator = () => {
               label="Monthly Expenses"
               icon={<Briefcase className="h-5 w-5" />}
               type="number"
-              value={inputs.monthlyExpenses || ""}
-              onChange={(e) => updateInput("monthlyExpenses", parseFloat(e.target.value) || 0)}
+              value={inputs.monthlyExpenses || ''}
+              onChange={(e) => updateInput('monthlyExpenses', parseFloat(e.target.value) || 0)}
               hint="Total running costs"
             />
             <IOSInput
               label="Material Markup"
               icon={<Percent className="h-5 w-5" />}
               type="number"
-              value={inputs.materialMarkup || ""}
-              onChange={(e) => updateInput("materialMarkup", parseFloat(e.target.value) || 0)}
+              value={inputs.materialMarkup || ''}
+              onChange={(e) => updateInput('materialMarkup', parseFloat(e.target.value) || 0)}
               hint="Markup on materials"
             />
           </div>
@@ -219,7 +227,7 @@ const BusinessCalculator = () => {
           {profitMargin < 15 && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4"
             >
@@ -227,14 +235,16 @@ const BusinessCalculator = () => {
                 <div className="p-2 bg-amber-500/20 rounded-xl">
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                 </div>
-                <span className="text-ios-headline font-semibold text-amber-300">Improvement Ideas</span>
+                <span className="text-ios-headline font-semibold text-amber-300">
+                  Improvement Ideas
+                </span>
               </div>
               <ul className="space-y-2">
                 {[
-                  "Consider increasing your hourly rate",
-                  "Look for ways to reduce monthly expenses",
-                  "Increase billable hours per week",
-                  "Add higher-margin specialisation services"
+                  'Consider increasing your hourly rate',
+                  'Look for ways to reduce monthly expenses',
+                  'Increase billable hours per week',
+                  'Add higher-margin specialisation services',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-ios-body text-amber-200/80">
                     <Zap className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
@@ -266,21 +276,26 @@ const BusinessCalculator = () => {
             {showGuidance && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 className="overflow-hidden"
               >
                 <div className="bg-blue-500/5 border-x border-b border-blue-500/20 rounded-b-2xl p-4 -mt-2 pt-6 space-y-3">
                   {[
-                    { term: "Break-even hours", desc: "Minimum billable hours/month to cover expenses" },
-                    { term: "Margin > 25%", desc: "Healthy buffer for growth and emergencies" },
-                    { term: "15-25% margin", desc: "Sustainable but limited room for investment" },
-                    { term: "< 15% margin", desc: "Risk of cash flow issues during slow periods" }
+                    {
+                      term: 'Break-even hours',
+                      desc: 'Minimum billable hours/month to cover expenses',
+                    },
+                    { term: 'Margin > 25%', desc: 'Healthy buffer for growth and emergencies' },
+                    { term: '15-25% margin', desc: 'Sustainable but limited room for investment' },
+                    { term: '< 15% margin', desc: 'Risk of cash flow issues during slow periods' },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <span className="text-ios-subhead font-medium text-blue-300">{item.term}: </span>
+                        <span className="text-ios-subhead font-medium text-blue-300">
+                          {item.term}:{' '}
+                        </span>
                         <span className="text-ios-body text-blue-200/70">{item.desc}</span>
                       </div>
                     </div>
@@ -311,14 +326,16 @@ const BusinessCalculator = () => {
             {showReference && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 className="overflow-hidden"
               >
                 <div className="bg-elec-yellow/5 border-x border-b border-elec-yellow/20 rounded-b-2xl p-4 -mt-2 pt-6">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-ios-subhead font-medium text-amber-300 mb-2">Typical Rates</p>
+                      <p className="text-ios-subhead font-medium text-amber-300 mb-2">
+                        Typical Rates
+                      </p>
                       <div className="space-y-1 text-ios-caption-1 text-amber-200/70">
                         <p>Electrician: £40-60/hr</p>
                         <p>Emergency: £80-120/hr</p>
@@ -326,7 +343,9 @@ const BusinessCalculator = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="text-ios-subhead font-medium text-amber-300 mb-2">Expenses Guide</p>
+                      <p className="text-ios-subhead font-medium text-amber-300 mb-2">
+                        Expenses Guide
+                      </p>
                       <div className="space-y-1 text-ios-caption-1 text-amber-200/70">
                         <p>Van: £300-500/mo</p>
                         <p>Insurance: £100-200/mo</p>
@@ -334,7 +353,9 @@ const BusinessCalculator = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="text-ios-subhead font-medium text-amber-300 mb-2">Utilisation</p>
+                      <p className="text-ios-subhead font-medium text-amber-300 mb-2">
+                        Utilisation
+                      </p>
                       <div className="space-y-1 text-ios-caption-1 text-amber-200/70">
                         <p>Target: 70-80%</p>
                         <p>Admin time: 20-30%</p>

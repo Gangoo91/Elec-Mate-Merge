@@ -1,59 +1,61 @@
-
-import { Helmet } from "react-helmet";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle, BookOpen, Newspaper, Building, Shield, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
-import SampleDataLoader from "@/components/electrician/safety-shares/SampleDataLoader";
+import { Helmet } from 'react-helmet';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, BookOpen, Newspaper, Building, Shield, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import SampleDataLoader from '@/components/electrician/safety-shares/SampleDataLoader';
 
 const SafetyShares = () => {
   const safetyCategories = [
     {
       id: 1,
-      title: "Safety Alerts",
-      description: "Critical safety warnings and real-time alerts for electrical professionals",
+      title: 'Safety Alerts',
+      description: 'Critical safety warnings and real-time alerts for electrical professionals',
       icon: <AlertTriangle className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/safety-shares/alerts",
-      enhancedLink: "/electrician/safety-shares/alerts-enhanced"
+      link: '/electrician/safety-shares/alerts',
+      enhancedLink: '/electrician/safety-shares/alerts-enhanced',
     },
     {
       id: 2,
-      title: "Learning From Experience",
-      description: "Real incidents, near misses, and lessons learned from the field",
+      title: 'Learning From Experience',
+      description: 'Real incidents, near misses, and lessons learned from the field',
       icon: <BookOpen className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/safety-shares/lfe"
+      link: '/electrician/safety-shares/lfe',
     },
     {
       id: 3,
-      title: "Industry News",
-      description: "Latest regulatory updates and compliance information from industry bodies",
+      title: 'Industry News',
+      description: 'Latest regulatory updates and compliance information from industry bodies',
       icon: <Newspaper className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/safety-shares/news",
-      enhancedLink: "/electrician/safety-shares/news-enhanced"
+      link: '/electrician/safety-shares/news',
+      enhancedLink: '/electrician/safety-shares/news-enhanced',
     },
     {
       id: 4,
-      title: "Major Projects",
-      description: "Industry projects and emerging opportunities in the electrical sector",
+      title: 'Major Projects',
+      description: 'Industry projects and emerging opportunities in the electrical sector',
       icon: <Building className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/safety-shares/projects"
+      link: '/electrician/safety-shares/projects',
     },
     {
       id: 5,
-      title: "Safety Resources",
-      description: "Essential safety guides, toolbox talks, and training materials",
+      title: 'Safety Resources',
+      description: 'Essential safety guides, toolbox talks, and training materials',
       icon: <Shield className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/safety-shares/resources",
-      enhancedLink: "/electrician/safety-shares/resources-enhanced"
-    }
+      link: '/electrician/safety-shares/resources',
+      enhancedLink: '/electrician/safety-shares/resources-enhanced',
+    },
   ];
 
   return (
     <div className="bg-elec-dark text-white  ">
       <Helmet>
         <title>Safety Shares - Elec-Mate</title>
-        <meta name="description" content="Share safety knowledge, learn from experience, and stay updated with the latest electrical industry safety information" />
+        <meta
+          name="description"
+          content="Share safety knowledge, learn from experience, and stay updated with the latest electrical industry safety information"
+        />
       </Helmet>
-      
+
       <div className="space-y-8 animate-fade-in">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Safety Shares</h1>
@@ -78,14 +80,10 @@ const SafetyShares = () => {
                       </div>
                     )}
                   </div>
-                  <CardDescription className="text-sm">
-                    {category.description}
-                  </CardDescription>
+                  <CardDescription className="text-sm">{category.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex items-center justify-center py-6">
-                  <div className="transition-transform group-hover:scale-110">
-                    {category.icon}
-                  </div>
+                  <div className="transition-transform group-hover:scale-110">{category.icon}</div>
                 </CardContent>
                 <CardContent className="pt-0">
                   <div className="flex gap-2">

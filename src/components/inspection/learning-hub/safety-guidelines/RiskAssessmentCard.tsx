@@ -4,10 +4,34 @@ import { AlertTriangle, CheckCircle2, XCircle, MinusCircle } from 'lucide-react'
 
 const RiskAssessmentCard = () => {
   const riskMatrix = [
-    { likelihood: 'Very Likely', severity: 'High', risk: 'Very High', color: 'bg-red-500', action: 'Stop work immediately' },
-    { likelihood: 'Likely', severity: 'High', risk: 'High', color: 'bg-orange-500', action: 'Additional controls required' },
-    { likelihood: 'Possible', severity: 'Medium', risk: 'Medium', color: 'bg-yellow-500', action: 'Monitor and review' },
-    { likelihood: 'Unlikely', severity: 'Low', risk: 'Low', color: 'bg-green-500', action: 'Acceptable with controls' }
+    {
+      likelihood: 'Very Likely',
+      severity: 'High',
+      risk: 'Very High',
+      color: 'bg-red-500',
+      action: 'Stop work immediately',
+    },
+    {
+      likelihood: 'Likely',
+      severity: 'High',
+      risk: 'High',
+      color: 'bg-orange-500',
+      action: 'Additional controls required',
+    },
+    {
+      likelihood: 'Possible',
+      severity: 'Medium',
+      risk: 'Medium',
+      color: 'bg-yellow-500',
+      action: 'Monitor and review',
+    },
+    {
+      likelihood: 'Unlikely',
+      severity: 'Low',
+      risk: 'Low',
+      color: 'bg-green-500',
+      action: 'Acceptable with controls',
+    },
   ];
 
   const assessmentSteps = [
@@ -17,32 +41,47 @@ const RiskAssessmentCard = () => {
       description: 'Look for electrical hazards in the work environment',
       examples: ['Live conductors', 'Damaged equipment', 'Water/moisture', 'Overhead lines'],
       icon: AlertTriangle,
-      color: 'text-red-400'
+      color: 'text-red-400',
     },
     {
       step: '2',
       title: 'Assess Risk Level',
       description: 'Evaluate likelihood and severity of potential harm',
-      examples: ['Probability of occurrence', 'Potential consequences', 'Number of people affected', 'Duration of exposure'],
+      examples: [
+        'Probability of occurrence',
+        'Potential consequences',
+        'Number of people affected',
+        'Duration of exposure',
+      ],
       icon: MinusCircle,
-      color: 'text-orange-400'
+      color: 'text-orange-400',
     },
     {
       step: '3',
       title: 'Implement Controls',
       description: 'Apply hierarchy of controls to eliminate or reduce risk',
-      examples: ['Isolation/switching off', 'Barriers and guards', 'PPE selection', 'Safe work procedures'],
+      examples: [
+        'Isolation/switching off',
+        'Barriers and guards',
+        'PPE selection',
+        'Safe work procedures',
+      ],
       icon: CheckCircle2,
-      color: 'text-green-400'
+      color: 'text-green-400',
     },
     {
       step: '4',
       title: 'Monitor & Review',
       description: 'Continuously monitor effectiveness of control measures',
-      examples: ['Regular inspections', 'Incident reporting', 'Control effectiveness', 'Procedure updates'],
+      examples: [
+        'Regular inspections',
+        'Incident reporting',
+        'Control effectiveness',
+        'Procedure updates',
+      ],
       icon: XCircle,
-      color: 'text-blue-400'
-    }
+      color: 'text-blue-400',
+    },
   ];
 
   return (
@@ -66,7 +105,9 @@ const RiskAssessmentCard = () => {
               return (
                 <div key={index} className="bg-card rounded-lg p-4">
                   <div className="flex items-start gap-3">
-                    <div className={`w-8 h-8 rounded-full bg-muted flex items-center justify-center font-bold ${step.color}`}>
+                    <div
+                      className={`w-8 h-8 rounded-full bg-muted flex items-center justify-center font-bold ${step.color}`}
+                    >
                       {step.step}
                     </div>
                     <div className="flex-grow">
@@ -77,7 +118,10 @@ const RiskAssessmentCard = () => {
                       <p className="text-sm text-gray-300 mb-3">{step.description}</p>
                       <div className="space-y-1">
                         {step.examples.map((example, exampleIndex) => (
-                          <div key={exampleIndex} className="flex items-center gap-2 text-xs text-gray-400">
+                          <div
+                            key={exampleIndex}
+                            className="flex items-center gap-2 text-xs text-gray-400"
+                          >
                             <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
                             {example}
                           </div>
@@ -110,7 +154,9 @@ const RiskAssessmentCard = () => {
                     <td className="p-2 text-gray-300">{row.likelihood}</td>
                     <td className="p-2 text-gray-300">{row.severity}</td>
                     <td className="p-2">
-                      <span className={`px-2 py-1 rounded text-xs font-medium text-foreground ${row.color}`}>
+                      <span
+                        className={`px-2 py-1 rounded text-xs font-medium text-foreground ${row.color}`}
+                      >
                         {row.risk}
                       </span>
                     </td>
@@ -127,38 +173,50 @@ const RiskAssessmentCard = () => {
           <h4 className="font-medium text-blue-400 mb-3">Hierarchy of Risk Controls</h4>
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-3 p-2 bg-card rounded">
-              <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">1</span>
+              <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                1
+              </span>
               <div>
                 <span className="text-foreground font-medium">Elimination:</span>
                 <span className="text-gray-300 ml-2">Remove the hazard completely</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
-              <span className="w-6 h-6 bg-orange-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">2</span>
+              <span className="w-6 h-6 bg-orange-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                2
+              </span>
               <div>
                 <span className="text-foreground font-medium">Substitution:</span>
                 <span className="text-gray-300 ml-2">Replace with safer alternative</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
-              <span className="w-6 h-6 bg-yellow-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">3</span>
+              <span className="w-6 h-6 bg-yellow-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                3
+              </span>
               <div>
                 <span className="text-foreground font-medium">Engineering Controls:</span>
                 <span className="text-gray-300 ml-2">Physical safeguards and barriers</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
-              <span className="w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">4</span>
+              <span className="w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                4
+              </span>
               <div>
                 <span className="text-foreground font-medium">Administrative:</span>
                 <span className="text-gray-300 ml-2">Procedures, training, signage</span>
               </div>
             </div>
             <div className="flex items-center gap-3 p-2 bg-card rounded">
-              <span className="w-6 h-6 bg-green-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">5</span>
+              <span className="w-6 h-6 bg-green-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                5
+              </span>
               <div>
                 <span className="text-foreground font-medium">PPE:</span>
-                <span className="text-gray-300 ml-2">Personal protective equipment (last resort)</span>
+                <span className="text-gray-300 ml-2">
+                  Personal protective equipment (last resort)
+                </span>
               </div>
             </div>
           </div>

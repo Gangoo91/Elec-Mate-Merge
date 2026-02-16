@@ -11,11 +11,11 @@ interface HealthSafetySuccessProps {
   onClose: () => void;
 }
 
-export const HealthSafetySuccess = ({ 
-  hazardCount, 
-  ppeCount, 
+export const HealthSafetySuccess = ({
+  hazardCount,
+  ppeCount,
   generationTime = 120,
-  onClose 
+  onClose,
 }: HealthSafetySuccessProps) => {
   useEffect(() => {
     // Trigger confetti

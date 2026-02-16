@@ -1,4 +1,4 @@
-import ModernRegionalPricing from "./ModernRegionalPricing";
+import ModernRegionalPricing from './ModernRegionalPricing';
 
 const EnhancedRegionalPricing = () => {
   return <ModernRegionalPricing />;

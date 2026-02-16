@@ -10,19 +10,12 @@ export interface EarthSymbolProps {
 
 export const EarthSymbol = ({ x, y, size = 30, label }: EarthSymbolProps) => {
   const lineSpacing = size / 3;
-  
+
   return (
     <g transform={`translate(${x}, ${y})`} className="earth-symbol">
       {/* Vertical connection line */}
-      <line
-        x1="0"
-        y1={-size / 2}
-        x2="0"
-        y2="0"
-        stroke="black"
-        strokeWidth="2"
-      />
-      
+      <line x1="0" y1={-size / 2} x2="0" y2="0" stroke="black" strokeWidth="2" />
+
       {/* Earth symbol - three horizontal lines (decreasing width) */}
       <line
         x1={-size / 2}
@@ -33,7 +26,7 @@ export const EarthSymbol = ({ x, y, size = 30, label }: EarthSymbolProps) => {
         strokeWidth="2.5"
         strokeLinecap="round"
       />
-      
+
       <line
         x1={-size / 2.5}
         y1={lineSpacing}
@@ -43,7 +36,7 @@ export const EarthSymbol = ({ x, y, size = 30, label }: EarthSymbolProps) => {
         strokeWidth="2.5"
         strokeLinecap="round"
       />
-      
+
       <line
         x1={-size / 4}
         y1={lineSpacing * 2}
@@ -53,7 +46,7 @@ export const EarthSymbol = ({ x, y, size = 30, label }: EarthSymbolProps) => {
         strokeWidth="2.5"
         strokeLinecap="round"
       />
-      
+
       {/* Label */}
       {label && (
         <text

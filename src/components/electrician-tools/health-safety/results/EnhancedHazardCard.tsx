@@ -3,7 +3,12 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from '@/components/ui/mobile-accordion';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
 import { getRiskColors } from '@/utils/risk-level-helpers';
 import { useState } from 'react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
@@ -16,11 +21,16 @@ interface EnhancedHazardCardProps {
   onDelete?: (index: number) => void;
 }
 
-export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: EnhancedHazardCardProps) => {
+export const EnhancedHazardCard = ({
+  hazard,
+  index,
+  onUpdate,
+  onDelete,
+}: EnhancedHazardCardProps) => {
   const { isMobile } = useMobileEnhanced();
   const [isEditing, setIsEditing] = useState(false);
   const [showEditSheet, setShowEditSheet] = useState(false);
-  const riskScore = hazard.riskScore || (hazard.likelihood * hazard.severity);
+  const riskScore = hazard.riskScore || hazard.likelihood * hazard.severity;
   const riskColors = getRiskColors(riskScore);
 
   const handleEditClick = (e: React.MouseEvent) => {
@@ -37,11 +47,11 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
   const severityDots = Array.from({ length: 5 }, (_, i) => i < hazard.severity);
 
   return (
-    <div 
+    <div
       className={`rounded-lg border-l-4 ${riskColors.border} bg-elec-card/50 overflow-hidden hover:shadow-lg transition-all`}
     >
-      <MobileAccordion 
-        type="single" 
+      <MobileAccordion
+        type="single"
         collapsible
         defaultValue={index < 3 ? `hazard-${index}` : undefined}
       >
@@ -62,34 +72,32 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
                 ) : (
                   <h4 className="font-semibold text-base mb-2">{hazard.hazard}</h4>
                 )}
-                <Badge className={riskColors.badge}>
-                  Risk Score: {riskScore}
-                </Badge>
-               </div>
-               <div className="absolute top-2 right-2 flex gap-1">
-                 <Button
-                   size="icon"
-                   variant="ghost"
-                   onClick={handleEditClick}
-                   className="h-11 w-11 touch-manipulation active:scale-[0.95]"
-                 >
-                   <Edit2 className="h-5 w-5" />
-                 </Button>
-                 <Button
-                   size="icon"
-                   variant="ghost"
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     if (confirm('Delete this hazard?')) {
-                       onDelete?.(index);
-                     }
-                   }}
-                   className="h-11 w-11 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation active:scale-[0.95]"
-                 >
-                   <Trash2 className="h-5 w-5" />
-                 </Button>
-               </div>
-             </div>
+                <Badge className={riskColors.badge}>Risk Score: {riskScore}</Badge>
+              </div>
+              <div className="absolute top-2 right-2 flex gap-1">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={handleEditClick}
+                  className="h-11 w-11 touch-manipulation active:scale-[0.95]"
+                >
+                  <Edit2 className="h-5 w-5" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (confirm('Delete this hazard?')) {
+                      onDelete?.(index);
+                    }
+                  }}
+                  className="h-11 w-11 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation active:scale-[0.95]"
+                >
+                  <Trash2 className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
           </MobileAccordionTrigger>
 
           <MobileAccordionContent>
@@ -112,8 +120,11 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
                     />
                   ) : (
                     <div className="space-y-2 text-sm">
-                      {hazard.controlMeasure.split(/(?=PRIMARY ACTION:|ENGINEER CONTROLS:|ADMINISTRATIVE CONTROLS:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS:|REGULATION:|ELIMINATE|SUBSTITUTE)/i)
-                        .filter(section => section.trim())
+                      {hazard.controlMeasure
+                        .split(
+                          /(?=PRIMARY ACTION:|ENGINEER CONTROLS:|ADMINISTRATIVE CONTROLS:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS:|REGULATION:|ELIMINATE|SUBSTITUTE)/i
+                        )
+                        .filter((section) => section.trim())
                         .map((section, idx) => {
                           const match = section.match(/^([A-Z\s]+):/);
                           if (match) {
@@ -121,13 +132,17 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
                             const content = section.substring(match[0].length).trim();
                             return (
                               <div key={idx} className="pl-3 border-l-2 border-amber-500/40">
-                                <div className="text-xs font-bold text-amber-600 mb-0.5">{label}</div>
+                                <div className="text-xs font-bold text-amber-600 mb-0.5">
+                                  {label}
+                                </div>
                                 <div className="text-foreground/90 leading-relaxed">{content}</div>
                               </div>
                             );
                           }
                           return (
-                            <div key={idx} className="text-foreground/90 leading-relaxed">{section}</div>
+                            <div key={idx} className="text-foreground/90 leading-relaxed">
+                              {section}
+                            </div>
                           );
                         })}
                     </div>
@@ -138,9 +153,7 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
               {/* Likelihood & Severity */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="text-xs font-medium text-foreground mb-2">
-                    Likelihood
-                  </div>
+                  <div className="text-xs font-medium text-foreground mb-2">Likelihood</div>
                   {isEditing ? (
                     <Input
                       type="number"
@@ -165,9 +178,7 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
                   )}
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-foreground mb-2">
-                    Severity
-                  </div>
+                  <div className="text-xs font-medium text-foreground mb-2">Severity</div>
                   {isEditing ? (
                     <Input
                       type="number"

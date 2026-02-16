@@ -6,8 +6,8 @@ The Health & Safety Agent generates comprehensive risk assessments for electrica
 
 ## Agents Involved
 
-| Agent | Edge Function | Core Logic | Purpose |
-|-------|---------------|------------|---------|
+| Agent                     | Edge Function      | Core Logic         | Purpose                    |
+| ------------------------- | ------------------ | ------------------ | -------------------------- |
 | **Health & Safety Agent** | `health-safety-v3` | Direct in function | Risk assessment generation |
 
 ## Entry Points
@@ -28,10 +28,10 @@ The Health & Safety Agent generates comprehensive risk assessments for electrica
 
 ### RAG Sources (Two-Tier Hybrid Search)
 
-| Tier | Table | Search Function | Weight | Purpose |
-|------|-------|-----------------|--------|---------|
-| **Tier 1** | `health_safety_knowledge` | `search_health_safety_hybrid` | 95% | HSE guidance, hazard data |
-| **Tier 2** | `regulations_intelligence` | `search_regulations_intelligence_hybrid` | 90% | BS 7671 safety regulations |
+| Tier       | Table                      | Search Function                          | Weight | Purpose                    |
+| ---------- | -------------------------- | ---------------------------------------- | ------ | -------------------------- |
+| **Tier 1** | `health_safety_knowledge`  | `search_health_safety_hybrid`            | 95%    | HSE guidance, hazard data  |
+| **Tier 2** | `regulations_intelligence` | `search_regulations_intelligence_hybrid` | 90%    | BS 7671 safety regulations |
 
 ### Hybrid Search Strategy
 
@@ -42,6 +42,7 @@ The Health & Safety Agent generates comprehensive risk assessments for electrica
 ### Additional Direct Lookup
 
 The agent also directly queries `regulations_intelligence` for pre-structured hazard regulations:
+
 - Keywords: `hazard`, `risk`, `protection`, `safety`, `shock`, `burn`, `fire`, `explosion`, `RCD`, `bonding`, `earthing`, `isolation`
 - Categories: `Protection`, `Safety`, `Earthing`
 
@@ -60,23 +61,23 @@ sequenceDiagram
     Frontend->>CreateJob: Submit H&S request
     CreateJob->>Database: Create job (status: pending)
     CreateJob->>Processor: Trigger processing
-    
+
     Processor->>Agent: Generate risk assessment
-    
+
     Agent->>Agent: Query enhancement
     Agent->>Agent: Safety Guardian detection
-    
+
     Agent->>RAG: Parallel hybrid RAG
     Note over RAG: health_safety (95%) + regulations (90%)
     RAG->>Agent: Return knowledge
-    
+
     Agent->>Agent: Direct hazard regulation lookup
-    
+
     Agent->>OpenAI: Tool call with hazard schema
     OpenAI->>Agent: Structured risk assessment
-    
+
     Agent->>Database: Save output_data (status: complete)
-    
+
     Frontend->>Database: Poll for completion
     Database->>Frontend: Return risk assessment
 ```
@@ -85,19 +86,21 @@ sequenceDiagram
 
 ```typescript
 interface HealthSafetyRequest {
-  query: string;                    // Work description
-  workType?: string;                // Type of electrical work
-  location?: string;                // Work location
-  hazards?: string[];               // Pre-identified hazards
-  messages?: Array<{                // Conversation history
+  query: string; // Work description
+  workType?: string; // Type of electrical work
+  location?: string; // Work location
+  hazards?: string[]; // Pre-identified hazards
+  messages?: Array<{
+    // Conversation history
     role: string;
     content: string;
   }>;
-  previousAgentOutputs?: Array<{    // From other agents (AI RAMS)
+  previousAgentOutputs?: Array<{
+    // From other agents (AI RAMS)
     agent: string;
     output: any;
   }>;
-  sharedRegulations?: any[];        // Pre-fetched regulations (AI RAMS)
+  sharedRegulations?: any[]; // Pre-fetched regulations (AI RAMS)
   projectDetails?: {
     projectName?: string;
     clientName?: string;
@@ -115,14 +118,14 @@ interface HealthSafetyV3Response {
     hazards: Array<{
       id: string;
       hazard: string;
-      likelihood: number;         // 1-5
-      severity: number;           // 1-5
-      riskScore: number;          // likelihood × severity
-      riskLevel: string;          // low/medium/high/very-high
-      controlMeasure: string;     // Structured format with 9 sections
+      likelihood: number; // 1-5
+      severity: number; // 1-5
+      riskScore: number; // likelihood × severity
+      riskLevel: string; // low/medium/high/very-high
+      controlMeasure: string; // Structured format with 9 sections
       residualRisk: number;
       residualRiskLevel: string;
-      linkedToStep: number;       // 0 = general, 1-N = specific step
+      linkedToStep: number; // 0 = general, 1-N = specific step
       regulation?: string;
     }>;
     ppe: Array<{
@@ -177,18 +180,18 @@ function calculateRiskLevel(riskScore: number): string {
 
 **Table**: `health_safety_jobs`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | UUID | Job identifier |
-| `user_id` | UUID | Owner |
-| `status` | TEXT | pending, processing, complete, failed, cancelled |
-| `progress` | INTEGER | 0-100 |
-| `current_step` | TEXT | Current processing stage |
-| `project_info` | JSONB | Project metadata |
-| `work_type` | TEXT | Type of work |
-| `output_data` | JSONB | Generated risk assessment |
-| `raw_response` | JSONB | Raw AI response |
-| `error_message` | TEXT | Error details if failed |
+| Column          | Type    | Description                                      |
+| --------------- | ------- | ------------------------------------------------ |
+| `id`            | UUID    | Job identifier                                   |
+| `user_id`       | UUID    | Owner                                            |
+| `status`        | TEXT    | pending, processing, complete, failed, cancelled |
+| `progress`      | INTEGER | 0-100                                            |
+| `current_step`  | TEXT    | Current processing stage                         |
+| `project_info`  | JSONB   | Project metadata                                 |
+| `work_type`     | TEXT    | Type of work                                     |
+| `output_data`   | JSONB   | Generated risk assessment                        |
+| `raw_response`  | JSONB   | Raw AI response                                  |
+| `error_message` | TEXT    | Error details if failed                          |
 
 ## Validation & Safety
 
@@ -209,6 +212,7 @@ function calculateRiskLevel(riskScore: number): string {
 ### Query Enhancement
 
 The agent uses `_shared/query-enhancer.ts` to expand queries:
+
 - Extracts key entities from conversation history
 - Adds context from previous messages
 - Logs enhancement details for debugging
@@ -216,6 +220,7 @@ The agent uses `_shared/query-enhancer.ts` to expand queries:
 ### Safety Guardian
 
 `_shared/safety-guardian.ts` detects critical hazards:
+
 - Identifies high-risk scenarios (confined spaces, live working, etc.)
 - Flags mandatory PPE requirements
 - Returns `criticalCount` for logging

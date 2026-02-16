@@ -1,69 +1,70 @@
-
-import { FileText, Clock, CheckCircle, AlertTriangle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { FileText, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface DocumentationRequirementsDiagramProps {
   installationType?: string;
 }
 
-const DocumentationRequirementsDiagram = ({ installationType }: DocumentationRequirementsDiagramProps) => {
+const DocumentationRequirementsDiagram = ({
+  installationType,
+}: DocumentationRequirementsDiagramProps) => {
   const getRequiredDocuments = () => {
     return [
       {
-        document: "Electrical Installation Certificate",
-        regulation: "BS 7671:2018 Appendix 6",
-        purpose: "Confirms new installation complies with BS 7671",
-        completedBy: "Person responsible for design, construction, inspection and testing",
-        timing: "Upon completion of new installation",
-        critical: true
+        document: 'Electrical Installation Certificate',
+        regulation: 'BS 7671:2018 Appendix 6',
+        purpose: 'Confirms new installation complies with BS 7671',
+        completedBy: 'Person responsible for design, construction, inspection and testing',
+        timing: 'Upon completion of new installation',
+        critical: true,
       },
       {
-        document: "Schedule of Inspections",
-        regulation: "BS 7671:2018 Appendix 6",
-        purpose: "Records visual inspection items checked",
-        completedBy: "Competent person carrying out inspection",
-        timing: "During visual inspection phase",
-        critical: true
+        document: 'Schedule of Inspections',
+        regulation: 'BS 7671:2018 Appendix 6',
+        purpose: 'Records visual inspection items checked',
+        completedBy: 'Competent person carrying out inspection',
+        timing: 'During visual inspection phase',
+        critical: true,
       },
       {
-        document: "Schedule of Test Results",
-        regulation: "BS 7671:2018 Appendix 6",
-        purpose: "Records all test measurements and results",
-        completedBy: "Competent person carrying out testing",
-        timing: "During testing phase",
-        critical: true
+        document: 'Schedule of Test Results',
+        regulation: 'BS 7671:2018 Appendix 6',
+        purpose: 'Records all test measurements and results',
+        completedBy: 'Competent person carrying out testing',
+        timing: 'During testing phase',
+        critical: true,
       },
       {
-        document: "Circuit Charts",
-        regulation: "Regulation 514.9.1",
-        purpose: "Identification of circuits and protective devices",
-        completedBy: "Installation designer/contractor",
-        timing: "Before energisation",
-        critical: true
-      }
+        document: 'Circuit Charts',
+        regulation: 'Regulation 514.9.1',
+        purpose: 'Identification of circuits and protective devices',
+        completedBy: 'Installation designer/contractor',
+        timing: 'Before energisation',
+        critical: true,
+      },
     ];
   };
 
   const requiredDocuments = getRequiredDocuments();
 
   const getAdditionalDocuments = () => {
-    if (installationType === "domestic") {
+    if (installationType === 'domestic') {
       return [
-        "Minor Electrical Installation Works Certificate (for additions)",
-        "Electrical Installation Condition Report (if existing work present)",
-        "Building Control notification (where required)"
+        'Minor Electrical Installation Works Certificate (for additions)',
+        'Electrical Installation Condition Report (if existing work present)',
+        'Building Control notification (where required)',
       ];
-    } else if (installationType === "commercial") {
+    } else if (installationType === 'commercial') {
       return [
-        "Fire Risk Assessment electrical considerations",
-        "Emergency lighting compliance certificates",
-        "Electrical maintenance schedule"
+        'Fire Risk Assessment electrical considerations',
+        'Emergency lighting compliance certificates',
+        'Electrical maintenance schedule',
       ];
-    } else if (installationType === "industrial") {
+    } else if (installationType === 'industrial') {
       return [
-        "Hazardous area classification drawings",
-        "Equipment certification for ATEX compliance",
-        "Earthing and bonding system verification"
+        'Hazardous area classification drawings',
+        'Equipment certification for ATEX compliance',
+        'Earthing and bonding system verification',
       ];
     }
     return [];
@@ -81,11 +82,14 @@ const DocumentationRequirementsDiagram = ({ installationType }: DocumentationReq
       <div className="bg-blue-600/20 p-4 rounded border border-blue-500/30">
         <div className="flex items-center gap-2 mb-3">
           <FileText className="h-5 w-5 text-blue-400" />
-          <h4 className="font-medium text-blue-200">Regulation 631.1 - Documentation Requirements</h4>
+          <h4 className="font-medium text-blue-200">
+            Regulation 631.1 - Documentation Requirements
+          </h4>
         </div>
         <p className="text-xs text-blue-100">
-          "Upon completion of the work, the person responsible for the construction of the installation shall provide 
-          the person ordering the work with a certificate confirming that the installation complies with BS 7671."
+          "Upon completion of the work, the person responsible for the construction of the
+          installation shall provide the person ordering the work with a certificate confirming that
+          the installation complies with BS 7671."
         </p>
       </div>
 
@@ -95,7 +99,7 @@ const DocumentationRequirementsDiagram = ({ installationType }: DocumentationReq
           <CheckCircle className="h-4 w-4" />
           Mandatory Documentation
         </h4>
-        
+
         {requiredDocuments.map((doc, index) => (
           <div key={index} className="bg-green-600/20 p-4 rounded border border-green-500/30">
             <div className="flex items-start justify-between mb-2">
@@ -109,7 +113,7 @@ const DocumentationRequirementsDiagram = ({ installationType }: DocumentationReq
                 </Badge>
               )}
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
               <div>
                 <span className="text-green-300 font-medium">Purpose:</span>
@@ -120,7 +124,7 @@ const DocumentationRequirementsDiagram = ({ installationType }: DocumentationReq
                 <p className="text-green-100">{doc.completedBy}</p>
               </div>
             </div>
-            
+
             <div className="mt-2 flex items-center gap-2">
               <Clock className="h-3 w-3 text-green-400" />
               <span className="text-xs text-green-200">Timing: {doc.timing}</span>
@@ -134,9 +138,10 @@ const DocumentationRequirementsDiagram = ({ installationType }: DocumentationReq
         <div className="space-y-3">
           <h4 className="font-medium text-purple-200 flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            {installationType?.charAt(0).toUpperCase()}{installationType?.slice(1)} Installation Additional Requirements
+            {installationType?.charAt(0).toUpperCase()}
+            {installationType?.slice(1)} Installation Additional Requirements
           </h4>
-          
+
           <div className="bg-purple-600/20 p-4 rounded border border-purple-500/30">
             <ul className="space-y-2">
               {additionalDocuments.map((doc, index) => (
@@ -156,34 +161,42 @@ const DocumentationRequirementsDiagram = ({ installationType }: DocumentationReq
           <Clock className="h-4 w-4" />
           Documentation Timeline
         </h4>
-        
+
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</span>
+            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              1
+            </span>
             <div className="text-xs">
               <span className="text-amber-200 font-medium">Before commencement:</span>
               <span className="text-amber-100"> Design documentation and calculations</span>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</span>
+            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              2
+            </span>
             <div className="text-xs">
               <span className="text-amber-200 font-medium">During inspection:</span>
               <span className="text-amber-100"> Schedule of Inspections completion</span>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</span>
+            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              3
+            </span>
             <div className="text-xs">
               <span className="text-amber-200 font-medium">During testing:</span>
               <span className="text-amber-100"> Schedule of Test Results completion</span>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3">
-            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">4</span>
+            <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              4
+            </span>
             <div className="text-xs">
               <span className="text-amber-200 font-medium">Upon completion:</span>
               <span className="text-amber-100"> Electrical Installation Certificate issue</span>

@@ -50,8 +50,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'class-f-water-danger',
-    question:
-      'What reaction makes water extremely dangerous on Class F cooking oil fires?',
+    question: 'What reaction makes water extremely dangerous on Class F cooking oil fires?',
     options: [
       'Water causes a chemical reaction that produces toxic fumes',
       'Water cools the oil too rapidly, causing the container to crack',
@@ -69,8 +68,7 @@ const quickCheckQuestions = [
 /* ------------------------------------------------------------------ */
 const faqs = [
   {
-    question:
-      "Why doesn't the current BS EN 2 standard include a Class E for electrical fires?",
+    question: "Why doesn't the current BS EN 2 standard include a Class E for electrical fires?",
     answer:
       'The original British Standard did include a Class E for electrical fires, but when the European standard BS EN 2:1992 was adopted, it was removed as a formal classification. The reasoning is that electricity is not a fuel — it is the ignition source. Once the electrical supply is isolated, the fire is reclassified according to the fuel that is actually burning (most commonly Class A for cable insulation or Class B for transformer oil). In practice, electrical fires are still treated as a distinct scenario because of the electrocution hazard. You must never use water or foam on energised electrical equipment. CO2 and dry powder extinguishers are safe on live electrical equipment because they are non-conductive. The key first step is always to de-energise the equipment if it is safe to do so, then fight the fire according to the underlying fuel class.',
   },
@@ -80,8 +78,7 @@ const faqs = [
       'Yes, and this is actually quite common in real-world fire scenarios. A workshop fire might involve burning timber and cardboard (Class A), spilled solvents and lubricating oils (Class B), and a ruptured gas line (Class C) all at the same time. A kitchen fire could combine Class A materials (wooden cupboards, paper towels) with Class F (deep fat fryer oil). In these situations, you must assess the primary fuel that is burning most fiercely and address that first, while being careful not to use an extinguishing agent that could make another element of the fire worse. For example, using water on the Class A element of a fire that also involves burning oil could trigger a catastrophic boilover on the oil component. Multi-class fires are one of the strongest arguments for thorough fire risk assessments that identify all potential fuel sources in a given area.',
   },
   {
-    question:
-      'What is the difference between flash point and auto-ignition temperature?',
+    question: 'What is the difference between flash point and auto-ignition temperature?',
     answer:
       'These are two distinct but related properties of flammable liquids. The flash point is the lowest temperature at which a liquid produces enough vapour to form a flammable mixture with air near its surface. At the flash point, the vapour will ignite briefly if an external ignition source (such as a spark or flame) is applied, but may not sustain burning. The auto-ignition temperature is the minimum temperature at which a substance will spontaneously ignite without any external ignition source — no spark or flame is needed. The auto-ignition temperature is always significantly higher than the flash point. For example, petrol has a flash point of approximately minus 43 degrees C (which is why it is so dangerous — it produces flammable vapour even in cold conditions) but an auto-ignition temperature of around 280 degrees C. Understanding these concepts is critical for fire risk assessment, particularly when working near stored flammable liquids or in confined spaces where vapour can accumulate.',
   },
@@ -139,8 +136,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question:
-      'What does the term "flash point" mean in the context of flammable liquids?',
+    question: 'What does the term "flash point" mean in the context of flammable liquids?',
     options: [
       'The temperature at which a liquid spontaneously ignites without a spark',
       'The lowest temperature at which a liquid produces enough vapour to ignite briefly when an ignition source is applied',
@@ -258,7 +254,8 @@ export default function FireSafetyModule1Section2() {
             <p className="text-rose-400 text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>6 classes:</strong> A (solids), B (liquids), C (gases), D (metals), Electrical, F (cooking oils)
+                <strong>6 classes:</strong> A (solids), B (liquids), C (gases), D (metals),
+                Electrical, F (cooking oils)
               </li>
               <li>
                 <strong>Wrong agent = danger:</strong> Water on oil or electrics can kill
@@ -317,12 +314,12 @@ export default function FireSafetyModule1Section2() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Not all fires are the same. A fire burning through timber reacts very differently
-                to one fuelled by petrol, and both are fundamentally different from a fire
-                involving a leaking gas cylinder or a deep fat fryer. Because these fires behave
-                differently, they require different approaches to extinguish them safely and
-                effectively. Using the wrong method can be not just ineffective, but actively
-                dangerous &mdash; even fatal.
+                Not all fires are the same. A fire burning through timber reacts very differently to
+                one fuelled by petrol, and both are fundamentally different from a fire involving a
+                leaking gas cylinder or a deep fat fryer. Because these fires behave differently,
+                they require different approaches to extinguish them safely and effectively. Using
+                the wrong method can be not just ineffective, but actively dangerous &mdash; even
+                fatal.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
@@ -332,19 +329,22 @@ export default function FireSafetyModule1Section2() {
                 </div>
                 <div className="text-sm text-white/80 space-y-2">
                   <p>
-                    Directing a <strong className="text-white">water jet at burning cooking oil</strong>{' '}
-                    causes a violent steam explosion (boilover) that throws burning oil into the
-                    air, rapidly spreading the fire and causing severe burns.
+                    Directing a{' '}
+                    <strong className="text-white">water jet at burning cooking oil</strong> causes
+                    a violent steam explosion (boilover) that throws burning oil into the air,
+                    rapidly spreading the fire and causing severe burns.
                   </p>
                   <p>
-                    Applying <strong className="text-white">water to live electrical equipment</strong>{' '}
+                    Applying{' '}
+                    <strong className="text-white">water to live electrical equipment</strong>{' '}
                     creates a conductive path that can electrocute the person holding the
                     extinguisher.
                   </p>
                   <p>
-                    Pouring <strong className="text-white">water onto certain burning metals</strong>{' '}
-                    (such as magnesium or lithium) causes an explosive reaction that releases
-                    hydrogen gas and can intensify the fire dramatically.
+                    Pouring{' '}
+                    <strong className="text-white">water onto certain burning metals</strong> (such
+                    as magnesium or lithium) causes an explosive reaction that releases hydrogen gas
+                    and can intensify the fire dramatically.
                   </p>
                 </div>
               </div>
@@ -352,8 +352,8 @@ export default function FireSafetyModule1Section2() {
               <p>
                 Fire classification provides a standardised system that allows anyone &mdash; from
                 trained fire marshals to members of the public &mdash; to quickly identify the type
-                of fire they are dealing with and select the appropriate extinguishing agent. In
-                the United Kingdom, fire classification follows the European standard{' '}
+                of fire they are dealing with and select the appropriate extinguishing agent. In the
+                United Kingdom, fire classification follows the European standard{' '}
                 <strong>BS EN 2:1992</strong>, which categorises fires based on the type of fuel
                 that is burning.
               </p>
@@ -371,8 +371,8 @@ export default function FireSafetyModule1Section2() {
               </div>
 
               <p>
-                The classification system recognises six categories of fire. Each is identified by
-                a letter (A through F, with no current Class E), and each has specific
+                The classification system recognises six categories of fire. Each is identified by a
+                letter (A through F, with no current Class E), and each has specific
                 characteristics, associated fuels, hazards, and recommended extinguishing agents.
                 Understanding these classes is fundamental to fire safety and is a core requirement
                 for anyone acting as a fire marshal in the workplace.
@@ -412,8 +412,8 @@ export default function FireSafetyModule1Section2() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Electrical</strong> &mdash; Energised electrical
-                      equipment (not a formal class)
+                      <strong className="text-white">Electrical</strong> &mdash; Energised
+                      electrical equipment (not a formal class)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -498,18 +498,20 @@ export default function FireSafetyModule1Section2() {
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
                   <strong className="text-rose-400">For Electricians:</strong> Class A fuels are
-                  everywhere on construction sites and in occupied buildings. Cable insulation
-                  (PVC, XLPE, LSF), conduit, trunking, dado trunking, wooden battens, plasterboard
-                  paper facing, packaging from electrical components, and even the dust that
-                  accumulates in ceiling voids are all Class A materials. When carrying out
-                  hot works (soldering, brazing) or working near materials that can be ignited by
-                  electrical faults (such as overloaded cables overheating), awareness of
-                  surrounding Class A fuels is essential.
+                  everywhere on construction sites and in occupied buildings. Cable insulation (PVC,
+                  XLPE, LSF), conduit, trunking, dado trunking, wooden battens, plasterboard paper
+                  facing, packaging from electrical components, and even the dust that accumulates
+                  in ceiling voids are all Class A materials. When carrying out hot works
+                  (soldering, brazing) or working near materials that can be ignited by electrical
+                  faults (such as overloaded cables overheating), awareness of surrounding Class A
+                  fuels is essential.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">Suitable Extinguishers for Class A</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Suitable Extinguishers for Class A
+                </p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -558,11 +560,11 @@ export default function FireSafetyModule1Section2() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Class B fires involve <strong>flammable liquids and liquefiable solids</strong>.
-                It is important to understand that it is not the liquid itself that burns &mdash;
-                it is the <strong>vapour</strong> given off by the liquid that ignites. The rate at
-                which a liquid produces flammable vapour depends on its temperature, surface area,
-                and chemical properties.
+                Class B fires involve <strong>flammable liquids and liquefiable solids</strong>. It
+                is important to understand that it is not the liquid itself that burns &mdash; it is
+                the <strong>vapour</strong> given off by the liquid that ignites. The rate at which
+                a liquid produces flammable vapour depends on its temperature, surface area, and
+                chemical properties.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -607,7 +609,9 @@ export default function FireSafetyModule1Section2() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">Flash Point &amp; Auto-Ignition</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Flash Point &amp; Auto-Ignition
+                </p>
                 <p className="text-sm text-white/80 mb-3">
                   Two critical temperatures determine how dangerous a flammable liquid is:
                 </p>
@@ -623,11 +627,13 @@ export default function FireSafetyModule1Section2() {
                     </p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-lg">
-                    <p className="text-sm font-medium text-amber-400 mb-1">Auto-Ignition Temperature</p>
+                    <p className="text-sm font-medium text-amber-400 mb-1">
+                      Auto-Ignition Temperature
+                    </p>
                     <p className="text-xs text-white/80">
-                      The minimum temperature at which a substance will spontaneously ignite
-                      without any external spark or flame. This is always significantly higher
-                      than the flash point. Petrol auto-ignites at approximately 280&deg;C. Diesel
+                      The minimum temperature at which a substance will spontaneously ignite without
+                      any external spark or flame. This is always significantly higher than the
+                      flash point. Petrol auto-ignites at approximately 280&deg;C. Diesel
                       auto-ignites at around 210&deg;C. These temperatures can be reached on hot
                       exhaust manifolds, overheated machinery, or during hot works.
                     </p>
@@ -636,12 +642,12 @@ export default function FireSafetyModule1Section2() {
               </div>
 
               <p>
-                Class B liquids are sub-divided into two categories:{' '}
-                <strong>miscible</strong> (those that mix with water, such as alcohols and
-                acetone) and <strong>immiscible</strong> (those that do not mix with water, such
-                as petrol, diesel, and oils). This distinction matters because it affects which
-                foam types are effective &mdash; alcohol-resistant foams (AR-AFFF) must be used on
-                miscible liquids to prevent the foam blanket from breaking down.
+                Class B liquids are sub-divided into two categories: <strong>miscible</strong>{' '}
+                (those that mix with water, such as alcohols and acetone) and{' '}
+                <strong>immiscible</strong> (those that do not mix with water, such as petrol,
+                diesel, and oils). This distinction matters because it affects which foam types are
+                effective &mdash; alcohol-resistant foams (AR-AFFF) must be used on miscible liquids
+                to prevent the foam blanket from breaking down.
               </p>
 
               <p>
@@ -657,17 +663,21 @@ export default function FireSafetyModule1Section2() {
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  <strong className="text-white">NEVER use a water jet on a burning liquid pool.</strong>{' '}
-                  The force of the water jet can scatter burning liquid across a wide area,
-                  rapidly spreading the fire. On immiscible liquids like petrol, the water sinks
-                  beneath the burning fuel and can cause dangerous splashing. The only exception
-                  is water mist or water spray extinguishers used on small Class B fires, where
-                  the fine droplets cool and smother without disturbing the liquid surface.
+                  <strong className="text-white">
+                    NEVER use a water jet on a burning liquid pool.
+                  </strong>{' '}
+                  The force of the water jet can scatter burning liquid across a wide area, rapidly
+                  spreading the fire. On immiscible liquids like petrol, the water sinks beneath the
+                  burning fuel and can cause dangerous splashing. The only exception is water mist
+                  or water spray extinguishers used on small Class B fires, where the fine droplets
+                  cool and smother without disturbing the liquid surface.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">Suitable Extinguishers for Class B</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Suitable Extinguishers for Class B
+                </p>
                 <ul className="text-sm text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -708,8 +718,8 @@ export default function FireSafetyModule1Section2() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Class C fires involve <strong>flammable gases</strong>. These fires present unique
-                hazards because gases can spread rapidly, are often invisible, and can accumulate
-                in enclosed or poorly ventilated spaces to create explosive atmospheres. The
+                hazards because gases can spread rapidly, are often invisible, and can accumulate in
+                enclosed or poorly ventilated spaces to create explosive atmospheres. The
                 fundamental principle with gas fires is radically different from other classes:{' '}
                 <strong>
                   do NOT extinguish a gas fire unless the gas supply can be isolated first.
@@ -757,7 +767,9 @@ export default function FireSafetyModule1Section2() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">Critical: Why Not to Extinguish</p>
+                  <p className="text-sm font-medium text-red-400">
+                    Critical: Why Not to Extinguish
+                  </p>
                 </div>
                 <div className="text-sm text-white/80 space-y-2">
                   <p>
@@ -769,10 +781,10 @@ export default function FireSafetyModule1Section2() {
                   </p>
                   <p>
                     When the concentration of gas in air reaches the correct ratio &mdash; between
-                    the <strong className="text-white">Lower Explosive Limit (LEL)</strong> and
-                    the <strong className="text-white">Upper Explosive Limit (UEL)</strong> &mdash;
-                    any ignition source can trigger a devastating explosion. The correct procedure
-                    is always:{' '}
+                    the <strong className="text-white">Lower Explosive Limit (LEL)</strong> and the{' '}
+                    <strong className="text-white">Upper Explosive Limit (UEL)</strong> &mdash; any
+                    ignition source can trigger a devastating explosion. The correct procedure is
+                    always:{' '}
                     <strong className="text-red-300">
                       isolate the gas supply first, then let the fire burn out safely.
                     </strong>
@@ -783,8 +795,8 @@ export default function FireSafetyModule1Section2() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">LEL &amp; UEL Explained</p>
                 <p className="text-sm text-white/80 mb-3">
-                  Every flammable gas has a specific range of concentrations in air within which
-                  it can ignite or explode:
+                  Every flammable gas has a specific range of concentrations in air within which it
+                  can ignite or explode:
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -807,9 +819,8 @@ export default function FireSafetyModule1Section2() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Flammable range</strong> &mdash; the range
-                      between LEL and UEL. Methane: 5&ndash;15%. Propane: 2.1&ndash;9.5%.
-                      Acetylene: 2.5&ndash;81% (extremely wide and dangerous). Hydrogen:
-                      4&ndash;75%.
+                      between LEL and UEL. Methane: 5&ndash;15%. Propane: 2.1&ndash;9.5%. Acetylene:
+                      2.5&ndash;81% (extremely wide and dangerous). Hydrogen: 4&ndash;75%.
                     </span>
                   </li>
                 </ul>
@@ -817,14 +828,14 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-rose-400">For Electricians:</strong> You regularly work
-                  in properties with gas installations. Before drilling into walls or lifting
+                  <strong className="text-rose-400">For Electricians:</strong> You regularly work in
+                  properties with gas installations. Before drilling into walls or lifting
                   floorboards, always consider the location of gas pipes. A ruptured gas pipe
-                  combined with an electrical spark from a drill, power tool, or even a light
-                  switch creates the perfect conditions for a gas explosion. If you smell gas on
-                  site, stop all work immediately, do not operate any electrical switches (on or
-                  off), ventilate the area by opening doors and windows, evacuate, and call the
-                  National Gas Emergency Service on 0800 111 999.
+                  combined with an electrical spark from a drill, power tool, or even a light switch
+                  creates the perfect conditions for a gas explosion. If you smell gas on site, stop
+                  all work immediately, do not operate any electrical switches (on or off),
+                  ventilate the area by opening doors and windows, evacuate, and call the National
+                  Gas Emergency Service on 0800 111 999.
                 </p>
               </div>
             </div>
@@ -858,40 +869,39 @@ export default function FireSafetyModule1Section2() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Magnesium</strong> &mdash; burns with an
-                      intensely bright white flame at approximately 2,200&deg;C. Found in
-                      automotive components, aerospace parts, and some power tools
+                      intensely bright white flame at approximately 2,200&deg;C. Found in automotive
+                      components, aerospace parts, and some power tools
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Aluminium</strong> &mdash; in powder or
-                      swarf form, aluminium is highly combustible. Solid aluminium is harder to
-                      ignite but will burn at high temperatures
+                      <strong className="text-white">Aluminium</strong> &mdash; in powder or swarf
+                      form, aluminium is highly combustible. Solid aluminium is harder to ignite but
+                      will burn at high temperatures
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Titanium</strong> &mdash; used in specialist
-                      engineering, burns fiercely once ignited, particularly in powder or swarf
-                      form
+                      engineering, burns fiercely once ignited, particularly in powder or swarf form
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Alkali metals (sodium, potassium)</strong> &mdash;
-                      highly reactive, react violently with water producing hydrogen gas and
+                      <strong className="text-white">Alkali metals (sodium, potassium)</strong>{' '}
+                      &mdash; highly reactive, react violently with water producing hydrogen gas and
                       intense heat
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Lithium</strong> &mdash; increasingly
-                      common due to lithium-ion batteries in power tools, electric vehicles,
-                      battery storage systems, UPS units, and solar PV installations
+                      <strong className="text-white">Lithium</strong> &mdash; increasingly common
+                      due to lithium-ion batteries in power tools, electric vehicles, battery
+                      storage systems, UPS units, and solar PV installations
                     </span>
                   </li>
                 </ul>
@@ -908,31 +918,32 @@ export default function FireSafetyModule1Section2() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">Specialist Class D Extinguishing Agents</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Specialist Class D Extinguishing Agents
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">M28 dry powder</strong> &mdash; a specialist
-                      graphite-based powder designed for magnesium fires. Applied gently to
-                      smother the fire without disturbing the burning metal
+                      graphite-based powder designed for magnesium fires. Applied gently to smother
+                      the fire without disturbing the burning metal
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">L2 dry powder</strong> &mdash; a
-                      copper-based specialist powder effective on a range of combustible metals
-                      including lithium
+                      <strong className="text-white">L2 dry powder</strong> &mdash; a copper-based
+                      specialist powder effective on a range of combustible metals including lithium
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Dry sand</strong> &mdash; can be used as an
-                      emergency measure to smother small metal fires by gently covering the
-                      burning material. Must be completely dry &mdash; any moisture will cause a
-                      violent reaction
+                      emergency measure to smother small metal fires by gently covering the burning
+                      material. Must be completely dry &mdash; any moisture will cause a violent
+                      reaction
                     </span>
                   </li>
                 </ul>
@@ -948,40 +959,40 @@ export default function FireSafetyModule1Section2() {
                     As an electrician, you are increasingly likely to encounter lithium-ion
                     batteries &mdash; in cordless power tools, battery storage systems (BESS),
                     uninterruptible power supplies (UPS), electric vehicle charging installations,
-                    and solar PV battery systems. Lithium battery fires are particularly
-                    hazardous for several reasons:
+                    and solar PV battery systems. Lithium battery fires are particularly hazardous
+                    for several reasons:
                   </p>
                   <ul className="space-y-1 ml-0">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                       <span>
-                        <strong className="text-white">Thermal runaway</strong> &mdash; once a
-                        cell overheats, it triggers a self-sustaining chain reaction that spreads
-                        to adjacent cells, releasing its own oxygen
+                        <strong className="text-white">Thermal runaway</strong> &mdash; once a cell
+                        overheats, it triggers a self-sustaining chain reaction that spreads to
+                        adjacent cells, releasing its own oxygen
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                       <span>
-                        <strong className="text-white">Toxic fumes</strong> &mdash; burning
-                        lithium batteries release hydrogen fluoride, carbon monoxide, and other
-                        highly toxic gases
+                        <strong className="text-white">Toxic fumes</strong> &mdash; burning lithium
+                        batteries release hydrogen fluoride, carbon monoxide, and other highly toxic
+                        gases
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                       <span>
-                        <strong className="text-white">Re-ignition</strong> &mdash; lithium
-                        battery fires can appear extinguished then reignite hours or days later as
-                        thermal runaway continues to propagate through the battery pack
+                        <strong className="text-white">Re-ignition</strong> &mdash; lithium battery
+                        fires can appear extinguished then reignite hours or days later as thermal
+                        runaway continues to propagate through the battery pack
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                       <span>
                         <strong className="text-white">Multi-class fire</strong> &mdash;
-                        simultaneously a Class D metal fire (lithium) and a Class B fire
-                        (flammable organic electrolyte solvent)
+                        simultaneously a Class D metal fire (lithium) and a Class B fire (flammable
+                        organic electrolyte solvent)
                       </span>
                     </li>
                   </ul>
@@ -1004,27 +1015,31 @@ export default function FireSafetyModule1Section2() {
               <p>
                 Although electrical fires do not have a formal class under the current BS EN 2
                 standard, they are treated as a distinct and critical category in practice.
-                Electricity is not a fuel &mdash; it is an <strong>ignition source</strong>. When
-                an electrical fault causes a fire, the actual fuel burning is usually the cable
-                insulation (Class A), transformer oil (Class B), or whatever combustible material
-                is nearby. However, the presence of live electricity adds the{' '}
+                Electricity is not a fuel &mdash; it is an <strong>ignition source</strong>. When an
+                electrical fault causes a fire, the actual fuel burning is usually the cable
+                insulation (Class A), transformer oil (Class B), or whatever combustible material is
+                nearby. However, the presence of live electricity adds the{' '}
                 <strong>lethal hazard of electrocution</strong> to the fire scenario.
               </p>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-rose-400">For Electricians &mdash; This Is Your Area:</strong>{' '}
+                  <strong className="text-rose-400">
+                    For Electricians &mdash; This Is Your Area:
+                  </strong>{' '}
                   Electrical fires are the most directly relevant fire class for your profession.
                   You install, maintain, and repair the very systems that, when they malfunction,
                   cause electrical fires. Overloaded circuits, loose connections, deteriorated
-                  insulation, water ingress into electrical enclosures, incorrect fuse ratings,
-                  and poor workmanship are all causes of electrical fires that you have the power
-                  to prevent through competent installation and thorough inspection and testing.
+                  insulation, water ingress into electrical enclosures, incorrect fuse ratings, and
+                  poor workmanship are all causes of electrical fires that you have the power to
+                  prevent through competent installation and thorough inspection and testing.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Common Causes of Electrical Fires</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Common Causes of Electrical Fires
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -1044,24 +1059,24 @@ export default function FireSafetyModule1Section2() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Damaged or deteriorated insulation</strong> &mdash;
-                      age, UV exposure, rodent damage, or mechanical damage exposes conductors,
-                      leading to short circuits and arcing
+                      <strong className="text-white">Damaged or deteriorated insulation</strong>{' '}
+                      &mdash; age, UV exposure, rodent damage, or mechanical damage exposes
+                      conductors, leading to short circuits and arcing
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Incorrect protective device ratings</strong> &mdash;
-                      oversized fuses or MCBs that fail to disconnect a fault before dangerous
-                      temperatures are reached
+                      <strong className="text-white">Incorrect protective device ratings</strong>{' '}
+                      &mdash; oversized fuses or MCBs that fail to disconnect a fault before
+                      dangerous temperatures are reached
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Arcing faults</strong> &mdash; electrical
-                      arcs across damaged conductors or at connection points, generating extreme
+                      <strong className="text-white">Arcing faults</strong> &mdash; electrical arcs
+                      across damaged conductors or at connection points, generating extreme
                       localised heat (arc flash temperatures can exceed 19,000&deg;C)
                     </span>
                   </li>
@@ -1069,7 +1084,9 @@ export default function FireSafetyModule1Section2() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-2">Procedure for Electrical Fires</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Procedure for Electrical Fires
+                </p>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-rose-400">
@@ -1086,8 +1103,8 @@ export default function FireSafetyModule1Section2() {
                     </span>
                     <span className="text-sm text-white/80">
                       <strong className="text-white">De-energise if safe</strong> &mdash; isolate
-                      the electrical supply at the distribution board, consumer unit, or
-                      emergency stop. Do NOT touch the equipment directly
+                      the electrical supply at the distribution board, consumer unit, or emergency
+                      stop. Do NOT touch the equipment directly
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1095,9 +1112,9 @@ export default function FireSafetyModule1Section2() {
                       3
                     </span>
                     <span className="text-sm text-white/80">
-                      <strong className="text-white">If de-energised</strong> &mdash; treat the
-                      fire according to its underlying fuel class (usually Class A for cable
-                      insulation or Class B for transformer oil)
+                      <strong className="text-white">If de-energised</strong> &mdash; treat the fire
+                      according to its underlying fuel class (usually Class A for cable insulation
+                      or Class B for transformer oil)
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1106,9 +1123,9 @@ export default function FireSafetyModule1Section2() {
                     </span>
                     <span className="text-sm text-white/80">
                       <strong className="text-white">If still energised</strong> &mdash; use only{' '}
-                      <strong>CO2 (black label)</strong> or{' '}
-                      <strong>dry powder (blue label)</strong> extinguishers. These agents are
-                      non-conductive and safe to use on live equipment
+                      <strong>CO2 (black label)</strong> or <strong>dry powder (blue label)</strong>{' '}
+                      extinguishers. These agents are non-conductive and safe to use on live
+                      equipment
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1130,12 +1147,12 @@ export default function FireSafetyModule1Section2() {
                   <p className="text-sm font-medium text-red-400">High Voltage Fires</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  For fires involving high voltage equipment (above 1,000 V AC or 1,500 V DC),
-                  do not attempt to fight the fire yourself. Evacuate the area, maintain a safe
+                  For fires involving high voltage equipment (above 1,000 V AC or 1,500 V DC), do
+                  not attempt to fight the fire yourself. Evacuate the area, maintain a safe
                   distance of at least 25 metres, call 999, and contact the electricity network
                   operator. High voltage arcing can jump across gaps and the electrocution risk
-                  extends well beyond the immediate equipment. Only the fire service with
-                  specialist training and equipment should tackle high voltage fires.
+                  extends well beyond the immediate equipment. Only the fire service with specialist
+                  training and equipment should tackle high voltage fires.
                 </p>
               </div>
             </div>
@@ -1167,9 +1184,9 @@ export default function FireSafetyModule1Section2() {
                 Cooking oils and fats have very high <strong>auto-ignition temperatures</strong>,
                 typically around 340&deg;C for vegetable oils and up to 370&deg;C for some animal
                 fats. When oil reaches this temperature, it will spontaneously ignite without any
-                external spark or flame. Deep fat fryers, chip pans, commercial fryers, and woks
-                can all reach these temperatures if left unattended, if the thermostat fails, or
-                if the oil level is too low.
+                external spark or flame. Deep fat fryers, chip pans, commercial fryers, and woks can
+                all reach these temperatures if left unattended, if the thermostat fails, or if the
+                oil level is too low.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
@@ -1183,18 +1200,18 @@ export default function FireSafetyModule1Section2() {
                   <p>
                     This is one of the most critical safety messages in fire training. When water
                     comes into contact with burning cooking oil at temperatures exceeding 300&deg;C,
-                    the water <strong className="text-white">instantly vaporises into steam</strong>.
-                    Water expands approximately{' '}
+                    the water <strong className="text-white">instantly vaporises into steam</strong>
+                    . Water expands approximately{' '}
                     <strong className="text-white">1,700 times in volume</strong> when it converts
                     from liquid to steam. This violent expansion throws the burning oil upward and
                     outward in a catastrophic fireball &mdash; this is called a{' '}
                     <strong className="text-red-300">boilover</strong>.
                   </p>
                   <p>
-                    A single cup of water thrown onto a burning chip pan can produce a fireball
-                    that reaches the ceiling and spreads across the entire kitchen in under one
-                    second. This is the cause of numerous deaths and severe burn injuries every
-                    year in the UK.
+                    A single cup of water thrown onto a burning chip pan can produce a fireball that
+                    reaches the ceiling and spreads across the entire kitchen in under one second.
+                    This is the cause of numerous deaths and severe burn injuries every year in the
+                    UK.
                   </p>
                 </div>
               </div>
@@ -1204,31 +1221,32 @@ export default function FireSafetyModule1Section2() {
                   Wet Chemical Extinguisher &amp; Saponification
                 </p>
                 <p className="text-sm text-white/80 mb-3">
-                  The wet chemical extinguisher (yellow label) was developed specifically for
-                  Class F fires. It works through a chemical process called{' '}
+                  The wet chemical extinguisher (yellow label) was developed specifically for Class
+                  F fires. It works through a chemical process called{' '}
                   <strong className="text-white">saponification</strong>:
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      The extinguisher contains a solution of <strong className="text-white">
-                      potassium acetate</strong> (or potassium citrate or potassium carbonate)
+                      The extinguisher contains a solution of{' '}
+                      <strong className="text-white">potassium acetate</strong> (or potassium
+                      citrate or potassium carbonate)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      It is discharged as a <strong className="text-white">fine mist</strong>,
-                      not a jet &mdash; this is critical to avoid disturbing the burning oil
+                      It is discharged as a <strong className="text-white">fine mist</strong>, not a
+                      jet &mdash; this is critical to avoid disturbing the burning oil
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       The potassium salt reacts with the fatty acids in the oil to form a{' '}
-                      <strong className="text-white">thick, soap-like layer</strong> on the
-                      surface (saponification literally means &ldquo;soap making&rdquo;)
+                      <strong className="text-white">thick, soap-like layer</strong> on the surface
+                      (saponification literally means &ldquo;soap making&rdquo;)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1252,11 +1270,11 @@ export default function FireSafetyModule1Section2() {
                 <p className="text-sm text-white">
                   <strong className="text-rose-400">Emergency Actions for a Chip Pan Fire:</strong>{' '}
                   If a wet chemical extinguisher is not available: turn off the heat source if safe
-                  to do so, NEVER move the pan, NEVER throw water on it, and if you have a damp
-                  (not wet) tea towel or fire blanket, you can carefully place it over the pan to
-                  smother the fire. Call 999 immediately. Leave the towel or blanket in place and
-                  do not remove it — the oil beneath may still be above its auto-ignition
-                  temperature and could reignite.
+                  to do so, NEVER move the pan, NEVER throw water on it, and if you have a damp (not
+                  wet) tea towel or fire blanket, you can carefully place it over the pan to smother
+                  the fire. Call 999 immediately. Leave the towel or blanket in place and do not
+                  remove it — the oil beneath may still be above its auto-ignition temperature and
+                  could reignite.
                 </p>
               </div>
             </div>
@@ -1296,7 +1314,9 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Ordinary Combustibles</p>
-                        <p className="text-xs text-white/60">Wood, paper, textiles, rubber, plastics</p>
+                        <p className="text-xs text-white/60">
+                          Wood, paper, textiles, rubber, plastics
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -1320,7 +1340,9 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Flammable Liquids</p>
-                        <p className="text-xs text-white/60">Petrol, diesel, solvents, paints, oils</p>
+                        <p className="text-xs text-white/60">
+                          Petrol, diesel, solvents, paints, oils
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -1365,7 +1387,9 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Combustible Metals</p>
-                        <p className="text-xs text-white/60">Magnesium, lithium, sodium, aluminium</p>
+                        <p className="text-xs text-white/60">
+                          Magnesium, lithium, sodium, aluminium
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -1386,7 +1410,9 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Electrical Fires</p>
-                        <p className="text-xs text-white/60">Energised equipment &mdash; de-energise first</p>
+                        <p className="text-xs text-white/60">
+                          Energised equipment &mdash; de-energise first
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -1410,7 +1436,9 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Cooking Oils &amp; Fats</p>
-                        <p className="text-xs text-white/60">Deep fat fryers, chip pans, cooking oils</p>
+                        <p className="text-xs text-white/60">
+                          Deep fat fryers, chip pans, cooking oils
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -1427,30 +1455,29 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-rose-400">Remember:</strong> Extinguisher label colours
-                  in the UK follow a standard system &mdash;{' '}
-                  <strong>Red</strong> (water),{' '}
-                  <strong>Cream</strong> (foam),{' '}
-                  <strong>Black</strong> (CO2),{' '}
-                  <strong>Blue</strong> (dry powder),{' '}
-                  <strong>Yellow</strong> (wet chemical). All extinguishers have a red body with
-                  a coloured band or label panel indicating the type. Being able to identify the
-                  correct extinguisher instantly by its colour band is a fundamental fire marshal
-                  skill.
+                  <strong className="text-rose-400">Remember:</strong> Extinguisher label colours in
+                  the UK follow a standard system &mdash; <strong>Red</strong> (water),{' '}
+                  <strong>Cream</strong> (foam), <strong>Black</strong> (CO2), <strong>Blue</strong>{' '}
+                  (dry powder), <strong>Yellow</strong> (wet chemical). All extinguishers have a red
+                  body with a coloured band or label panel indicating the type. Being able to
+                  identify the correct extinguisher instantly by its colour band is a fundamental
+                  fire marshal skill.
                 </p>
               </div>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <p className="text-sm font-medium text-red-400">Key &ldquo;Never Do&rdquo; Rules</p>
+                  <p className="text-sm font-medium text-red-400">
+                    Key &ldquo;Never Do&rdquo; Rules
+                  </p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">NEVER</strong> use water on burning cooking
-                      oil (Class F) &mdash; violent steam explosion / boilover
+                      <strong className="text-white">NEVER</strong> use water on burning cooking oil
+                      (Class F) &mdash; violent steam explosion / boilover
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1477,8 +1504,8 @@ export default function FireSafetyModule1Section2() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
-                      <strong className="text-white">NEVER</strong> extinguish a gas fire
-                      (Class C) unless the gas supply has been isolated &mdash; explosion risk
+                      <strong className="text-white">NEVER</strong> extinguish a gas fire (Class C)
+                      unless the gas supply has been isolated &mdash; explosion risk
                     </span>
                   </li>
                 </ul>

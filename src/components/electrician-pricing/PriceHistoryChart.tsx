@@ -1,13 +1,12 @@
-
-import { 
+import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
-  ChartLegendContent 
-} from "@/components/ui/chart";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+  ChartLegendContent,
+} from '@/components/ui/chart';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 interface PriceDataPoint {
   date: string;
@@ -25,8 +24,8 @@ const PriceHistoryChart = ({ title, data, color, unit }: PriceHistoryChartProps)
   const config = {
     price: {
       label: title,
-      color: color
-    }
+      color: color,
+    },
   };
 
   return (
@@ -39,12 +38,7 @@ const PriceHistoryChart = ({ title, data, color, unit }: PriceHistoryChartProps)
           <ChartContainer config={config}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 20 }}>
-                <XAxis 
-                  dataKey="date"
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={10}
-                />
+                <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={10} />
                 <YAxis
                   tickFormatter={(value) => `${unit}${value}`}
                   tickLine={false}

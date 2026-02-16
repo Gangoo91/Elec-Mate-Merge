@@ -1,39 +1,65 @@
-import { useState, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, RefreshCw } from "lucide-react";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
+import { useState, useRef } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, Filter, RefreshCw } from 'lucide-react';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 const COMMON_PRODUCTS = [
-  "Twin & Earth Cable 2.5mm", "Twin & Earth Cable 1.5mm", "SWA Cable 4mm", "SWA Cable 2.5mm",
-  "MCB 32A", "MCB 20A", "MCB 16A", "MCB 6A", "RCD 30mA", "RCD 100mA",
-  "Consumer Unit 10 Way", "Consumer Unit 18 Way", "Isolator Switch", "Circuit Breaker",
-  "LED Downlight 6W", "LED Downlight 9W", "Emergency Light", "Batten Light 4ft",
-  "Cable Clips", "Cable Gland 20mm", "Conduit 20mm", "Trunking 50x50",
-  "Junction Box", "Weatherproof Box", "Socket Outlet", "Light Switch"
+  'Twin & Earth Cable 2.5mm',
+  'Twin & Earth Cable 1.5mm',
+  'SWA Cable 4mm',
+  'SWA Cable 2.5mm',
+  'MCB 32A',
+  'MCB 20A',
+  'MCB 16A',
+  'MCB 6A',
+  'RCD 30mA',
+  'RCD 100mA',
+  'Consumer Unit 10 Way',
+  'Consumer Unit 18 Way',
+  'Isolator Switch',
+  'Circuit Breaker',
+  'LED Downlight 6W',
+  'LED Downlight 9W',
+  'Emergency Light',
+  'Batten Light 4ft',
+  'Cable Clips',
+  'Cable Gland 20mm',
+  'Conduit 20mm',
+  'Trunking 50x50',
+  'Junction Box',
+  'Weatherproof Box',
+  'Socket Outlet',
+  'Light Switch',
 ];
 
 const CATEGORIES = [
-  { value: "all", label: "All Categories" },
-  { value: "cables", label: "Cables" },
-  { value: "components", label: "Components" },
-  { value: "lighting", label: "Lighting" },
-  { value: "protection", label: "Protection" },
-  { value: "accessories", label: "Accessories" }
+  { value: 'all', label: 'All Categories' },
+  { value: 'cables', label: 'Cables' },
+  { value: 'components', label: 'Components' },
+  { value: 'lighting', label: 'Lighting' },
+  { value: 'protection', label: 'Protection' },
+  { value: 'accessories', label: 'Accessories' },
 ];
 
 const SUPPLIERS = [
-  { value: "all", label: "All Suppliers" },
-  { value: "screwfix", label: "Screwfix" },
-  { value: "cef", label: "CEF" },
-  { value: "rs", label: "RS Components" },
-  { value: "toolstation", label: "Toolstation" }
+  { value: 'all', label: 'All Suppliers' },
+  { value: 'screwfix', label: 'Screwfix' },
+  { value: 'cef', label: 'CEF' },
+  { value: 'rs', label: 'RS Components' },
+  { value: 'toolstation', label: 'Toolstation' },
 ];
 
 interface SearchInterfaceProps {
@@ -60,7 +86,7 @@ export const SearchInterface = ({
   isLoading,
   onSearch,
   onClearSelection,
-  showingPreSelected
+  showingPreSelected,
 }: SearchInterfaceProps) => {
   const isMobile = useIsMobile();
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -69,9 +95,9 @@ export const SearchInterface = ({
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
-    
+
     if (value.length > 1) {
-      const filtered = COMMON_PRODUCTS.filter(product =>
+      const filtered = COMMON_PRODUCTS.filter((product) =>
         product.toLowerCase().includes(value.toLowerCase())
       ).slice(0, 5);
       setSuggestions(filtered);
@@ -102,10 +128,12 @@ export const SearchInterface = ({
           {/* Show clear button for pre-selected items */}
           {showingPreSelected && onClearSelection && (
             <div className="flex items-center justify-between p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-              <span className="text-sm text-blue-400">Showing selected materials from category</span>
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <span className="text-sm text-blue-400">
+                Showing selected materials from category
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={onClearSelection}
                 className="text-blue-400 border-blue-500/30 hover:bg-blue-500/20"
               >
@@ -119,7 +147,7 @@ export const SearchInterface = ({
           <div className="relative">
             {isMobile ? (
               <div className="relative">
-                <MobileInputWrapper 
+                <MobileInputWrapper
                   label="Search Materials"
                   placeholder="e.g., Twin & Earth Cable 2.5mm, MCB 32A..."
                   value={searchQuery}
@@ -138,7 +166,7 @@ export const SearchInterface = ({
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className={cn("h-12", !searchQuery && "pl-10")}
+                  className={cn('h-12', !searchQuery && 'pl-10')}
                 />
               </div>
             )}
@@ -163,7 +191,7 @@ export const SearchInterface = ({
           <div className={`${isMobile ? 'space-y-3' : 'flex gap-4'}`}>
             {isMobile ? (
               <>
-                <MobileSelectWrapper 
+                <MobileSelectWrapper
                   label="Category"
                   placeholder="Select category..."
                   value={selectedCategory}
@@ -171,7 +199,7 @@ export const SearchInterface = ({
                   options={CATEGORIES}
                 />
 
-                <MobileSelectWrapper 
+                <MobileSelectWrapper
                   label="Supplier"
                   placeholder="Select supplier..."
                   value={selectedSupplier}
@@ -187,7 +215,7 @@ export const SearchInterface = ({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {CATEGORIES.map(category => (
+                    {CATEGORIES.map((category) => (
                       <SelectItem key={category.value} value={category.value}>
                         {category.label}
                       </SelectItem>
@@ -200,7 +228,7 @@ export const SearchInterface = ({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {SUPPLIERS.map(supplier => (
+                    {SUPPLIERS.map((supplier) => (
                       <SelectItem key={supplier.value} value={supplier.value}>
                         {supplier.label}
                       </SelectItem>

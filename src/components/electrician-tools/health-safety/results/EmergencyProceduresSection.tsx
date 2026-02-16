@@ -15,13 +15,13 @@ interface EmergencyProceduresSectionProps {
   onAdd?: () => void;
 }
 
-export const EmergencyProceduresSection = ({ 
-  procedures, 
-  isEditing = false, 
-  onUpdate, 
-  onDelete, 
-  onMove, 
-  onAdd 
+export const EmergencyProceduresSection = ({
+  procedures,
+  isEditing = false,
+  onUpdate,
+  onDelete,
+  onMove,
+  onAdd,
 }: EmergencyProceduresSectionProps) => {
   const { isMobile } = useMobileEnhanced();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -63,15 +63,15 @@ export const EmergencyProceduresSection = ({
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-foreground flex items-center justify-center font-bold text-sm shadow-lg">
                 {idx + 1}
               </div>
-              
+
               {editingIndex === idx ? (
                 <div className="flex-1 w-full space-y-2">
                   <Textarea
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                     className={cn(
-                      "min-h-[60px] touch-manipulation",
-                      isMobile && "min-h-[100px] text-base"
+                      'min-h-[60px] touch-manipulation',
+                      isMobile && 'min-h-[100px] text-base'
                     )}
                   />
                   <div className="flex gap-2">
@@ -79,8 +79,8 @@ export const EmergencyProceduresSection = ({
                       size="sm"
                       onClick={() => handleSaveEdit(idx)}
                       className={cn(
-                        "touch-manipulation active:scale-[0.98]",
-                        isMobile && "min-h-[44px] px-4"
+                        'touch-manipulation active:scale-[0.98]',
+                        isMobile && 'min-h-[44px] px-4'
                       )}
                     >
                       Save
@@ -90,8 +90,8 @@ export const EmergencyProceduresSection = ({
                       variant="outline"
                       onClick={handleCancelEdit}
                       className={cn(
-                        "touch-manipulation active:scale-[0.98]",
-                        isMobile && "min-h-[44px] px-4"
+                        'touch-manipulation active:scale-[0.98]',
+                        isMobile && 'min-h-[44px] px-4'
                       )}
                     >
                       Cancel
@@ -100,29 +100,31 @@ export const EmergencyProceduresSection = ({
                 </div>
               ) : (
                 <>
-                  <p className="flex-1 w-full text-sm leading-relaxed pt-1 text-center sm:text-left">{procedure}</p>
+                  <p className="flex-1 w-full text-sm leading-relaxed pt-1 text-center sm:text-left">
+                    {procedure}
+                  </p>
                   <div className="absolute top-2 right-2 flex gap-1">
                     <Button
                       size="icon"
                       variant="ghost"
                       onClick={() => handleStartEdit(idx, procedure)}
                       className={cn(
-                        "touch-manipulation active:scale-[0.95]",
-                        isMobile ? "h-11 w-11" : "h-8 w-8"
+                        'touch-manipulation active:scale-[0.95]',
+                        isMobile ? 'h-11 w-11' : 'h-8 w-8'
                       )}
                     >
-                      <Edit2 className={isMobile ? "h-5 w-5" : "h-4 w-4"} />
+                      <Edit2 className={isMobile ? 'h-5 w-5' : 'h-4 w-4'} />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
                       onClick={() => onDelete?.(idx)}
                       className={cn(
-                        "text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation active:scale-[0.95]",
-                        isMobile ? "h-11 w-11" : "h-8 w-8"
+                        'text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation active:scale-[0.95]',
+                        isMobile ? 'h-11 w-11' : 'h-8 w-8'
                       )}
                     >
-                      <Trash2 className={isMobile ? "h-5 w-5" : "h-4 w-4"} />
+                      <Trash2 className={isMobile ? 'h-5 w-5' : 'h-4 w-4'} />
                     </Button>
                   </div>
                 </>
@@ -135,8 +137,8 @@ export const EmergencyProceduresSection = ({
           onClick={onAdd}
           variant="outline"
           className={cn(
-            "w-full mt-3 touch-manipulation active:scale-[0.98]",
-            isMobile && "min-h-[48px]"
+            'w-full mt-3 touch-manipulation active:scale-[0.98]',
+            isMobile && 'min-h-[48px]'
           )}
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -148,7 +150,9 @@ export const EmergencyProceduresSection = ({
           <div className="flex items-start gap-2">
             <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
             <p className="text-xs text-foreground">
-              <span className="font-semibold text-foreground">Important:</span> Ensure all team members are familiar with emergency procedures and know the location of first aid equipment and emergency exits.
+              <span className="font-semibold text-foreground">Important:</span> Ensure all team
+              members are familiar with emergency procedures and know the location of first aid
+              equipment and emergency exits.
             </p>
           </div>
         </div>

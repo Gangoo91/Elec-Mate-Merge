@@ -5,7 +5,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Graceful shutdown logging
@@ -23,12 +24,12 @@ Deno.serve(async (req) => {
 
   const body = await req.json();
   const jobId = body.jobId;
-  
+
   if (!jobId) {
-    return new Response(
-      JSON.stringify({ error: 'Job ID is required' }),
-      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: 'Job ID is required' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 
   logger.info('Job accepted for background processing', { jobId });
@@ -62,7 +63,7 @@ Deno.serve(async (req) => {
           status: 'processing',
           started_at: new Date().toISOString(),
           progress: 5,
-          current_step: 'Parsing safety requirements...'
+          current_step: 'Parsing safety requirements...',
         })
         .eq('id', jobId);
 
@@ -76,14 +77,14 @@ Deno.serve(async (req) => {
           .select('status')
           .eq('id', jobId)
           .single();
-        
+
         if (currentJob?.status === 'processing') {
           await supabase
             .from('health_safety_jobs')
             .update({
               status: 'failed',
               error_message: 'Request timed out after 4 minutes',
-              completed_at: new Date().toISOString()
+              completed_at: new Date().toISOString(),
             })
             .eq('id', jobId);
         }
@@ -95,7 +96,7 @@ Deno.serve(async (req) => {
           .from('health_safety_jobs')
           .update({
             progress: Math.min(95, progress),
-            current_step: step
+            current_step: step,
           })
           .eq('id', jobId);
         logger.info('Progress update', { progress, step });
@@ -103,11 +104,7 @@ Deno.serve(async (req) => {
 
       // Call the core agent directly
       logger.info('Calling Health & Safety core agent');
-      const result = await generateHealthSafety(
-        job.query,
-        job.project_info || {},
-        onProgress
-      );
+      const result = await generateHealthSafety(job.query, job.project_info || {}, onProgress);
 
       logger.info('Agent call completed successfully');
 
@@ -120,18 +117,17 @@ Deno.serve(async (req) => {
           current_step: 'Complete',
           output_data: result,
           raw_response: { data: result },
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
 
       logger.info('Job completed successfully', { jobId });
-
     } catch (error: any) {
       logger.error('Job processing failed', { error: error.message });
       await captureException(error, {
         functionName: 'process-health-safety-job',
         requestUrl: req.url,
-        requestMethod: req.method
+        requestMethod: req.method,
       });
 
       await supabase
@@ -139,7 +135,7 @@ Deno.serve(async (req) => {
         .update({
           status: 'failed',
           error_message: error.message,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
     } finally {
@@ -154,11 +150,8 @@ Deno.serve(async (req) => {
   EdgeRuntime.waitUntil(backgroundTask());
 
   // Return immediate response
-  return new Response(
-    JSON.stringify({ success: true, jobId, status: 'processing' }),
-    { 
-      status: 202, // Accepted
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    }
-  );
+  return new Response(JSON.stringify({ success: true, jobId, status: 'processing' }), {
+    status: 202, // Accepted
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
 });

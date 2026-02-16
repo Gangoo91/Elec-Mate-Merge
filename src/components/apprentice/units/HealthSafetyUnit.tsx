@@ -1,12 +1,11 @@
-
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CheckCircle, BookOpen, Shield, Users } from "lucide-react";
-import { healthAndSafetySections } from "@/data/healthAndSafety/index";
-import BackButton from "../BackButton";
-import { useAuth } from "@/contexts/AuthContext";
-import { userKey } from "@/lib/userStorage";
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { CheckCircle, BookOpen, Shield, Users } from 'lucide-react';
+import { healthAndSafetySections } from '@/data/healthAndSafety/index';
+import BackButton from '../BackButton';
+import { useAuth } from '@/contexts/AuthContext';
+import { userKey } from '@/lib/userStorage';
 
 interface HealthSafetyUnitProps {
   unitCode: string;
@@ -20,7 +19,9 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
 
   // Load completion status (user-scoped)
   useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(userKey(user?.id, `unit_${unitCode}_quiz_completed`));
+    const storedQuizStatus = localStorage.getItem(
+      userKey(user?.id, `unit_${unitCode}_quiz_completed`)
+    );
     if (storedQuizStatus === 'true') {
       setQuizCompleted(true);
     }
@@ -33,24 +34,27 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
 
   // Create a URL slug from a section number and title
   const createSectionSlug = (sectionNumber: string) => {
-    return sectionNumber.toLowerCase().replace(/\//g, "-");
+    return sectionNumber.toLowerCase().replace(/\//g, '-');
   };
-  
+
   // Section 1 specific content
   const renderSection1Content = () => {
     return (
       <div className="space-y-6 mt-6">
-        <h2 className="text-xl md:text-2xl font-bold text-elec-yellow">Health and Safety in Electrical Work</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-elec-yellow">
+          Health and Safety in Electrical Work
+        </h2>
         <p className="text-elec-light/80">
-          This section covers the key legislation and regulations that govern health and safety in electrical work, 
-          along with the roles and responsibilities of different stakeholders in maintaining a safe work environment.
+          This section covers the key legislation and regulations that govern health and safety in
+          electrical work, along with the roles and responsibilities of different stakeholders in
+          maintaining a safe work environment.
         </p>
-        
+
         {/* Subsections for Section 1 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           {/* Legislation and Regulations subsection */}
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <Link 
+            <Link
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.1`}
               onClick={handleSectionClick}
               className="block h-full"
@@ -65,8 +69,8 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-elec-light/80">
-                  Study of key health and safety laws relevant to electrical work, including the Health 
-                  and Safety at Work Act, Electricity at Work Regulations, and COSHH.
+                  Study of key health and safety laws relevant to electrical work, including the
+                  Health and Safety at Work Act, Electricity at Work Regulations, and COSHH.
                 </CardDescription>
                 <div className="flex justify-end mt-4">
                   <BookOpen className="h-5 w-5 text-elec-yellow opacity-70" />
@@ -74,10 +78,10 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               </CardContent>
             </Link>
           </Card>
-          
+
           {/* Roles and Responsibilities subsection */}
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <Link 
+            <Link
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.2`}
               onClick={handleSectionClick}
               className="block h-full"
@@ -92,7 +96,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-elec-light/80">
-                  Identification of duties for employers, employees, and other stakeholders in 
+                  Identification of duties for employers, employees, and other stakeholders in
                   maintaining a safe working environment.
                 </CardDescription>
                 <div className="flex justify-end mt-4">
@@ -101,10 +105,10 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               </CardContent>
             </Link>
           </Card>
-          
+
           {/* Risk Assessment subsection */}
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-white/5 to-white/5/80 hover:from-white/5/90 hover:to-white/5/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <Link 
+            <Link
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.3`}
               onClick={handleSectionClick}
               className="block h-full"
@@ -119,7 +123,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-elec-light/80">
-                  Learn how to conduct thorough risk assessments, create proper method statements, 
+                  Learn how to conduct thorough risk assessments, create proper method statements,
                   and implement effective incident reporting procedures in electrical work.
                 </CardDescription>
                 <div className="flex justify-end mt-4">
@@ -139,10 +143,10 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
       <div className="mb-6">
         <BackButton courseSlug={courseSlug} unitSlug={unitCode.toLowerCase().replace('/', '-')} />
       </div>
-      
+
       {/* Display Section 1 specific content if we're on section 1 */}
-      {sectionId === "1" && renderSection1Content()}
-      
+      {sectionId === '1' && renderSection1Content()}
+
       {/* Original Health and Safety Content - keep this for other sections */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {healthAndSafetySections.map((section) => {
@@ -158,16 +162,20 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
                 <CardContent className="flex flex-col p-6 h-full">
                   <div className="flex items-center gap-3">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                      <span className="text-elec-dark font-bold text-lg">{section.sectionNumber}</span>
+                      <span className="text-elec-dark font-bold text-lg">
+                        {section.sectionNumber}
+                      </span>
                     </div>
-                    <h3 className="text-base sm:text-lg font-medium leading-tight">{section.title}</h3>
+                    <h3 className="text-base sm:text-lg font-medium leading-tight">
+                      {section.title}
+                    </h3>
                   </div>
                 </CardContent>
               </Card>
             </Link>
           );
         })}
-        
+
         {/* Quiz Section */}
         <Link
           to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/quiz`}
@@ -183,9 +191,11 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
                   <span className="text-elec-dark font-bold text-lg">Q</span>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Health & Safety Assessment Quiz</h3>
+                <h3 className="text-base sm:text-lg font-medium leading-tight">
+                  Health & Safety Assessment Quiz
+                </h3>
               </div>
-              
+
               {quizCompleted && (
                 <div className="absolute top-3 right-3">
                   <CheckCircle className="h-5 w-5 text-green-500" />

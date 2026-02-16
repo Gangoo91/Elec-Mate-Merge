@@ -1,93 +1,107 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Puzzle, Users, DollarSign, Handshake, Cog, Gift, Building2, Target, PoundSterling } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import {
+  Puzzle,
+  Users,
+  DollarSign,
+  Handshake,
+  Cog,
+  Gift,
+  Building2,
+  Target,
+  PoundSterling,
+} from 'lucide-react';
 
 const BusinessModelCanvas = () => {
   const [canvasData, setCanvasData] = useState({
-    keyPartners: "",
-    keyActivities: "",
-    keyResources: "",
-    valuePropositions: "",
-    customerRelationships: "",
-    channels: "",
-    customerSegments: "",
-    costStructure: "",
-    revenueStreams: ""
+    keyPartners: '',
+    keyActivities: '',
+    keyResources: '',
+    valuePropositions: '',
+    customerRelationships: '',
+    channels: '',
+    customerSegments: '',
+    costStructure: '',
+    revenueStreams: '',
   });
 
   const updateSection = (section: string, value: string) => {
-    setCanvasData(prev => ({
+    setCanvasData((prev) => ({
       ...prev,
-      [section]: value
+      [section]: value,
     }));
   };
 
   const canvasSections = [
     {
-      key: "keyPartners",
-      title: "Key Partners",
+      key: 'keyPartners',
+      title: 'Key Partners',
       icon: <Handshake className="h-4 w-4" />,
-      prompt: "Who are your key suppliers, trade partners, and strategic alliances?",
-      examples: ["Electrical wholesalers", "Trade counter suppliers", "Other contractors for referrals"]
+      prompt: 'Who are your key suppliers, trade partners, and strategic alliances?',
+      examples: [
+        'Electrical wholesalers',
+        'Trade counter suppliers',
+        'Other contractors for referrals',
+      ],
     },
     {
-      key: "keyActivities",
-      title: "Key Activities",
+      key: 'keyActivities',
+      title: 'Key Activities',
       icon: <Cog className="h-4 w-4" />,
-      prompt: "What key activities does your value proposition require?",
-      examples: ["Electrical installations", "Testing & certification", "Emergency call-outs"]
+      prompt: 'What key activities does your value proposition require?',
+      examples: ['Electrical installations', 'Testing & certification', 'Emergency call-outs'],
     },
     {
-      key: "keyResources",
-      title: "Key Resources",
+      key: 'keyResources',
+      title: 'Key Resources',
       icon: <Building2 className="h-4 w-4" />,
-      prompt: "What key resources does your value proposition require?",
-      examples: ["Qualified electricians", "Testing equipment", "Van and tools"]
+      prompt: 'What key resources does your value proposition require?',
+      examples: ['Qualified electricians', 'Testing equipment', 'Van and tools'],
     },
     {
-      key: "valuePropositions",
-      title: "Value Propositions",
+      key: 'valuePropositions',
+      title: 'Value Propositions',
       icon: <Gift className="h-4 w-4" />,
-      prompt: "What value do you deliver to customers? What problems do you solve?",
-      examples: ["Reliable emergency service", "High-quality workmanship", "Competitive pricing"]
+      prompt: 'What value do you deliver to customers? What problems do you solve?',
+      examples: ['Reliable emergency service', 'High-quality workmanship', 'Competitive pricing'],
     },
     {
-      key: "customerRelationships",
-      title: "Customer Relationships",
+      key: 'customerRelationships',
+      title: 'Customer Relationships',
       icon: <Users className="h-4 w-4" />,
-      prompt: "What type of relationship does each customer segment expect?",
-      examples: ["Personal assistance", "Ongoing maintenance contracts", "Quick response times"]
+      prompt: 'What type of relationship does each customer segment expect?',
+      examples: ['Personal assistance', 'Ongoing maintenance contracts', 'Quick response times'],
     },
     {
-      key: "channels",
-      title: "Channels",
+      key: 'channels',
+      title: 'Channels',
       icon: <Target className="h-4 w-4" />,
-      prompt: "Through which channels do you reach your customers?",
-      examples: ["Word of mouth", "Google ads", "Local directory listings"]
+      prompt: 'Through which channels do you reach your customers?',
+      examples: ['Word of mouth', 'Google ads', 'Local directory listings'],
     },
     {
-      key: "customerSegments",
-      title: "Customer Segments",
+      key: 'customerSegments',
+      title: 'Customer Segments',
       icon: <Users className="h-4 w-4" />,
-      prompt: "For whom are you creating value? Who are your most important customers?",
-      examples: ["Domestic homeowners", "Small businesses", "Property developers"]
+      prompt: 'For whom are you creating value? Who are your most important customers?',
+      examples: ['Domestic homeowners', 'Small businesses', 'Property developers'],
     },
     {
-      key: "costStructure",
-      title: "Cost Structure",
+      key: 'costStructure',
+      title: 'Cost Structure',
       icon: <DollarSign className="h-4 w-4" />,
-      prompt: "What are the most important costs in your business model?",
-      examples: ["Vehicle costs", "Tool investments", "Insurance and certifications"]
+      prompt: 'What are the most important costs in your business model?',
+      examples: ['Vehicle costs', 'Tool investments', 'Insurance and certifications'],
     },
     {
-      key: "revenueStreams",
-      title: "Revenue Streams",
+      key: 'revenueStreams',
+      title: 'Revenue Streams',
       icon: <PoundSterling className="h-4 w-4" />,
-      prompt: "For what value are customers willing to pay?",
-      examples: ["Installation work", "Testing certificates", "Emergency call-out fees"]
-    }
+      prompt: 'For what value are customers willing to pay?',
+      examples: ['Installation work', 'Testing certificates', 'Emergency call-out fees'],
+    },
   ];
 
   return (
@@ -122,9 +136,9 @@ const BusinessModelCanvas = () => {
                 />
                 <div className="flex flex-wrap gap-1 mt-2">
                   {section.examples.map((example, idx) => (
-                    <Badge 
-                      key={idx} 
-                      variant="outline" 
+                    <Badge
+                      key={idx}
+                      variant="outline"
                       className="text-xs border-purple-400/40 text-purple-300 bg-purple-500/20"
                     >
                       {example}

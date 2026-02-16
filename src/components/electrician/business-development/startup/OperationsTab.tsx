@@ -1,129 +1,155 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Settings, Truck, Phone, Calendar, MapPin, Clock, Users, CheckCircle, Download, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import {
+  Settings,
+  Truck,
+  Phone,
+  Calendar,
+  MapPin,
+  Clock,
+  Users,
+  CheckCircle,
+  Download,
+  Star,
+} from 'lucide-react';
 
 const OperationsTab = () => {
   const operationalAreas = [
     {
-      title: "Service Area & Territory",
-      priority: "High",
+      title: 'Service Area & Territory',
+      priority: 'High',
       items: [
-        "Define your service radius (typically 10-25 miles)",
-        "Research local competition and pricing",
-        "Identify high-demand postcodes",
-        "Plan travel time and fuel costs"
-      ]
+        'Define your service radius (typically 10-25 miles)',
+        'Research local competition and pricing',
+        'Identify high-demand postcodes',
+        'Plan travel time and fuel costs',
+      ],
     },
     {
-      title: "Scheduling & Time Management",
-      priority: "High",
+      title: 'Scheduling & Time Management',
+      priority: 'High',
       items: [
-        "Implement booking system (online/phone)",
-        "Allow buffer time between jobs",
-        "Plan for emergency call-outs",
-        "Set realistic appointment windows"
-      ]
+        'Implement booking system (online/phone)',
+        'Allow buffer time between jobs',
+        'Plan for emergency call-outs',
+        'Set realistic appointment windows',
+      ],
     },
     {
-      title: "Quality Control",
-      priority: "Medium",
+      title: 'Quality Control',
+      priority: 'Medium',
       items: [
-        "Develop installation checklists",
-        "Create testing procedures",
-        "Document completion processes",
-        "Follow-up customer satisfaction"
-      ]
-    }
+        'Develop installation checklists',
+        'Create testing procedures',
+        'Document completion processes',
+        'Follow-up customer satisfaction',
+      ],
+    },
   ];
 
   const businessSystems = [
     {
-      category: "Customer Management",
+      category: 'Customer Management',
       tools: [
-        { name: "ServiceM8", cost: "£25/month", features: ["Job management", "Invoicing", "GPS tracking"] },
-        { name: "Powered Now", cost: "£35/month", features: ["CRM", "Scheduling", "Quotes"] },
-        { name: "FieldPulse", cost: "£29/month", features: ["Dispatch", "Payments", "Reports"] }
-      ]
+        {
+          name: 'ServiceM8',
+          cost: '£25/month',
+          features: ['Job management', 'Invoicing', 'GPS tracking'],
+        },
+        { name: 'Powered Now', cost: '£35/month', features: ['CRM', 'Scheduling', 'Quotes'] },
+        { name: 'FieldPulse', cost: '£29/month', features: ['Dispatch', 'Payments', 'Reports'] },
+      ],
     },
     {
-      category: "Communication",
+      category: 'Communication',
       tools: [
-        { name: "Professional Mobile", cost: "£30-60/month", features: ["24/7 availability", "Voicemail", "SMS"] },
-        { name: "Google Workspace", cost: "£5/month", features: ["Email", "Calendar", "Storage"] },
-        { name: "WhatsApp Business", cost: "Free", features: ["Customer chat", "Catalogue", "Labels"] }
-      ]
-    }
+        {
+          name: 'Professional Mobile',
+          cost: '£30-60/month',
+          features: ['24/7 availability', 'Voicemail', 'SMS'],
+        },
+        { name: 'Google Workspace', cost: '£5/month', features: ['Email', 'Calendar', 'Storage'] },
+        {
+          name: 'WhatsApp Business',
+          cost: 'Free',
+          features: ['Customer chat', 'Catalogue', 'Labels'],
+        },
+      ],
+    },
   ];
 
   const qualityStandards = [
     {
-      stage: "Pre-Job",
+      stage: 'Pre-Job',
       checklist: [
-        "Site survey completed",
-        "Risk assessment documented",
-        "Materials list confirmed",
-        "Customer briefed on process"
-      ]
+        'Site survey completed',
+        'Risk assessment documented',
+        'Materials list confirmed',
+        'Customer briefed on process',
+      ],
     },
     {
-      stage: "Installation",
+      stage: 'Installation',
       checklist: [
-        "Safe isolation procedures followed",
-        "Installation to BS 7671 standards",
-        "Regular progress updates",
-        "Work area kept clean and tidy"
-      ]
+        'Safe isolation procedures followed',
+        'Installation to BS 7671 standards',
+        'Regular progress updates',
+        'Work area kept clean and tidy',
+      ],
     },
     {
-      stage: "Completion",
+      stage: 'Completion',
       checklist: [
-        "All testing completed and documented",
-        "Certificates issued",
-        "Customer walkthrough",
-        "Follow-up scheduled"
-      ]
-    }
+        'All testing completed and documented',
+        'Certificates issued',
+        'Customer walkthrough',
+        'Follow-up scheduled',
+      ],
+    },
   ];
 
   const customerService = [
     {
-      area: "Communication",
+      area: 'Communication',
       best_practices: [
-        "Answer calls within 3 rings",
-        "Return messages within 2 hours",
-        "Send confirmation texts before arrival",
-        "Provide realistic time estimates"
-      ]
+        'Answer calls within 3 rings',
+        'Return messages within 2 hours',
+        'Send confirmation texts before arrival',
+        'Provide realistic time estimates',
+      ],
     },
     {
-      area: "Professionalism",
+      area: 'Professionalism',
       best_practices: [
-        "Arrive on time or call ahead",
-        "Wear clean, branded workwear",
-        "Use protective shoe covers",
-        "Explain work clearly to customers"
-      ]
+        'Arrive on time or call ahead',
+        'Wear clean, branded workwear',
+        'Use protective shoe covers',
+        'Explain work clearly to customers',
+      ],
     },
     {
-      area: "Problem Resolution",
+      area: 'Problem Resolution',
       best_practices: [
-        "Listen to customer concerns",
-        "Offer multiple solutions when possible",
-        "Be transparent about costs",
-        "Follow up to ensure satisfaction"
-      ]
-    }
+        'Listen to customer concerns',
+        'Offer multiple solutions when possible',
+        'Be transparent about costs',
+        'Follow up to ensure satisfaction',
+      ],
+    },
   ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'High': return 'bg-red-500/20 text-red-400';
-      case 'Medium': return 'bg-amber-500/20 text-amber-400';
-      case 'Low': return 'bg-green-500/20 text-green-400';
-      default: return 'bg-elec-yellow/20 text-elec-yellow';
+      case 'High':
+        return 'bg-red-500/20 text-red-400';
+      case 'Medium':
+        return 'bg-amber-500/20 text-amber-400';
+      case 'Low':
+        return 'bg-green-500/20 text-green-400';
+      default:
+        return 'bg-elec-yellow/20 text-elec-yellow';
     }
   };
 
@@ -171,9 +197,7 @@ const OperationsTab = () => {
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-semibold text-foreground">{area.title}</h4>
-                  <Badge className={getPriorityColor(area.priority)}>
-                    {area.priority}
-                  </Badge>
+                  <Badge className={getPriorityColor(area.priority)}>{area.priority}</Badge>
                 </div>
                 <ul className="space-y-2">
                   {area.items.map((item, itemIndex) => (
@@ -307,7 +331,7 @@ const OperationsTab = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-green-300 mb-3">Cost Control</h4>
               <ul className="space-y-2 text-sm">
@@ -330,7 +354,7 @@ const OperationsTab = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="mt-6 pt-4 border-t border-green-500/20">
             <Button className="bg-green-500 text-green-900 hover:bg-green-400">
               <Download className="h-4 w-4 mr-2" />

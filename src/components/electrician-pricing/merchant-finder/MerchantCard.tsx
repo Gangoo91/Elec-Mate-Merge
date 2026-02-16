@@ -1,8 +1,7 @@
-
-import { Button } from "@/components/ui/button";
-import { MapPin, Phone, ExternalLink } from "lucide-react";
-import { StarRating } from "./StarRating";
-import { ScrapMerchant } from "@/hooks/useScrapMerchantFinder";
+import { Button } from '@/components/ui/button';
+import { MapPin, Phone, ExternalLink } from 'lucide-react';
+import { StarRating } from './StarRating';
+import { ScrapMerchant } from '@/hooks/useScrapMerchantFinder';
 
 interface MerchantCardProps {
   merchant: ScrapMerchant;
@@ -11,44 +10,45 @@ interface MerchantCardProps {
 
 export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) => {
   return (
-    <div 
-      key={merchant.id} 
-      className="border border-elec-yellow/20 rounded-lg p-4 bg-black/10"
-    >
+    <div key={merchant.id} className="border border-elec-yellow/20 rounded-lg p-4 bg-black/10">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
         <div className="flex-1 min-w-0">
           <h3 className="font-medium text-lg">{merchant.name}</h3>
           <p className="text-sm text-muted-foreground flex items-start gap-1 mt-1">
-            <MapPin className="h-3 w-3 flex-shrink-0 mt-0.5" /> 
-            <span className="break-words">{merchant.address} ({merchant.distance})</span>
+            <MapPin className="h-3 w-3 flex-shrink-0 mt-0.5" />
+            <span className="break-words">
+              {merchant.address} ({merchant.distance})
+            </span>
           </p>
         </div>
-        <span className={`min-w-fit px-2 py-0.5 text-xs rounded-full self-start ${
-          merchant.openNow ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
-        }`}>
-          {merchant.openNow ? "Open Now" : "Closed"}
+        <span
+          className={`min-w-fit px-2 py-0.5 text-xs rounded-full self-start ${
+            merchant.openNow ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+          }`}
+        >
+          {merchant.openNow ? 'Open Now' : 'Closed'}
         </span>
       </div>
-      
+
       <div className="mt-2">
         <StarRating rating={merchant.rating} />
       </div>
-      
+
       <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
         <div>
           <p className="text-xs text-muted-foreground">Accepts</p>
-          <p className="text-sm">{merchant.acceptedMaterials.join(", ")}</p>
+          <p className="text-sm">{merchant.acceptedMaterials.join(', ')}</p>
         </div>
         <div>
           <p className="text-xs text-muted-foreground">Payment</p>
-          <p className="text-sm">{merchant.paymentMethods.join(", ")}</p>
+          <p className="text-sm">{merchant.paymentMethods.join(', ')}</p>
         </div>
       </div>
-      
+
       <div className="mt-3 flex flex-col gap-2">
-        <Button 
-          size="sm" 
-          variant="outline" 
+        <Button
+          size="sm"
+          variant="outline"
           className="flex items-center justify-center gap-1 w-full"
           disabled={merchant.phone === 'Not available'}
           onClick={() => window.open(`tel:${merchant.phone}`, '_blank')}
@@ -56,9 +56,9 @@ export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) =>
           <Phone className="h-3 w-3" />
           <span>{merchant.phone === 'Not available' ? 'No Phone' : merchant.phone}</span>
         </Button>
-        <Button 
-          size="sm" 
-          variant="outline" 
+        <Button
+          size="sm"
+          variant="outline"
           className="flex items-center justify-center gap-1 w-full"
           onClick={() => openDirections(merchant)}
         >

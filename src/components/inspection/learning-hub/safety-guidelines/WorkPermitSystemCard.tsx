@@ -9,29 +9,29 @@ const WorkPermitSystemCard = () => {
       description: 'For work on or near live electrical equipment',
       duration: 'Single shift or specified period',
       requirements: ['Isolation confirmation', 'Risk assessment', 'Competent person authorization'],
-      color: 'text-red-400'
+      color: 'text-red-400',
     },
     {
       type: 'Hot Work Permit',
       description: 'For work involving heat, sparks, or naked flames',
       duration: 'Maximum 8 hours',
       requirements: ['Fire watch', 'Area clearance', 'Firefighting equipment'],
-      color: 'text-orange-400'
+      color: 'text-orange-400',
     },
     {
       type: 'Confined Space Permit',
       description: 'For work in enclosed or restricted spaces',
       duration: 'Specific entry period',
       requirements: ['Atmosphere testing', 'Emergency procedures', 'Communication plan'],
-      color: 'text-blue-400'
+      color: 'text-blue-400',
     },
     {
       type: 'Height Work Permit',
       description: 'For work at height above 2 metres',
       duration: 'Task duration',
       requirements: ['Fall protection', 'Weather conditions', 'Rescue plan'],
-      color: 'text-green-400'
-    }
+      color: 'text-green-400',
+    },
   ];
 
   const permitProcess = [
@@ -39,32 +39,32 @@ const WorkPermitSystemCard = () => {
       stage: 'Planning',
       description: 'Identify work scope and hazards',
       actions: ['Risk assessment', 'Method statements', 'Resource planning'],
-      responsible: 'Work Planner'
+      responsible: 'Work Planner',
     },
     {
       stage: 'Authorization',
       description: 'Approve permit and control measures',
       actions: ['Verify isolation', 'Check competency', 'Sign authorization'],
-      responsible: 'Authorised Person'
+      responsible: 'Authorised Person',
     },
     {
       stage: 'Issue',
       description: 'Brief workers and issue permit',
       actions: ['Safety briefing', 'Hand over permit', 'Start work'],
-      responsible: 'Competent Person'
+      responsible: 'Competent Person',
     },
     {
       stage: 'Monitoring',
       description: 'Supervise work and conditions',
       actions: ['Regular checks', 'Condition monitoring', 'Communication'],
-      responsible: 'Supervisor'
+      responsible: 'Supervisor',
     },
     {
       stage: 'Completion',
       description: 'Close permit and restore systems',
       actions: ['Work completion check', 'System restoration', 'Permit closure'],
-      responsible: 'Authorised Person'
-    }
+      responsible: 'Authorised Person',
+    },
   ];
 
   return (
@@ -90,18 +90,23 @@ const WorkPermitSystemCard = () => {
                   <div className="flex-grow">
                     <h5 className={`font-medium ${permit.color} mb-1`}>{permit.type}</h5>
                     <p className="text-sm text-gray-300 mb-3">{permit.description}</p>
-                    
+
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-xs text-gray-400">
                         <Clock className="h-3 w-3" />
                         <span>Duration: {permit.duration}</span>
                       </div>
-                      
+
                       <div>
-                        <p className="text-xs font-medium text-foreground mb-1">Key Requirements:</p>
+                        <p className="text-xs font-medium text-foreground mb-1">
+                          Key Requirements:
+                        </p>
                         <div className="space-y-1">
                           {permit.requirements.map((req, reqIndex) => (
-                            <div key={reqIndex} className="flex items-center gap-2 text-xs text-gray-300">
+                            <div
+                              key={reqIndex}
+                              className="flex items-center gap-2 text-xs text-gray-300"
+                            >
                               <CheckCircle2 className="h-3 w-3 text-green-400" />
                               {req}
                             </div>
@@ -135,7 +140,10 @@ const WorkPermitSystemCard = () => {
                   <p className="text-sm text-gray-300 mb-2">{stage.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {stage.actions.map((action, actionIndex) => (
-                      <span key={actionIndex} className="text-xs bg-accent text-gray-300 px-2 py-1 rounded">
+                      <span
+                        key={actionIndex}
+                        className="text-xs bg-accent text-gray-300 px-2 py-1 rounded"
+                      >
                         {action}
                       </span>
                     ))}

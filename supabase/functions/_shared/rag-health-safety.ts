@@ -30,19 +30,19 @@ export type HSKnowledgeResult = HealthSafetyResult;
  */
 function expandSafetyQuery(query: string): string {
   const expansions: Record<string, string[]> = {
-    'bathroom': ['wet areas', 'Section 701', 'zones', 'IP rating', 'moisture'],
-    'outdoor': ['external', 'weatherproof', 'IP65', 'buried', 'underground'],
-    'height': ['working at height', 'WAHR', 'scaffolding', 'fall protection', 'ladders'],
-    'excavation': ['digging', 'trenching', 'underground services', 'shoring'],
-    'isolation': ['LOTO', 'lock off tag out', 'safe isolation', 'permit to work'],
-    'ppe': ['personal protective equipment', 'safety gear', 'protection'],
-    'risk': ['risk assessment', 'RAMS', 'hazard', 'mitigation'],
-    'fire': ['fire safety', 'fire extinguisher', 'emergency procedures'],
+    bathroom: ['wet areas', 'Section 701', 'zones', 'IP rating', 'moisture'],
+    outdoor: ['external', 'weatherproof', 'IP65', 'buried', 'underground'],
+    height: ['working at height', 'WAHR', 'scaffolding', 'fall protection', 'ladders'],
+    excavation: ['digging', 'trenching', 'underground services', 'shoring'],
+    isolation: ['LOTO', 'lock off tag out', 'safe isolation', 'permit to work'],
+    ppe: ['personal protective equipment', 'safety gear', 'protection'],
+    risk: ['risk assessment', 'RAMS', 'hazard', 'mitigation'],
+    fire: ['fire safety', 'fire extinguisher', 'emergency procedures'],
     'first aid': ['medical emergency', 'injury', 'accident response'],
-    'asbestos': ['ACM', 'asbestos containing materials', 'R&D survey'],
-    'shock': ['electrocution', 'live', 'voltage', 'current'],
-    'testing': ['proving', 'voltage indicator', 'GS38'],
-    'emergency': ['shock treatment', 'INDG231'],
+    asbestos: ['ACM', 'asbestos containing materials', 'R&D survey'],
+    shock: ['electrocution', 'live', 'voltage', 'current'],
+    testing: ['proving', 'voltage indicator', 'GS38'],
+    emergency: ['shock treatment', 'INDG231'],
   };
 
   let expanded = query.toLowerCase();
@@ -63,7 +63,7 @@ function generateCacheKey(query: string, scale?: string): string {
   // UTF-8 safe base64 encoding to handle emojis/special characters
   const encoder = new TextEncoder();
   const data = encoder.encode(key);
-  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join("");
+  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join('');
   return btoa(binString).substring(0, 32);
 }
 
@@ -126,25 +126,23 @@ async function storeSemanticCache(
   try {
     const ttlMs = calculateCacheTTL(avgConfidence);
     const expiresAt = new Date(Date.now() + ttlMs);
-    
-    await supabase
-      .from('rag_cache')
-      .upsert({
-        query_hash: queryHash,
-        query_text: query,
-        agent_name: 'health-safety',
-        results,
-        hit_count: 0,
-        cache_confidence: avgConfidence,
-        created_at: new Date().toISOString(),
-        expires_at: expiresAt.toISOString()
-      });
 
-    logger.debug('Stored in cache', { 
-      queryHash, 
+    await supabase.from('rag_cache').upsert({
+      query_hash: queryHash,
+      query_text: query,
+      agent_name: 'health-safety',
+      results,
+      hit_count: 0,
+      cache_confidence: avgConfidence,
+      created_at: new Date().toISOString(),
+      expires_at: expiresAt.toISOString(),
+    });
+
+    logger.debug('Stored in cache', {
+      queryHash,
       resultCount: results.length,
       confidence: avgConfidence.toFixed(2),
-      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1)
+      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1),
     });
   } catch (err) {
     logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
@@ -162,7 +160,7 @@ export async function searchHealthSafetyKnowledge(
   scale?: string
 ): Promise<HealthSafetyResult[]> {
   const searchStart = Date.now();
-  
+
   // Check cache
   const cacheKey = generateCacheKey(query, scale);
   const cached = await checkSemanticCache(supabase, cacheKey, logger);
@@ -175,7 +173,7 @@ export async function searchHealthSafetyKnowledge(
 
   // Expand query
   const expandedQuery = expandSafetyQuery(query);
-  
+
   // Generate embedding
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
@@ -185,7 +183,7 @@ export async function searchHealthSafetyKnowledge(
       query_text: expandedQuery,
       query_embedding: embedding,
       scale_filter: scale || null,
-      match_count: 12
+      match_count: 12,
     });
 
     if (error) throw error;
@@ -196,71 +194,79 @@ export async function searchHealthSafetyKnowledge(
     if (results.length > 0) {
       logger.debug('Reranking H&S knowledge with cross-encoder');
       const rerankStart = Date.now();
-      
+
       // Convert to RegulationResult format for reranking
-      const asRegulations: RegulationResult[] = results.map(r => ({
+      const asRegulations: RegulationResult[] = results.map((r) => ({
         id: r.id,
         regulation_number: r.topic,
         section: r.source,
         content: r.content,
-        metadata: r.metadata
+        metadata: r.metadata,
       }));
-      
-      const reranked = await rerankWithCrossEncoder(
-        query,
-        asRegulations,
-        openAiKey,
-        logger
-      );
-      
+
+      const reranked = await rerankWithCrossEncoder(query, asRegulations, openAiKey, logger);
+
       // Convert back to HealthSafetyResult format
       results = reranked.map((r, idx) => ({
         ...results[idx],
         finalScore: r.finalScore,
-        crossEncoderScore: r.crossEncoderScore
+        crossEncoderScore: r.crossEncoderScore,
       }));
-      
+
       logger.info('Cross-encoder reranking complete', {
-        duration: Date.now() - rerankStart
+        duration: Date.now() - rerankStart,
       });
     }
 
     // Calculate confidence scores
-    const resultsWithConfidence = results.map(r => {
+    const resultsWithConfidence = results.map((r) => {
       const asReg: RegulationResult = {
         id: r.id,
         regulation_number: r.topic,
         section: r.source,
-        content: r.content
+        content: r.content,
       };
       return {
         ...r,
-        confidence: calculateConfidence(asReg, query, { scale })
+        confidence: calculateConfidence(asReg, query, { scale }),
       };
     });
 
     // Calculate average confidence
-    const avgConfidence = resultsWithConfidence.length > 0
-      ? resultsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) / resultsWithConfidence.length
-      : 0.7;
+    const avgConfidence =
+      resultsWithConfidence.length > 0
+        ? resultsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) /
+          resultsWithConfidence.length
+        : 0.7;
 
     logger.info('Hybrid H&S search complete', {
       duration: Date.now() - searchStart,
       resultsCount: results.length,
       avgConfidence: avgConfidence.toFixed(2),
-      avgScore: results.length > 0 
-        ? (results.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / results.length).toFixed(3)
-        : 0
+      avgScore:
+        results.length > 0
+          ? (
+              results.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) /
+              results.length
+            ).toFixed(3)
+          : 0,
     });
 
     // Store in cache with dynamic TTL
-    await storeSemanticCache(supabase, cacheKey, query, resultsWithConfidence, avgConfidence, logger);
+    await storeSemanticCache(
+      supabase,
+      cacheKey,
+      query,
+      resultsWithConfidence,
+      avgConfidence,
+      logger
+    );
 
     return resultsWithConfidence;
   } catch (error) {
     logger.error('Hybrid H&S search failed', {
       error: error instanceof Error ? error.message : String(error),
-      duration: Date.now() - searchStart
+      duration: Date.now() - searchStart,
     });
     throw error;
   }
@@ -278,21 +284,21 @@ export async function retrieveHealthSafetyKnowledge(
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
-  
+
   const logger = {
     debug: (msg: string, data?: any) => console.log(`[DEBUG] ${msg}`, data),
     info: (msg: string, data?: any) => console.log(`[INFO] ${msg}`, data),
     warn: (msg: string, data?: any) => console.warn(`[WARN] ${msg}`, data),
     error: (msg: string, data?: any) => console.error(`[ERROR] ${msg}`, data),
   };
-  
+
   if (!openAiKey) {
     openAiKey = Deno.env.get('OPENAI_API_KEY');
   }
   if (!openAiKey) {
     throw new Error('OpenAI API key required');
   }
-  
+
   return searchHealthSafetyKnowledge(query, openAiKey, supabase, logger, workType);
 }
 
@@ -304,11 +310,13 @@ export function formatHealthSafetyContext(results: HealthSafetyResult[]): string
     return 'No database H&S guidance found. Use standard safety principles.';
   }
 
-  return `HEALTH & SAFETY GUIDANCE (${results.length} items):\n` +
+  return (
+    `HEALTH & SAFETY GUIDANCE (${results.length} items):\n` +
     results
       .slice(0, 10)
-      .map(h => `- ${h.topic}: ${h.content.substring(0, 150)}...`)
-      .join('\n');
+      .map((h) => `- ${h.topic}: ${h.content.substring(0, 150)}...`)
+      .join('\n')
+  );
 }
 
 /**
@@ -316,9 +324,9 @@ export function formatHealthSafetyContext(results: HealthSafetyResult[]): string
  */
 export function extractSafetyKeywords(query: string): string[] {
   const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'for', 'with', 'what', 'how', 'when'];
-  
+
   return query
     .toLowerCase()
     .split(/\s+/)
-    .filter(word => word.length > 3 && !stopWords.includes(word));
+    .filter((word) => word.length > 3 && !stopWords.includes(word));
 }

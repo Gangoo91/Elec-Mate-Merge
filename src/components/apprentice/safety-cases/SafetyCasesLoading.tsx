@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { HardHat, Loader2 } from 'lucide-react';
@@ -7,7 +6,7 @@ interface SafetyCasesLoadingProps {
   message?: string;
 }
 
-const SafetyCasesLoading = ({ message = "Loading safety cases..." }: SafetyCasesLoadingProps) => {
+const SafetyCasesLoading = ({ message = 'Loading safety cases...' }: SafetyCasesLoadingProps) => {
   return (
     <div className="min-h-[400px] flex items-center justify-center animate-fade-in">
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 max-w-md w-full overflow-hidden relative">

@@ -1,17 +1,17 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   Area,
-  AreaChart
-} from "recharts";
-import { TrendingUp, TrendingDown, Calendar, Info } from "lucide-react";
+  AreaChart,
+} from 'recharts';
+import { TrendingUp, TrendingDown, Calendar, Info } from 'lucide-react';
 
 interface PricePoint {
   date: string;
@@ -37,17 +37,16 @@ const PriceTrendChart = ({
   priceChange,
   priceChangePercent,
   timeframe,
-  onTimeframeChange
+  onTimeframeChange,
 }: PriceTrendChartProps) => {
-  
   const isPositiveTrend = priceChange >= 0;
   const TrendIcon = isPositiveTrend ? TrendingUp : TrendingDown;
-  
+
   const timeframeLabels = {
     '7d': '7 Days',
-    '30d': '30 Days', 
+    '30d': '30 Days',
     '90d': '3 Months',
-    '1y': '1 Year'
+    '1y': '1 Year',
   };
 
   // Custom tooltip component
@@ -60,10 +59,15 @@ const PriceTrendChart = ({
           <p className="text-sm text-elec-yellow">{`Price: £${payload[0].value.toFixed(2)}`}</p>
           <p className="text-xs text-muted-foreground">{`Confidence: ${dataPoint.confidence}%`}</p>
           <div className="flex items-center gap-1 mt-1">
-            <div className={`w-2 h-2 rounded-full ${
-              dataPoint.source === 'live' ? 'bg-green-400' : 
-              dataPoint.source === 'estimated' ? 'bg-yellow-400' : 'bg-gray-400'
-            }`}></div>
+            <div
+              className={`w-2 h-2 rounded-full ${
+                dataPoint.source === 'live'
+                  ? 'bg-green-400'
+                  : dataPoint.source === 'estimated'
+                    ? 'bg-yellow-400'
+                    : 'bg-gray-400'
+              }`}
+            ></div>
             <span className="text-xs text-muted-foreground capitalize">{dataPoint.source}</span>
           </div>
         </div>
@@ -78,13 +82,18 @@ const PriceTrendChart = ({
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">{itemName} Price Trend</CardTitle>
           <div className="flex items-center gap-2">
-            <TrendIcon className={`h-4 w-4 ${isPositiveTrend ? 'text-red-400' : 'text-green-400'}`} />
-            <span className={`text-sm font-medium ${isPositiveTrend ? 'text-red-400' : 'text-green-400'}`}>
-              {isPositiveTrend ? '+' : ''}{priceChangePercent.toFixed(1)}%
+            <TrendIcon
+              className={`h-4 w-4 ${isPositiveTrend ? 'text-red-400' : 'text-green-400'}`}
+            />
+            <span
+              className={`text-sm font-medium ${isPositiveTrend ? 'text-red-400' : 'text-green-400'}`}
+            >
+              {isPositiveTrend ? '+' : ''}
+              {priceChangePercent.toFixed(1)}%
             </span>
           </div>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div>
             <span className="text-2xl font-bold text-foreground">£{currentPrice.toFixed(2)}</span>
@@ -92,15 +101,15 @@ const PriceTrendChart = ({
               ({isPositiveTrend ? '+' : ''}£{Math.abs(priceChange).toFixed(2)})
             </span>
           </div>
-          
+
           <div className="flex gap-1">
             {(Object.keys(timeframeLabels) as Array<keyof typeof timeframeLabels>).map((period) => (
               <button
                 key={period}
                 onClick={() => onTimeframeChange(period)}
                 className={`px-2 py-1 rounded text-xs transition-colors ${
-                  timeframe === period 
-                    ? 'bg-elec-yellow text-elec-dark font-medium' 
+                  timeframe === period
+                    ? 'bg-elec-yellow text-elec-dark font-medium'
                     : 'text-muted-foreground hover:text-foreground hover:bg-elec-yellow/10'
                 }`}
               >
@@ -110,7 +119,7 @@ const PriceTrendChart = ({
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent>
         {/* Chart */}
         <div className="h-64 w-full">
@@ -118,25 +127,23 @@ const PriceTrendChart = ({
             <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
               <defs>
                 <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#F59E0B" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#F59E0B" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
-              <XAxis 
-                dataKey="date" 
+              <XAxis
+                dataKey="date"
                 stroke="#9CA3AF"
                 fontSize={12}
-                tickFormatter={(value) => new Date(value).toLocaleDateString('en-GB', { 
-                  month: 'short', 
-                  day: 'numeric' 
-                })}
+                tickFormatter={(value) =>
+                  new Date(value).toLocaleDateString('en-GB', {
+                    month: 'short',
+                    day: 'numeric',
+                  })
+                }
               />
-              <YAxis 
-                stroke="#9CA3AF"
-                fontSize={12}
-                tickFormatter={(value) => `£${value}`}
-              />
+              <YAxis stroke="#9CA3AF" fontSize={12} tickFormatter={(value) => `£${value}`} />
               <Tooltip content={<CustomTooltip />} />
               <Area
                 type="monotone"
@@ -148,14 +155,14 @@ const PriceTrendChart = ({
                   const { cx, cy, payload } = props;
                   const colors = {
                     live: '#10B981',
-                    estimated: '#F59E0B', 
-                    historical: '#6B7280'
+                    estimated: '#F59E0B',
+                    historical: '#6B7280',
                   };
                   return (
-                    <circle 
-                      cx={cx} 
-                      cy={cy} 
-                      r={3} 
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={3}
                       fill={colors[payload.source as keyof typeof colors]}
                       stroke="#1F2937"
                       strokeWidth={1}
@@ -184,7 +191,7 @@ const PriceTrendChart = ({
                 <span className="text-xs text-muted-foreground">Historical</span>
               </div>
             </div>
-            
+
             <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
               <Calendar className="h-3 w-3 mr-1" />
               {timeframeLabels[timeframe]}
@@ -202,20 +209,23 @@ const PriceTrendChart = ({
                     <span className="font-medium">Data Points:</span> {data.length}
                   </div>
                   <div>
-                    <span className="font-medium">Avg Confidence:</span> {
-                      Math.round(data.reduce((acc, point) => acc + point.confidence, 0) / data.length)
-                    }%
+                    <span className="font-medium">Avg Confidence:</span>{' '}
+                    {Math.round(
+                      data.reduce((acc, point) => acc + point.confidence, 0) / data.length
+                    )}
+                    %
                   </div>
                   <div>
-                    <span className="font-medium">Live Sources:</span> {
-                      data.filter(point => point.source === 'live').length
-                    }
+                    <span className="font-medium">Live Sources:</span>{' '}
+                    {data.filter((point) => point.source === 'live').length}
                   </div>
                   <div>
-                    <span className="font-medium">Volatility:</span> {
-                      Math.abs(priceChangePercent) > 10 ? 'High' : 
-                      Math.abs(priceChangePercent) > 5 ? 'Medium' : 'Low'
-                    }
+                    <span className="font-medium">Volatility:</span>{' '}
+                    {Math.abs(priceChangePercent) > 10
+                      ? 'High'
+                      : Math.abs(priceChangePercent) > 5
+                        ? 'Medium'
+                        : 'Low'}
                   </div>
                 </div>
               </div>

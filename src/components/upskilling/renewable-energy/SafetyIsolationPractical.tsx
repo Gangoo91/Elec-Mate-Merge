@@ -21,27 +21,43 @@ const SafetyIsolationPractical = () => {
           <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
             <div className="space-y-3">
               <div className="flex items-center gap-3 p-3 bg-red-900/30 rounded border-l-4 border-red-500">
-                <Badge variant="outline" className="bg-red-500 text-foreground">1</Badge>
+                <Badge variant="outline" className="bg-red-500 text-foreground">
+                  1
+                </Badge>
                 <span className="text-foreground">Turn off AC isolator at inverter</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-red-900/30 rounded border-l-4 border-red-500">
-                <Badge variant="outline" className="bg-red-500 text-foreground">2</Badge>
+                <Badge variant="outline" className="bg-red-500 text-foreground">
+                  2
+                </Badge>
                 <span className="text-foreground">Switch off main AC isolator</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-yellow-900/30 rounded border-l-4 border-yellow-500">
-                <Badge variant="outline" className="bg-yellow-500 text-black">3</Badge>
+                <Badge variant="outline" className="bg-yellow-500 text-black">
+                  3
+                </Badge>
                 <span className="text-foreground">Open all DC isolators in sequence</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-yellow-900/30 rounded border-l-4 border-yellow-500">
-                <Badge variant="outline" className="bg-yellow-500 text-black">4</Badge>
-                <span className="text-foreground">Wait for inverter capacitor discharge (5 mins)</span>
+                <Badge variant="outline" className="bg-yellow-500 text-black">
+                  4
+                </Badge>
+                <span className="text-foreground">
+                  Wait for inverter capacitor discharge (5 mins)
+                </span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-blue-900/30 rounded border-l-4 border-blue-500">
-                <Badge variant="outline" className="bg-blue-500 text-foreground">5</Badge>
-                <span className="text-foreground">Test voltage at work location with approved tester</span>
+                <Badge variant="outline" className="bg-blue-500 text-foreground">
+                  5
+                </Badge>
+                <span className="text-foreground">
+                  Test voltage at work location with approved tester
+                </span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-green-900/30 rounded border-l-4 border-green-500">
-                <Badge variant="outline" className="bg-green-500 text-foreground">6</Badge>
+                <Badge variant="outline" className="bg-green-500 text-foreground">
+                  6
+                </Badge>
                 <span className="text-foreground">Apply locks and warning notices</span>
               </div>
             </div>
@@ -103,10 +119,18 @@ const SafetyIsolationPractical = () => {
                 <div>
                   <p className="text-foreground font-medium mb-2">Emergency Contacts:</p>
                   <div className="space-y-1 text-sm text-gray-300">
-                    <p>Emergency Services: <span className="text-elec-yellow">999</span></p>
-                    <p>Site Safety Officer: <span className="text-elec-yellow">_______</span></p>
-                    <p>Local Hospital: <span className="text-elec-yellow">_______</span></p>
-                    <p>Client Contact: <span className="text-elec-yellow">_______</span></p>
+                    <p>
+                      Emergency Services: <span className="text-elec-yellow">999</span>
+                    </p>
+                    <p>
+                      Site Safety Officer: <span className="text-elec-yellow">_______</span>
+                    </p>
+                    <p>
+                      Local Hospital: <span className="text-elec-yellow">_______</span>
+                    </p>
+                    <p>
+                      Client Contact: <span className="text-elec-yellow">_______</span>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -147,7 +171,9 @@ const SafetyIsolationPractical = () => {
             Risk Assessment Templates
           </h3>
           <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
-            <h4 className="font-semibold text-elec-yellow mb-3">PV System Risk Assessment Matrix</h4>
+            <h4 className="font-semibold text-elec-yellow mb-3">
+              PV System Risk Assessment Matrix
+            </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -161,33 +187,53 @@ const SafetyIsolationPractical = () => {
                 <tbody className="text-gray-300">
                   <tr className="border-b border-gray-700">
                     <td className="p-2">DC Electric Shock</td>
-                    <td className="p-2"><Badge className="bg-red-500">High</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-red-500">High</Badge>
+                    </td>
                     <td className="p-2">Isolation, PPE, Testing</td>
-                    <td className="p-2"><Badge className="bg-yellow-500 text-black">Medium</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-yellow-500 text-black">Medium</Badge>
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-700">
                     <td className="p-2">Arc Flash</td>
-                    <td className="p-2"><Badge className="bg-red-500">High</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-red-500">High</Badge>
+                    </td>
                     <td className="p-2">Arc-rated PPE, Procedures</td>
-                    <td className="p-2"><Badge className="bg-green-500">Low</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-green-500">Low</Badge>
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-700">
                     <td className="p-2">Working at Height</td>
-                    <td className="p-2"><Badge className="bg-red-500">High</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-red-500">High</Badge>
+                    </td>
                     <td className="p-2">Harness, Training, Weather</td>
-                    <td className="p-2"><Badge className="bg-yellow-500 text-black">Medium</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-yellow-500 text-black">Medium</Badge>
+                    </td>
                   </tr>
                   <tr className="border-b border-gray-700">
                     <td className="p-2">Manual Handling</td>
-                    <td className="p-2"><Badge className="bg-yellow-500 text-black">Medium</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-yellow-500 text-black">Medium</Badge>
+                    </td>
                     <td className="p-2">Lifting aids, Team lifting</td>
-                    <td className="p-2"><Badge className="bg-green-500">Low</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-green-500">Low</Badge>
+                    </td>
                   </tr>
                   <tr>
                     <td className="p-2">Weather Exposure</td>
-                    <td className="p-2"><Badge className="bg-yellow-500 text-black">Medium</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-yellow-500 text-black">Medium</Badge>
+                    </td>
                     <td className="p-2">Weather monitoring, Shelter</td>
-                    <td className="p-2"><Badge className="bg-green-500">Low</Badge></td>
+                    <td className="p-2">
+                      <Badge className="bg-green-500">Low</Badge>
+                    </td>
                   </tr>
                 </tbody>
               </table>

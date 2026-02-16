@@ -1,5 +1,5 @@
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface NewsPaginationProps {
   currentPage: number;
@@ -59,7 +59,7 @@ const NewsPagination = ({ currentPage, totalPages, paginate }: NewsPaginationPro
       <div className="text-sm text-foreground/90 order-2 sm:order-1 font-medium">
         Page {currentPage} of {totalPages}
       </div>
-      
+
       {/* Navigation buttons */}
       <div className="flex items-center gap-2 order-1 sm:order-2">
         <Button
@@ -76,7 +76,7 @@ const NewsPagination = ({ currentPage, totalPages, paginate }: NewsPaginationPro
 
         {/* Desktop page numbers - hidden on mobile */}
         <div className="hidden sm:flex items-center gap-1">
-          {getPageNumbers().map((page, index) => (
+          {getPageNumbers().map((page, index) =>
             page === '...' ? (
               <div key={`ellipsis-${index}`} className="px-2">
                 <MoreHorizontal className="h-4 w-4 text-foreground/40" />
@@ -84,19 +84,19 @@ const NewsPagination = ({ currentPage, totalPages, paginate }: NewsPaginationPro
             ) : (
               <Button
                 key={page}
-                variant={currentPage === page ? "default" : "outline"}
+                variant={currentPage === page ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => paginate(page as number)}
                 className={`transition-all duration-200 ${
                   currentPage === page
-                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg"
-                    : "border-white/30 text-foreground hover:bg-white/10 bg-white/5"
+                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg'
+                    : 'border-white/30 text-foreground hover:bg-white/10 bg-white/5'
                 }`}
               >
                 {page}
               </Button>
             )
-          ))}
+          )}
         </div>
 
         <Button

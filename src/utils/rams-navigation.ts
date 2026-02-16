@@ -19,10 +19,7 @@ export interface RAMSDocumentData {
   activities?: string[];
 }
 
-export function navigateToAmendRAMS(
-  navigate: NavigateFunction,
-  documentData: RAMSDocumentData
-) {
+export function navigateToAmendRAMS(navigate: NavigateFunction, documentData: RAMSDocumentData) {
   navigate('/electrician-tools/ai-rams', {
     state: {
       amendMode: true,
@@ -41,16 +38,13 @@ export function navigateToAmendRAMS(
           firstAiderPhone: documentData.first_aider_phone || '',
           safetyOfficerName: documentData.safety_officer_name || '',
           safetyOfficerPhone: documentData.safety_officer_phone || '',
-          assemblyPoint: documentData.assembly_point || ''
-        }
-      }
-    }
+          assemblyPoint: documentData.assembly_point || '',
+        },
+      },
+    },
   });
 }
 
-export function openQuickEdit(
-  documentId: string,
-  setAmendDialog: (id: string) => void
-) {
+export function openQuickEdit(documentId: string, setAmendDialog: (id: string) => void) {
   setAmendDialog(documentId);
 }

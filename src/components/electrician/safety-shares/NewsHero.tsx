@@ -1,10 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Calendar, Clock, ExternalLink, Eye, Star, Bookmark } from "lucide-react";
-import { format, formatDistanceToNow } from "date-fns";
-import type { NewsArticle } from "@/hooks/useIndustryNews";
-import { isValidUrl } from "@/utils/urlUtils";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Calendar, Clock, ExternalLink, Eye, Star, Bookmark } from 'lucide-react';
+import { format, formatDistanceToNow } from 'date-fns';
+import type { NewsArticle } from '@/hooks/useIndustryNews';
+import { isValidUrl } from '@/utils/urlUtils';
 
 // Placeholder image paths from public directory
 
@@ -15,34 +15,34 @@ interface NewsHeroProps {
 const NewsHero = ({ article }: NewsHeroProps) => {
   const getCategoryColor = (category: string) => {
     switch (category?.toLowerCase()) {
-      case "bs7671":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "hse":
-        return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "infrastructure":
-        return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      case "training":
-        return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "smart technology":
-        return "bg-cyan-500/20 text-cyan-400 border-cyan-500/30";
+      case 'bs7671':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'hse':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'infrastructure':
+        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      case 'training':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'smart technology':
+        return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
       default:
-        return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
+        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
     }
   };
 
   const getCategoryImage = (category: string) => {
     switch (category?.toLowerCase()) {
-      case "bs7671":
-        return "/news-placeholders/bs7671.jpg";
-      case "hse":
-      case "fire safety":
-      case "construction safety":
-      case "safety technology":
-        return "/news-placeholders/hse.jpg";
-      case "niceic":
-        return "/news-placeholders/niceic.jpg";
+      case 'bs7671':
+        return '/news-placeholders/bs7671.jpg';
+      case 'hse':
+      case 'fire safety':
+      case 'construction safety':
+      case 'safety technology':
+        return '/news-placeholders/hse.jpg';
+      case 'niceic':
+        return '/news-placeholders/niceic.jpg';
       default:
-        return "/news-placeholders/general.jpg";
+        return '/news-placeholders/general.jpg';
     }
   };
 
@@ -55,9 +55,7 @@ const NewsHero = ({ article }: NewsHeroProps) => {
       <div className="bg-gradient-to-r from-elec-yellow via-elec-yellow/90 to-elec-yellow/70 text-elec-dark px-4 py-2 mb-6 rounded-lg">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Badge className="bg-elec-dark text-elec-yellow animate-pulse">
-              FEATURED
-            </Badge>
+            <Badge className="bg-elec-dark text-elec-yellow animate-pulse">FEATURED</Badge>
             <span className="font-bold text-sm">Latest Industry Update</span>
           </div>
           <div className="text-xs font-medium">
@@ -70,12 +68,14 @@ const NewsHero = ({ article }: NewsHeroProps) => {
       <Card className="relative overflow-hidden bg-gradient-to-br from-elec-card/95 via-elec-card/90 to-elec-card/85 border-elec-yellow/20 hover:border-elec-yellow/30 transition-all duration-500 shadow-2xl">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        
+
         <CardContent className="relative p-4 sm:p-6 lg:p-8">
           {/* Top Meta Bar */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
             <div className="flex flex-wrap items-center gap-3">
-              <Badge className={`${getCategoryColor(article.category)} font-semibold text-xs uppercase tracking-wide`}>
+              <Badge
+                className={`${getCategoryColor(article.category)} font-semibold text-xs uppercase tracking-wide`}
+              >
                 {article.category}
               </Badge>
               {article.regulatory_body && (
@@ -84,7 +84,7 @@ const NewsHero = ({ article }: NewsHeroProps) => {
                 </Badge>
               )}
             </div>
-            
+
             <div className="flex items-center gap-4 text-xs text-foreground/90">
               <div className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
@@ -132,7 +132,9 @@ const NewsHero = ({ article }: NewsHeroProps) => {
               <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/80 mb-6">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span className="font-medium">{format(new Date(article.date_published), 'EEEE, MMMM dd, yyyy')}</span>
+                  <span className="font-medium">
+                    {format(new Date(article.date_published), 'EEEE, MMMM dd, yyyy')}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
@@ -154,7 +156,7 @@ const NewsHero = ({ article }: NewsHeroProps) => {
                   <ExternalLink className="h-5 w-5 mr-2" />
                   Read Full Article
                 </Button>
-                
+
                 <Button
                   variant="outline"
                   size="lg"

@@ -1,24 +1,28 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { 
-  Calculator, 
-  Brain, 
-  Calendar, 
-  Shield, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Calculator,
+  Brain,
+  Calendar,
+  Shield,
   TrendingUp,
   Target,
   PoundSterling,
   Users,
   Clock,
-  Zap
-} from "lucide-react";
-import EnhancedCostCalculator from "./interactive/EnhancedCostCalculator";
-import DigitalSkillsAnalyser from "./interactive/DigitalSkillsAnalyser";
-import TrainingScheduleOptimiser from "./interactive/TrainingScheduleOptimizer";
-import ComplianceChecker from "./interactive/ComplianceChecker";
+  Zap,
+} from 'lucide-react';
+import EnhancedCostCalculator from './interactive/EnhancedCostCalculator';
+import DigitalSkillsAnalyser from './interactive/DigitalSkillsAnalyser';
+import TrainingScheduleOptimiser from './interactive/TrainingScheduleOptimizer';
+import ComplianceChecker from './interactive/ComplianceChecker';
 
 const InteractiveToolsTab = () => {
   const isMobile = useIsMobile();
@@ -26,33 +30,33 @@ const InteractiveToolsTab = () => {
   // 2025 Key Metrics for Employers
   const keyMetrics = [
     {
-      metric: "Cost per Qualified Electrician",
-      value: "£68,000",
-      change: "-12% vs. external recruitment",
+      metric: 'Cost per Qualified Electrician',
+      value: '£68,000',
+      change: '-12% vs. external recruitment',
       icon: <PoundSterling className="h-5 w-5 text-green-400" />,
-      detail: "Total 4-year investment including all costs and incentives"
+      detail: 'Total 4-year investment including all costs and incentives',
     },
     {
-      metric: "Time to Competency",
-      value: "18 months",
-      change: "3 months faster with optimized training",
+      metric: 'Time to Competency',
+      value: '18 months',
+      change: '3 months faster with optimized training',
       icon: <Clock className="h-5 w-5 text-blue-400" />,
-      detail: "Average time to independent working capability"
+      detail: 'Average time to independent working capability',
     },
     {
-      metric: "ROI After 5 Years",
-      value: "287%",
-      change: "+15% with 2025 wage rates",
+      metric: 'ROI After 5 Years',
+      value: '287%',
+      change: '+15% with 2025 wage rates',
       icon: <TrendingUp className="h-5 w-5 text-elec-yellow" />,
-      detail: "Return on investment including retention and productivity gains"
+      detail: 'Return on investment including retention and productivity gains',
     },
     {
-      metric: "Success Rate Improvement",
-      value: "23%",
-      change: "With digital tools & structured support",
+      metric: 'Success Rate Improvement',
+      value: '23%',
+      change: 'With digital tools & structured support',
       icon: <Target className="h-5 w-5 text-purple-400" />,
-      detail: "Increased completion rates through enhanced monitoring"
-    }
+      detail: 'Increased completion rates through enhanced monitoring',
+    },
   ];
 
   if (isMobile) {
@@ -61,7 +65,8 @@ const InteractiveToolsTab = () => {
         <Alert className="border-blue-500/50 bg-blue-500/10">
           <Zap className="h-4 w-4 text-blue-400" />
           <AlertDescription className="text-blue-200">
-            Advanced 2025 tools for apprentice planning, cost optimization, and compliance management. Designed for maximum ROI and business outcomes.
+            Advanced 2025 tools for apprentice planning, cost optimization, and compliance
+            management. Designed for maximum ROI and business outcomes.
           </AlertDescription>
         </Alert>
 
@@ -132,8 +137,9 @@ const InteractiveToolsTab = () => {
       <Alert className="border-blue-500/50 bg-blue-500/10">
         <Zap className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
-          Advanced 2025 digital tools for apprentice planning, cost optimization, and compliance management. 
-          Designed for maximum ROI and business outcomes with BS7671:2018+A3:2024 compliance.
+          Advanced 2025 digital tools for apprentice planning, cost optimization, and compliance
+          management. Designed for maximum ROI and business outcomes with BS7671:2018+A3:2024
+          compliance.
         </AlertDescription>
       </Alert>
 
@@ -148,7 +154,10 @@ const InteractiveToolsTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {keyMetrics.map((metric, index) => (
-              <div key={index} className="p-4 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg">
+              <div
+                key={index}
+                className="p-4 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg"
+              >
                 <div className="flex items-center gap-3 mb-3">
                   {metric.icon}
                   <div className="text-sm font-medium text-foreground">{metric.metric}</div>
@@ -159,7 +168,7 @@ const InteractiveToolsTab = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
             <h4 className="font-semibold text-blue-300 mb-2">2025 Market Context</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -183,12 +192,12 @@ const InteractiveToolsTab = () => {
       {/* Interactive Tools */}
       <div className="space-y-6">
         <EnhancedCostCalculator />
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <DigitalSkillsAnalyser />
           <TrainingScheduleOptimiser />
         </div>
-        
+
         <ComplianceChecker />
       </div>
 
@@ -212,7 +221,7 @@ const InteractiveToolsTab = () => {
                 <li>• Predictable salary progression</li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-foreground mb-3">Operational Advantages</h4>
               <ul className="space-y-2 text-sm text-green-200">
@@ -223,7 +232,7 @@ const InteractiveToolsTab = () => {
                 <li>• Enhanced industry reputation</li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-foreground mb-3">Strategic Impact</h4>
               <ul className="space-y-2 text-sm text-green-200">

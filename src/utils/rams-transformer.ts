@@ -63,7 +63,7 @@ export function transformInstallerOutputToMethodStatement(
   }
 ): MethodStatementData {
   const enhancedOutput = installerOutput as EnhancedInstallerAgentOutput;
-  
+
   const methodSteps: MethodStep[] = installerOutput.steps.map((step, index) => ({
     id: uuidv4(),
     stepNumber: step.stepNumber,
@@ -82,10 +82,10 @@ export function transformInstallerOutputToMethodStatement(
   // Aggregate tools and materials at document level
   const allToolsSet = new Set<string>();
   const allMaterialsSet = new Set<string>();
-  
-  installerOutput.steps.forEach(step => {
-    step.toolsRequired?.forEach(tool => allToolsSet.add(tool));
-    step.materialsNeeded?.forEach(mat => allMaterialsSet.add(mat));
+
+  installerOutput.steps.forEach((step) => {
+    step.toolsRequired?.forEach((tool) => allToolsSet.add(tool));
+    step.materialsNeeded?.forEach((mat) => allMaterialsSet.add(mat));
   });
 
   return {
@@ -101,28 +101,28 @@ export function transformInstallerOutputToMethodStatement(
     reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     steps: methodSteps,
     createdAt: new Date().toISOString(),
-    
+
     // Document-level aggregated fields
     toolsRequired: Array.from(allToolsSet),
     materialsRequired: Array.from(allMaterialsSet),
     totalEstimatedTime: installerOutput.totalDuration,
     requiredQualifications: installerOutput.requiredQualifications || [],
-    
+
     // Enhanced fields from installer agent
     scopeOfWork: enhancedOutput.scopeOfWork,
     scheduleDetails: enhancedOutput.scheduleDetails,
     practicalTips: enhancedOutput.practicalTips,
     commonMistakes: enhancedOutput.commonMistakes,
     complianceRegulations: enhancedOutput.compliance?.regulations,
-    
+
     // RAG citations from installer
-    ragCitations: enhancedOutput.ragCitations?.map(citation => ({
+    ragCitations: enhancedOutput.ragCitations?.map((citation) => ({
       source: 'installer' as const,
       regulation: citation.regulation,
       content: citation.content,
       linkedToStep: citation.linkedToStep,
     })),
-    
+
     // Agent metadata
     agentMetadata: {
       installerVersion: 'v3',
@@ -134,26 +134,24 @@ export function transformInstallerOutputToMethodStatement(
 function extractStepTitle(description: string): string {
   // Extract first sentence or first 50 chars as title
   const firstSentence = description.split('.')[0];
-  return firstSentence.length > 60 
-    ? firstSentence.substring(0, 57) + '...'
-    : firstSentence;
+  return firstSentence.length > 60 ? firstSentence.substring(0, 57) + '...' : firstSentence;
 }
 
 function determineStepRiskLevel(step: InstallerStepOutput): 'low' | 'medium' | 'high' {
   const highRiskKeywords = ['live', 'energized', 'height', 'confined', 'overhead'];
   const mediumRiskKeywords = ['termination', 'testing', 'cable pulling', 'drilling'];
-  
+
   const desc = step.description.toLowerCase();
   const safety = step.safetyRequirements.join(' ').toLowerCase();
   const combined = desc + ' ' + safety;
-  
-  if (highRiskKeywords.some(keyword => combined.includes(keyword))) {
+
+  if (highRiskKeywords.some((keyword) => combined.includes(keyword))) {
     return 'high';
   }
-  
-  if (mediumRiskKeywords.some(keyword => combined.includes(keyword))) {
+
+  if (mediumRiskKeywords.some((keyword) => combined.includes(keyword))) {
     return 'medium';
   }
-  
+
   return 'low';
 }

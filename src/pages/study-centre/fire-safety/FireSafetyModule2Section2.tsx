@@ -20,8 +20,7 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'rp-article-5',
-    question:
-      'Under Article 5 of the RRFSO, who is the responsible person in a workplace?',
+    question: 'Under Article 5 of the RRFSO, who is the responsible person in a workplace?',
     options: [
       'The most senior employee on site at any given time',
       'The employer',
@@ -34,8 +33,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'rp-delegation',
-    question:
-      'Can the responsible person delegate their legal responsibility for fire safety?',
+    question: 'Can the responsible person delegate their legal responsibility for fire safety?',
     options: [
       'Yes, to any competent person appointed under Article 18',
       'Yes, but only to a qualified fire risk assessor',
@@ -48,8 +46,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'rp-competent-person',
-    question:
-      'Under which Article must the responsible person appoint competent persons?',
+    question: 'Under which Article must the responsible person appoint competent persons?',
     options: [
       'Article 9 — Fire risk assessment',
       'Article 14 — Emergency routes and exits',
@@ -80,7 +77,7 @@ const faqs = [
   },
   {
     question:
-      'As an electrician working on someone else\'s premises, what fire safety duties do I have?',
+      "As an electrician working on someone else's premises, what fire safety duties do I have?",
     answer:
       'As a contractor working on premises controlled by another responsible person, you have a duty under Article 5(4) of the RRFSO to cooperate with the responsible person and comply with any fire safety arrangements in place. You must follow the site fire safety rules, attend any fire safety induction or briefing, report any fire hazards you create or discover (such as hot works, temporary removal of fire-stopping, or impairment of fire detection systems), and ensure your own work does not compromise the fire safety of the premises. If your work involves hot works, temporary isolation of fire alarms, or penetration of fire-resistant barriers, you must coordinate with the responsible person and follow a formal permit-to-work system.',
   },
@@ -157,7 +154,7 @@ const quizQuestions = [
     options: [
       'Only when a fire risk assessment identifies new risks',
       'At recruitment, on transfer of role, and when risks change — during working hours and free of charge',
-      'Annually, at the employer\'s discretion',
+      "Annually, at the employer's discretion",
       'Only when requested by the fire and rescue authority',
     ],
     correctAnswer: 1,
@@ -171,7 +168,7 @@ const quizQuestions = [
     options: ['6 months', '1 year', '2 years', '5 years'],
     correctAnswer: 2,
     explanation:
-      'Under the RRFSO, a person found guilty of a fire safety offence on indictment can face up to 2 years\' imprisonment and/or an unlimited fine. For offences tried summarily in the magistrates\' court, the maximum sentence is a fine (unlimited since the Legal Aid, Sentencing and Punishment of Offenders Act 2012 removed the cap).',
+      "Under the RRFSO, a person found guilty of a fire safety offence on indictment can face up to 2 years' imprisonment and/or an unlimited fine. For offences tried summarily in the magistrates' court, the maximum sentence is a fine (unlimited since the Legal Aid, Sentencing and Punishment of Offenders Act 2012 removed the cap).",
   },
   {
     id: 8,
@@ -291,60 +288,65 @@ export default function FireSafetyModule2Section2() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Article 5</strong> of the Regulatory Reform (Fire Safety) Order 2005 defines who the
-                &ldquo;responsible person&rdquo; (RP) is. The definition depends on the type of premises:
+                <strong>Article 5</strong> of the Regulatory Reform (Fire Safety) Order 2005 defines
+                who the &ldquo;responsible person&rdquo; (RP) is. The definition depends on the type
+                of premises:
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Article 5 &mdash; Responsible Person Definition</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Article 5 &mdash; Responsible Person Definition
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">In a workplace:</strong> the <strong>employer</strong>, if
-                      the premises are (or are part of) a workplace under their control
+                      <strong className="text-white">In a workplace:</strong> the{' '}
+                      <strong>employer</strong>, if the premises are (or are part of) a workplace
+                      under their control
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">In other premises:</strong> any person who has{' '}
-                      <strong>control of the premises</strong> in connection with the carrying on of a trade,
-                      business, or other undertaking (whether for profit or not)
+                      <strong>control of the premises</strong> in connection with the carrying on of
+                      a trade, business, or other undertaking (whether for profit or not)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Otherwise:</strong> the <strong>owner</strong> of the
-                      premises
+                      <strong className="text-white">Otherwise:</strong> the <strong>owner</strong>{' '}
+                      of the premises
                     </span>
                   </li>
                 </ul>
               </div>
 
               <p>
-                The concept of the responsible person is deliberately broad. It ensures that someone is
-                always legally accountable for fire safety in any non-domestic premises. The person with the
-                most control over the premises bears the greatest responsibility.
+                The concept of the responsible person is deliberately broad. It ensures that someone
+                is always legally accountable for fire safety in any non-domestic premises. The
+                person with the most control over the premises bears the greatest responsibility.
               </p>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
                   <strong className="text-rose-400">Key Point:</strong> In{' '}
-                  <strong>multi-occupancy buildings</strong> (such as shopping centres, business parks,
-                  or multi-tenanted offices), there may be <strong>multiple responsible persons</strong>,
-                  each responsible for different parts of the premises. <strong>Article 22</strong>{' '}
-                  requires all responsible persons sharing a building to cooperate with each other and
-                  coordinate their fire safety measures.
+                  <strong>multi-occupancy buildings</strong> (such as shopping centres, business
+                  parks, or multi-tenanted offices), there may be{' '}
+                  <strong>multiple responsible persons</strong>, each responsible for different
+                  parts of the premises. <strong>Article 22</strong> requires all responsible
+                  persons sharing a building to cooperate with each other and coordinate their fire
+                  safety measures.
                 </p>
               </div>
 
               <p>
-                Where there are multiple responsible persons, each must take reasonable steps to cooperate
-                and share information. This is particularly important for ensuring that fire detection
-                systems, escape routes, and emergency procedures work cohesively across the entire building,
-                not just within individual tenancies.
+                Where there are multiple responsible persons, each must take reasonable steps to
+                cooperate and share information. This is particularly important for ensuring that
+                fire detection systems, escape routes, and emergency procedures work cohesively
+                across the entire building, not just within individual tenancies.
               </p>
             </div>
           </div>
@@ -359,9 +361,10 @@ export default function FireSafetyModule2Section2() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The RRFSO places extensive duties on the responsible person. These duties are designed to
-                ensure that fire risks are identified, managed, and reduced to the lowest reasonably
-                practicable level. The principal duties are set out across multiple Articles:
+                The RRFSO places extensive duties on the responsible person. These duties are
+                designed to ensure that fire risks are identified, managed, and reduced to the
+                lowest reasonably practicable level. The principal duties are set out across
+                multiple Articles:
               </p>
 
               <div className="space-y-3">
@@ -421,7 +424,10 @@ export default function FireSafetyModule2Section2() {
                       'Provide information to employees (Article 19) and non-employees (Article 20). Provide adequate fire safety training at recruitment, on transfer, and when risks change (Article 21). Training must be during working hours and free of charge.',
                   },
                 ].map((item) => (
-                  <div key={item.article} className="bg-white/5 border border-white/10 rounded-lg p-4">
+                  <div
+                    key={item.article}
+                    className="bg-white/5 border border-white/10 rounded-lg p-4"
+                  >
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 min-w-[80px]">
                         <span className="text-xs font-bold text-rose-400 bg-rose-500/10 border border-rose-500/30 px-2 py-1 rounded">
@@ -443,9 +449,10 @@ export default function FireSafetyModule2Section2() {
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-5 w-5 text-rose-400 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-white">
-                    <strong className="text-rose-300">Important:</strong> These duties are not optional.
-                    The responsible person must comply with all relevant Articles of the RRFSO. Failure to do
-                    so is a criminal offence that can result in prosecution, unlimited fines, and imprisonment.
+                    <strong className="text-rose-300">Important:</strong> These duties are not
+                    optional. The responsible person must comply with all relevant Articles of the
+                    RRFSO. Failure to do so is a criminal offence that can result in prosecution,
+                    unlimited fines, and imprisonment.
                   </p>
                 </div>
               </div>
@@ -466,47 +473,54 @@ export default function FireSafetyModule2Section2() {
               <p>
                 Article 18 requires the responsible person to appoint one or more{' '}
                 <strong>competent persons</strong> to assist them in undertaking the preventive and
-                protective measures demanded by the RRFSO. This is a legal requirement &mdash; the RP
-                cannot simply do everything themselves unless they personally possess the necessary competence.
+                protective measures demanded by the RRFSO. This is a legal requirement &mdash; the
+                RP cannot simply do everything themselves unless they personally possess the
+                necessary competence.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">What Makes a Person &ldquo;Competent&rdquo;?</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  What Makes a Person &ldquo;Competent&rdquo;?
+                </p>
                 <p className="text-sm text-white/80 mb-3">
-                  The RRFSO states that a person is competent if they have <strong>&ldquo;sufficient
-                  training and experience or knowledge and other qualities&rdquo;</strong> to properly
-                  assist the responsible person. In practice, this means:
+                  The RRFSO states that a person is competent if they have{' '}
+                  <strong>
+                    &ldquo;sufficient training and experience or knowledge and other
+                    qualities&rdquo;
+                  </strong>{' '}
+                  to properly assist the responsible person. In practice, this means:
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Training:</strong> Formal fire safety qualifications
-                      such as NEBOSH Fire Certificate, IFE (Institution of Fire Engineers) membership, or
-                      FPA (Fire Protection Association) Diploma
+                      <strong className="text-white">Training:</strong> Formal fire safety
+                      qualifications such as NEBOSH Fire Certificate, IFE (Institution of Fire
+                      Engineers) membership, or FPA (Fire Protection Association) Diploma
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Experience:</strong> Practical experience in
-                      conducting fire risk assessments, implementing fire safety measures, and managing
-                      fire safety in buildings of similar type and complexity
+                      conducting fire risk assessments, implementing fire safety measures, and
+                      managing fire safety in buildings of similar type and complexity
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Knowledge:</strong> Understanding of fire behaviour,
-                      fire legislation, building construction, fire detection/alarm systems, means of
-                      escape, and fire risk assessment methodology
+                      <strong className="text-white">Knowledge:</strong> Understanding of fire
+                      behaviour, fire legislation, building construction, fire detection/alarm
+                      systems, means of escape, and fire risk assessment methodology
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Other qualities:</strong> Good communication skills,
-                      attention to detail, and the ability to write clear, actionable fire risk assessments
+                      <strong className="text-white">Other qualities:</strong> Good communication
+                      skills, attention to detail, and the ability to write clear, actionable fire
+                      risk assessments
                     </span>
                   </li>
                 </ul>
@@ -514,10 +528,11 @@ export default function FireSafetyModule2Section2() {
 
               <p>
                 The competent person can be an <strong>internal employee</strong> (such as a trained
-                facilities manager or fire safety officer) or an <strong>external fire safety consultant</strong>.
-                Article 18(6) states that where there is a competent person within the employer&rsquo;s
-                employment, that person should be used in preference to an external consultant, provided
-                they have the necessary competence.
+                facilities manager or fire safety officer) or an{' '}
+                <strong>external fire safety consultant</strong>. Article 18(6) states that where
+                there is a competent person within the employer&rsquo;s employment, that person
+                should be used in preference to an external consultant, provided they have the
+                necessary competence.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -528,25 +543,27 @@ export default function FireSafetyModule2Section2() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">PAS 79-1:2020</strong> is the published standard for
-                      fire risk assessment in non-residential premises. It provides a framework for what a
-                      competent fire risk assessor should cover and how a fire risk assessment should be structured.
+                      <strong className="text-white">PAS 79-1:2020</strong> is the published
+                      standard for fire risk assessment in non-residential premises. It provides a
+                      framework for what a competent fire risk assessor should cover and how a fire
+                      risk assessment should be structured.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">BAFE SP205</strong> is a third-party certification
-                      scheme for fire risk assessors. Assessors registered under SP205 have been independently
-                      verified as competent to carry out fire risk assessments.
+                      <strong className="text-white">BAFE SP205</strong> is a third-party
+                      certification scheme for fire risk assessors. Assessors registered under SP205
+                      have been independently verified as competent to carry out fire risk
+                      assessments.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">IFE Register:</strong> The Institution of Fire
-                      Engineers maintains a register of fire risk assessors who have demonstrated competence
-                      through a combination of qualifications and practical experience.
+                      Engineers maintains a register of fire risk assessors who have demonstrated
+                      competence through a combination of qualifications and practical experience.
                     </span>
                   </li>
                 </ul>
@@ -556,12 +573,12 @@ export default function FireSafetyModule2Section2() {
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-white">
-                    <strong className="text-orange-300">Recent Case Law:</strong> Courts have increasingly
-                    scrutinised the competence of those appointed to carry out fire risk assessments. In
-                    several prosecution cases, responsible persons have received heavier penalties because
-                    they failed to verify the competence of the person they appointed. Simply hiring the
-                    cheapest assessor without checking their qualifications, experience, or track record is
-                    not a defence.
+                    <strong className="text-orange-300">Recent Case Law:</strong> Courts have
+                    increasingly scrutinised the competence of those appointed to carry out fire
+                    risk assessments. In several prosecution cases, responsible persons have
+                    received heavier penalties because they failed to verify the competence of the
+                    person they appointed. Simply hiring the cheapest assessor without checking
+                    their qualifications, experience, or track record is not a defence.
                   </p>
                 </div>
               </div>
@@ -578,8 +595,8 @@ export default function FireSafetyModule2Section2() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                One of the most commonly misunderstood aspects of the RRFSO is the distinction between
-                delegating fire safety <strong>tasks</strong> and delegating fire safety{' '}
+                One of the most commonly misunderstood aspects of the RRFSO is the distinction
+                between delegating fire safety <strong>tasks</strong> and delegating fire safety{' '}
                 <strong>responsibility</strong>. This distinction is critical:
               </p>
 
@@ -645,8 +662,9 @@ export default function FireSafetyModule2Section2() {
               </div>
 
               <p>
-                Fire marshals and fire wardens act <strong>on behalf of</strong> the responsible person,
-                but the RP retains full liability. The practical hierarchy typically works as follows:
+                Fire marshals and fire wardens act <strong>on behalf of</strong> the responsible
+                person, but the RP retains full liability. The practical hierarchy typically works
+                as follows:
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -672,7 +690,10 @@ export default function FireSafetyModule2Section2() {
                       desc: 'Follow fire safety procedures, attend training, report hazards, know evacuation routes',
                     },
                   ].map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-lg p-3">
+                    <div
+                      key={idx}
+                      className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-lg p-3"
+                    >
                       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center">
                         <span className="text-xs font-bold text-rose-400">{idx + 1}</span>
                       </div>
@@ -687,10 +708,11 @@ export default function FireSafetyModule2Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-rose-400">Key Point:</strong> Clear documentation of roles and
-                  responsibilities is essential. The responsible person should ensure that fire safety
-                  duties are assigned to <strong>named individuals</strong> with written role descriptions,
-                  and that those individuals are trained and resourced to carry out their roles effectively.
+                  <strong className="text-rose-400">Key Point:</strong> Clear documentation of roles
+                  and responsibilities is essential. The responsible person should ensure that fire
+                  safety duties are assigned to <strong>named individuals</strong> with written role
+                  descriptions, and that those individuals are trained and resourced to carry out
+                  their roles effectively.
                 </p>
               </div>
             </div>
@@ -708,9 +730,9 @@ export default function FireSafetyModule2Section2() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The responsible person has specific duties to provide both <strong>information</strong> and{' '}
-                <strong>training</strong> to employees and other relevant persons. These duties are set out
-                in Articles 19, 20, and 21 of the RRFSO.
+                The responsible person has specific duties to provide both{' '}
+                <strong>information</strong> and <strong>training</strong> to employees and other
+                relevant persons. These duties are set out in Articles 19, 20, and 21 of the RRFSO.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -721,7 +743,8 @@ export default function FireSafetyModule2Section2() {
                   </p>
                 </div>
                 <p className="text-sm text-white/80 mb-2">
-                  The responsible person must provide employees with comprehensible and relevant information on:
+                  The responsible person must provide employees with comprehensible and relevant
+                  information on:
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -734,7 +757,9 @@ export default function FireSafetyModule2Section2() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span>The emergency procedures, including evacuation routes and assembly points</span>
+                    <span>
+                      The emergency procedures, including evacuation routes and assembly points
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -742,7 +767,10 @@ export default function FireSafetyModule2Section2() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span>Any specific risks arising from the activities of other employers sharing the premises</span>
+                    <span>
+                      Any specific risks arising from the activities of other employers sharing the
+                      premises
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -755,8 +783,8 @@ export default function FireSafetyModule2Section2() {
                   </p>
                 </div>
                 <p className="text-sm text-white/80 mb-2">
-                  The RP must also provide comprehensible and relevant information to non-employees who may
-                  be on the premises, including:
+                  The RP must also provide comprehensible and relevant information to non-employees
+                  who may be on the premises, including:
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -769,15 +797,17 @@ export default function FireSafetyModule2Section2() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Contractors:</strong> site-specific fire safety rules,
-                      hot work procedures, and any temporary changes to fire safety arrangements
+                      <strong className="text-white">Contractors:</strong> site-specific fire safety
+                      rules, hot work procedures, and any temporary changes to fire safety
+                      arrangements
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Members of the public:</strong> where applicable
-                      (e.g. shops, theatres, hotels), adequate signage and verbal/written instructions
+                      <strong className="text-white">Members of the public:</strong> where
+                      applicable (e.g. shops, theatres, hotels), adequate signage and verbal/written
+                      instructions
                     </span>
                   </li>
                 </ul>
@@ -786,54 +816,56 @@ export default function FireSafetyModule2Section2() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <Shield className="h-5 w-5 text-rose-400" />
-                  <p className="text-sm font-medium text-rose-400">
-                    Article 21 &mdash; Training
-                  </p>
+                  <p className="text-sm font-medium text-rose-400">Article 21 &mdash; Training</p>
                 </div>
                 <p className="text-sm text-white/80 mb-2">
-                  The responsible person must ensure that employees receive adequate fire safety training:
+                  The responsible person must ensure that employees receive adequate fire safety
+                  training:
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">At recruitment:</strong> as part of induction, before
-                      the employee begins work
+                      <strong className="text-white">At recruitment:</strong> as part of induction,
+                      before the employee begins work
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">On transfer or change of role:</strong> when an
-                      employee moves to a different part of the building or takes on new responsibilities
+                      employee moves to a different part of the building or takes on new
+                      responsibilities
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">When risks change:</strong> following introduction of
-                      new equipment, processes, substances, or changes to the building layout
+                      <strong className="text-white">When risks change:</strong> following
+                      introduction of new equipment, processes, substances, or changes to the
+                      building layout
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Repeated periodically:</strong> refresher training to
-                      maintain awareness (typically annually, but more frequently in higher-risk premises)
+                      <strong className="text-white">Repeated periodically:</strong> refresher
+                      training to maintain awareness (typically annually, but more frequently in
+                      higher-risk premises)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">During working hours:</strong> training must take
-                      place during normal working hours
+                      <strong className="text-white">During working hours:</strong> training must
+                      take place during normal working hours
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Free of charge:</strong> the employer must bear the
-                      cost of training, not the employee
+                      <strong className="text-white">Free of charge:</strong> the employer must bear
+                      the cost of training, not the employee
                     </span>
                   </li>
                 </ul>
@@ -843,9 +875,9 @@ export default function FireSafetyModule2Section2() {
                 <p className="text-sm text-white">
                   <strong className="text-rose-400">Fire Marshal Training:</strong> Training of fire
                   marshals and fire wardens falls within the scope of Article 21. Fire marshals need
-                  enhanced training beyond basic fire awareness, including how to conduct a sweep of their
-                  zone, how to assist persons with disabilities, how to use fire extinguishers, and how to
-                  communicate with the fire and rescue service on arrival.
+                  enhanced training beyond basic fire awareness, including how to conduct a sweep of
+                  their zone, how to assist persons with disabilities, how to use fire
+                  extinguishers, and how to communicate with the fire and rescue service on arrival.
                 </p>
               </div>
             </div>
@@ -861,10 +893,10 @@ export default function FireSafetyModule2Section2() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Many buildings &mdash; shopping centres, business parks, multi-tenanted offices, industrial
-                estates &mdash; are occupied by multiple organisations, each of which may be a responsible
-                person for their part of the premises. <strong>Article 22</strong> addresses this
-                situation directly.
+                Many buildings &mdash; shopping centres, business parks, multi-tenanted offices,
+                industrial estates &mdash; are occupied by multiple organisations, each of which may
+                be a responsible person for their part of the premises. <strong>Article 22</strong>{' '}
+                addresses this situation directly.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -872,8 +904,8 @@ export default function FireSafetyModule2Section2() {
                   Article 22 &mdash; Co-operation and Co-ordination
                 </p>
                 <p className="text-sm text-white/80 mb-3">
-                  Where two or more responsible persons share, or have duties in respect of, the same
-                  premises, each must:
+                  Where two or more responsible persons share, or have duties in respect of, the
+                  same premises, each must:
                 </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
@@ -886,15 +918,15 @@ export default function FireSafetyModule2Section2() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Coordinate</strong> their fire safety measures to
-                      ensure they are consistent and do not conflict
+                      <strong className="text-white">Coordinate</strong> their fire safety measures
+                      to ensure they are consistent and do not conflict
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Inform</strong> each other of any risks arising from
-                      their own activities that could affect others in the building
+                      <strong className="text-white">Inform</strong> each other of any risks arising
+                      from their own activities that could affect others in the building
                     </span>
                   </li>
                 </ul>
@@ -903,42 +935,45 @@ export default function FireSafetyModule2Section2() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
                   <Building2 className="h-5 w-5 text-rose-400" />
-                  <p className="text-sm font-medium text-white">Common Areas &mdash; Who Is Responsible?</p>
+                  <p className="text-sm font-medium text-white">
+                    Common Areas &mdash; Who Is Responsible?
+                  </p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Landlord / management company:</strong> typically the
-                      responsible person for common parts &mdash; corridors, stairwells, lobbies, car parks,
-                      shared plant rooms, external areas, and building-wide fire detection/alarm systems
+                      <strong className="text-white">Landlord / management company:</strong>{' '}
+                      typically the responsible person for common parts &mdash; corridors,
+                      stairwells, lobbies, car parks, shared plant rooms, external areas, and
+                      building-wide fire detection/alarm systems
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Individual tenants:</strong> responsible person for
-                      their own demise (their leased area), including internal fire safety measures, staff
-                      training, and compliance within their unit
+                      <strong className="text-white">Individual tenants:</strong> responsible person
+                      for their own demise (their leased area), including internal fire safety
+                      measures, staff training, and compliance within their unit
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Lease agreements:</strong> should clearly define fire
-                      safety responsibilities, including who maintains what, who pays for what, and how
-                      communication between parties is managed
+                      <strong className="text-white">Lease agreements:</strong> should clearly
+                      define fire safety responsibilities, including who maintains what, who pays
+                      for what, and how communication between parties is managed
                     </span>
                   </li>
                 </ul>
               </div>
 
               <p>
-                In practice, multi-occupancy fire safety requires regular communication, shared fire risk
-                assessments for common areas, coordinated evacuation procedures, and clear documentation
-                of who is responsible for each element of fire safety within the building. A breakdown in
-                cooperation between responsible persons is one of the most common causes of enforcement
-                action in multi-tenanted premises.
+                In practice, multi-occupancy fire safety requires regular communication, shared fire
+                risk assessments for common areas, coordinated evacuation procedures, and clear
+                documentation of who is responsible for each element of fire safety within the
+                building. A breakdown in cooperation between responsible persons is one of the most
+                common causes of enforcement action in multi-tenanted premises.
               </p>
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
@@ -946,10 +981,10 @@ export default function FireSafetyModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-white">
                     <strong className="text-rose-300">Common Pitfall:</strong> In multi-occupancy
-                    buildings, gaps in responsibility often occur where no single party considers themselves
-                    responsible for shared areas or interfaces between tenancies. The fire and rescue
-                    authority can prosecute <strong>all</strong> responsible persons who have failed in
-                    their duty, not just the one most at fault.
+                    buildings, gaps in responsibility often occur where no single party considers
+                    themselves responsible for shared areas or interfaces between tenancies. The
+                    fire and rescue authority can prosecute <strong>all</strong> responsible persons
+                    who have failed in their duty, not just the one most at fault.
                   </p>
                 </div>
               </div>
@@ -969,26 +1004,31 @@ export default function FireSafetyModule2Section2() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The RRFSO does not only target organisations &mdash; it can target{' '}
-                <strong>individuals</strong>. Article 32 makes it clear that directors, managers, company
-                secretaries, and similar officers can be held <strong>personally liable</strong> for fire
-                safety offences committed by the organisation.
+                <strong>individuals</strong>. Article 32 makes it clear that directors, managers,
+                company secretaries, and similar officers can be held{' '}
+                <strong>personally liable</strong> for fire safety offences committed by the
+                organisation.
               </p>
 
               <div className="bg-red-500/10 border-2 border-red-500/40 p-4 sm:p-5 rounded-lg">
                 <div className="flex items-start gap-2 mb-3">
                   <Gavel className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-bold text-red-300 text-base">Article 32 &mdash; Personal Liability</h3>
+                  <h3 className="font-bold text-red-300 text-base">
+                    Article 32 &mdash; Personal Liability
+                  </h3>
                 </div>
                 <p className="text-white text-sm leading-relaxed mb-3">
-                  Where an offence under the RRFSO is committed by a body corporate and is proved to have
-                  been committed with the <strong>&ldquo;consent or connivance&rdquo;</strong> of, or to
-                  be attributable to any <strong>&ldquo;neglect&rdquo;</strong> on the part of, any
-                  director, manager, secretary, or similar officer, that individual as well as the body
-                  corporate is guilty of the offence and liable to be prosecuted and punished accordingly.
+                  Where an offence under the RRFSO is committed by a body corporate and is proved to
+                  have been committed with the <strong>&ldquo;consent or connivance&rdquo;</strong>{' '}
+                  of, or to be attributable to any <strong>&ldquo;neglect&rdquo;</strong> on the
+                  part of, any director, manager, secretary, or similar officer, that individual as
+                  well as the body corporate is guilty of the offence and liable to be prosecuted
+                  and punished accordingly.
                 </p>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  This means a director who knew about a fire safety deficiency and failed to act, or who
-                  turned a blind eye to non-compliance, can face personal criminal prosecution.
+                  This means a director who knew about a fire safety deficiency and failed to act,
+                  or who turned a blind eye to non-compliance, can face personal criminal
+                  prosecution.
                 </p>
               </div>
 
@@ -1011,48 +1051,50 @@ export default function FireSafetyModule2Section2() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Consequences Beyond Criminal Penalties</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Consequences Beyond Criminal Penalties
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Professional reputation:</strong> criminal convictions
-                      for fire safety offences are a matter of public record and can severely damage
-                      professional reputation and career prospects
+                      <strong className="text-white">Professional reputation:</strong> criminal
+                      convictions for fire safety offences are a matter of public record and can
+                      severely damage professional reputation and career prospects
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Insurance implications:</strong> insurers may void
-                      fire insurance policies or refuse to pay claims where the responsible person has
-                      failed to comply with the RRFSO, leaving the organisation to bear the full cost of
-                      fire damage
+                      <strong className="text-white">Insurance implications:</strong> insurers may
+                      void fire insurance policies or refuse to pay claims where the responsible
+                      person has failed to comply with the RRFSO, leaving the organisation to bear
+                      the full cost of fire damage
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Civil claims:</strong> in addition to criminal
-                      prosecution, the responsible person may face civil claims for damages from those
-                      injured or bereaved as a result of a fire
+                      prosecution, the responsible person may face civil claims for damages from
+                      those injured or bereaved as a result of a fire
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Disqualification:</strong> directors convicted of
-                      serious fire safety offences may face disqualification from acting as a company
-                      director under the Company Directors Disqualification Act 1986
+                      <strong className="text-white">Disqualification:</strong> directors convicted
+                      of serious fire safety offences may face disqualification from acting as a
+                      company director under the Company Directors Disqualification Act 1986
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Corporate Manslaughter:</strong> where gross
-                      management failures lead to a fire causing death, prosecution under the Corporate
-                      Manslaughter and Corporate Homicide Act 2007 may follow, with unlimited fines and
-                      mandatory publicity orders
+                      management failures lead to a fire causing death, prosecution under the
+                      Corporate Manslaughter and Corporate Homicide Act 2007 may follow, with
+                      unlimited fines and mandatory publicity orders
                     </span>
                   </li>
                 </ul>
@@ -1062,12 +1104,12 @@ export default function FireSafetyModule2Section2() {
                 <div className="flex items-start gap-2">
                   <Scale className="h-5 w-5 text-rose-400 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-white">
-                    <strong className="text-rose-300">Recent Prosecution Examples:</strong> In recent
-                    years, the courts have imposed significant penalties for RRFSO breaches. Landlords of
-                    houses in multiple occupation (HMOs), hotel owners, care home operators, and business
-                    owners have all received prison sentences and six-figure fines. The trend is towards
-                    increasingly robust enforcement, particularly where failures put sleeping occupants or
-                    vulnerable persons at risk.
+                    <strong className="text-rose-300">Recent Prosecution Examples:</strong> In
+                    recent years, the courts have imposed significant penalties for RRFSO breaches.
+                    Landlords of houses in multiple occupation (HMOs), hotel owners, care home
+                    operators, and business owners have all received prison sentences and six-figure
+                    fines. The trend is towards increasingly robust enforcement, particularly where
+                    failures put sleeping occupants or vulnerable persons at risk.
                   </p>
                 </div>
               </div>
@@ -1085,7 +1127,9 @@ export default function FireSafetyModule2Section2() {
               {/* Start */}
               <div className="text-center">
                 <div className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-rose-500/20 border-2 border-rose-500/40">
-                  <span className="text-sm font-bold text-rose-300">Are the premises a workplace?</span>
+                  <span className="text-sm font-bold text-rose-300">
+                    Are the premises a workplace?
+                  </span>
                 </div>
               </div>
 
@@ -1095,9 +1139,7 @@ export default function FireSafetyModule2Section2() {
                   <div className="text-xs font-bold text-green-400 mb-1">YES</div>
                   <div className="h-4 w-[1px] bg-white/20 mx-auto" />
                   <div className="mt-1 px-3 py-2 rounded-lg bg-green-500/10 border border-green-500/30">
-                    <span className="text-xs font-semibold text-green-300">
-                      RP = The Employer
-                    </span>
+                    <span className="text-xs font-semibold text-green-300">RP = The Employer</span>
                   </div>
                 </div>
 

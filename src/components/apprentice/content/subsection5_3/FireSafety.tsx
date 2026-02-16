@@ -1,17 +1,19 @@
-
-import React from "react";
-import { Flame, FileText, ShieldAlert } from "lucide-react";
+import React from 'react';
+import { Flame, FileText, ShieldAlert } from 'lucide-react';
 
 const FireSafety = () => {
   return (
     <div className="space-y-4">
-      <h3 className="text-2xl font-bold text-elec-yellow">Fire Safety for Electrical Environments</h3>
-      
+      <h3 className="text-2xl font-bold text-elec-yellow">
+        Fire Safety for Electrical Environments
+      </h3>
+
       <p className="text-base md:text-lg mb-4">
-        Electrical fires require specific response procedures due to their unique hazards. Understanding the 
-        correct extinguishing methods and preventive measures is essential for all electrical workers.
+        Electrical fires require specific response procedures due to their unique hazards.
+        Understanding the correct extinguishing methods and preventive measures is essential for all
+        electrical workers.
       </p>
-      
+
       <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Left Column */}
@@ -20,34 +22,64 @@ const FireSafety = () => {
               <div className="p-1.5 bg-elec-yellow/10 rounded">
                 <Flame className="h-5 w-5 text-elec-yellow" />
               </div>
-              <h4 className="font-medium text-elec-yellow text-lg">Fire Classification & Extinguishers</h4>
+              <h4 className="font-medium text-elec-yellow text-lg">
+                Fire Classification & Extinguishers
+              </h4>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Electrical Fires (Class E/C)</h5>
-              <p className="text-base mb-2">Electrical fires are classified as Class E (UK) or Class C (EU) fires. They require specific extinguishing agents that do not conduct electricity.</p>
-              
-              <h6 className="font-medium text-white text-sm mt-3 mb-1">Appropriate Extinguishers:</h6>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">
+                Electrical Fires (Class E/C)
+              </h5>
+              <p className="text-base mb-2">
+                Electrical fires are classified as Class E (UK) or Class C (EU) fires. They require
+                specific extinguishing agents that do not conduct electricity.
+              </p>
+
+              <h6 className="font-medium text-white text-sm mt-3 mb-1">
+                Appropriate Extinguishers:
+              </h6>
               <ul className="list-disc list-inside text-base space-y-1">
-                <li><span className="text-elec-yellow">CO₂ extinguishers</span> - Primary choice for electrical fires</li>
-                <li><span className="text-elec-yellow">Dry powder</span> - Effective but causes significant mess</li>
-                <li className="text-red-400">NEVER use water or foam extinguishers on live electrical equipment</li>
+                <li>
+                  <span className="text-elec-yellow">CO₂ extinguishers</span> - Primary choice for
+                  electrical fires
+                </li>
+                <li>
+                  <span className="text-elec-yellow">Dry powder</span> - Effective but causes
+                  significant mess
+                </li>
+                <li className="text-red-400">
+                  NEVER use water or foam extinguishers on live electrical equipment
+                </li>
               </ul>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Fire Extinguisher Operation (PASS)</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">
+                Fire Extinguisher Operation (PASS)
+              </h5>
               <ol className="list-decimal list-inside text-base space-y-1">
-                <li><span className="font-medium">P</span>ull the pin</li>
-                <li><span className="font-medium">A</span>im at the base of the fire</li>
-                <li><span className="font-medium">S</span>queeze the handle</li>
-                <li><span className="font-medium">S</span>weep from side to side</li>
+                <li>
+                  <span className="font-medium">P</span>ull the pin
+                </li>
+                <li>
+                  <span className="font-medium">A</span>im at the base of the fire
+                </li>
+                <li>
+                  <span className="font-medium">S</span>queeze the handle
+                </li>
+                <li>
+                  <span className="font-medium">S</span>weep from side to side
+                </li>
               </ol>
-              
-              <p className="text-base mt-2">Only attempt to fight small, contained fires if it is safe to do so and you have a clear escape route.</p>
+
+              <p className="text-base mt-2">
+                Only attempt to fight small, contained fires if it is safe to do so and you have a
+                clear escape route.
+              </p>
             </div>
           </div>
-          
+
           {/* Right Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
@@ -56,7 +88,7 @@ const FireSafety = () => {
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Fire Prevention & Response</h4>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Preventive Measures</h5>
               <ul className="list-disc list-inside text-base space-y-1">
@@ -68,7 +100,7 @@ const FireSafety = () => {
                 <li>Use RCDs for additional protection</li>
               </ul>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-1">Response Procedures</h5>
               <ol className="list-decimal list-inside text-base space-y-1">
@@ -80,9 +112,11 @@ const FireSafety = () => {
                 <li>Never re-enter a building until authorised</li>
               </ol>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Post-Fire Investigation</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">
+                Post-Fire Investigation
+              </h5>
               <ul className="list-disc list-inside text-base space-y-1">
                 <li>All electrical fires must be formally reported</li>
                 <li>Equipment involved should not be used until inspected</li>
@@ -93,16 +127,19 @@ const FireSafety = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-4 p-4 bg-white/10 rounded-lg text-base">
           <div className="flex items-start gap-3">
             <FileText className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
             <div>
               <p className="font-medium mb-1 text-elec-yellow">Legal Requirements:</p>
-              <p>The Regulatory Reform (Fire Safety) Order 2005 requires employers to conduct fire risk assessments, 
-              provide appropriate firefighting equipment, and ensure workers are trained in fire safety procedures. 
-              All electrical workers should be familiar with the specific requirements for electrical fire safety, including 
-              the locations of fire extinguishers, fire alarm call points, and emergency exits.</p>
+              <p>
+                The Regulatory Reform (Fire Safety) Order 2005 requires employers to conduct fire
+                risk assessments, provide appropriate firefighting equipment, and ensure workers are
+                trained in fire safety procedures. All electrical workers should be familiar with
+                the specific requirements for electrical fire safety, including the locations of
+                fire extinguishers, fire alarm call points, and emergency exits.
+              </p>
             </div>
           </div>
         </div>

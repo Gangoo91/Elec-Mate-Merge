@@ -6,7 +6,7 @@ import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { SmartTextarea } from './common/SmartTextarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -60,6 +60,10 @@ import { SafetyPhotoCapture } from './common/SafetyPhotoCapture';
 import { useShowMore } from '@/hooks/useShowMore';
 import { NearMissReport, Witness } from './types';
 import { RiskMatrix } from './common/RiskMatrix';
+import { SignaturePad } from './common/SignaturePad';
+import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
+import { LoadTemplateSheet } from './common/LoadTemplateSheet';
+import { NEAR_MISS_STANDARD_TEMPLATES } from '@/data/site-safety/near-miss-templates';
 
 interface FormData {
   category: string;
@@ -94,7 +98,7 @@ const QUICK_TEMPLATES = [
     category: 'electrical_hazard',
     severity: 'high',
     description:
-      'Near miss involving electrical hazard - exposed wiring, shock risk, or electrical fault detected before incident occurred.',
+      'Near miss involving electrical hazard \u2014 exposed live parts, shock risk, or inadequate isolation discovered. Ref: EAWR 1989 Reg 4, GS38.',
   },
   {
     id: 'fire',
@@ -103,7 +107,7 @@ const QUICK_TEMPLATES = [
     category: 'fire_risk',
     severity: 'critical',
     description:
-      'Near miss involving fire hazard - overheating equipment, sparking, or potential ignition source identified.',
+      'Near miss involving fire hazard \u2014 overheating connection, arcing, sparking, or potential ignition source. Ref: BS 7671 Chapter 42, RRO 2005.',
   },
   {
     id: 'ppe',
@@ -112,7 +116,7 @@ const QUICK_TEMPLATES = [
     category: 'ppe_failure',
     severity: 'medium',
     description:
-      'Near miss due to PPE issue - missing or damaged personal protective equipment identified before work commenced.',
+      'Near miss due to PPE issue \u2014 missing, damaged, or incorrect PPE identified before work commenced. Ref: PPER 2022.',
   },
   {
     id: 'worksite',
@@ -121,7 +125,7 @@ const QUICK_TEMPLATES = [
     category: 'worksite_hazard',
     severity: 'medium',
     description:
-      'Near miss involving worksite hazard - trip hazard, unstable surface, or access issue identified.',
+      'Near miss involving worksite hazard \u2014 trip hazard, cable strike risk, unstable surface, or access issue. Ref: CDM 2015, HSG47.',
   },
 ];
 
@@ -223,6 +227,41 @@ export const NearMissReporting: React.FC = () => {
   const [severityFilter, setSeverityFilter] = useState('all');
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Reporter signature state
+  const [reporterSigName, setReporterSigName] = useState('');
+  const [reporterSigDate, setReporterSigDate] = useState('');
+  const [reporterSigDataUrl, setReporterSigDataUrl] = useState('');
+
+  // Template state
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
+  const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+
+  const getTemplateData = () => ({
+    category: formData.category,
+    severity: formData.severity,
+    potential_consequences: formData.potential_consequences,
+    immediate_actions: formData.immediate_actions,
+    preventive_measures: formData.preventive_measures,
+    weather_conditions: formData.weather_conditions,
+    lighting_conditions: formData.lighting_conditions,
+    likelihood: formData.likelihood,
+  });
+
+  const handleLoadTemplate = (data: Record<string, unknown>) => {
+    setFormData((prev) => ({
+      ...prev,
+      ...(data.category && { category: data.category as string }),
+      ...(data.severity && { severity: data.severity as string }),
+      ...(data.description && { description: data.description as string }),
+      ...(data.potential_consequences && { potential_consequences: data.potential_consequences as string }),
+      ...(data.immediate_actions && { immediate_actions: data.immediate_actions as string }),
+      ...(data.preventive_measures && { preventive_measures: data.preventive_measures as string }),
+      ...(data.weather_conditions && { weather_conditions: data.weather_conditions as string }),
+      ...(data.lighting_conditions && { lighting_conditions: data.lighting_conditions as string }),
+      ...(data.likelihood !== undefined && { likelihood: data.likelihood as number }),
+    }));
+  };
 
   // Collapsible section states
   const [peopleOpen, setPeopleOpen] = useState(false);
@@ -339,6 +378,9 @@ export const NearMissReporting: React.FC = () => {
     setPeopleOpen(false);
     setEnvironmentOpen(false);
     setInvestigationOpen(false);
+    setReporterSigName('');
+    setReporterSigDate('');
+    setReporterSigDataUrl('');
   };
 
   // Draft persistence
@@ -446,6 +488,7 @@ export const NearMissReporting: React.FC = () => {
         supervisor_name: formData.supervisor_name || null,
         previous_similar_incidents: formData.previous_similar_incidents || null,
         photos: photoUrls.length > 0 ? photoUrls : null,
+        reporter_signature: reporterSigDataUrl || null,
         likelihood: formData.likelihood > 0 ? formData.likelihood : null,
         risk_rating:
           formData.likelihood > 0 && formData.severity
@@ -800,6 +843,15 @@ export const NearMissReporting: React.FC = () => {
         )}
       </AnimatePresence>
 
+      {/* Load from Template */}
+      <button
+        type="button"
+        onClick={() => setShowLoadTemplate(true)}
+        className="w-full h-10 flex items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
+      >
+        Load from Template
+      </button>
+
       <div className="space-y-3">
         <Label className="text-sm text-white">Quick templates</Label>
         <div className="grid grid-cols-2 gap-2">
@@ -965,10 +1017,10 @@ export const NearMissReporting: React.FC = () => {
               <Label className="text-white">
                 Description <span className="text-red-400">*</span>
               </Label>
-              <Textarea
+              <SmartTextarea
                 placeholder="Describe what happened..."
                 value={formData.description}
-                onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+                onChange={(val) => setFormData((prev) => ({ ...prev, description: val }))}
                 className={`min-h-[120px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white ${errors.description ? 'border-red-500' : ''}`}
               />
               <div className="flex justify-between">
@@ -990,33 +1042,33 @@ export const NearMissReporting: React.FC = () => {
             </h3>
             <div className="space-y-2">
               <Label className="text-white">Potential Consequences</Label>
-              <Textarea
+              <SmartTextarea
                 placeholder="What could have happened?"
                 value={formData.potential_consequences}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, potential_consequences: e.target.value }))
+                onChange={(val) =>
+                  setFormData((prev) => ({ ...prev, potential_consequences: val }))
                 }
                 className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
             </div>
             <div className="space-y-2">
               <Label className="text-white">Immediate Actions</Label>
-              <Textarea
+              <SmartTextarea
                 placeholder="What did you do?"
                 value={formData.immediate_actions}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, immediate_actions: e.target.value }))
+                onChange={(val) =>
+                  setFormData((prev) => ({ ...prev, immediate_actions: val }))
                 }
                 className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
             </div>
             <div className="space-y-2">
               <Label className="text-white">Preventive Measures</Label>
-              <Textarea
+              <SmartTextarea
                 placeholder="How to prevent this?"
                 value={formData.preventive_measures}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, preventive_measures: e.target.value }))
+                onChange={(val) =>
+                  setFormData((prev) => ({ ...prev, preventive_measures: val }))
                 }
                 className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
               />
@@ -1093,11 +1145,11 @@ export const NearMissReporting: React.FC = () => {
                   />
                 </div>
                 {formData.third_party_involved && (
-                  <Textarea
+                  <SmartTextarea
                     placeholder="Details about third party..."
                     value={formData.third_party_details}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, third_party_details: e.target.value }))
+                    onChange={(val) =>
+                      setFormData((prev) => ({ ...prev, third_party_details: val }))
                     }
                     className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                   />
@@ -1190,11 +1242,11 @@ export const NearMissReporting: React.FC = () => {
                   />
                 </div>
                 {formData.equipment_faulty && (
-                  <Textarea
+                  <SmartTextarea
                     placeholder="Describe the fault..."
                     value={formData.equipment_fault_details}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, equipment_fault_details: e.target.value }))
+                    onChange={(val) =>
+                      setFormData((prev) => ({ ...prev, equipment_fault_details: val }))
                     }
                     className="min-h-[80px] text-base resize-none bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
                   />
@@ -1290,10 +1342,23 @@ export const NearMissReporting: React.FC = () => {
               className="h-14 text-base bg-[#1a1a1a] border-white/10 text-white placeholder:text-white"
             />
           </div>
+
+          {/* Reporter Signature */}
+          <div className="pt-4 border-t border-white/10">
+            <SignaturePad
+              label="Reporter Signature"
+              name={reporterSigName}
+              date={reporterSigDate}
+              signatureDataUrl={reporterSigDataUrl}
+              onSignatureChange={setReporterSigDataUrl}
+              onNameChange={setReporterSigName}
+              onDateChange={setReporterSigDate}
+            />
+          </div>
         </CardContent>
       </Card>
 
-      <div className="sticky bottom-0 bg-[#121212]/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-white/10">
+      <div className="sticky bottom-0 bg-[#121212]/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-white/10 space-y-2">
         <Button
           onClick={submitReport}
           disabled={isSubmitting}
@@ -1311,7 +1376,28 @@ export const NearMissReporting: React.FC = () => {
             </>
           )}
         </Button>
+        <button
+          type="button"
+          onClick={() => setShowSaveTemplate(true)}
+          className="w-full h-10 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
+        >
+          Save as Template
+        </button>
       </div>
+
+      <SaveAsTemplateSheet
+        open={showSaveTemplate}
+        onOpenChange={setShowSaveTemplate}
+        moduleType="near-miss"
+        getTemplateData={getTemplateData}
+      />
+      <LoadTemplateSheet
+        open={showLoadTemplate}
+        onOpenChange={setShowLoadTemplate}
+        moduleType="near-miss"
+        onLoad={handleLoadTemplate}
+        standardTemplates={NEAR_MISS_STANDARD_TEMPLATES}
+      />
     </div>
   );
 };

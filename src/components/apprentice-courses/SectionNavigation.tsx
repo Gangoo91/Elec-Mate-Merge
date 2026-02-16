@@ -1,6 +1,6 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface SectionNavigationProps {
   backHref?: string;
@@ -14,10 +14,10 @@ interface SectionNavigationProps {
  * Provides touch-friendly 48px+ targets with proper spacing.
  */
 export function SectionNavigation({
-  backHref = "..",
-  backLabel = "Back",
+  backHref = '..',
+  backLabel = 'Back',
   nextHref,
-  nextLabel = "Next Section",
+  nextLabel = 'Next Section',
 }: SectionNavigationProps) {
   return (
     <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">

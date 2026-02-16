@@ -1,4 +1,4 @@
-import NewIndustryNewsCard from "./NewIndustryNewsCard";
+import NewIndustryNewsCard from './NewIndustryNewsCard';
 
 const EnhancedIndustryNewsCard = () => {
   return <NewIndustryNewsCard />;

@@ -23,6 +23,7 @@ import { SafetyPhoto, getCategoryColor, getCategoryLabel } from '@/hooks/useSafe
 import { useSwipeable } from 'react-swipeable';
 import { format } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import ThumbnailStrip from './ThumbnailStrip';
 import AnnotationCanvas from './AnnotationCanvas';
 
@@ -173,22 +174,53 @@ export default function PhotoViewer({
     });
   }, [newTag, photo, onEdit]);
 
-  // Handle annotation save
+  // Handle annotation save — upload to storage and persist URL
   const handleAnnotationSave = useCallback(
-    (dataUrl: string) => {
-      // The annotated image data URL - in a full implementation this would
-      // upload to Supabase storage and update the photo record
-      // For now, we open the annotated image in a new tab / offer download
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = `annotated-${photo.filename || photo.id}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setShowAnnotation(false);
-      toast({ title: 'Annotated photo saved', description: 'Downloaded to your device' });
+    async (dataUrl: string) => {
+      try {
+        // Convert data URL to blob for upload
+        const res = await fetch(dataUrl);
+        const blob = await res.blob();
+        const fileName = `annotated-${photo.id}-${Date.now()}.jpg`;
+        const filePath = `${photo.user_id}/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('safety-photos')
+          .upload(filePath, blob, { contentType: 'image/jpeg', upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('safety-photos').getPublicUrl(filePath);
+
+        // Save annotated URL in annotations metadata
+        const existingAnnotations = (photo.annotations as Record<string, unknown>[]) || [];
+        const updatedAnnotations = [
+          ...existingAnnotations.filter((a) => !(a as Record<string, unknown>).__annotated_url),
+          { __annotated_url: publicUrl, __annotated_at: new Date().toISOString() },
+        ];
+
+        if (onEdit) {
+          onEdit(photo, { annotations: updatedAnnotations });
+        }
+
+        setShowAnnotation(false);
+        toast({ title: 'Annotated photo saved', description: 'Saved and will appear in exports' });
+      } catch (err) {
+        console.error('Failed to save annotation:', err);
+        // Fallback to download
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `annotated-${photo.filename || photo.id}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setShowAnnotation(false);
+        toast({ title: 'Annotated photo saved', description: 'Downloaded to your device' });
+      }
     },
-    [photo]
+    [photo, onEdit]
   );
 
   // Handle thumbnail strip navigation

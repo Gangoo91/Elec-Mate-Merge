@@ -1,13 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Slider } from "@/components/ui/slider";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Scenario, useCashFlow } from "@/hooks/use-cash-flow";
-import { Target, TrendingUp, TrendingDown, BarChart3, AlertTriangle } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Slider } from '@/components/ui/slider';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Scenario, useCashFlow } from '@/hooks/use-cash-flow';
+import { Target, TrendingUp, TrendingDown, BarChart3, AlertTriangle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface ScenarioPlannerProps {
   scenarios: Scenario[];
@@ -17,12 +17,12 @@ interface ScenarioPlannerProps {
   financialMetrics: any;
 }
 
-export const ScenarioPlanner = ({ 
-  scenarios, 
-  selectedScenario, 
-  onScenarioChange, 
+export const ScenarioPlanner = ({
+  scenarios,
+  selectedScenario,
+  onScenarioChange,
   monthlyProjections,
-  financialMetrics 
+  financialMetrics,
 }: ScenarioPlannerProps) => {
   const [whatIfMultiplier, setWhatIfMultiplier] = useState([1.0]);
   const [whatIfAnalysis, setWhatIfAnalysis] = useState<{
@@ -33,37 +33,38 @@ export const ScenarioPlanner = ({
 
   const runWhatIfAnalysis = () => {
     const multiplier = whatIfMultiplier[0];
-    const newProjections = monthlyProjections.map(p => ({
+    const newProjections = monthlyProjections.map((p) => ({
       ...p,
       income: p.income * multiplier,
-      netFlow: (p.income * multiplier) - p.expenses
+      netFlow: p.income * multiplier - p.expenses,
     }));
 
-    let cumulativeBalance = monthlyProjections[0]?.cumulativeBalance - monthlyProjections[0]?.netFlow || 5000;
-    const updatedProjections = newProjections.map(p => {
+    let cumulativeBalance =
+      monthlyProjections[0]?.cumulativeBalance - monthlyProjections[0]?.netFlow || 5000;
+    const updatedProjections = newProjections.map((p) => {
       cumulativeBalance += p.netFlow;
       return { ...p, cumulativeBalance };
     });
 
     const newNetProfit = updatedProjections.reduce((sum, p) => sum + p.netFlow, 0);
-    const newMinBalance = Math.min(...updatedProjections.map(p => p.cumulativeBalance));
-    
-    let impactDescription = "";
+    const newMinBalance = Math.min(...updatedProjections.map((p) => p.cumulativeBalance));
+
+    let impactDescription = '';
     const changePercent = ((multiplier - 1) * 100).toFixed(0);
     const profitChange = newNetProfit - financialMetrics.netProfit;
-    
+
     if (multiplier > 1) {
       impactDescription = `${changePercent}% income increase would add £${profitChange.toLocaleString(undefined, { maximumFractionDigits: 0 })} annual profit`;
     } else if (multiplier < 1) {
       impactDescription = `${Math.abs(Number(changePercent))}% income decrease would reduce annual profit by £${Math.abs(profitChange).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
     } else {
-      impactDescription = "No change from current projections";
+      impactDescription = 'No change from current projections';
     }
 
     setWhatIfAnalysis({
       newNetProfit,
       newMinBalance,
-      impactDescription
+      impactDescription,
     });
   };
 
@@ -94,17 +95,18 @@ export const ScenarioPlanner = ({
     }
   };
 
-  const scenarioComparison = scenarios.map(scenario => {
+  const scenarioComparison = scenarios.map((scenario) => {
     const multiplier = scenario.multiplier;
     const projectedIncome = financialMetrics.totalIncome * multiplier;
-    const projectedProfit = (financialMetrics.totalIncome * multiplier) - financialMetrics.totalExpenses;
-    const projectedMargin = ((projectedProfit / projectedIncome) * 100);
+    const projectedProfit =
+      financialMetrics.totalIncome * multiplier - financialMetrics.totalExpenses;
+    const projectedMargin = (projectedProfit / projectedIncome) * 100;
 
     return {
       ...scenario,
       projectedIncome,
       projectedProfit,
-      projectedMargin
+      projectedMargin,
     };
   });
 
@@ -135,9 +137,9 @@ export const ScenarioPlanner = ({
               <p className="text-elec-light/80 text-sm">
                 Select different scenarios to see how they impact your cash flow projections.
               </p>
-              
+
               <div className="grid gap-3">
-                {scenarios.map(scenario => (
+                {scenarios.map((scenario) => (
                   <div
                     key={scenario.id}
                     className={`p-4 rounded-lg border cursor-pointer transition-all ${
@@ -160,7 +162,9 @@ export const ScenarioPlanner = ({
                           {(scenario.multiplier * 100).toFixed(0)}%
                         </Badge>
                         {selectedScenario === scenario.id && (
-                          <Badge variant="outline" className="ml-2">Active</Badge>
+                          <Badge variant="outline" className="ml-2">
+                            Active
+                          </Badge>
                         )}
                       </div>
                     </div>
@@ -188,8 +192,8 @@ export const ScenarioPlanner = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {scenarioComparison.map(scenario => (
-                      <tr 
+                    {scenarioComparison.map((scenario) => (
+                      <tr
                         key={scenario.id}
                         className={`border-b border-secondary/20 ${
                           selectedScenario === scenario.id ? 'bg-elec-yellow/5' : ''
@@ -207,15 +211,22 @@ export const ScenarioPlanner = ({
                         <td className="text-right py-3 text-green-400 font-medium">
                           £{scenario.projectedIncome.toFixed(0)}
                         </td>
-                        <td className={`text-right py-3 font-medium ${
-                          scenario.projectedProfit >= 0 ? 'text-green-400' : 'text-red-400'
-                        }`}>
+                        <td
+                          className={`text-right py-3 font-medium ${
+                            scenario.projectedProfit >= 0 ? 'text-green-400' : 'text-red-400'
+                          }`}
+                        >
                           £{scenario.projectedProfit.toFixed(0)}
                         </td>
-                        <td className={`text-right py-3 font-medium ${
-                          scenario.projectedMargin >= 10 ? 'text-green-400' : 
-                          scenario.projectedMargin >= 0 ? 'text-yellow-400' : 'text-red-400'
-                        }`}>
+                        <td
+                          className={`text-right py-3 font-medium ${
+                            scenario.projectedMargin >= 10
+                              ? 'text-green-400'
+                              : scenario.projectedMargin >= 0
+                                ? 'text-yellow-400'
+                                : 'text-red-400'
+                          }`}
+                        >
                           {scenario.projectedMargin.toFixed(1)}%
                         </td>
                       </tr>
@@ -235,7 +246,10 @@ export const ScenarioPlanner = ({
             <CardContent className="space-y-6">
               <div>
                 <label className="text-elec-light font-medium mb-3 block">
-                  If my income changes by: <span className="text-elec-yellow font-bold">{((whatIfMultiplier[0] - 1) * 100).toFixed(0)}%</span>
+                  If my income changes by:{' '}
+                  <span className="text-elec-yellow font-bold">
+                    {((whatIfMultiplier[0] - 1) * 100).toFixed(0)}%
+                  </span>
                 </label>
                 <Slider
                   value={whatIfMultiplier}
@@ -258,28 +272,41 @@ export const ScenarioPlanner = ({
               {whatIfAnalysis && (
                 <div className="space-y-4 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
                   <h4 className="font-medium text-elec-light">Live Results</h4>
-                  
+
                   {/* Live results grid */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 rounded-lg bg-elec-dark/50">
                       <p className="text-xs text-elec-light/70">New Annual Profit</p>
-                      <p className={`text-xl font-bold ${
-                        whatIfAnalysis.newNetProfit >= 0 ? 'text-green-400' : 'text-red-400'
-                      }`}>
-                        £{whatIfAnalysis.newNetProfit.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      <p
+                        className={`text-xl font-bold ${
+                          whatIfAnalysis.newNetProfit >= 0 ? 'text-green-400' : 'text-red-400'
+                        }`}
+                      >
+                        £
+                        {whatIfAnalysis.newNetProfit.toLocaleString(undefined, {
+                          maximumFractionDigits: 0,
+                        })}
                       </p>
                       <p className="text-xs text-elec-light/60 mt-1">
-                        {whatIfAnalysis.newNetProfit - financialMetrics.netProfit >= 0 ? '+' : ''}
-                        £{Math.abs(whatIfAnalysis.newNetProfit - financialMetrics.netProfit).toLocaleString(undefined, { maximumFractionDigits: 0 })} change
+                        {whatIfAnalysis.newNetProfit - financialMetrics.netProfit >= 0 ? '+' : ''}£
+                        {Math.abs(
+                          whatIfAnalysis.newNetProfit - financialMetrics.netProfit
+                        ).toLocaleString(undefined, { maximumFractionDigits: 0 })}{' '}
+                        change
                       </p>
                     </div>
-                    
+
                     <div className="p-3 rounded-lg bg-elec-dark/50">
                       <p className="text-xs text-elec-light/70">Lowest Balance</p>
-                      <p className={`text-xl font-bold ${
-                        whatIfAnalysis.newMinBalance >= 0 ? 'text-green-400' : 'text-red-400'
-                      }`}>
-                        £{whatIfAnalysis.newMinBalance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      <p
+                        className={`text-xl font-bold ${
+                          whatIfAnalysis.newMinBalance >= 0 ? 'text-green-400' : 'text-red-400'
+                        }`}
+                      >
+                        £
+                        {whatIfAnalysis.newMinBalance.toLocaleString(undefined, {
+                          maximumFractionDigits: 0,
+                        })}
                       </p>
                       <p className="text-xs text-elec-light/60 mt-1">
                         {whatIfAnalysis.newMinBalance >= 0 ? 'Safe' : 'Negative'}
@@ -291,8 +318,12 @@ export const ScenarioPlanner = ({
                     <Alert variant="destructive">
                       <AlertTriangle className="h-4 w-4" />
                       <AlertDescription>
-                        At {((whatIfMultiplier[0] - 1) * 100).toFixed(0)}% income change, you'll go negative. 
-                        Consider reducing expenses by £{Math.abs(whatIfAnalysis.newMinBalance).toLocaleString(undefined, { maximumFractionDigits: 0 })}.
+                        At {((whatIfMultiplier[0] - 1) * 100).toFixed(0)}% income change, you'll go
+                        negative. Consider reducing expenses by £
+                        {Math.abs(whatIfAnalysis.newMinBalance).toLocaleString(undefined, {
+                          maximumFractionDigits: 0,
+                        })}
+                        .
                       </AlertDescription>
                     </Alert>
                   )}

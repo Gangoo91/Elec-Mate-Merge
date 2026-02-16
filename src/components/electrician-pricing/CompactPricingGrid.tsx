@@ -1,14 +1,13 @@
-
-import { Zap, Cable, Settings, Clock } from "lucide-react";
-import { useState } from "react";
-import PricingSection from "./PricingSection";
+import { Zap, Cable, Settings, Clock } from 'lucide-react';
+import { useState } from 'react';
+import PricingSection from './PricingSection';
 
 interface PriceMetric {
   id: number;
   name: string;
   value: string;
   change: string;
-  trend: "up" | "down" | "neutral";
+  trend: 'up' | 'down' | 'neutral';
   badge?: string;
   suppliers?: string[];
   subItems?: PriceMetric[];
@@ -21,7 +20,12 @@ interface CompactPricingGridProps {
   dataSource?: string;
 }
 
-const CompactPricingGrid = ({ metalPrices, lastUpdated, isLive, dataSource }: CompactPricingGridProps) => {
+const CompactPricingGrid = ({
+  metalPrices,
+  lastUpdated,
+  isLive,
+  dataSource,
+}: CompactPricingGridProps) => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const toggleSection = (section: string) => {

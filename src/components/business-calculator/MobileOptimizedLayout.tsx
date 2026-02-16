@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, ChevronUp, ArrowLeft, ArrowRight } from "lucide-react";
-import { useSwipeable } from "react-swipeable";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown, ChevronUp, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useSwipeable } from 'react-swipeable';
 
 interface Section {
   id: string;
@@ -27,10 +27,8 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
   const [openSections, setOpenSections] = useState<string[]>([sections[0]?.id]);
 
   const toggleSection = (sectionId: string) => {
-    setOpenSections(prev =>
-      prev.includes(sectionId)
-        ? prev.filter(id => id !== sectionId)
-        : [...prev, sectionId]
+    setOpenSections((prev) =>
+      prev.includes(sectionId) ? prev.filter((id) => id !== sectionId) : [...prev, sectionId]
     );
   };
 
@@ -63,9 +61,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
                   <CardTitle className="flex items-center gap-3 text-lg">
                     <div className="text-elec-yellow">{section.icon}</div>
                     {section.title}
-                    {section.isRequired && (
-                      <span className="text-red-400 text-sm">*</span>
-                    )}
+                    {section.isRequired && <span className="text-red-400 text-sm">*</span>}
                   </CardTitle>
                   {openSections.includes(section.id) ? (
                     <ChevronUp className="h-5 w-5 text-elec-yellow" />
@@ -76,9 +72,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
               </CardHeader>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <CardContent className="pt-0">
-                {section.content}
-              </CardContent>
+              <CardContent className="pt-0">{section.content}</CardContent>
             </CollapsibleContent>
           </Collapsible>
         </Card>
@@ -112,9 +106,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                    index === currentSectionIndex
-                      ? "bg-elec-yellow w-6"
-                      : "bg-muted"
+                    index === currentSectionIndex ? 'bg-elec-yellow w-6' : 'bg-muted'
                   }`}
                 />
               ))}
@@ -122,7 +114,9 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => onSectionChange(Math.min(sections.length - 1, currentSectionIndex + 1))}
+              onClick={() =>
+                onSectionChange(Math.min(sections.length - 1, currentSectionIndex + 1))
+              }
               disabled={currentSectionIndex === sections.length - 1}
               className="text-elec-yellow hover:bg-elec-yellow/10"
             >
@@ -134,9 +128,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
 
         {/* Current Section Content */}
         <Card className="border border-muted/40 bg-card">
-          <CardContent className="p-6">
-            {sections[currentSectionIndex]?.content}
-          </CardContent>
+          <CardContent className="p-6">{sections[currentSectionIndex]?.content}</CardContent>
         </Card>
 
         {/* Swipe Hint */}
@@ -152,15 +144,15 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
   // Keyboard navigation
   React.useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft" && currentSectionIndex > 0) {
+      if (e.key === 'ArrowLeft' && currentSectionIndex > 0) {
         onSectionChange(currentSectionIndex - 1);
-      } else if (e.key === "ArrowRight" && currentSectionIndex < sections.length - 1) {
+      } else if (e.key === 'ArrowRight' && currentSectionIndex < sections.length - 1) {
         onSectionChange(currentSectionIndex + 1);
       }
     };
 
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
   }, [currentSectionIndex, sections.length, onSectionChange]);
 
   return (

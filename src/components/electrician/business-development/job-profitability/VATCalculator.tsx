@@ -1,7 +1,7 @@
 import React from 'react';
-import { Receipt, Info, Check } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Switch } from "@/components/ui/switch";
+import { Receipt, Info, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Switch } from '@/components/ui/switch';
 
 interface VATCalculatorProps {
   quoteAmount: number;
@@ -16,7 +16,7 @@ export function VATCalculator({
   vatRate,
   onVATRateChange,
   vatRegistered,
-  onVATRegistrationChange
+  onVATRegistrationChange,
 }: VATCalculatorProps) {
   const vatAmount = vatRegistered ? (quoteAmount * vatRate) / 100 : 0;
   const totalWithVAT = quoteAmount + vatAmount;
@@ -31,9 +31,9 @@ export function VATCalculator({
   };
 
   const vatRateButtons = [
-    { rate: 20, label: "20%", desc: "Standard" },
-    { rate: 5, label: "5%", desc: "Reduced" },
-    { rate: 0, label: "0%", desc: "Zero" }
+    { rate: 20, label: '20%', desc: 'Standard' },
+    { rate: 5, label: '5%', desc: 'Reduced' },
+    { rate: 0, label: '0%', desc: 'Zero' },
   ];
 
   return (
@@ -69,7 +69,7 @@ export function VATCalculator({
         {vatRegistered && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
+            animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
           >
@@ -83,19 +83,18 @@ export function VATCalculator({
                   onClick={() => onVATRateChange(btn.rate)}
                   className={`relative p-4 rounded-2xl border transition-all duration-200 touch-manipulation active:scale-[0.98] ${
                     vatRate === btn.rate
-                      ? "bg-elec-yellow/20 border-elec-yellow/50"
-                      : "bg-white/5 border-white/10 hover:bg-white/10"
+                      ? 'bg-elec-yellow/20 border-elec-yellow/50'
+                      : 'bg-white/5 border-white/10 hover:bg-white/10'
                   }`}
                 >
                   {vatRate === btn.rate && (
-                    <motion.div
-                      layoutId="vat-check"
-                      className="absolute top-2 right-2"
-                    >
+                    <motion.div layoutId="vat-check" className="absolute top-2 right-2">
                       <Check className="h-4 w-4 text-elec-yellow" />
                     </motion.div>
                   )}
-                  <p className={`text-xl font-bold ${vatRate === btn.rate ? "text-elec-yellow" : "text-white"}`}>
+                  <p
+                    className={`text-xl font-bold ${vatRate === btn.rate ? 'text-elec-yellow' : 'text-white'}`}
+                  >
                     {btn.label}
                   </p>
                   <p className="text-ios-caption-2 text-white/50 mt-1">{btn.desc}</p>
@@ -115,21 +114,27 @@ export function VATCalculator({
         >
           <div className="flex justify-between items-center">
             <span className="text-ios-body text-white/70">Net Amount</span>
-            <span className="text-ios-body font-medium text-white tabular-nums">£{quoteAmount.toFixed(2)}</span>
+            <span className="text-ios-body font-medium text-white tabular-nums">
+              £{quoteAmount.toFixed(2)}
+            </span>
           </div>
 
           <div className="h-px bg-white/10" />
 
           <div className="flex justify-between items-center">
             <span className="text-ios-body text-white/70">VAT ({vatRate}%)</span>
-            <span className="text-ios-body font-medium text-white tabular-nums">£{vatAmount.toFixed(2)}</span>
+            <span className="text-ios-body font-medium text-white tabular-nums">
+              £{vatAmount.toFixed(2)}
+            </span>
           </div>
 
           <div className="h-px bg-white/10" />
 
           <div className="flex justify-between items-center pt-1">
             <span className="text-ios-headline font-semibold text-white">Total</span>
-            <span className="text-2xl font-bold text-elec-yellow tabular-nums">£{totalWithVAT.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-elec-yellow tabular-nums">
+              £{totalWithVAT.toFixed(2)}
+            </span>
           </div>
         </motion.div>
       )}
@@ -150,7 +155,8 @@ export function VATCalculator({
               <div>
                 <p className="text-ios-subhead font-medium text-blue-300">Reduced VAT Rate</p>
                 <p className="text-ios-caption-1 text-blue-200/70 mt-1">
-                  5% VAT applies to qualifying energy-saving work including heating and insulation. Verify eligibility.
+                  5% VAT applies to qualifying energy-saving work including heating and insulation.
+                  Verify eligibility.
                 </p>
               </div>
             </div>

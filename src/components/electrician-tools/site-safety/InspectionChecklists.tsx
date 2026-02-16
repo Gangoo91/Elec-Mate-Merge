@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { SmartTextarea } from './common/SmartTextarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -51,6 +51,8 @@ import { useShowMore } from '@/hooks/useShowMore';
 type CheckResult = 'pass' | 'fail' | 'na' | null;
 type NonConformanceClass = 'critical' | 'major' | 'minor' | null;
 
+type NonConformanceStatus = 'open' | 'in_progress' | 'closed' | null;
+
 interface ChecklistItem {
   id: string;
   text: string;
@@ -59,6 +61,9 @@ interface ChecklistItem {
   photo: string | null;
   classification: NonConformanceClass;
   remedial_action: string;
+  assigned_to: string;
+  due_date: string;
+  nc_status: NonConformanceStatus;
 }
 
 interface ChecklistSection {
@@ -553,6 +558,9 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
           photo: null,
           classification: null,
           remedial_action: '',
+          assigned_to: '',
+          due_date: '',
+          nc_status: null,
         })),
       }))
     );
@@ -568,6 +576,11 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
       if (result !== 'fail') {
         item.classification = null;
         item.remedial_action = '';
+        item.assigned_to = '';
+        item.due_date = '';
+        item.nc_status = null;
+      } else if (!item.nc_status) {
+        item.nc_status = 'open';
       }
       items[itemIndex] = item;
       section.items = items;
@@ -610,6 +623,30 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
       const section = { ...updated[sectionIndex] };
       const items = [...section.items];
       items[itemIndex] = { ...items[itemIndex], remedial_action };
+      section.items = items;
+      updated[sectionIndex] = section;
+      return updated;
+    });
+  };
+
+  const setItemAssignedTo = (sectionIndex: number, itemIndex: number, assigned_to: string) => {
+    setSections((prev) => {
+      const updated = [...prev];
+      const section = { ...updated[sectionIndex] };
+      const items = [...section.items];
+      items[itemIndex] = { ...items[itemIndex], assigned_to };
+      section.items = items;
+      updated[sectionIndex] = section;
+      return updated;
+    });
+  };
+
+  const setItemDueDate = (sectionIndex: number, itemIndex: number, due_date: string) => {
+    setSections((prev) => {
+      const updated = [...prev];
+      const section = { ...updated[sectionIndex] };
+      const items = [...section.items];
+      items[itemIndex] = { ...items[itemIndex], due_date };
       section.items = items;
       updated[sectionIndex] = section;
       return updated;
@@ -875,14 +912,33 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                                 placeholder="Describe the defect or issue..."
                               />
                               {/* Remedial action */}
-                              <Textarea
+                              <SmartTextarea
                                 value={item.remedial_action}
-                                onChange={(e) =>
-                                  setItemRemedialAction(sectionIdx, itemIdx, e.target.value)
+                                onChange={(val) =>
+                                  setItemRemedialAction(sectionIdx, itemIdx, val)
                                 }
                                 className="touch-manipulation text-sm min-h-[60px] border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
                                 placeholder="Remedial action required..."
                               />
+                              {/* Assigned to & due date */}
+                              <div className="flex gap-2">
+                                <Input
+                                  value={item.assigned_to}
+                                  onChange={(e) =>
+                                    setItemAssignedTo(sectionIdx, itemIdx, e.target.value)
+                                  }
+                                  className="flex-1 h-11 text-sm touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
+                                  placeholder="Assigned to..."
+                                />
+                                <Input
+                                  type="date"
+                                  value={item.due_date}
+                                  onChange={(e) =>
+                                    setItemDueDate(sectionIdx, itemIdx, e.target.value)
+                                  }
+                                  className="w-[140px] h-11 text-sm touch-manipulation border-white/20 focus:border-yellow-500 focus:ring-yellow-500/20 bg-transparent"
+                                />
+                              </div>
                             </div>
                           )}
                         </div>
@@ -942,9 +998,9 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
             {/* Additional notes */}
             <div>
               <Label className="text-white text-sm">Additional Notes</Label>
-              <Textarea
+              <SmartTextarea
                 value={additionalNotes}
-                onChange={(e) => setAdditionalNotes(e.target.value)}
+                onChange={setAdditionalNotes}
                 className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                 placeholder="Any additional observations..."
               />
@@ -1224,24 +1280,50 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
 
               <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
                 {/* Result summary */}
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="p-3 rounded-xl bg-green-500/10 text-center">
-                    <p className="text-2xl font-bold text-green-400">
-                      {viewingInspection.pass_count}
-                    </p>
-                    <p className="text-xs text-green-300">Pass</p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-red-500/10 text-center">
-                    <p className="text-2xl font-bold text-red-400">
-                      {viewingInspection.fail_count}
-                    </p>
-                    <p className="text-xs text-red-300">Fail</p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-gray-500/10 text-center">
-                    <p className="text-2xl font-bold text-white">{viewingInspection.na_count}</p>
-                    <p className="text-xs text-white">N/A</p>
-                  </div>
-                </div>
+                {(() => {
+                  const answered = viewingInspection.pass_count + viewingInspection.fail_count;
+                  const overallRate = answered > 0
+                    ? Math.round((viewingInspection.pass_count / answered) * 100)
+                    : 0;
+                  return (
+                    <div className="space-y-2">
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="p-3 rounded-xl bg-green-500/10 text-center">
+                          <p className="text-2xl font-bold text-green-400">
+                            {viewingInspection.pass_count}
+                          </p>
+                          <p className="text-xs text-green-300">Pass</p>
+                        </div>
+                        <div className="p-3 rounded-xl bg-red-500/10 text-center">
+                          <p className="text-2xl font-bold text-red-400">
+                            {viewingInspection.fail_count}
+                          </p>
+                          <p className="text-xs text-red-300">Fail</p>
+                        </div>
+                        <div className="p-3 rounded-xl bg-gray-500/10 text-center">
+                          <p className="text-2xl font-bold text-white">
+                            {viewingInspection.na_count}
+                          </p>
+                          <p className="text-xs text-white">N/A</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-sm text-white">Overall Pass Rate:</span>
+                        <span
+                          className={`text-lg font-bold ${
+                            overallRate >= 80
+                              ? 'text-green-400'
+                              : overallRate >= 50
+                                ? 'text-amber-400'
+                                : 'text-red-400'
+                          }`}
+                        >
+                          {overallRate}%
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 {/* Failed items with classification */}
                 {viewingInspection.fail_count > 0 &&
@@ -1320,6 +1402,37 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                                     Remedial action: {item.remedial_action}
                                   </p>
                                 )}
+                                {(item.assigned_to || item.due_date || item.nc_status) && (
+                                  <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                                    {item.assigned_to && (
+                                      <span className="text-[10px] text-white bg-white/5 px-2 py-0.5 rounded-full">
+                                        Assigned: {item.assigned_to}
+                                      </span>
+                                    )}
+                                    {item.due_date && (
+                                      <span className="text-[10px] text-white bg-white/5 px-2 py-0.5 rounded-full">
+                                        Due: {new Date(item.due_date).toLocaleDateString('en-GB')}
+                                      </span>
+                                    )}
+                                    {item.nc_status && (
+                                      <Badge
+                                        variant="outline"
+                                        className={`text-[10px] ${
+                                          item.nc_status === 'closed'
+                                            ? 'border-green-500/30 text-green-400'
+                                            : item.nc_status === 'in_progress'
+                                              ? 'border-amber-500/30 text-amber-400'
+                                              : 'border-red-500/30 text-red-400'
+                                        }`}
+                                      >
+                                        {item.nc_status === 'in_progress'
+                                          ? 'In Progress'
+                                          : item.nc_status.charAt(0).toUpperCase() +
+                                            item.nc_status.slice(1)}
+                                      </Badge>
+                                    )}
+                                  </div>
+                                )}
                               </div>
                             );
                           })}
@@ -1328,10 +1441,40 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                     );
                   })()}
 
-                {/* All sections */}
-                {viewingInspection.sections.map((section) => (
+                {/* All sections with per-section summary */}
+                {viewingInspection.sections.map((section) => {
+                  const sPass = section.items.filter((i) => i.result === 'pass').length;
+                  const sFail = section.items.filter((i) => i.result === 'fail').length;
+                  const sNa = section.items.filter((i) => i.result === 'na').length;
+                  const sTotal = section.items.length;
+                  const sAnswered = sPass + sFail;
+                  const sRate = sAnswered > 0 ? Math.round((sPass / sAnswered) * 100) : 0;
+                  return (
                   <div key={section.id}>
-                    <h4 className="text-sm font-bold text-white mb-2">{section.title}</h4>
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-sm font-bold text-white">{section.title}</h4>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] text-green-400">{sPass}P</span>
+                        <span className="text-[10px] text-white">/</span>
+                        <span className="text-[10px] text-red-400">{sFail}F</span>
+                        <span className="text-[10px] text-white">/</span>
+                        <span className="text-[10px] text-white">{sNa}NA</span>
+                        {sAnswered > 0 && (
+                          <Badge
+                            variant="outline"
+                            className={`text-[9px] ml-1 ${
+                              sRate >= 80
+                                ? 'border-green-500/30 text-green-400'
+                                : sRate >= 50
+                                  ? 'border-amber-500/30 text-amber-400'
+                                  : 'border-red-500/30 text-red-400'
+                            }`}
+                          >
+                            {sRate}%
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
                     <div className="space-y-1">
                       {section.items.map((item) => {
                         const result = item.result;
@@ -1347,7 +1490,8 @@ export function InspectionChecklists({ onBack }: { onBack: () => void }) {
                       })}
                     </div>
                   </div>
-                ))}
+                  );
+                })}
 
                 {viewingInspection.additional_notes && (
                   <div>

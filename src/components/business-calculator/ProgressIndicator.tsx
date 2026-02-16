@@ -1,7 +1,7 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle, Circle, ArrowRight } from "lucide-react";
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { CheckCircle, Circle, ArrowRight } from 'lucide-react';
 
 interface ProgressIndicatorProps {
   currentStep: number;
@@ -41,10 +41,10 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                   <div
                     className={`flex items-center justify-center w-6 h-6 rounded-full border-2 transition-all duration-200 ${
                       completedSteps[index]
-                        ? "bg-elec-yellow border-elec-yellow text-black"
+                        ? 'bg-elec-yellow border-elec-yellow text-black'
                         : index === currentStep
-                        ? "border-elec-yellow text-elec-yellow bg-elec-yellow/10"
-                        : "border-muted text-muted-foreground"
+                          ? 'border-elec-yellow text-elec-yellow bg-elec-yellow/10'
+                          : 'border-muted text-muted-foreground'
                     }`}
                   >
                     {completedSteps[index] ? (
@@ -56,8 +56,8 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                   <span
                     className={`text-xs text-center max-w-16 leading-tight ${
                       completedSteps[index] || index === currentStep
-                        ? "text-elec-yellow"
-                        : "text-muted-foreground"
+                        ? 'text-elec-yellow'
+                        : 'text-muted-foreground'
                     }`}
                   >
                     {label}
@@ -66,7 +66,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                 {index < stepLabels.length - 1 && (
                   <ArrowRight
                     className={`h-3 w-3 mx-1 ${
-                      completedSteps[index] ? "text-elec-yellow" : "text-muted-foreground"
+                      completedSteps[index] ? 'text-elec-yellow' : 'text-muted-foreground'
                     }`}
                   />
                 )}
@@ -79,7 +79,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
             <p className="text-xs text-muted-foreground">
               {currentStep < totalSteps
                 ? `Complete ${stepLabels[currentStep]} to continue`
-                : "All steps completed! Review your business plan."}
+                : 'All steps completed! Review your business plan.'}
             </p>
           </div>
         </div>

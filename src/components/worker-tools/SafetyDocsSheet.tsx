@@ -56,7 +56,10 @@ export function SafetyDocsSheet({ open, onOpenChange }: SafetyDocsSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-xl sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-xl sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -176,7 +179,8 @@ export function SafetyDocsSheet({ open, onOpenChange }: SafetyDocsSheetProps) {
                             <p className="font-medium text-white">{doc.title}</p>
                             <p className="text-sm text-white/60">{doc.type}</p>
                             <p className="text-xs text-white/40 mt-1">
-                              Acknowledged {new Date(doc.acknowledged_at!).toLocaleDateString('en-GB', {
+                              Acknowledged{' '}
+                              {new Date(doc.acknowledged_at!).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'short',
                                 year: 'numeric',

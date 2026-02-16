@@ -28,7 +28,9 @@ interface UseHealthSafetyGenerationReturn {
   error: string | null;
 }
 
-export const useHealthSafetyGeneration = (jobId: string | null): UseHealthSafetyGenerationReturn => {
+export const useHealthSafetyGeneration = (
+  jobId: string | null
+): UseHealthSafetyGenerationReturn => {
   const [job, setJob] = useState<HealthSafetyJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
   const [lastProgress, setLastProgress] = useState(0);
@@ -56,7 +58,7 @@ export const useHealthSafetyGeneration = (jobId: string | null): UseHealthSafety
       if (data.status === 'processing') {
         const hasProgressChanged = data.progress !== lastProgress;
         const hasStepChanged = data.current_step !== lastCurrentStep;
-        
+
         if (hasProgressChanged || hasStepChanged) {
           setLastProgress(data.progress);
           setLastCurrentStep(data.current_step || '');
@@ -69,7 +71,8 @@ export const useHealthSafetyGeneration = (jobId: string | null): UseHealthSafety
               .from('health_safety_jobs')
               .update({
                 status: 'failed',
-                error_message: 'Generation timed out - no activity detected for 6 minutes. Please try again.'
+                error_message:
+                  'Generation timed out - no activity detected for 6 minutes. Please try again.',
               })
               .eq('id', jobId);
             setIsPolling(false);
@@ -100,7 +103,7 @@ export const useHealthSafetyGeneration = (jobId: string | null): UseHealthSafety
     const poll = () => {
       pollJob();
       pollCount++;
-      
+
       if (pollCount === 20) {
         pollInterval = 5000;
         console.log('📊 Polling: Switching to 5s interval');
@@ -109,7 +112,7 @@ export const useHealthSafetyGeneration = (jobId: string | null): UseHealthSafety
         pollInterval = 10000;
         console.log('📊 Polling: Switching to 10s interval');
       }
-      
+
       timeoutId = window.setTimeout(poll, pollInterval);
     };
 
@@ -136,9 +139,12 @@ export const useHealthSafetyGeneration = (jobId: string | null): UseHealthSafety
     startPolling,
     stopPolling,
     progress: job?.progress || 0,
-    status: jobId ? ((job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') || 'pending') : 'idle',
+    status: jobId
+      ? (job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') ||
+        'pending'
+      : 'idle',
     currentStep: job?.current_step || '',
     outputData: job?.output_data,
-    error: job?.error_message
+    error: job?.error_message,
   };
 };

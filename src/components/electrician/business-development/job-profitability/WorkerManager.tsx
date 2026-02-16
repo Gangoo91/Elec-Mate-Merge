@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
 import {
   Plus,
   Trash2,
@@ -12,17 +12,25 @@ import {
   GraduationCap,
   Award,
   Briefcase,
-  Star
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
+  Star,
+} from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export interface Worker {
   id: string;
   role: string;
   hours: number;
   hourlyRate: number;
-  skillLevel: 'apprentice-1st' | 'apprentice-2nd' | 'apprentice-3rd' | 'apprentice-4th' | 'qualified' | 'senior' | 'supervisor' | 'specialist';
+  skillLevel:
+    | 'apprentice-1st'
+    | 'apprentice-2nd'
+    | 'apprentice-3rd'
+    | 'apprentice-4th'
+    | 'qualified'
+    | 'senior'
+    | 'supervisor'
+    | 'specialist';
 }
 
 interface RoleOption {
@@ -35,14 +43,70 @@ interface RoleOption {
 }
 
 const workerRoleOptions: RoleOption[] = [
-  { value: "apprentice-1st", label: "1st Year Apprentice", shortLabel: "1st Yr", rate: 15, icon: GraduationCap, color: "blue" },
-  { value: "apprentice-2nd", label: "2nd Year Apprentice", shortLabel: "2nd Yr", rate: 18, icon: GraduationCap, color: "blue" },
-  { value: "apprentice-3rd", label: "3rd Year Apprentice", shortLabel: "3rd Yr", rate: 22, icon: GraduationCap, color: "blue" },
-  { value: "apprentice-4th", label: "4th Year Apprentice", shortLabel: "4th Yr", rate: 25, icon: GraduationCap, color: "blue" },
-  { value: "qualified", label: "Qualified Electrician", shortLabel: "Qualified", rate: 45, icon: Award, color: "green" },
-  { value: "senior", label: "Senior Electrician", shortLabel: "Senior", rate: 55, icon: Star, color: "amber" },
-  { value: "supervisor", label: "Supervisor/Foreman", shortLabel: "Supervisor", rate: 65, icon: Briefcase, color: "purple" },
-  { value: "specialist", label: "Specialist/Consultant", shortLabel: "Specialist", rate: 75, icon: Star, color: "red" },
+  {
+    value: 'apprentice-1st',
+    label: '1st Year Apprentice',
+    shortLabel: '1st Yr',
+    rate: 15,
+    icon: GraduationCap,
+    color: 'blue',
+  },
+  {
+    value: 'apprentice-2nd',
+    label: '2nd Year Apprentice',
+    shortLabel: '2nd Yr',
+    rate: 18,
+    icon: GraduationCap,
+    color: 'blue',
+  },
+  {
+    value: 'apprentice-3rd',
+    label: '3rd Year Apprentice',
+    shortLabel: '3rd Yr',
+    rate: 22,
+    icon: GraduationCap,
+    color: 'blue',
+  },
+  {
+    value: 'apprentice-4th',
+    label: '4th Year Apprentice',
+    shortLabel: '4th Yr',
+    rate: 25,
+    icon: GraduationCap,
+    color: 'blue',
+  },
+  {
+    value: 'qualified',
+    label: 'Qualified Electrician',
+    shortLabel: 'Qualified',
+    rate: 45,
+    icon: Award,
+    color: 'green',
+  },
+  {
+    value: 'senior',
+    label: 'Senior Electrician',
+    shortLabel: 'Senior',
+    rate: 55,
+    icon: Star,
+    color: 'amber',
+  },
+  {
+    value: 'supervisor',
+    label: 'Supervisor/Foreman',
+    shortLabel: 'Supervisor',
+    rate: 65,
+    icon: Briefcase,
+    color: 'purple',
+  },
+  {
+    value: 'specialist',
+    label: 'Specialist/Consultant',
+    shortLabel: 'Specialist',
+    rate: 75,
+    icon: Star,
+    color: 'red',
+  },
 ];
 
 interface WorkerManagerProps {
@@ -58,7 +122,7 @@ export const WorkerManager = ({
   onWorkersChange,
   totalLabourHours,
   totalLabourCost,
-  isVisible
+  isVisible,
 }: WorkerManagerProps) => {
   const { toast } = useToast();
   const [expandedWorker, setExpandedWorker] = useState<string | null>(workers[0]?.id || null);
@@ -66,55 +130,57 @@ export const WorkerManager = ({
   const addWorker = () => {
     const newWorker: Worker = {
       id: Date.now().toString(),
-      role: "Qualified Electrician",
+      role: 'Qualified Electrician',
       hours: 8,
       hourlyRate: 45,
-      skillLevel: 'qualified'
+      skillLevel: 'qualified',
     };
 
     onWorkersChange([...workers, newWorker]);
     setExpandedWorker(newWorker.id);
     toast({
-      title: "Worker Added",
-      description: "New worker added to the team.",
-      variant: "success"
+      title: 'Worker Added',
+      description: 'New worker added to the team.',
+      variant: 'success',
     });
   };
 
   const removeWorker = (workerId: string) => {
     if (workers.length === 1) {
       toast({
-        title: "Cannot Remove",
-        description: "At least one worker is required.",
-        variant: "destructive"
+        title: 'Cannot Remove',
+        description: 'At least one worker is required.',
+        variant: 'destructive',
       });
       return;
     }
 
-    onWorkersChange(workers.filter(w => w.id !== workerId));
+    onWorkersChange(workers.filter((w) => w.id !== workerId));
     toast({
-      title: "Worker Removed",
-      description: "Worker removed from the team.",
-      variant: "default"
+      title: 'Worker Removed',
+      description: 'Worker removed from the team.',
+      variant: 'default',
     });
   };
 
   const updateWorker = (workerId: string, field: keyof Worker, value: any) => {
-    onWorkersChange(workers.map(worker => {
-      if (worker.id === workerId) {
-        if (field === 'skillLevel') {
-          const roleOption = workerRoleOptions.find(opt => opt.value === value);
-          return {
-            ...worker,
-            [field]: value,
-            role: roleOption?.label || worker.role,
-            hourlyRate: roleOption?.rate || worker.hourlyRate
-          };
+    onWorkersChange(
+      workers.map((worker) => {
+        if (worker.id === workerId) {
+          if (field === 'skillLevel') {
+            const roleOption = workerRoleOptions.find((opt) => opt.value === value);
+            return {
+              ...worker,
+              [field]: value,
+              role: roleOption?.label || worker.role,
+              hourlyRate: roleOption?.rate || worker.hourlyRate,
+            };
+          }
+          return { ...worker, [field]: value };
         }
-        return { ...worker, [field]: value };
-      }
-      return worker;
-    }));
+        return worker;
+      })
+    );
   };
 
   const blendedHourlyRate = totalLabourHours > 0 ? totalLabourCost / totalLabourHours : 0;
@@ -131,7 +197,9 @@ export const WorkerManager = ({
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white">Team</h3>
-            <p className="text-ios-caption-1 text-white/50">{workers.length} worker{workers.length !== 1 ? 's' : ''}</p>
+            <p className="text-ios-caption-1 text-white/50">
+              {workers.length} worker{workers.length !== 1 ? 's' : ''}
+            </p>
           </div>
         </div>
         <Button
@@ -150,21 +218,27 @@ export const WorkerManager = ({
             <Clock className="h-3 w-3 text-elec-yellow" />
             <span className="text-ios-caption-2 text-elec-yellow">Hours</span>
           </div>
-          <p className="text-ios-title-3 font-semibold text-white tabular-nums">{totalLabourHours.toFixed(1)}h</p>
+          <p className="text-ios-title-3 font-semibold text-white tabular-nums">
+            {totalLabourHours.toFixed(1)}h
+          </p>
         </div>
         <div className="flex-shrink-0 bg-green-500/10 border border-green-500/30 rounded-xl p-3 min-w-[100px]">
           <div className="flex items-center gap-1 mb-1">
             <PoundSterling className="h-3 w-3 text-green-400" />
             <span className="text-ios-caption-2 text-green-400">Blended</span>
           </div>
-          <p className="text-ios-title-3 font-semibold text-white tabular-nums">£{blendedHourlyRate.toFixed(0)}/hr</p>
+          <p className="text-ios-title-3 font-semibold text-white tabular-nums">
+            £{blendedHourlyRate.toFixed(0)}/hr
+          </p>
         </div>
         <div className="flex-shrink-0 bg-blue-500/10 border border-blue-500/30 rounded-xl p-3 min-w-[100px]">
           <div className="flex items-center gap-1 mb-1">
             <PoundSterling className="h-3 w-3 text-blue-400" />
             <span className="text-ios-caption-2 text-blue-400">Total</span>
           </div>
-          <p className="text-ios-title-3 font-semibold text-white tabular-nums">£{totalLabourCost.toFixed(0)}</p>
+          <p className="text-ios-title-3 font-semibold text-white tabular-nums">
+            £{totalLabourCost.toFixed(0)}
+          </p>
         </div>
       </div>
 
@@ -172,7 +246,7 @@ export const WorkerManager = ({
       <div className="space-y-2">
         <AnimatePresence>
           {workers.map((worker, index) => {
-            const roleOption = workerRoleOptions.find(r => r.value === worker.skillLevel);
+            const roleOption = workerRoleOptions.find((r) => r.value === worker.skillLevel);
             const RoleIcon = roleOption?.icon || Users;
             const isExpanded = expandedWorker === worker.id;
             const workerCost = worker.hours * worker.hourlyRate;
@@ -218,7 +292,7 @@ export const WorkerManager = ({
                   {isExpanded && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
+                      animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       className="border-t border-white/10"
                     >
@@ -233,21 +307,31 @@ export const WorkerManager = ({
                               return (
                                 <button
                                   key={option.value}
-                                  onClick={() => updateWorker(worker.id, 'skillLevel', option.value)}
+                                  onClick={() =>
+                                    updateWorker(worker.id, 'skillLevel', option.value)
+                                  }
                                   className={`p-2.5 rounded-xl border text-left transition-all touch-manipulation active:scale-[0.98] ${
                                     isSelected
-                                      ? "bg-elec-yellow/20 border-elec-yellow/50"
-                                      : "bg-white/5 border-white/10"
+                                      ? 'bg-elec-yellow/20 border-elec-yellow/50'
+                                      : 'bg-white/5 border-white/10'
                                   }`}
                                 >
                                   <div className="flex items-center gap-2">
-                                    {isSelected && <CheckCircle className="h-3 w-3 text-elec-yellow" />}
-                                    <Icon className={`h-3 w-3 ${isSelected ? "text-elec-yellow" : "text-white/50"}`} />
-                                    <span className={`text-ios-caption-1 font-medium ${isSelected ? "text-elec-yellow" : "text-white"}`}>
+                                    {isSelected && (
+                                      <CheckCircle className="h-3 w-3 text-elec-yellow" />
+                                    )}
+                                    <Icon
+                                      className={`h-3 w-3 ${isSelected ? 'text-elec-yellow' : 'text-white/50'}`}
+                                    />
+                                    <span
+                                      className={`text-ios-caption-1 font-medium ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
+                                    >
                                       {option.shortLabel}
                                     </span>
                                   </div>
-                                  <p className="text-ios-caption-2 text-white/40 mt-0.5">£{option.rate}/hr</p>
+                                  <p className="text-ios-caption-2 text-white/40 mt-0.5">
+                                    £{option.rate}/hr
+                                  </p>
                                 </button>
                               );
                             })}
@@ -261,8 +345,10 @@ export const WorkerManager = ({
                               label="Hours"
                               icon={<Clock className="h-4 w-4" />}
                               type="number"
-                              value={worker.hours || ""}
-                              onChange={(e) => updateWorker(worker.id, 'hours', parseFloat(e.target.value) || 0)}
+                              value={worker.hours || ''}
+                              onChange={(e) =>
+                                updateWorker(worker.id, 'hours', parseFloat(e.target.value) || 0)
+                              }
                               hint="Time on job"
                             />
                           </div>
@@ -271,8 +357,14 @@ export const WorkerManager = ({
                               label="Rate"
                               icon={<PoundSterling className="h-4 w-4" />}
                               type="number"
-                              value={worker.hourlyRate || ""}
-                              onChange={(e) => updateWorker(worker.id, 'hourlyRate', parseFloat(e.target.value) || 0)}
+                              value={worker.hourlyRate || ''}
+                              onChange={(e) =>
+                                updateWorker(
+                                  worker.id,
+                                  'hourlyRate',
+                                  parseFloat(e.target.value) || 0
+                                )
+                              }
                               hint="Per hour"
                             />
                           </div>
@@ -302,19 +394,19 @@ export const WorkerManager = ({
       {/* Quick Add Buttons */}
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
         {[
-          { level: "apprentice-1st" as const, label: "+Apprentice", rate: 15 },
-          { level: "qualified" as const, label: "+Qualified", rate: 45 },
-          { level: "senior" as const, label: "+Senior", rate: 55 }
+          { level: 'apprentice-1st' as const, label: '+Apprentice', rate: 15 },
+          { level: 'qualified' as const, label: '+Qualified', rate: 45 },
+          { level: 'senior' as const, label: '+Senior', rate: 55 },
         ].map((quick) => (
           <button
             key={quick.level}
             onClick={() => {
               const newWorker: Worker = {
                 id: Date.now().toString(),
-                role: workerRoleOptions.find(r => r.value === quick.level)?.label || "",
+                role: workerRoleOptions.find((r) => r.value === quick.level)?.label || '',
                 hours: 8,
                 hourlyRate: quick.rate,
-                skillLevel: quick.level
+                skillLevel: quick.level,
               };
               onWorkersChange([...workers, newWorker]);
               setExpandedWorker(newWorker.id);

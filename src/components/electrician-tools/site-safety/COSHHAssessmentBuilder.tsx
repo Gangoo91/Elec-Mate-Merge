@@ -7,7 +7,7 @@ import { DraftSaveIndicator } from './common/DraftSaveIndicator';
 import { useCOSHHAssessments, useCreateCOSHH, useDeleteCOSHH } from '@/hooks/useCOSHH';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { SmartTextarea } from './common/SmartTextarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -53,7 +53,10 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { LoadMoreButton } from './common/LoadMoreButton';
+import { SignaturePad } from './common/SignaturePad';
 import { useShowMore } from '@/hooks/useShowMore';
+import { SaveAsTemplateSheet } from './common/SaveAsTemplateSheet';
+import { LoadTemplateSheet } from './common/LoadTemplateSheet';
 
 // ─── Types ───
 
@@ -142,7 +145,7 @@ const COMMON_SUBSTANCES = [
     ghs: ['flammable', 'harmful'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
     health:
-      'Eye and respiratory irritation. Prolonged exposure may cause headache, dizziness. Skin defatting.',
+      'Eye and respiratory irritation. WEL: 50 ppm (8-hr TWA), 100 ppm (15-min STEL) for THF per EH40/2005. Prolonged exposure may cause headache, dizziness. Skin defatting.',
     controls: [
       'Use in well-ventilated area',
       'Avoid breathing vapours',
@@ -176,7 +179,7 @@ const COMMON_SUBSTANCES = [
     ghs: ['harmful', 'corrosive'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
     health:
-      'Fume inhalation may cause occupational asthma. Corrosive to skin and eyes. May cause sensitisation.',
+      'Fume inhalation may cause occupational asthma. WEL: 0.05 mg/m\u00B3 (8-hr TWA) for rosin-based solder fume per EH40/2005. Corrosive to skin and eyes. May cause sensitisation.',
     controls: [
       'Local exhaust ventilation at soldering point',
       'Minimise heating time',
@@ -212,7 +215,7 @@ const COMMON_SUBSTANCES = [
     manufacturer: 'Various',
     ghs: ['harmful', 'environmental'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
-    health: 'Respiratory irritation. Skin sensitisation possible. May contain isocyanates.',
+    health: 'Respiratory irritation. Skin sensitisation possible. May contain isocyanates \u2014 WEL: 0.02 mg/m\u00B3 (8-hr TWA) for MDI/HDI per EH40/2005. Health surveillance required under COSHH Reg 11.',
     controls: [
       'Adequate ventilation',
       'Avoid spray mist inhalation',
@@ -232,7 +235,7 @@ const COMMON_SUBSTANCES = [
     ghs: ['harmful', 'health-hazard'],
     routes: ['inhalation', 'skin-contact', 'eye-contact'],
     health:
-      'Skin sensitisation (epoxy). Respiratory sensitisation. Exothermic reaction during curing — burn risk.',
+      'Skin sensitisation (epoxy) \u2014 may cause allergic dermatitis. Respiratory sensitisation. Exothermic reaction during curing \u2014 burn risk. Health surveillance recommended per COSHH Reg 11 for regular users.',
     controls: [
       'Use in ventilated area',
       'Mix components as directed',
@@ -249,6 +252,90 @@ const COMMON_SUBSTANCES = [
     spill: 'Allow to cure if mixed. Scrape up uncured material. Avoid skin contact.',
     firstAid:
       'Skin: Remove immediately with suitable cleaner (not solvent). Eyes: Flush 15 min, seek medical attention. Inhalation: Fresh air.',
+  },
+  {
+    name: 'Expanding Foam (PU Fire Stop)',
+    manufacturer: 'Various',
+    ghs: ['flammable', 'harmful', 'health-hazard'],
+    routes: ['inhalation', 'skin-contact', 'eye-contact'],
+    health:
+      'Contains MDI (methylene diphenyl diisocyanate) \u2014 respiratory sensitiser (H334), skin sensitiser (H317). WEL: 0.02 mg/m\u00B3 (8-hr TWA) per EH40/2005. Once sensitised, even low exposures can trigger asthma. Health surveillance mandatory under COSHH Reg 11.',
+    controls: [
+      'Use in well-ventilated area or with RPE',
+      'Minimise spray duration',
+      'Allow to cure before re-entering enclosed areas',
+      'Health surveillance for regular users',
+    ],
+    ppe: ['FFP3 respirator', 'Nitrile gloves', 'Safety glasses/goggles', 'Long sleeves'],
+    storage:
+      'Store upright below 50\u00B0C. Pressurised container \u2014 protect from sunlight. Check expiry date.',
+    spill:
+      'Allow to cure fully then remove mechanically. Do not use solvents. Ventilate area.',
+    firstAid:
+      'Inhalation: Move to fresh air immediately, seek medical attention if breathing difficulty. Skin: Wash with soap and water (do not use solvents). Eyes: Flush 15 min. Ingestion: Do not induce vomiting, seek medical advice.',
+  },
+  {
+    name: 'Battery Acid (Sulphuric Acid)',
+    manufacturer: 'Various',
+    ghs: ['corrosive'],
+    routes: ['inhalation', 'skin-contact', 'eye-contact', 'ingestion'],
+    health:
+      'Severe burns to skin and eyes (H314). Inhalation of mist causes respiratory irritation. WEL: 0.05 mg/m\u00B3 (8-hr TWA) thoracic fraction per EH40/2005. Found in UPS systems, emergency lighting batteries, and lead-acid standby systems.',
+    controls: [
+      'Avoid contact with skin and eyes',
+      'Use in ventilated area',
+      'Keep away from metals \u2014 reacts to produce hydrogen gas',
+      'Neutralising agent (sodium bicarbonate) available nearby',
+    ],
+    ppe: ['Chemical splash goggles', 'Acid-resistant gloves', 'Face shield', 'Chemical-resistant apron'],
+    storage:
+      'Store in original acid-resistant container. Upright, in bunded area. Away from metals and combustibles.',
+    spill:
+      'Contain with absorbent. Neutralise with sodium bicarbonate. Do NOT use water on concentrated acid \u2014 dilute slowly. Dispose as hazardous waste.',
+    firstAid:
+      'Skin: Flush immediately with copious water for 20 min, remove contaminated clothing. Eyes: Flush with clean water 20 min, seek emergency medical attention. Inhalation: Move to fresh air. Ingestion: Do NOT induce vomiting, drink small sips of water, seek emergency medical attention.',
+  },
+  {
+    name: 'Asbestos-Containing Dust',
+    manufacturer: 'N/A \u2014 legacy building material',
+    ghs: ['health-hazard'],
+    routes: ['inhalation'],
+    health:
+      'Causes mesothelioma, asbestosis, lung cancer (H350, H372). WEL: 0.1 fibres/cm\u00B3 (4-hr TWA) per CAR 2012. NO safe exposure level \u2014 any fibre release is hazardous. Latency period 15\u201360 years. Common in pre-2000 buildings: behind DBs, ceiling tiles, AIB, textured coatings, flash guards.',
+    controls: [
+      'DO NOT disturb \u2014 stop work immediately if ACMs encountered',
+      'Only licensed contractors may remove asbestos',
+      'Check asbestos register before any work in pre-2000 buildings per CAR 2012 Reg 4',
+      'Asbestos awareness training mandatory for all operatives',
+    ],
+    ppe: ['RPE (FFP3 minimum) \u2014 face-fit tested', 'Disposable coveralls (Type 5/6)', 'Overshoes', 'Gloves'],
+    storage:
+      'N/A \u2014 do not collect or store. If encapsulated and undamaged, manage in situ per asbestos management plan.',
+    spill:
+      'DO NOT sweep or vacuum with standard equipment. Evacuate area. Engage licensed asbestos removal contractor. UKAS-accredited air testing required before area re-entry.',
+    firstAid:
+      'If exposure suspected: record names of all persons exposed, duration, and activity. Remove contaminated clothing carefully (dampen first). Shower. Report to occupational health. Register on medical surveillance per CAR 2012 Reg 22.',
+  },
+  {
+    name: 'Lead Paint Dust',
+    manufacturer: 'N/A \u2014 legacy building material',
+    ghs: ['harmful', 'health-hazard', 'environmental'],
+    routes: ['inhalation', 'ingestion', 'skin-contact'],
+    health:
+      'Toxic if inhaled or ingested (H332, H302). Cumulative poison \u2014 damages nervous system, kidneys, reproductive system. WEL: 0.15 mg/m\u00B3 (8-hr TWA) per EH40/2005. Common in pre-1970 properties. Disturbed during chasing, drilling, or cable routing through old paintwork.',
+    controls: [
+      'Wet methods to suppress dust when drilling/chasing',
+      'HEPA vacuum for debris \u2014 never dry sweep',
+      'Wash hands before eating, drinking, or smoking',
+      'Blood lead level monitoring for regular exposure per CLAW 2002',
+    ],
+    ppe: ['FFP3 respirator', 'Nitrile gloves', 'Coveralls', 'Safety glasses'],
+    storage:
+      'N/A \u2014 collect debris in sealed bags for hazardous waste disposal.',
+    spill:
+      'Dampen area. Collect with HEPA vacuum or damp cloth. Do NOT dry sweep. Dispose as hazardous waste.',
+    firstAid:
+      'Inhalation: Move to fresh air. Ingestion: Rinse mouth, drink water, seek medical advice. Skin: Wash thoroughly. If regular exposure suspected, arrange blood lead level test.',
   },
 ];
 
@@ -457,6 +544,47 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [assessedBy, setAssessedBy] = useState('');
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
 
+  // Signature state
+  const [assessorSigName, setAssessorSigName] = useState('');
+  const [assessorSigDate, setAssessorSigDate] = useState('');
+  const [assessorSigDataUrl, setAssessorSigDataUrl] = useState('');
+  const [reviewerSigName, setReviewerSigName] = useState('');
+  const [reviewerSigDate, setReviewerSigDate] = useState('');
+  const [reviewerSigDataUrl, setReviewerSigDataUrl] = useState('');
+
+  // ─── Template state ───
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
+  const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+
+  const getTemplateData = () => ({
+    substanceName, manufacturer, productCode, locationOfUse, taskDescription,
+    quantityUsed, frequencyOfUse, selectedGHS, healthEffects, oelValue,
+    controlMeasures, ppeRequired, storageRequirements, spillProcedure,
+    firstAid, disposalMethod, monitoringRequired, monitoringDetails, riskRating,
+  });
+
+  const handleLoadTemplate = (data: Record<string, unknown>) => {
+    if (data.substanceName) setSubstanceName(data.substanceName as string);
+    if (data.manufacturer) setManufacturer(data.manufacturer as string);
+    if (data.productCode) setProductCode(data.productCode as string);
+    if (data.locationOfUse) setLocationOfUse(data.locationOfUse as string);
+    if (data.taskDescription) setTaskDescription(data.taskDescription as string);
+    if (data.quantityUsed) setQuantityUsed(data.quantityUsed as string);
+    if (data.frequencyOfUse) setFrequencyOfUse(data.frequencyOfUse as string);
+    if (data.selectedGHS) setSelectedGHS(data.selectedGHS as string[]);
+    if (data.healthEffects) setHealthEffects(data.healthEffects as string);
+    if (data.oelValue) setOelValue(data.oelValue as string);
+    if (data.controlMeasures) setControlMeasures(data.controlMeasures as string[]);
+    if (data.ppeRequired) setPpeRequired(data.ppeRequired as string[]);
+    if (data.storageRequirements) setStorageRequirements(data.storageRequirements as string);
+    if (data.spillProcedure) setSpillProcedure(data.spillProcedure as string);
+    if (data.firstAid) setFirstAid(data.firstAid as string);
+    if (data.disposalMethod) setDisposalMethod(data.disposalMethod as string);
+    if (data.monitoringRequired !== undefined) setMonitoringRequired(data.monitoringRequired as boolean);
+    if (data.monitoringDetails) setMonitoringDetails(data.monitoringDetails as string);
+    if (data.riskRating) setRiskRating(data.riskRating as 'low' | 'medium' | 'high' | 'very-high');
+  };
+
   // ─── Draft persistence ───
   const coshhDraftData = useMemo(
     () => ({
@@ -598,6 +726,12 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     setRiskRating('medium');
     setAssessedBy('');
     setPhotoUrls([]);
+    setAssessorSigName('');
+    setAssessorSigDate('');
+    setAssessorSigDataUrl('');
+    setReviewerSigName('');
+    setReviewerSigDate('');
+    setReviewerSigDataUrl('');
   };
 
   const handleDuplicate = (assessment: COSHHAssessment) => {
@@ -694,6 +828,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         risk_rating: riskRating,
         assessed_by: assessedBy,
         photos: photoUrls,
+        assessor_signature: assessorSigDataUrl || null,
+        reviewer_signature: reviewerSigDataUrl || null,
+        reviewer_name: reviewerSigName || null,
         assessment_date: now.toISOString().split('T')[0],
         review_date: reviewDate.toISOString().split('T')[0],
       });
@@ -774,14 +911,24 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
         return (
           <div className="space-y-4">
             <h3 className="text-base font-bold text-white">Substance Details</h3>
-            <Button
-              variant="outline"
-              onClick={() => setShowSubstanceSheet(true)}
-              className="w-full h-11 border-elec-yellow/30 text-elec-yellow rounded-xl touch-manipulation"
-            >
-              <FlaskConical className="h-4 w-4 mr-2" />
-              Load Common Substance
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setShowSubstanceSheet(true)}
+                className="flex-1 h-11 border-elec-yellow/30 text-elec-yellow rounded-xl touch-manipulation"
+              >
+                <FlaskConical className="h-4 w-4 mr-2" />
+                Load Substance
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowLoadTemplate(true)}
+                className="flex-1 h-11 border-white/20 text-white rounded-xl touch-manipulation"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Load Template
+              </Button>
+            </div>
             <div className="space-y-3">
               <div>
                 <Label className="text-white text-sm">Substance Name *</Label>
@@ -818,9 +965,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               />
               <div>
                 <Label className="text-white text-sm">Task / How Used</Label>
-                <Textarea
+                <SmartTextarea
                   value={taskDescription}
-                  onChange={(e) => setTaskDescription(e.target.value)}
+                  onChange={setTaskDescription}
                   className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                   placeholder="Describe how the substance is used..."
                 />
@@ -945,9 +1092,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
 
             <div>
               <Label className="text-white text-sm">Health Effects</Label>
-              <Textarea
+              <SmartTextarea
                 value={healthEffects}
-                onChange={(e) => setHealthEffects(e.target.value)}
+                onChange={setHealthEffects}
                 className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                 placeholder="Describe potential health effects..."
               />
@@ -1132,9 +1279,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
 
             <div>
               <Label className="text-white text-sm">Storage Requirements</Label>
-              <Textarea
+              <SmartTextarea
                 value={storageRequirements}
-                onChange={(e) => setStorageRequirements(e.target.value)}
+                onChange={setStorageRequirements}
                 className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                 placeholder="Storage conditions and requirements..."
               />
@@ -1142,9 +1289,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
 
             <div>
               <Label className="text-white text-sm">Spill Procedure</Label>
-              <Textarea
+              <SmartTextarea
                 value={spillProcedure}
-                onChange={(e) => setSpillProcedure(e.target.value)}
+                onChange={setSpillProcedure}
                 className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                 placeholder="Steps to take in event of spillage..."
               />
@@ -1152,9 +1299,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
 
             <div>
               <Label className="text-white text-sm">First Aid Measures</Label>
-              <Textarea
+              <SmartTextarea
                 value={firstAid}
-                onChange={(e) => setFirstAid(e.target.value)}
+                onChange={setFirstAid}
                 className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 mt-1"
                 placeholder="First aid measures by exposure route..."
               />
@@ -1202,6 +1349,28 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 placeholder="Your full name"
               />
             </div>
+
+            {/* Assessor Signature */}
+            <SignaturePad
+              label="Assessor Signature"
+              name={assessorSigName}
+              date={assessorSigDate}
+              signatureDataUrl={assessorSigDataUrl}
+              onSignatureChange={setAssessorSigDataUrl}
+              onNameChange={setAssessorSigName}
+              onDateChange={setAssessorSigDate}
+            />
+
+            {/* Reviewer Signature (optional) */}
+            <SignaturePad
+              label="Reviewer Signature (Optional)"
+              name={reviewerSigName}
+              date={reviewerSigDate}
+              signatureDataUrl={reviewerSigDataUrl}
+              onSignatureChange={setReviewerSigDataUrl}
+              onNameChange={setReviewerSigName}
+              onDateChange={setReviewerSigDate}
+            />
           </div>
         );
 
@@ -1219,7 +1388,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
       case 2:
         return controlMeasures.length > 0 || ppeRequired.length > 0;
       case 3:
-        return assessedBy.trim().length > 0;
+        return assessedBy.trim().length > 0 && assessorSigDataUrl.length > 0;
       default:
         return true;
     }
@@ -1410,10 +1579,32 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
               >
                 {wizardStep === 3 ? 'Save Assessment' : 'Continue'}
               </Button>
+              {wizardStep === 3 && (
+                <button
+                  type="button"
+                  onClick={() => setShowSaveTemplate(true)}
+                  className="w-full h-10 mt-2 rounded-xl border border-white/20 text-xs font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  Save as Template
+                </button>
+              )}
             </div>
           </div>
         </SheetContent>
       </Sheet>
+
+      <SaveAsTemplateSheet
+        open={showSaveTemplate}
+        onOpenChange={setShowSaveTemplate}
+        moduleType="coshh"
+        getTemplateData={getTemplateData}
+      />
+      <LoadTemplateSheet
+        open={showLoadTemplate}
+        onOpenChange={setShowLoadTemplate}
+        moduleType="coshh"
+        onLoad={handleLoadTemplate}
+      />
 
       {/* Common Substances Sheet */}
       <Sheet open={showSubstanceSheet} onOpenChange={setShowSubstanceSheet}>
@@ -1627,6 +1818,36 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                     <span>Review by: {viewingAssessment.review_date}</span>
                   </div>
                 </div>
+
+                {/* Signatures */}
+                {((viewingAssessment as Record<string, unknown>).assessor_signature ||
+                  (viewingAssessment as Record<string, unknown>).reviewer_signature) && (
+                  <div className="space-y-3 mt-4">
+                    <h4 className="text-sm font-bold text-white">Signatures</h4>
+                    {(viewingAssessment as Record<string, unknown>).assessor_signature && (
+                      <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                        <p className="text-xs text-white mb-2">Assessor</p>
+                        <img
+                          src={(viewingAssessment as Record<string, unknown>).assessor_signature as string}
+                          alt="Assessor signature"
+                          className="h-16 rounded border border-white/10 bg-white"
+                        />
+                      </div>
+                    )}
+                    {(viewingAssessment as Record<string, unknown>).reviewer_signature && (
+                      <div className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                        <p className="text-xs text-white mb-2">
+                          Reviewer: {(viewingAssessment as Record<string, unknown>).reviewer_name || 'N/A'}
+                        </p>
+                        <img
+                          src={(viewingAssessment as Record<string, unknown>).reviewer_signature as string}
+                          alt="Reviewer signature"
+                          className="h-16 rounded border border-white/10 bg-white"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="px-4 py-3 border-t border-white/10 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                 <Button

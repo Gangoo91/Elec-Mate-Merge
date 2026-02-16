@@ -1,10 +1,10 @@
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Eye, Clock, ExternalLink } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import type { NewsArticle } from "@/hooks/useIndustryNews";
-import { motion } from "framer-motion";
-import { NEWS_SOURCE_BRANDING } from "@/lib/constants/news-sources";
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Eye, Clock, ExternalLink } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import type { NewsArticle } from '@/hooks/useIndustryNews';
+import { motion } from 'framer-motion';
+import { NEWS_SOURCE_BRANDING } from '@/lib/constants/news-sources';
 
 interface NewsGridProps {
   articles: NewsArticle[];
@@ -30,27 +30,30 @@ const itemVariants = {
 
 const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
   const filteredArticles = excludeId
-    ? articles.filter(article => article.id !== excludeId)
+    ? articles.filter((article) => article.id !== excludeId)
     : articles;
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      "Regulation": "bg-rose-500/80 text-white",
-      "Safety": "bg-amber-500/80 text-white",
-      "Technology": "bg-sky-500/80 text-white",
-      "Industry": "bg-emerald-500/80 text-white",
-      "Standards": "bg-violet-500/80 text-white",
-      "News": "bg-cyan-500/80 text-white",
-      "Training": "bg-yellow-500/80 text-black",
-      "Technical": "bg-indigo-500/80 text-white",
-      "BS7671": "bg-purple-500/80 text-white",
-      "Projects": "bg-orange-500/80 text-white",
+      Regulation: 'bg-rose-500/80 text-white',
+      Safety: 'bg-amber-500/80 text-white',
+      Technology: 'bg-sky-500/80 text-white',
+      Industry: 'bg-emerald-500/80 text-white',
+      Standards: 'bg-violet-500/80 text-white',
+      News: 'bg-cyan-500/80 text-white',
+      Training: 'bg-yellow-500/80 text-black',
+      Technical: 'bg-indigo-500/80 text-white',
+      BS7671: 'bg-purple-500/80 text-white',
+      Projects: 'bg-orange-500/80 text-white',
     };
-    return colors[category] || "bg-white/20 text-white";
+    return colors[category] || 'bg-white/20 text-white';
   };
 
   const SourceBadge = ({ source }: { source: string }) => {
-    const branding = NEWS_SOURCE_BRANDING[source] || { color: '#6B7280', shortName: source.slice(0, 2).toUpperCase() };
+    const branding = NEWS_SOURCE_BRANDING[source] || {
+      color: '#6B7280',
+      shortName: source.slice(0, 2).toUpperCase(),
+    };
     return (
       <span
         className="text-[9px] font-bold px-1.5 py-0.5 rounded"
@@ -63,17 +66,25 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
 
   const getCategoryImage = (category: string) => {
     const images: Record<string, string> = {
-      "Regulation": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop&auto=format&q=80",
-      "Safety": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=300&fit=crop&auto=format&q=80",
-      "Technology": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop&auto=format&q=80",
-      "Industry": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop&auto=format&q=80",
-      "Standards": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop&auto=format&q=80",
-      "News": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop&auto=format&q=80",
-      "Training": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&auto=format&q=80",
-      "Technical": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop&auto=format&q=80",
-      "BS7671": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop&auto=format&q=80",
+      Regulation:
+        'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop&auto=format&q=80',
+      Safety:
+        'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=400&h=300&fit=crop&auto=format&q=80',
+      Technology:
+        'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop&auto=format&q=80',
+      Industry:
+        'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop&auto=format&q=80',
+      Standards:
+        'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop&auto=format&q=80',
+      News: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop&auto=format&q=80',
+      Training:
+        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&auto=format&q=80',
+      Technical:
+        'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=300&fit=crop&auto=format&q=80',
+      BS7671:
+        'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop&auto=format&q=80',
     };
-    return images[category] || images["Industry"];
+    return images[category] || images['Industry'];
   };
 
   const getReadTime = (content: string) => {
@@ -125,7 +136,12 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               {/* Top: Category + Source */}
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-1.5">
-                  <Badge className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md", getCategoryColor(article.category))}>
+                  <Badge
+                    className={cn(
+                      'text-[10px] font-semibold px-2 py-0.5 rounded-md',
+                      getCategoryColor(article.category)
+                    )}
+                  >
                     {article.category}
                   </Badge>
                   <SourceBadge source={article.source_name} />
@@ -145,9 +161,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 </h3>
 
                 {/* Summary */}
-                <p className="text-white/50 text-xs line-clamp-2">
-                  {article.summary}
-                </p>
+                <p className="text-white/50 text-xs line-clamp-2">{article.summary}</p>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-[10px] text-white/40">

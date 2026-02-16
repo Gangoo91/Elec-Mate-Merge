@@ -179,9 +179,17 @@ export function useSafetyPhotoUpload() {
 
   // Extract GPS from image EXIF data
   const extractGPS = useCallback(async (file: File): Promise<{ lat?: number; lng?: number }> => {
-    // For now, we'll use the browser's geolocation API as a fallback
-    // EXIF extraction could be added with a library like exif-js
-    return {};
+    try {
+      const exifr = await import('exifr');
+      const data = await exifr.default.parse(file, { gps: true });
+      if (data?.latitude && data?.longitude) {
+        return { lat: data.latitude, lng: data.longitude };
+      }
+      return {};
+    } catch {
+      console.warn('Failed to extract GPS from EXIF');
+      return {};
+    }
   }, []);
 
   // Get current location
@@ -263,15 +271,21 @@ export function useSafetyPhotoUpload() {
           data: { publicUrl },
         } = supabase.storage.from('safety-photos').getPublicUrl(filePath);
 
-        // Get GPS coordinates if available
+        // Get GPS coordinates: try EXIF first, then browser geolocation
         let gpsLat = options.gpsLatitude;
         let gpsLng = options.gpsLongitude;
 
         if (!gpsLat && !gpsLng) {
-          const location = await getCurrentLocation();
-          if (location) {
-            gpsLat = location.lat;
-            gpsLng = location.lng;
+          const exifGps = await extractGPS(file);
+          if (exifGps.lat && exifGps.lng) {
+            gpsLat = exifGps.lat;
+            gpsLng = exifGps.lng;
+          } else {
+            const location = await getCurrentLocation();
+            if (location) {
+              gpsLat = location.lat;
+              gpsLng = location.lng;
+            }
           }
         }
 

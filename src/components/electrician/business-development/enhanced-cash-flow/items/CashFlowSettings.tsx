@@ -1,5 +1,5 @@
-import { Settings } from "lucide-react";
-import { CalculatorInput, CalculatorSelect } from "@/components/calculators/shared";
+import { Settings } from 'lucide-react';
+import { CalculatorInput, CalculatorSelect } from '@/components/calculators/shared';
 
 interface CashFlowSettingsProps {
   startingBalance: number;
@@ -16,14 +16,14 @@ interface CashFlowSettingsProps {
 }
 
 const vatQuarterOptions = [
-  { value: "1", label: "Jan/Apr/Jul/Oct" },
-  { value: "2", label: "Feb/May/Aug/Nov" },
-  { value: "3", label: "Mar/Jun/Sep/Dec" },
+  { value: '1', label: 'Jan/Apr/Jul/Oct' },
+  { value: '2', label: 'Feb/May/Aug/Nov' },
+  { value: '3', label: 'Mar/Jun/Sep/Dec' },
 ];
 
 const vatSchemeOptions = [
-  { value: "standard", label: "Standard" },
-  { value: "flat-rate", label: "Flat Rate" },
+  { value: 'standard', label: 'Standard' },
+  { value: 'flat-rate', label: 'Flat Rate' },
 ];
 
 export const CashFlowSettings = ({
@@ -109,7 +109,7 @@ export const CashFlowSettings = ({
           value={monthlyLoanRepayments.toString()}
           onChange={(val) => onUpdate({ monthlyLoanRepayments: parseFloat(val) || 0 })}
         />
-        {vatScheme === "flat-rate" && (
+        {vatScheme === 'flat-rate' && (
           <CalculatorInput
             label="Flat Rate %"
             unit="%"

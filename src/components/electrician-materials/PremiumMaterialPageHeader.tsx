@@ -1,15 +1,9 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import {
-  ArrowLeft,
-  Search,
-  SlidersHorizontal,
-  X,
-  Package,
-} from "lucide-react";
-import { getMaterialCategoryStyle } from "./materialCategoryStyleUtils";
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { ArrowLeft, Search, SlidersHorizontal, X, Package } from 'lucide-react';
+import { getMaterialCategoryStyle } from './materialCategoryStyleUtils';
 
 interface PremiumMaterialPageHeaderProps {
   categoryId: string;
@@ -51,15 +45,11 @@ const PremiumMaterialPageHeader = ({
             </Link>
 
             <div className="flex items-center gap-3 min-w-0">
-              <div
-                className={`p-2 sm:p-2.5 rounded-xl ${style.iconBg} border shrink-0`}
-              >
+              <div className={`p-2 sm:p-2.5 rounded-xl ${style.iconBg} border shrink-0`}>
                 <CategoryIcon className={`h-5 w-5 sm:h-6 sm:w-6 ${style.textColor}`} />
               </div>
               <div className="min-w-0">
-                <h1 className="text-lg sm:text-xl font-bold text-white truncate">
-                  {categoryName}
-                </h1>
+                <h1 className="text-lg sm:text-xl font-bold text-white truncate">{categoryName}</h1>
                 <div className="flex items-center gap-2">
                   <Badge
                     variant="outline"
@@ -107,7 +97,7 @@ const PremiumMaterialPageHeader = ({
             />
             {searchTerm && (
               <button
-                onClick={() => onSearchChange("")}
+                onClick={() => onSearchChange('')}
                 className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-lg
                            bg-white/10 hover:bg-white/20 transition-colors"
               >

@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { 
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue, 
-} from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, X, LogIn } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
+  SelectValue,
+} from '@/components/ui/select';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon, X, LogIn } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 type ProjectSubmissionDialogProps = {
   open: boolean;
@@ -30,14 +30,14 @@ type ProjectSubmissionDialogProps = {
 export const ProjectSubmissionDialog = ({
   open,
   onOpenChange,
-  onProjectSubmitted
+  onProjectSubmitted,
 }: ProjectSubmissionDialogProps) => {
   const { user, isLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tenderDeadline, setTenderDeadline] = useState<Date>();
   const [dateAwarded, setDateAwarded] = useState<Date>();
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
-  
+
   const [formData, setFormData] = useState({
     title: '',
     summary: '',
@@ -49,7 +49,7 @@ export const ProjectSubmissionDialog = ({
     category: '',
     electrical_scope: '',
     external_project_url: '',
-    source_url: ''
+    source_url: '',
   });
 
   const electricalScopes = [
@@ -64,7 +64,7 @@ export const ProjectSubmissionDialog = ({
     'Building Management Systems',
     'Fire Alarm Systems',
     'Security Systems',
-    'HVAC Controls'
+    'HVAC Controls',
   ];
 
   const availableTechnologies = [
@@ -81,12 +81,12 @@ export const ProjectSubmissionDialog = ({
     'Power Distribution',
     'Cable Management',
     'Testing & Commissioning',
-    'Maintenance Systems'
+    'Maintenance Systems',
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const addTechnology = (tech: string) => {
@@ -96,59 +96,66 @@ export const ProjectSubmissionDialog = ({
   };
 
   const removeTechnology = (tech: string) => {
-    setSelectedTechnologies(selectedTechnologies.filter(t => t !== tech));
+    setSelectedTechnologies(selectedTechnologies.filter((t) => t !== tech));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please log in to submit projects.",
-        variant: "destructive",
+        title: 'Authentication Required',
+        description: 'Please log in to submit projects.',
+        variant: 'destructive',
       });
       return;
     }
-    
-    if (!formData.title || !formData.summary || !formData.awarded_to || !formData.location || !formData.project_value) {
+
+    if (
+      !formData.title ||
+      !formData.summary ||
+      !formData.awarded_to ||
+      !formData.location ||
+      !formData.project_value
+    ) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields: Title, Summary, Client/Organisation, Location, and Project Value.",
-        variant: "destructive",
+        title: 'Missing Information',
+        description:
+          'Please fill in all required fields: Title, Summary, Client/Organisation, Location, and Project Value.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
-      const { error } = await supabase
-        .from('major_projects')
-        .insert({
-          title: formData.title,
-          summary: formData.summary,
-          content: formData.content || formData.summary,
-          awarded_to: formData.awarded_to,
-          location: formData.location,
-          project_value: formData.project_value,
-          status: formData.status,
-          category: formData.category || 'Infrastructure',
-          electrical_scope: formData.electrical_scope || 'General Electrical',
-          technologies: selectedTechnologies,
-          external_project_url: formData.external_project_url || null,
-          source_url: formData.source_url || null,
-          tender_deadline: tenderDeadline?.toISOString().split('T')[0] || null,
-          date_awarded: dateAwarded?.toISOString().split('T')[0] || new Date().toISOString().split('T')[0],
-          is_active: true
-        });
+      const { error } = await supabase.from('major_projects').insert({
+        title: formData.title,
+        summary: formData.summary,
+        content: formData.content || formData.summary,
+        awarded_to: formData.awarded_to,
+        location: formData.location,
+        project_value: formData.project_value,
+        status: formData.status,
+        category: formData.category || 'Infrastructure',
+        electrical_scope: formData.electrical_scope || 'General Electrical',
+        technologies: selectedTechnologies,
+        external_project_url: formData.external_project_url || null,
+        source_url: formData.source_url || null,
+        tender_deadline: tenderDeadline?.toISOString().split('T')[0] || null,
+        date_awarded:
+          dateAwarded?.toISOString().split('T')[0] || new Date().toISOString().split('T')[0],
+        is_active: true,
+      });
 
       if (error) throw error;
 
       toast({
-        title: "Project Submitted",
-        description: "Your project has been submitted successfully and is now visible to the community.",
-        variant: "default",
+        title: 'Project Submitted',
+        description:
+          'Your project has been submitted successfully and is now visible to the community.',
+        variant: 'default',
       });
 
       // Reset form
@@ -163,21 +170,20 @@ export const ProjectSubmissionDialog = ({
         category: '',
         electrical_scope: '',
         external_project_url: '',
-        source_url: ''
+        source_url: '',
       });
       setTenderDeadline(undefined);
       setDateAwarded(undefined);
       setSelectedTechnologies([]);
-      
+
       onOpenChange(false);
       onProjectSubmitted?.();
-      
     } catch (error) {
       console.error('Error submitting project:', error);
       toast({
-        title: "Submission Failed",
-        description: "There was an error submitting your project. Please try again.",
-        variant: "destructive",
+        title: 'Submission Failed',
+        description: 'There was an error submitting your project. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -224,9 +230,11 @@ export const ProjectSubmissionDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-foreground">Submit New Project</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-foreground">
+            Submit New Project
+          </DialogTitle>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2 md:col-span-2">
@@ -240,7 +248,7 @@ export const ProjectSubmissionDialog = ({
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="awarded_to">Client/Organisation *</Label>
               <Input
@@ -252,7 +260,7 @@ export const ProjectSubmissionDialog = ({
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="location">Location *</Label>
               <Input
@@ -264,7 +272,7 @@ export const ProjectSubmissionDialog = ({
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="project_value">Project Value *</Label>
               <Input
@@ -276,14 +284,12 @@ export const ProjectSubmissionDialog = ({
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="category">Category</Label>
-              <Select 
-                value={formData.category} 
-                onValueChange={(value) => 
-                  setFormData(prev => ({ ...prev, category: value }))
-                }
+              <Select
+                value={formData.category}
+                onValueChange={(value) => setFormData((prev) => ({ ...prev, category: value }))}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
@@ -299,13 +305,13 @@ export const ProjectSubmissionDialog = ({
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="electrical_scope">Electrical Scope</Label>
-              <Select 
-                value={formData.electrical_scope} 
-                onValueChange={(value) => 
-                  setFormData(prev => ({ ...prev, electrical_scope: value }))
+              <Select
+                value={formData.electrical_scope}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, electrical_scope: value }))
                 }
               >
                 <SelectTrigger>
@@ -313,19 +319,19 @@ export const ProjectSubmissionDialog = ({
                 </SelectTrigger>
                 <SelectContent>
                   {electricalScopes.map((scope) => (
-                    <SelectItem key={scope} value={scope}>{scope}</SelectItem>
+                    <SelectItem key={scope} value={scope}>
+                      {scope}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="status">Status</Label>
-              <Select 
-                value={formData.status} 
-                onValueChange={(value) => 
-                  setFormData(prev => ({ ...prev, status: value }))
-                }
+              <Select
+                value={formData.status}
+                onValueChange={(value) => setFormData((prev) => ({ ...prev, status: value }))}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
@@ -338,7 +344,7 @@ export const ProjectSubmissionDialog = ({
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label>Date Awarded (Optional)</Label>
               <Popover>
@@ -346,12 +352,12 @@ export const ProjectSubmissionDialog = ({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !dateAwarded && "text-muted-foreground"
+                      'w-full justify-start text-left font-normal',
+                      !dateAwarded && 'text-muted-foreground'
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dateAwarded ? format(dateAwarded, "PPP") : "Pick a date"}
+                    {dateAwarded ? format(dateAwarded, 'PPP') : 'Pick a date'}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -365,7 +371,7 @@ export const ProjectSubmissionDialog = ({
                 </PopoverContent>
               </Popover>
             </div>
-            
+
             <div className="space-y-2">
               <Label>Tender Deadline (Optional)</Label>
               <Popover>
@@ -373,12 +379,12 @@ export const ProjectSubmissionDialog = ({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !tenderDeadline && "text-muted-foreground"
+                      'w-full justify-start text-left font-normal',
+                      !tenderDeadline && 'text-muted-foreground'
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {tenderDeadline ? format(tenderDeadline, "PPP") : "Pick a date"}
+                    {tenderDeadline ? format(tenderDeadline, 'PPP') : 'Pick a date'}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -392,7 +398,7 @@ export const ProjectSubmissionDialog = ({
                 </PopoverContent>
               </Popover>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="external_project_url">Project URL (Optional)</Label>
               <Input
@@ -405,7 +411,7 @@ export const ProjectSubmissionDialog = ({
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label>Technologies</Label>
             <div className="space-y-2">
@@ -415,9 +421,11 @@ export const ProjectSubmissionDialog = ({
                 </SelectTrigger>
                 <SelectContent>
                   {availableTechnologies
-                    .filter(tech => !selectedTechnologies.includes(tech))
+                    .filter((tech) => !selectedTechnologies.includes(tech))
                     .map((tech) => (
-                      <SelectItem key={tech} value={tech}>{tech}</SelectItem>
+                      <SelectItem key={tech} value={tech}>
+                        {tech}
+                      </SelectItem>
                     ))}
                 </SelectContent>
               </Select>
@@ -426,8 +434,8 @@ export const ProjectSubmissionDialog = ({
                   {selectedTechnologies.map((tech) => (
                     <Badge key={tech} variant="secondary" className="flex items-center gap-1">
                       {tech}
-                      <X 
-                        className="h-3 w-3 cursor-pointer" 
+                      <X
+                        className="h-3 w-3 cursor-pointer"
                         onClick={() => removeTechnology(tech)}
                       />
                     </Badge>
@@ -436,7 +444,7 @@ export const ProjectSubmissionDialog = ({
               )}
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="summary">Project Summary *</Label>
             <Textarea
@@ -449,7 +457,7 @@ export const ProjectSubmissionDialog = ({
               required
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="content">Detailed Description (Optional)</Label>
             <Textarea
@@ -461,7 +469,7 @@ export const ProjectSubmissionDialog = ({
               rows={4}
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="source_url">Source URL (Optional)</Label>
             <Input
@@ -473,22 +481,22 @@ export const ProjectSubmissionDialog = ({
               type="url"
             />
           </div>
-          
+
           <div className="flex justify-end gap-2 pt-4 border-t border-elec-yellow/20">
-            <Button 
-              type="button" 
-              variant="outline" 
+            <Button
+              type="button"
+              variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
             >
               Cancel
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isSubmitting}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
             >
-              {isSubmitting ? "Submitting..." : "Submit Project"}
+              {isSubmitting ? 'Submitting...' : 'Submit Project'}
             </Button>
           </div>
         </form>

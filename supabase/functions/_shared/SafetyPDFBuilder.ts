@@ -1027,6 +1027,51 @@ export class SafetyPDFBuilder {
     this.y -= 16;
   }
 
+  /** Standardised audit trail footer for all safety documents */
+  auditFooter(refId: string) {
+    this.ensureSpace(44);
+
+    this.page.drawLine({
+      start: { x: ML, y: this.y },
+      end: { x: PW - MR, y: this.y },
+      thickness: 0.5,
+      color: C.border,
+    });
+
+    this.y -= 12;
+
+    const now = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' });
+    this.page.drawText(`Document Ref: ${refId}`, {
+      x: ML,
+      y: this.y,
+      size: 7,
+      font: this.bold,
+      color: C.textLight,
+    });
+    this.page.drawText(`Generated: ${now}`, {
+      x: PW - MR - this.font.widthOfTextAtSize(`Generated: ${now}`, 7),
+      y: this.y,
+      size: 7,
+      font: this.font,
+      color: C.textLight,
+    });
+
+    this.y -= 12;
+
+    this.page.drawText(
+      'This document was generated electronically by Elec-Mate and constitutes a controlled safety record.',
+      {
+        x: ML,
+        y: this.y,
+        size: 6.5,
+        font: this.font,
+        color: C.textLight,
+      }
+    );
+
+    this.y -= 14;
+  }
+
   // ═══════════════════════════════════════════════════════════════════════════
   // INTERNAL HELPERS
   // ═══════════════════════════════════════════════════════════════════════════

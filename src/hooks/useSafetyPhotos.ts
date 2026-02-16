@@ -1,7 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
 export interface SafetyPhoto {
   id: string;
@@ -17,6 +17,10 @@ export interface SafetyPhoto {
   mime_type: string | null;
   folder_name: string | null;
   project_reference: string | null;
+  project_id: string | null;
+  photo_type: string | null;
+  notes: string | null;
+  annotations: Record<string, unknown>[] | null;
   created_at: string;
   updated_at: string;
   user_id: string;
@@ -26,19 +30,30 @@ export interface PhotoFilters {
   category?: string;
   search?: string;
   project?: string;
+  projectId?: string;
+  photoType?: string;
   dateFrom?: Date;
   dateTo?: Date;
 }
 
 export const PHOTO_CATEGORIES = [
-  { value: "before_work", label: "Before Work", color: "bg-blue-500", icon: "📋" },
-  { value: "after_work", label: "After Work", color: "bg-green-500", icon: "✅" },
-  { value: "safety_procedure", label: "Safety Procedure", color: "bg-yellow-500", icon: "⚠️" },
-  { value: "hazard_identification", label: "Hazard ID", color: "bg-red-500", icon: "🚨" },
-  { value: "ppe_compliance", label: "PPE Compliance", color: "bg-purple-500", icon: "🦺" },
-  { value: "equipment_check", label: "Equipment Check", color: "bg-orange-500", icon: "🔧" },
-  { value: "site_condition", label: "Site Condition", color: "bg-cyan-500", icon: "🏗️" },
-  { value: "other", label: "Other", color: "bg-gray-500", icon: "📷" },
+  { value: 'before_work', label: 'Before Work', color: 'bg-blue-500', icon: '📋' },
+  { value: 'after_work', label: 'After Work', color: 'bg-green-500', icon: '✅' },
+  { value: 'safety_procedure', label: 'Safety Procedure', color: 'bg-yellow-500', icon: '⚠️' },
+  { value: 'hazard_identification', label: 'Hazard ID', color: 'bg-red-500', icon: '🚨' },
+  { value: 'ppe_compliance', label: 'PPE Compliance', color: 'bg-purple-500', icon: '🦺' },
+  { value: 'equipment_check', label: 'Equipment Check', color: 'bg-orange-500', icon: '🔧' },
+  { value: 'site_condition', label: 'Site Condition', color: 'bg-cyan-500', icon: '🏗️' },
+  // BS 7671 specific categories
+  { value: 'consumer_unit', label: 'Consumer Unit', color: 'bg-amber-500', icon: '⚡', bs7671: '411' },
+  { value: 'earthing', label: 'Earthing', color: 'bg-lime-500', icon: '🔌', bs7671: '542' },
+  { value: 'bonding', label: 'Bonding', color: 'bg-teal-500', icon: '🔗', bs7671: '544' },
+  { value: 'cable_routes', label: 'Cable Routes', color: 'bg-sky-500', icon: '🛤️', bs7671: '521' },
+  { value: 'containment', label: 'Containment', color: 'bg-violet-500', icon: '📦', bs7671: '521.5' },
+  { value: 'testing_setup', label: 'Testing Setup', color: 'bg-fuchsia-500', icon: '🔬', bs7671: 'GN3' },
+  { value: 'defects', label: 'Defects', color: 'bg-rose-500', icon: '⛔', bs7671: 'Reg 6' },
+  { value: 'remedial_work', label: 'Remedial Work', color: 'bg-emerald-500', icon: '🛠️', bs7671: 'Reg 6' },
+  { value: 'other', label: 'Other', color: 'bg-gray-500', icon: '📷' },
 ] as const;
 
 export function useSafetyPhotos(filters?: PhotoFilters) {
@@ -47,28 +62,34 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
 
   // Fetch all photos
   const photosQuery = useQuery({
-    queryKey: ["safety-photos", session?.user?.id, filters],
+    queryKey: ['safety-photos', session?.user?.id, filters],
     queryFn: async () => {
       if (!session?.user?.id) return [];
 
       let query = supabase
-        .from("safety_photos")
-        .select("*")
-        .eq("user_id", session.user.id)
-        .order("created_at", { ascending: false });
+        .from('safety_photos')
+        .select('*')
+        .eq('user_id', session.user.id)
+        .order('created_at', { ascending: false });
 
       // Apply filters
-      if (filters?.category && filters.category !== "all") {
-        query = query.eq("category", filters.category);
+      if (filters?.category && filters.category !== 'all') {
+        query = query.eq('category', filters.category);
       }
       if (filters?.project) {
-        query = query.eq("project_reference", filters.project);
+        query = query.eq('project_reference', filters.project);
+      }
+      if (filters?.projectId) {
+        query = query.eq('project_id', filters.projectId);
+      }
+      if (filters?.photoType && filters.photoType !== 'all') {
+        query = query.eq('photo_type', filters.photoType);
       }
       if (filters?.dateFrom) {
-        query = query.gte("created_at", filters.dateFrom.toISOString());
+        query = query.gte('created_at', filters.dateFrom.toISOString());
       }
       if (filters?.dateTo) {
-        query = query.lte("created_at", filters.dateTo.toISOString());
+        query = query.lte('created_at', filters.dateTo.toISOString());
       }
 
       const { data, error } = await query;
@@ -93,16 +114,16 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
 
   // Get unique projects
   const projectsQuery = useQuery({
-    queryKey: ["safety-photo-projects", session?.user?.id],
+    queryKey: ['safety-photo-projects', session?.user?.id],
     queryFn: async () => {
       if (!session?.user?.id) return [];
 
       const { data, error } = await supabase
-        .from("safety_photos")
-        .select("project_reference, created_at")
-        .eq("user_id", session.user.id)
-        .not("project_reference", "is", null)
-        .order("created_at", { ascending: false });
+        .from('safety_photos')
+        .select('project_reference, created_at')
+        .eq('user_id', session.user.id)
+        .not('project_reference', 'is', null)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
 
@@ -136,14 +157,14 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
 
   // Get stats by category
   const statsQuery = useQuery({
-    queryKey: ["safety-photo-stats", session?.user?.id],
+    queryKey: ['safety-photo-stats', session?.user?.id],
     queryFn: async () => {
       if (!session?.user?.id) return { total: 0, byCategory: {} };
 
       const { data, error } = await supabase
-        .from("safety_photos")
-        .select("category")
-        .eq("user_id", session.user.id);
+        .from('safety_photos')
+        .select('category')
+        .eq('user_id', session.user.id);
 
       if (error) throw error;
 
@@ -164,22 +185,22 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
   const deleteMutation = useMutation({
     mutationFn: async (photo: SafetyPhoto) => {
       // Delete from storage
-      const filePath = photo.file_url.split("/safety-photos/")[1];
+      const filePath = photo.file_url.split('/safety-photos/')[1];
       if (filePath) {
-        await supabase.storage.from("safety-photos").remove([filePath]);
+        await supabase.storage.from('safety-photos').remove([filePath]);
       }
       // Delete record
-      const { error } = await supabase.from("safety_photos").delete().eq("id", photo.id);
+      const { error } = await supabase.from('safety_photos').delete().eq('id', photo.id);
       if (error) throw error;
     },
     onSuccess: () => {
-      toast({ title: "Photo deleted" });
-      queryClient.invalidateQueries({ queryKey: ["safety-photos"] });
-      queryClient.invalidateQueries({ queryKey: ["safety-photo-stats"] });
-      queryClient.invalidateQueries({ queryKey: ["safety-photo-projects"] });
+      toast({ title: 'Photo deleted' });
+      queryClient.invalidateQueries({ queryKey: ['safety-photos'] });
+      queryClient.invalidateQueries({ queryKey: ['safety-photo-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['safety-photo-projects'] });
     },
     onError: (error: any) => {
-      toast({ title: "Delete failed", description: error.message, variant: "destructive" });
+      toast({ title: 'Delete failed', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -190,20 +211,22 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
       updates,
     }: {
       id: string;
-      updates: Partial<Pick<SafetyPhoto, "description" | "category" | "location" | "tags" | "project_reference">>;
+      updates: Partial<
+        Pick<SafetyPhoto, 'description' | 'category' | 'location' | 'tags' | 'project_reference' | 'project_id' | 'photo_type' | 'notes' | 'annotations'>
+      >;
     }) => {
       const { error } = await supabase
-        .from("safety_photos")
+        .from('safety_photos')
         .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq("id", id);
+        .eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
-      toast({ title: "Photo updated" });
-      queryClient.invalidateQueries({ queryKey: ["safety-photos"] });
+      toast({ title: 'Photo updated' });
+      queryClient.invalidateQueries({ queryKey: ['safety-photos'] });
     },
     onError: (error: any) => {
-      toast({ title: "Update failed", description: error.message, variant: "destructive" });
+      toast({ title: 'Update failed', description: error.message, variant: 'destructive' });
     },
   });
 
@@ -223,7 +246,7 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
 
 // Helper functions
 export function getCategoryColor(category: string): string {
-  return PHOTO_CATEGORIES.find((c) => c.value === category)?.color || "bg-gray-500";
+  return PHOTO_CATEGORIES.find((c) => c.value === category)?.color || 'bg-gray-500';
 }
 
 export function getCategoryLabel(category: string): string {
@@ -231,5 +254,5 @@ export function getCategoryLabel(category: string): string {
 }
 
 export function getCategoryIcon(category: string): string {
-  return PHOTO_CATEGORIES.find((c) => c.value === category)?.icon || "📷";
+  return PHOTO_CATEGORIES.find((c) => c.value === category)?.icon || '📷';
 }

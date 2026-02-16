@@ -1,166 +1,180 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { TrendingUp, Users, Target, Zap, Globe, MessageSquare, Award, CheckCircle, Download, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import {
+  TrendingUp,
+  Users,
+  Target,
+  Zap,
+  Globe,
+  MessageSquare,
+  Award,
+  CheckCircle,
+  Download,
+  Star,
+} from 'lucide-react';
 
 const GrowthTab = () => {
   const growthStrategies = [
     {
-      phase: "Foundation (0-6 months)",
-      focus: "Establish reputation and local presence",
+      phase: 'Foundation (0-6 months)',
+      focus: 'Establish reputation and local presence',
       strategies: [
-        "Complete first 50 jobs with excellence",
-        "Build Google My Business profile",
-        "Collect customer testimonials",
-        "Join local Facebook groups",
-        "Network with local tradespeople"
+        'Complete first 50 jobs with excellence',
+        'Build Google My Business profile',
+        'Collect customer testimonials',
+        'Join local Facebook groups',
+        'Network with local tradespeople',
       ],
-      targets: ["5-star Google rating", "20+ reviews", "Repeat customers"]
+      targets: ['5-star Google rating', '20+ reviews', 'Repeat customers'],
     },
     {
-      phase: "Growth (6-18 months)",
-      focus: "Scale operations and expand services",
+      phase: 'Growth (6-18 months)',
+      focus: 'Scale operations and expand services',
       strategies: [
-        "Develop specialisation areas",
-        "Implement referral program",
-        "Create professional website",
-        "Start social media marketing",
-        "Consider apprentice or subcontractor"
+        'Develop specialisation areas',
+        'Implement referral program',
+        'Create professional website',
+        'Start social media marketing',
+        'Consider apprentice or subcontractor',
       ],
-      targets: ["50+ jobs/month", "£8K+ monthly revenue", "Service diversification"]
+      targets: ['50+ jobs/month', '£8K+ monthly revenue', 'Service diversification'],
     },
     {
-      phase: "Expansion (18+ months)",
-      focus: "Team building and market leadership",
+      phase: 'Expansion (18+ months)',
+      focus: 'Team building and market leadership',
       strategies: [
-        "Hire qualified electricians",
-        "Expand service territory",
-        "Commercial contract bidding",
-        "Advanced certifications",
-        "Consider franchising opportunities"
+        'Hire qualified electricians',
+        'Expand service territory',
+        'Commercial contract bidding',
+        'Advanced certifications',
+        'Consider franchising opportunities',
       ],
-      targets: ["Team of 3-5", "£15K+ monthly revenue", "Market recognition"]
-    }
+      targets: ['Team of 3-5', '£15K+ monthly revenue', 'Market recognition'],
+    },
   ];
 
   const marketingChannels = [
     {
-      channel: "Google My Business",
-      cost: "Free",
+      channel: 'Google My Business',
+      cost: 'Free',
       effectiveness: 95,
-      timeframe: "Immediate",
-      description: "Essential for local visibility and credibility"
+      timeframe: 'Immediate',
+      description: 'Essential for local visibility and credibility',
     },
     {
-      channel: "Word of Mouth/Referrals",
-      cost: "Free-Low",
+      channel: 'Word of Mouth/Referrals',
+      cost: 'Free-Low',
       effectiveness: 90,
-      timeframe: "3-6 months",
-      description: "Most trusted and cost-effective marketing"
+      timeframe: '3-6 months',
+      description: 'Most trusted and cost-effective marketing',
     },
     {
-      channel: "Facebook Local Groups",
-      cost: "Free",
+      channel: 'Facebook Local Groups',
+      cost: 'Free',
       effectiveness: 75,
-      timeframe: "1-3 months",
-      description: "Great for community engagement"
+      timeframe: '1-3 months',
+      description: 'Great for community engagement',
     },
     {
-      channel: "Checkatrade/Rated People",
-      cost: "£30-100/month",
+      channel: 'Checkatrade/Rated People',
+      cost: '£30-100/month',
       effectiveness: 70,
-      timeframe: "1-2 months",
-      description: "Lead generation platforms"
+      timeframe: '1-2 months',
+      description: 'Lead generation platforms',
     },
     {
-      channel: "Local Newspaper Ads",
-      cost: "£50-200/month",
+      channel: 'Local Newspaper Ads',
+      cost: '£50-200/month',
       effectiveness: 45,
-      timeframe: "2-4 months",
-      description: "Traditional but declining effectiveness"
-    }
+      timeframe: '2-4 months',
+      description: 'Traditional but declining effectiveness',
+    },
   ];
 
   const specialisationAreas = [
     {
-      area: "Smart Home Technology",
-      growth_potential: "High",
-      investment: "Medium",
+      area: 'Smart Home Technology',
+      growth_potential: 'High',
+      investment: 'Medium',
       skills_needed: [
-        "Home automation systems",
-        "Smart lighting controls",
-        "Security system integration",
-        "Network installation"
+        'Home automation systems',
+        'Smart lighting controls',
+        'Security system integration',
+        'Network installation',
       ],
-      market_demand: "Growing rapidly",
-      premium: "30-50% higher rates"
+      market_demand: 'Growing rapidly',
+      premium: '30-50% higher rates',
     },
     {
-      area: "Electric Vehicle Charging",
-      growth_potential: "Very High",
-      investment: "High",
+      area: 'Electric Vehicle Charging',
+      growth_potential: 'Very High',
+      investment: 'High',
       skills_needed: [
-        "EV charger installation",
-        "Government grant schemes",
-        "Load balancing systems",
-        "Commercial charging points"
+        'EV charger installation',
+        'Government grant schemes',
+        'Load balancing systems',
+        'Commercial charging points',
       ],
-      market_demand: "Explosive growth",
-      premium: "40-60% higher rates"
+      market_demand: 'Explosive growth',
+      premium: '40-60% higher rates',
     },
     {
-      area: "Solar PV & Battery Storage",
-      growth_potential: "High",
-      investment: "High",
+      area: 'Solar PV & Battery Storage',
+      growth_potential: 'High',
+      investment: 'High',
       skills_needed: [
-        "Solar panel installation",
-        "Battery storage systems",
-        "Grid tie systems",
-        "Energy monitoring"
+        'Solar panel installation',
+        'Battery storage systems',
+        'Grid tie systems',
+        'Energy monitoring',
       ],
-      market_demand: "Strong and growing",
-      premium: "35-55% higher rates"
-    }
+      market_demand: 'Strong and growing',
+      premium: '35-55% higher rates',
+    },
   ];
 
   const teamBuilding = [
     {
-      role: "Apprentice Electrician",
-      timing: "6-12 months",
-      cost: "£12-18K/year",
-      benefits: ["Reduces workload", "Future skilled worker", "Government incentives"],
-      requirements: ["Training time investment", "Mentoring skills", "Patience"]
+      role: 'Apprentice Electrician',
+      timing: '6-12 months',
+      cost: '£12-18K/year',
+      benefits: ['Reduces workload', 'Future skilled worker', 'Government incentives'],
+      requirements: ['Training time investment', 'Mentoring skills', 'Patience'],
     },
     {
-      role: "Qualified Electrician",
-      timing: "12-18 months",
-      cost: "£25-35K/year",
-      benefits: ["Immediate productivity", "Handle complex work", "Cover more ground"],
-      requirements: ["Higher wages", "Insurance costs", "Management skills"]
+      role: 'Qualified Electrician',
+      timing: '12-18 months',
+      cost: '£25-35K/year',
+      benefits: ['Immediate productivity', 'Handle complex work', 'Cover more ground'],
+      requirements: ['Higher wages', 'Insurance costs', 'Management skills'],
     },
     {
-      role: "Administrative Assistant",
-      timing: "18-24 months",
-      cost: "£15-25K/year",
-      benefits: ["Handle bookings", "Manage paperwork", "Customer service"],
-      requirements: ["Office space", "Equipment", "Training time"]
-    }
+      role: 'Administrative Assistant',
+      timing: '18-24 months',
+      cost: '£15-25K/year',
+      benefits: ['Handle bookings', 'Manage paperwork', 'Customer service'],
+      requirements: ['Office space', 'Equipment', 'Training time'],
+    },
   ];
 
   const getEffectivenessColor = (effectiveness: number) => {
-    if (effectiveness >= 80) return "bg-green-500";
-    if (effectiveness >= 60) return "bg-amber-500";
-    return "bg-red-500";
+    if (effectiveness >= 80) return 'bg-green-500';
+    if (effectiveness >= 60) return 'bg-amber-500';
+    return 'bg-red-500';
   };
 
   const getGrowthColor = (potential: string) => {
     switch (potential) {
-      case 'Very High': return 'bg-green-500/20 text-green-400';
-      case 'High': return 'bg-blue-500/20 text-blue-400';
-      case 'Medium': return 'bg-amber-500/20 text-amber-400';
-      default: return 'bg-elec-yellow/20 text-elec-yellow';
+      case 'Very High':
+        return 'bg-green-500/20 text-green-400';
+      case 'High':
+        return 'bg-blue-500/20 text-blue-400';
+      case 'Medium':
+        return 'bg-amber-500/20 text-amber-400';
+      default:
+        return 'bg-elec-yellow/20 text-elec-yellow';
     }
   };
 
@@ -209,7 +223,7 @@ const GrowthTab = () => {
                 <h4 className="font-semibold text-elec-yellow">{phase.phase}</h4>
                 <Badge className="bg-blue-500/20 text-blue-400">{phase.focus}</Badge>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <h5 className="font-medium text-foreground mb-2">Key Strategies:</h5>
@@ -222,7 +236,7 @@ const GrowthTab = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div>
                   <h5 className="font-medium text-foreground mb-2">Success Targets:</h5>
                   <ul className="space-y-1">
@@ -256,17 +270,16 @@ const GrowthTab = () => {
                   <Badge className="bg-green-500/20 text-green-400">{channel.cost}</Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">{channel.description}</p>
-                
+
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-xs">Effectiveness</span>
                     <span className="text-xs font-medium">{channel.effectiveness}%</span>
                   </div>
-                  <Progress 
-                    value={channel.effectiveness} 
-                    className="h-2"
-                  />
-                  <div className="text-xs text-blue-400">Time to see results: {channel.timeframe}</div>
+                  <Progress value={channel.effectiveness} className="h-2" />
+                  <div className="text-xs text-blue-400">
+                    Time to see results: {channel.timeframe}
+                  </div>
                 </div>
               </div>
             ))}
@@ -289,7 +302,7 @@ const GrowthTab = () => {
                     {area.growth_potential}
                   </Badge>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                   <div>
                     <span className="text-muted-foreground">Investment: </span>
@@ -300,7 +313,7 @@ const GrowthTab = () => {
                     <span className="text-green-400">{area.premium}</span>
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <div className="text-xs text-blue-400">Market: {area.market_demand}</div>
                   <div>
@@ -341,7 +354,7 @@ const GrowthTab = () => {
                     <div className="text-xs text-muted-foreground">Annual Cost</div>
                     <div className="text-sm text-green-400">{member.cost}</div>
                   </div>
-                  
+
                   <div>
                     <div className="text-xs font-medium text-foreground mb-1">Benefits:</div>
                     <ul className="space-y-1">
@@ -353,7 +366,7 @@ const GrowthTab = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
                     <div className="text-xs font-medium text-foreground mb-1">Requirements:</div>
                     <ul className="space-y-1">
@@ -402,7 +415,7 @@ const GrowthTab = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold text-green-300 mb-3">Leadership Development</h4>
               <ul className="space-y-2 text-sm">
@@ -425,7 +438,7 @@ const GrowthTab = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="mt-6 pt-4 border-t border-green-500/20">
             <Button className="bg-green-500 text-green-900 hover:bg-green-400">
               <Download className="h-4 w-4 mr-2" />

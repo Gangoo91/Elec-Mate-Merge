@@ -1,65 +1,83 @@
-import { ArrowLeft, Flame, BookOpen, Scale, Shield, HardHat, Siren, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Flame,
+  BookOpen,
+  Scale,
+  Shield,
+  HardHat,
+  Siren,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Understanding Fire",
-    description: "The fire triangle, classes of fire, fire behaviour, and how fires start in the workplace",
+    title: 'Understanding Fire',
+    description:
+      'The fire triangle, classes of fire, fire behaviour, and how fires start in the workplace',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../fire-safety-module-1",
+    duration: '30 mins',
+    link: '../fire-safety-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Fire Safety Legislation",
-    description: "Regulatory Reform (Fire Safety) Order 2005, responsible person duties, and fire risk assessment",
+    title: 'Fire Safety Legislation',
+    description:
+      'Regulatory Reform (Fire Safety) Order 2005, responsible person duties, and fire risk assessment',
     icon: Scale,
-    duration: "30 mins",
-    link: "../fire-safety-module-2",
+    duration: '30 mins',
+    link: '../fire-safety-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Fire Prevention & Detection",
-    description: "Fire prevention measures, detection systems, alarm systems, and emergency lighting",
+    title: 'Fire Prevention & Detection',
+    description:
+      'Fire prevention measures, detection systems, alarm systems, and emergency lighting',
     icon: Shield,
-    duration: "30 mins",
-    link: "../fire-safety-module-3",
+    duration: '30 mins',
+    link: '../fire-safety-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Fire Marshal Duties & Evacuation",
-    description: "Fire marshal role, evacuation procedures, assembly points, and personal emergency evacuation plans",
+    title: 'Fire Marshal Duties & Evacuation',
+    description:
+      'Fire marshal role, evacuation procedures, assembly points, and personal emergency evacuation plans',
     icon: HardHat,
-    duration: "30 mins",
-    link: "../fire-safety-module-4",
+    duration: '30 mins',
+    link: '../fire-safety-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Firefighting Equipment & Incident Response",
-    description: "Fire extinguisher types, fire blankets, hose reels, incident reporting, and investigation",
+    title: 'Firefighting Equipment & Incident Response',
+    description:
+      'Fire extinguisher types, fire blankets, hose reels, incident reporting, and investigation',
     icon: Siren,
-    duration: "30 mins",
-    link: "../fire-safety-module-5",
+    duration: '30 mins',
+    link: '../fire-safety-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../fire-safety-module-6",
+    duration: '30 mins',
+    link: '../fire-safety-module-6',
     isExam: true,
   },
 ];
 
 export default function FireSafetyCourse() {
   useSEO({
-    title: "Fire Safety & Fire Marshal | General Upskilling",
-    description: "Complete fire safety and fire marshal training covering fire prevention, evacuation procedures, extinguisher use, and mock exam preparation.",
+    title: 'Fire Safety & Fire Marshal | General Upskilling',
+    description:
+      'Complete fire safety and fire marshal training covering fire prevention, evacuation procedures, extinguisher use, and mock exam preparation.',
   });
 
   return (
@@ -96,7 +114,8 @@ export default function FireSafetyCourse() {
                 Fire Safety &amp; Fire Marshal
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 max-w-2xl">
-                Fire prevention, evacuation procedures, and fire marshal responsibilities for tradespeople on site
+                Fire prevention, evacuation procedures, and fire marshal responsibilities for
+                tradespeople on site
               </p>
             </div>
           </div>

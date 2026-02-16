@@ -1,9 +1,16 @@
-import { useState, useEffect, useRef } from "react";
-import { Input } from "@/components/ui/input";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { MapPin, Search } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect, useRef } from 'react';
+import { Input } from '@/components/ui/input';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { MapPin, Search } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface PostcodeAutocompleteProps {
   value: string;
@@ -21,11 +28,11 @@ interface PostcodeDistrict {
   contractor_density: number;
 }
 
-const PostcodeAutocomplete = ({ 
-  value, 
-  onChange, 
-  placeholder = "Enter UK postcode or location...",
-  className = ""
+const PostcodeAutocomplete = ({
+  value,
+  onChange,
+  placeholder = 'Enter UK postcode or location...',
+  className = '',
 }: PostcodeAutocompleteProps) => {
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<PostcodeDistrict[]>([]);
@@ -43,8 +50,12 @@ const PostcodeAutocomplete = ({
       // Search postcode districts and nearby areas
       const { data, error } = await supabase
         .from('uk_postcode_districts')
-        .select('district_code, region, county, local_authority, avg_household_income, contractor_density')
-        .or(`district_code.ilike.%${searchTerm.toUpperCase()}%,region.ilike.%${searchTerm}%,local_authority.ilike.%${searchTerm}%`)
+        .select(
+          'district_code, region, county, local_authority, avg_household_income, contractor_density'
+        )
+        .or(
+          `district_code.ilike.%${searchTerm.toUpperCase()}%,region.ilike.%${searchTerm}%,local_authority.ilike.%${searchTerm}%`
+        )
         .order('contractor_density', { ascending: false })
         .limit(10);
 
@@ -85,17 +96,17 @@ const PostcodeAutocomplete = ({
   };
 
   const formatIncomeRange = (income: number) => {
-    if (income >= 50000) return "High income area";
-    if (income >= 35000) return "Middle income area";
-    if (income >= 25000) return "Average income area";
-    return "Lower income area";
+    if (income >= 50000) return 'High income area';
+    if (income >= 35000) return 'Middle income area';
+    if (income >= 25000) return 'Average income area';
+    return 'Lower income area';
   };
 
   const getContractorDensityText = (density: number) => {
-    if (density >= 100) return "Very high competition";
-    if (density >= 75) return "High competition";
-    if (density >= 50) return "Moderate competition";
-    return "Low competition";
+    if (density >= 100) return 'Very high competition';
+    if (density >= 75) return 'High competition';
+    if (density >= 50) return 'Moderate competition';
+    return 'Low competition';
   };
 
   return (
@@ -114,8 +125,8 @@ const PostcodeAutocomplete = ({
       </PopoverTrigger>
       <PopoverContent className="w-full p-0 bg-elec-dark border-elec-yellow/20" align="start">
         <Command>
-          <CommandInput 
-            placeholder="Search UK postcodes..." 
+          <CommandInput
+            placeholder="Search UK postcodes..."
             value={value}
             onValueChange={onChange}
           />
@@ -132,7 +143,7 @@ const PostcodeAutocomplete = ({
                 <div className="text-center py-6">
                   <MapPin className="h-8 w-8 mx-auto mb-2 opacity-50" />
                   <p className="text-sm text-muted-foreground">
-                    {value.length < 2 ? "Type to search postcodes" : "No postcodes found"}
+                    {value.length < 2 ? 'Type to search postcodes' : 'No postcodes found'}
                   </p>
                 </div>
               </CommandEmpty>

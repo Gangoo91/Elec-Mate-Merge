@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { SmartTextarea } from '../common/SmartTextarea';
 import { Badge } from '@/components/ui/badge';
 import {
   Select,
@@ -56,6 +56,7 @@ import { LocationAutoFill } from '../common/LocationAutoFill';
 import { DeleteConfirmSheet } from '../common/DeleteConfirmSheet';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
+import { SignaturePad } from '../common/SignaturePad';
 
 interface ElectricianSiteDiaryProps {
   onBack: () => void;
@@ -121,6 +122,11 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
   const [diaryPhotos, setDiaryPhotos] = useState<string[]>([]);
   const [selectedRamsIds, setSelectedRamsIds] = useState<string[]>([]);
   const [selectedPermitIds, setSelectedPermitIds] = useState<string[]>([]);
+
+  // Recorder signature state
+  const [recorderSigName, setRecorderSigName] = useState('');
+  const [recorderSigDate, setRecorderSigDate] = useState('');
+  const [recorderSigDataUrl, setRecorderSigDataUrl] = useState('');
 
   // Linked data sources
   const { data: activePermits = [] } = useActivePermits();
@@ -205,6 +211,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
     setDiaryPhotos([]);
     setSelectedRamsIds([]);
     setSelectedPermitIds([]);
+    setRecorderSigName('');
+    setRecorderSigDate('');
+    setRecorderSigDataUrl('');
     clearDraft();
   };
 
@@ -252,6 +261,8 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
       rams_ids: selectedRamsIds,
       permit_ids: selectedPermitIds,
       notes: notes.trim() || null,
+      recorder_signature: recorderSigDataUrl || null,
+      recorder_name: recorderSigName || null,
     });
 
     haptic.success();
@@ -480,9 +491,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   <label className="block text-sm font-medium text-white mb-1">
                     Work Completed
                   </label>
-                  <Textarea
+                  <SmartTextarea
                     value={workCompleted}
-                    onChange={(e) => setWorkCompleted(e.target.value)}
+                    onChange={setWorkCompleted}
                     placeholder="Describe work carried out today..."
                     className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
                   />
@@ -493,9 +504,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   <label className="block text-sm font-medium text-white mb-1">
                     Issues (optional)
                   </label>
-                  <Textarea
+                  <SmartTextarea
                     value={issues}
-                    onChange={(e) => setIssues(e.target.value)}
+                    onChange={setIssues}
                     placeholder="Any issues or problems encountered..."
                     className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
                   />
@@ -506,9 +517,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   <label className="block text-sm font-medium text-white mb-1">
                     Materials Used (optional)
                   </label>
-                  <Textarea
+                  <SmartTextarea
                     value={materialsUsed}
-                    onChange={(e) => setMaterialsUsed(e.target.value)}
+                    onChange={setMaterialsUsed}
                     placeholder="List materials used on site..."
                     className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
                   />
@@ -519,9 +530,9 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   <label className="block text-sm font-medium text-white mb-1">
                     Additional Notes (optional)
                   </label>
-                  <Textarea
+                  <SmartTextarea
                     value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                    onChange={setNotes}
                     placeholder="Anything else to record..."
                     className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
                   />
@@ -640,6 +651,17 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   onPhotosChange={setDiaryPhotos}
                   maxPhotos={5}
                   label="Site Photos"
+                />
+
+                {/* Recorder Signature */}
+                <SignaturePad
+                  label="Recorder Signature"
+                  name={recorderSigName}
+                  date={recorderSigDate}
+                  signatureDataUrl={recorderSigDataUrl}
+                  onSignatureChange={setRecorderSigDataUrl}
+                  onNameChange={setRecorderSigName}
+                  onDateChange={setRecorderSigDate}
                 />
 
                 {/* Spacer for fixed footer */}

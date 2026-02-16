@@ -1,20 +1,20 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Progress } from "@/components/ui/progress";
-import { 
-  AlertTriangle, 
-  CheckCircle, 
-  Info, 
-  TrendingUp, 
-  PiggyBank, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Progress } from '@/components/ui/progress';
+import {
+  AlertTriangle,
+  CheckCircle,
+  Info,
+  TrendingUp,
+  PiggyBank,
   Calendar,
   Zap,
   Shield,
   Target,
   Clock,
-  DollarSign
-} from "lucide-react";
+  DollarSign,
+} from 'lucide-react';
 
 interface Insight {
   type: 'warning' | 'success' | 'info';
@@ -40,7 +40,11 @@ interface FinancialInsightsProps {
   emergencyFundTarget: number;
 }
 
-export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTarget }: FinancialInsightsProps) => {
+export const FinancialInsights = ({
+  insights,
+  financialMetrics,
+  emergencyFundTarget,
+}: FinancialInsightsProps) => {
   const getInsightIcon = (type: string) => {
     switch (type) {
       case 'warning':
@@ -74,46 +78,54 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
     }
   };
 
-  const emergencyFundProgress = Math.min((financialMetrics.minBalance / emergencyFundTarget) * 100, 100);
-  const profitMarginHealth = financialMetrics.profitMargin >= 20 ? 'excellent' : 
-                            financialMetrics.profitMargin >= 10 ? 'good' : 
-                            financialMetrics.profitMargin >= 5 ? 'fair' : 'poor';
+  const emergencyFundProgress = Math.min(
+    (financialMetrics.minBalance / emergencyFundTarget) * 100,
+    100
+  );
+  const profitMarginHealth =
+    financialMetrics.profitMargin >= 20
+      ? 'excellent'
+      : financialMetrics.profitMargin >= 10
+        ? 'good'
+        : financialMetrics.profitMargin >= 5
+          ? 'fair'
+          : 'poor';
 
   const industryBenchmarks = {
     profitMargin: { excellent: 20, good: 15, fair: 10 },
     cashRunway: { excellent: 6, good: 4, fair: 2 },
-    emergencyFund: { excellent: 6, good: 4, fair: 2 }
+    emergencyFund: { excellent: 6, good: 4, fair: 2 },
   };
 
   const electricianSpecificMetrics = [
     {
-      title: "Certification Compliance",
+      title: 'Certification Compliance',
       icon: <Shield className="h-5 w-5 text-blue-400" />,
-      value: "18th Edition",
-      description: "Current BS7671 compliance",
-      status: "compliant"
+      value: '18th Edition',
+      description: 'Current BS7671 compliance',
+      status: 'compliant',
     },
     {
-      title: "Equipment Replacement",
+      title: 'Equipment Replacement',
       icon: <Zap className="h-5 w-5 text-yellow-400" />,
-      value: "£2,400",
-      description: "Annual equipment budget",
-      status: "adequate"
+      value: '£2,400',
+      description: 'Annual equipment budget',
+      status: 'adequate',
     },
     {
-      title: "VAT Planning",
+      title: 'VAT Planning',
       icon: <Calendar className="h-5 w-5 text-purple-400" />,
-      value: "Quarterly",
-      description: "VAT return frequency",
-      status: "optimal"
+      value: 'Quarterly',
+      description: 'VAT return frequency',
+      status: 'optimal',
     },
     {
-      title: "Seasonal Planning",
+      title: 'Seasonal Planning',
       icon: <Clock className="h-5 w-5 text-orange-400" />,
-      value: "Summer Peak",
-      description: "Revenue pattern identified",
-      status: "planned"
-    }
+      value: 'Summer Peak',
+      description: 'Revenue pattern identified',
+      status: 'planned',
+    },
   ];
 
   return (
@@ -137,9 +149,7 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
               <div className="text-2xl font-bold text-elec-light">
                 {financialMetrics.profitMargin.toFixed(1)}%
               </div>
-              <div className="text-xs text-elec-light/60">
-                Industry benchmark: 15%
-              </div>
+              <div className="text-xs text-elec-light/60">Industry benchmark: 15%</div>
             </div>
 
             <div className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
@@ -150,9 +160,7 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
               <div className="text-2xl font-bold text-elec-light">
                 {financialMetrics.cashRunway} months
               </div>
-              <div className="text-xs text-elec-light/60">
-                Target: 6+ months
-              </div>
+              <div className="text-xs text-elec-light/60">Target: 6+ months</div>
             </div>
 
             <div className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
@@ -185,7 +193,10 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
             <h4 className="text-elec-light font-medium mb-3">Electrician Business Metrics</h4>
             <div className="grid gap-3 md:grid-cols-2">
               {electricianSpecificMetrics.map((metric, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/10 border border-secondary/20">
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-secondary/10 border border-secondary/20"
+                >
                   {metric.icon}
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -220,9 +231,7 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
                       <h4 className="font-medium">{insight.title}</h4>
                       {getPriorityBadge(insight.priority)}
                     </div>
-                    <AlertDescription>
-                      {insight.message}
-                    </AlertDescription>
+                    <AlertDescription>{insight.message}</AlertDescription>
                   </div>
                 </div>
               </Alert>

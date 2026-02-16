@@ -1,56 +1,76 @@
-import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Search, Filter, ExternalLink, Star, Package, Loader2, Users, Bot, BarChart3 } from "lucide-react";
-import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
-import { useMaterialsComparison } from "@/hooks/useMaterialsComparison";
-import MaterialCard from "./MaterialCard";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  ArrowLeft,
+  Search,
+  Filter,
+  ExternalLink,
+  Star,
+  Package,
+  Loader2,
+  Users,
+  Bot,
+  BarChart3,
+} from 'lucide-react';
+import { useCategoryMaterials } from '@/hooks/useCategoryMaterials';
+import { useMaterialsComparison } from '@/hooks/useMaterialsComparison';
+import MaterialCard from './MaterialCard';
+import { cn } from '@/lib/utils';
 
 const MaterialsCategoryProductList = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("name");
-  const [supplierFilter, setSupplierFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('name');
+  const [supplierFilter, setSupplierFilter] = useState('all');
 
-  const { materials, categoryData, isLoading, error, refetch } = useCategoryMaterials(categoryId || "");
-  const { 
-    addToComparison, 
-    removeFromComparison, 
-    isInComparison, 
-    selectedCount, 
+  const { materials, categoryData, isLoading, error, refetch } = useCategoryMaterials(
+    categoryId || ''
+  );
+  const {
+    addToComparison,
+    removeFromComparison,
+    isInComparison,
+    selectedCount,
     selectedMaterialData,
-    clearComparison 
+    clearComparison,
   } = useMaterialsComparison();
 
   // Filter and sort materials
   const filteredMaterials = materials
-    ?.filter(material => {
-      const matchesSearch = material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           material.description?.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesSupplier = supplierFilter === "all" || material.supplier === supplierFilter;
+    ?.filter((material) => {
+      const matchesSearch =
+        material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        material.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSupplier = supplierFilter === 'all' || material.supplier === supplierFilter;
       return matchesSearch && matchesSupplier;
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case "price":
+        case 'price':
           const priceA = parseFloat(a.price.replace(/[£,]/g, ''));
           const priceB = parseFloat(b.price.replace(/[£,]/g, ''));
           return priceA - priceB;
-        case "supplier":
+        case 'supplier':
           return a.supplier.localeCompare(b.supplier);
-        case "name":
+        case 'name':
         default:
           return a.name.localeCompare(b.name);
       }
     });
 
   // Get unique suppliers for filter
-  const suppliers = [...new Set(materials?.map(m => m.supplier))].sort();
+  const suppliers = [...new Set(materials?.map((m) => m.supplier))].sort();
 
   if (error) {
     return (
@@ -62,11 +82,13 @@ const MaterialsCategoryProductList = () => {
               Back to Categories
             </Link>
           </Button>
-          
+
           <div className="text-center py-12">
             <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Failed to Load Products</h2>
-            <p className="text-muted-foreground mb-4">There was an error loading the materials for this category.</p>
+            <p className="text-muted-foreground mb-4">
+              There was an error loading the materials for this category.
+            </p>
             <Button onClick={() => refetch()} variant="outline">
               Try Again
             </Button>
@@ -90,7 +112,8 @@ const MaterialsCategoryProductList = () => {
             </Button>
             <div>
               <h1 className="text-3xl font-bold">
-                {categoryData?.title || categoryId?.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                {categoryData?.title ||
+                  categoryId?.replace(/[_-]/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
               </h1>
               <p className="text-muted-foreground">
                 {isLoading ? 'Loading...' : `${filteredMaterials?.length || 0} products found`}
@@ -131,7 +154,9 @@ const MaterialsCategoryProductList = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">Search Products</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Search Products
+                </label>
                 <div className="relative">
                   {!searchTerm && (
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -140,7 +165,7 @@ const MaterialsCategoryProductList = () => {
                     placeholder="Search by name or description..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className={cn("bg-elec-dark border-elec-yellow/30", !searchTerm && "pl-10")}
+                    className={cn('bg-elec-dark border-elec-yellow/30', !searchTerm && 'pl-10')}
                   />
                 </div>
               </div>
@@ -167,7 +192,7 @@ const MaterialsCategoryProductList = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Suppliers</SelectItem>
-                    {suppliers.map(supplier => (
+                    {suppliers.map((supplier) => (
                       <SelectItem key={supplier} value={supplier}>
                         {supplier}
                       </SelectItem>
@@ -200,8 +225,8 @@ const MaterialsCategoryProductList = () => {
         ) : filteredMaterials && filteredMaterials.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredMaterials.map((material) => (
-              <MaterialCard 
-                key={material.id} 
+              <MaterialCard
+                key={material.id}
                 item={material}
                 onAddToCompare={(item) => addToComparison(item.id, item)}
                 onRemoveFromCompare={(itemId) => removeFromComparison(itemId)}
@@ -215,16 +240,15 @@ const MaterialsCategoryProductList = () => {
             <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">No Products Found</h2>
             <p className="text-muted-foreground mb-4">
-              {searchTerm || supplierFilter !== "all" 
-                ? "Try adjusting your search or filters"
-                : "No products available for this category yet"
-              }
+              {searchTerm || supplierFilter !== 'all'
+                ? 'Try adjusting your search or filters'
+                : 'No products available for this category yet'}
             </p>
-            {(searchTerm || supplierFilter !== "all") && (
-              <Button 
+            {(searchTerm || supplierFilter !== 'all') && (
+              <Button
                 onClick={() => {
-                  setSearchTerm("");
-                  setSupplierFilter("all");
+                  setSearchTerm('');
+                  setSupplierFilter('all');
                 }}
                 variant="outline"
               >
@@ -246,20 +270,24 @@ const MaterialsCategoryProductList = () => {
                   <div className="text-sm text-muted-foreground">Products</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-elec-yellow">
-                    {suppliers.length}
-                  </div>
+                  <div className="text-2xl font-bold text-elec-yellow">{suppliers.length}</div>
                   <div className="text-sm text-muted-foreground">Suppliers</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-elec-yellow">
-                    £{Math.min(...filteredMaterials.map(m => parseFloat(m.price.replace(/[£,]/g, '')))).toFixed(2)}
+                    £
+                    {Math.min(
+                      ...filteredMaterials.map((m) => parseFloat(m.price.replace(/[£,]/g, '')))
+                    ).toFixed(2)}
                   </div>
                   <div className="text-sm text-muted-foreground">Lowest Price</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-elec-yellow">
-                    £{Math.max(...filteredMaterials.map(m => parseFloat(m.price.replace(/[£,]/g, '')))).toFixed(2)}
+                    £
+                    {Math.max(
+                      ...filteredMaterials.map((m) => parseFloat(m.price.replace(/[£,]/g, '')))
+                    ).toFixed(2)}
                   </div>
                   <div className="text-sm text-muted-foreground">Highest Price</div>
                 </div>

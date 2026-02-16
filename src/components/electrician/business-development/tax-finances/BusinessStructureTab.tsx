@@ -1,38 +1,55 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Building, FileText, Users, Shield, Calculator, Banknote, UserCheck, FileCheck, Scale, TrendingUp, CheckCircle } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionContent,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+} from '@/components/ui/mobile-accordion';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Building,
+  FileText,
+  Users,
+  Shield,
+  Calculator,
+  Banknote,
+  UserCheck,
+  FileCheck,
+  Scale,
+  TrendingUp,
+  CheckCircle,
+} from 'lucide-react';
 
 const BusinessStructureTab = () => {
   const isMobile = useIsMobile();
 
   const structureMetrics = [
     {
-      metric: "Tax Efficiency Threshold",
-      data: "£50,000 annual profit",
+      metric: 'Tax Efficiency Threshold',
+      data: '£50,000 annual profit',
       icon: <Calculator className="h-5 w-5 text-purple-400" />,
-      detail: "Point where limited company becomes more tax efficient"
+      detail: 'Point where limited company becomes more tax efficient',
     },
     {
-      metric: "Corporation Tax Rates",
-      data: "19% to 25%",
+      metric: 'Corporation Tax Rates',
+      data: '19% to 25%',
       icon: <Banknote className="h-5 w-5 text-blue-400" />,
-      detail: "Small profits rate 19%, main rate 25% over £250k"
+      detail: 'Small profits rate 19%, main rate 25% over £250k',
     },
     {
-      metric: "Personal Allowance",
-      data: "£12,570 tax-free",
+      metric: 'Personal Allowance',
+      data: '£12,570 tax-free',
       icon: <UserCheck className="h-5 w-5 text-green-400" />,
-      detail: "Tax-free income threshold for 2024/25"
+      detail: 'Tax-free income threshold for 2024/25',
     },
     {
-      metric: "Liability Protection",
-      data: "Limited company advantage",
+      metric: 'Liability Protection',
+      data: 'Limited company advantage',
       icon: <Shield className="h-5 w-5 text-orange-400" />,
-      detail: "Personal assets protected from business debts"
-    }
+      detail: 'Personal assets protected from business debts',
+    },
   ];
 
   return (
@@ -40,17 +57,24 @@ const BusinessStructureTab = () => {
       <Alert className="border-purple-400/50 bg-purple-400/10">
         <Building className="h-4 w-4 text-purple-400" />
         <AlertDescription className="text-purple-400">
-          Choosing the right business structure can save thousands in tax and protect your personal assets. Review annually as your business grows.
+          Choosing the right business structure can save thousands in tax and protect your personal
+          assets. Review annually as your business grows.
         </AlertDescription>
       </Alert>
 
-      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+      <div
+        className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}
+      >
         {structureMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
+                {metric.metric}
+              </div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                {metric.data}
+              </div>
             </div>
           </Card>
         ))}
@@ -64,16 +88,21 @@ const BusinessStructureTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                The simplest and most popular business structure for individual electricians starting their trade business in the UK.
+                The simplest and most popular business structure for individual electricians
+                starting their trade business in the UK.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Perfect for new electricians with straightforward business needs, annual profits under £50,000, and those who want immediate trading capability with minimal paperwork.</p>
+                    <p className="text-sm">
+                      Perfect for new electricians with straightforward business needs, annual
+                      profits under £50,000, and those who want immediate trading capability with
+                      minimal paperwork.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -85,7 +114,7 @@ const BusinessStructureTab = () => {
                       <li>• Monthly: Track income, expenses, and mileage</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -98,10 +127,12 @@ const BusinessStructureTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Key Features & Requirements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Annual Self Assessment tax return by 31st January</li>
                       <li>• National Insurance contributions (Class 2 and 4)</li>
@@ -111,7 +142,7 @@ const BusinessStructureTab = () => {
                       <li>• VAT registration if turnover exceeds £90,000</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
                     <ul className="text-sm space-y-1">
@@ -123,7 +154,7 @@ const BusinessStructureTab = () => {
                       <li>• Higher rate threshold: £50,270</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
                     <ul className="text-sm space-y-1">
@@ -148,16 +179,20 @@ const BusinessStructureTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                A separate legal entity offering liability protection and tax efficiency for established electricians with higher profits.
+                A separate legal entity offering liability protection and tax efficiency for
+                established electricians with higher profits.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Best for established electricians with annual profits over £50,000 seeking liability protection and tax efficiency.</p>
+                    <p className="text-sm">
+                      Best for established electricians with annual profits over £50,000 seeking
+                      liability protection and tax efficiency.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -167,7 +202,7 @@ const BusinessStructureTab = () => {
                       <li>• Month 1: Accounting system implementation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -178,10 +213,12 @@ const BusinessStructureTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Key Features & Requirements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Annual accounts filing</li>
                       <li>• Corporation tax returns</li>
@@ -190,7 +227,7 @@ const BusinessStructureTab = () => {
                       <li>• Companies House compliance</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
                     <ul className="text-sm space-y-1">
@@ -200,7 +237,7 @@ const BusinessStructureTab = () => {
                       <li>• Salary & dividend optimisation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
                     <ul className="text-sm space-y-1">
@@ -223,16 +260,20 @@ const BusinessStructureTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Two or more electricians working together, sharing skills, costs, and responsibilities in a flexible business arrangement.
+                Two or more electricians working together, sharing skills, costs, and
+                responsibilities in a flexible business arrangement.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Ideal for electricians combining complementary skills and sharing business risks while maintaining simple tax structure.</p>
+                    <p className="text-sm">
+                      Ideal for electricians combining complementary skills and sharing business
+                      risks while maintaining simple tax structure.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -242,7 +283,7 @@ const BusinessStructureTab = () => {
                       <li>• Week 4: Accounting system setup</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -253,10 +294,12 @@ const BusinessStructureTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Key Features & Requirements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Partnership agreement essential</li>
                       <li>• Joint and several liability</li>
@@ -265,7 +308,7 @@ const BusinessStructureTab = () => {
                       <li>• Shared decision-making</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
                     <ul className="text-sm space-y-1">
@@ -275,7 +318,7 @@ const BusinessStructureTab = () => {
                       <li>• Profit sharing affects tax liability</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
                     <ul className="text-sm space-y-1">
@@ -298,16 +341,20 @@ const BusinessStructureTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Use this comprehensive tool to evaluate which business structure best suits your electrical contracting business needs.
+                Use this comprehensive tool to evaluate which business structure best suits your
+                electrical contracting business needs.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Systematic evaluation of profit levels, liability exposure, administrative capacity, and growth plans.</p>
+                    <p className="text-sm">
+                      Systematic evaluation of profit levels, liability exposure, administrative
+                      capacity, and growth plans.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -317,7 +364,7 @@ const BusinessStructureTab = () => {
                       <li>• Week 4: Make informed decision</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -328,10 +375,12 @@ const BusinessStructureTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Key Features & Requirements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Annual profit assessment</li>
                       <li>• Liability risk evaluation</li>
@@ -340,7 +389,7 @@ const BusinessStructureTab = () => {
                       <li>• Professional advice consideration</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
                     <ul className="text-sm space-y-1">
@@ -350,7 +399,7 @@ const BusinessStructureTab = () => {
                       <li>• Review annually for changes</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
                     <ul className="text-sm space-y-1">
@@ -373,16 +422,20 @@ const BusinessStructureTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                A hybrid structure combining partnership flexibility with limited liability protection - ideal for professional electrical partnerships.
+                A hybrid structure combining partnership flexibility with limited liability
+                protection - ideal for professional electrical partnerships.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Perfect for established electrical partnerships requiring liability protection whilst maintaining tax transparency and operational flexibility.</p>
+                    <p className="text-sm">
+                      Perfect for established electrical partnerships requiring liability protection
+                      whilst maintaining tax transparency and operational flexibility.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -393,7 +446,7 @@ const BusinessStructureTab = () => {
                       <li>• Ongoing: Annual confirmation statements</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -405,10 +458,12 @@ const BusinessStructureTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Key Features & Requirements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Minimum 2 designated members required</li>
                       <li>• Annual confirmation statement to Companies House</li>
@@ -417,7 +472,7 @@ const BusinessStructureTab = () => {
                       <li>• Must display LLP status on documentation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
                     <ul className="text-sm space-y-1">
@@ -428,7 +483,7 @@ const BusinessStructureTab = () => {
                       <li>• Partnership return required annually</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
                     <ul className="text-sm space-y-1">
@@ -452,16 +507,20 @@ const BusinessStructureTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Comprehensive side-by-side comparison of all business structures to help UK electricians make informed decisions.
+                Comprehensive side-by-side comparison of all business structures to help UK
+                electricians make informed decisions.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Compare liability, tax efficiency, setup costs, and administrative requirements across all structure types for electrical contractors.</p>
+                    <p className="text-sm">
+                      Compare liability, tax efficiency, setup costs, and administrative
+                      requirements across all structure types for electrical contractors.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -472,7 +531,7 @@ const BusinessStructureTab = () => {
                       <li>• Decision: Choose optimal structure</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -484,10 +543,12 @@ const BusinessStructureTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Key Features & Requirements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Setup cost comparison (£12 to £500+)</li>
                       <li>• Annual compliance cost analysis</li>
@@ -496,7 +557,7 @@ const BusinessStructureTab = () => {
                       <li>• Administrative burden evaluation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
                     <ul className="text-sm space-y-1">
@@ -507,7 +568,7 @@ const BusinessStructureTab = () => {
                       <li>• Consider IR35 implications for contractors</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
                     <ul className="text-sm space-y-1">

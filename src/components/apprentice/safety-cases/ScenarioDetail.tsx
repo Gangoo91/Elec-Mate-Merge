@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Button } from '@/components/ui/button';
 import {
   ArrowLeft,
   ArrowRight,
@@ -11,9 +11,9 @@ import {
   Trophy,
   XCircle,
   Shield,
-} from "lucide-react";
-import ScenarioOption from "./ScenarioOption";
-import { SafetyScenario } from "./safetyScenarios";
+} from 'lucide-react';
+import ScenarioOption from './ScenarioOption';
+import { SafetyScenario } from './safetyScenarios';
 
 interface StepResult {
   stepId: string;
@@ -51,8 +51,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
   const step = scenario.steps[currentStepIndex];
   const totalSteps = scenario.steps.length;
   const stepsCorrect = stepResults.filter((r) => r.isCorrect).length;
-  const score =
-    totalSteps > 0 ? Math.round((stepsCorrect / totalSteps) * 100) : 0;
+  const score = totalSteps > 0 ? Math.round((stepsCorrect / totalSteps) * 100) : 0;
 
   // Completion panel
   if (isComplete) {
@@ -73,29 +72,21 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
             <div
               className={`p-3 rounded-xl ${
                 score >= 80
-                  ? "bg-green-500/15 border border-green-500/30"
+                  ? 'bg-green-500/15 border border-green-500/30'
                   : score >= 50
-                    ? "bg-elec-yellow/15 border border-elec-yellow/30"
-                    : "bg-red-500/15 border border-red-500/30"
+                    ? 'bg-elec-yellow/15 border border-elec-yellow/30'
+                    : 'bg-red-500/15 border border-red-500/30'
               }`}
             >
               <Trophy
                 className={`h-6 w-6 ${
-                  score >= 80
-                    ? "text-green-400"
-                    : score >= 50
-                      ? "text-elec-yellow"
-                      : "text-red-400"
+                  score >= 80 ? 'text-green-400' : score >= 50 ? 'text-elec-yellow' : 'text-red-400'
                 }`}
               />
             </div>
             <div>
               <h2 className="text-lg font-bold text-white">
-                {score >= 80
-                  ? "Excellent work!"
-                  : score >= 50
-                    ? "Good effort"
-                    : "Keep practising"}
+                {score >= 80 ? 'Excellent work!' : score >= 50 ? 'Good effort' : 'Keep practising'}
               </h2>
               <p className="text-white text-sm">
                 {stepsCorrect} of {totalSteps} steps correct
@@ -103,11 +94,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
             </div>
             <span
               className={`ml-auto text-3xl font-bold ${
-                score >= 80
-                  ? "text-green-400"
-                  : score >= 50
-                    ? "text-elec-yellow"
-                    : "text-red-400"
+                score >= 80 ? 'text-green-400' : score >= 50 ? 'text-elec-yellow' : 'text-red-400'
               }`}
             >
               {score}%
@@ -118,11 +105,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
           <div className="h-2 bg-white/10 rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-700 ${
-                score >= 80
-                  ? "bg-green-500"
-                  : score >= 50
-                    ? "bg-elec-yellow"
-                    : "bg-red-500"
+                score >= 80 ? 'bg-green-500' : score >= 50 ? 'bg-elec-yellow' : 'bg-red-500'
               }`}
               style={{ width: `${score}%` }}
             />
@@ -142,15 +125,13 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
               <div
                 key={result.stepId}
                 className={`p-3 rounded-xl bg-white/5 border-l-4 ${
-                  result.isCorrect
-                    ? "border-l-green-500"
-                    : "border-l-red-500"
+                  result.isCorrect ? 'border-l-green-500' : 'border-l-red-500'
                 } border border-white/10`}
               >
                 <div className="flex items-start gap-2.5">
                   <div
                     className={`mt-0.5 p-1 rounded-md flex-shrink-0 ${
-                      result.isCorrect ? "bg-green-500/20" : "bg-red-500/20"
+                      result.isCorrect ? 'bg-green-500/20' : 'bg-red-500/20'
                     }`}
                   >
                     {result.isCorrect ? (
@@ -164,9 +145,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
                       Step {idx + 1}: {s.question}
                     </p>
                     {result.isCorrect ? (
-                      <p className="text-white text-xs mt-1">
-                        Answered correctly
-                      </p>
+                      <p className="text-white text-xs mt-1">Answered correctly</p>
                     ) : (
                       <p className="text-white text-xs mt-1">
                         Correct answer: {correctOption?.text}
@@ -186,9 +165,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
               <AlertTriangle className="h-4 w-4 text-amber-400" />
               Real Incident
             </h3>
-            <p className="text-white text-sm leading-relaxed">
-              {scenario.realCase.summary}
-            </p>
+            <p className="text-white text-sm leading-relaxed">{scenario.realCase.summary}</p>
             {scenario.realCase.fineAmount && (
               <div className="flex items-center gap-2">
                 <span className="text-xs font-medium text-white bg-white/10 px-2 py-1 rounded">
@@ -199,9 +176,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
                 </span>
               </div>
             )}
-            <p className="text-white text-sm leading-relaxed">
-              {scenario.realCase.consequence}
-            </p>
+            <p className="text-white text-sm leading-relaxed">{scenario.realCase.consequence}</p>
           </div>
         )}
 
@@ -213,10 +188,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
               Key Regulation
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              {
-                scenario.steps[0]?.options.find((o) => o.isCorrect)
-                  ?.regulation
-              }
+              {scenario.steps[0]?.options.find((o) => o.isCorrect)?.regulation}
             </p>
           </div>
         )}
@@ -266,10 +238,10 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
               key={idx}
               className={`h-1.5 flex-1 rounded-full transition-all ${
                 idx < currentStepIndex
-                  ? "bg-green-500"
+                  ? 'bg-green-500'
                   : idx === currentStepIndex
-                    ? "bg-elec-yellow"
-                    : "bg-white/10"
+                    ? 'bg-elec-yellow'
+                    : 'bg-white/10'
               }`}
             />
           ))}
@@ -281,13 +253,9 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
         <div className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 space-y-2">
           <div className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-elec-yellow" />
-            <span className="text-white text-sm font-medium">
-              {scenario.location}
-            </span>
+            <span className="text-white text-sm font-medium">{scenario.location}</span>
           </div>
-          <p className="text-white text-sm leading-relaxed">
-            {scenario.briefing}
-          </p>
+          <p className="text-white text-sm leading-relaxed">{scenario.briefing}</p>
         </div>
       )}
 

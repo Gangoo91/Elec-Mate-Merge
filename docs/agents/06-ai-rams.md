@@ -6,11 +6,11 @@ AI RAMS (Risk Assessment & Method Statement) is a unified generator that produce
 
 ## Agents Involved
 
-| Agent | Edge Function | Core Logic | Purpose |
-|-------|---------------|------------|---------|
-| **Health & Safety Agent** | N/A (inline call) | `_agents/health-safety-core.ts` | Risk assessment generation |
-| **Installer Agent** | N/A (inline call) | `_agents/installer-core.ts` | Method statement generation |
-| **RAMS Generator** | `generate-rams` | Direct in function | Orchestration & merging |
+| Agent                     | Edge Function     | Core Logic                      | Purpose                     |
+| ------------------------- | ----------------- | ------------------------------- | --------------------------- |
+| **Health & Safety Agent** | N/A (inline call) | `_agents/health-safety-core.ts` | Risk assessment generation  |
+| **Installer Agent**       | N/A (inline call) | `_agents/installer-core.ts`     | Method statement generation |
+| **RAMS Generator**        | `generate-rams`   | Direct in function              | Orchestration & merging     |
 
 ## Entry Points
 
@@ -39,12 +39,12 @@ This shared data is passed to both agents to avoid duplicate RAG queries.
 
 ### Agent-Specific RAG
 
-| Agent | Table | Purpose |
-|-------|-------|---------|
-| Health & Safety | `health_safety_knowledge` | HSE guidance, hazard data |
-| Health & Safety | `regulations_intelligence` | BS 7671 safety regulations |
-| Installer | `practical_work_intelligence` | Installation procedures |
-| Installer | `regulations_intelligence` | BS 7671 installation rules |
+| Agent           | Table                         | Purpose                    |
+| --------------- | ----------------------------- | -------------------------- |
+| Health & Safety | `health_safety_knowledge`     | HSE guidance, hazard data  |
+| Health & Safety | `regulations_intelligence`    | BS 7671 safety regulations |
+| Installer       | `practical_work_intelligence` | Installation procedures    |
+| Installer       | `regulations_intelligence`    | BS 7671 installation rules |
 
 ## Internal Flow
 
@@ -61,7 +61,7 @@ sequenceDiagram
     Frontend->>CreateJob: Submit RAMS request
     CreateJob->>Database: Create job (status: pending)
     CreateJob->>Generator: Trigger generation
-    
+
     Generator->>Cache: Layer 1: Check full RAMS cache
     alt Full Cache Hit
         Cache->>Database: Return cached RAMS
@@ -69,9 +69,9 @@ sequenceDiagram
     else Cache Miss
         Generator->>Database: Update: Fetching shared regulations
         Generator->>Generator: Fetch shared regulations (once)
-        
+
         Generator->>Cache: Layer 3: Check partial caches
-        
+
         par Parallel Agent Execution
             Generator->>HSAgent: Generate risk assessment
             HSAgent->>HSAgent: RAG + AI generation
@@ -81,13 +81,13 @@ sequenceDiagram
             InstallerAgent->>InstallerAgent: RAG + AI generation
             InstallerAgent->>Generator: Return installation steps
         end
-        
+
         Generator->>Generator: Merge outputs
         Generator->>Cache: Store in RAMS cache
         Generator->>Cache: Store partial caches
         Generator->>Database: Save rams_data + method_data
     end
-    
+
     Frontend->>Database: Poll for completion
     Database->>Frontend: Return complete RAMS
 ```
@@ -97,6 +97,7 @@ sequenceDiagram
 ### Layer 1: Full RAMS Cache
 
 **Function**: `checkRAMSCache()` / `storeRAMSCache()`
+
 - Checks for identical job descriptions with semantic similarity
 - Returns complete RAMS if found
 - Instant response (<1s)
@@ -108,6 +109,7 @@ RAG results are implicitly cached through shared regulations fetch.
 ### Layer 3: Partial Agent Cache
 
 **Function**: `checkPartialCache()` / `storePartialCache()`
+
 - Caches individual agent outputs
 - If H&S cached but Installer not, only runs Installer
 - Reduces generation time by ~50% on partial hits
@@ -116,8 +118,8 @@ RAG results are implicitly cached through shared regulations fetch.
 
 ```typescript
 interface RAMSRequest {
-  jobDescription: string;           // Work description
-  jobScale: string;                 // domestic, commercial, industrial
+  jobDescription: string; // Work description
+  jobScale: string; // domestic, commercial, industrial
   projectInfo: {
     projectName: string;
     location: string;
@@ -209,46 +211,46 @@ interface MethodData {
 
 **Table**: `rams_generation_jobs`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | UUID | Job identifier |
-| `user_id` | UUID | Owner |
-| `status` | TEXT | pending, processing, complete, partial, failed, cancelled |
-| `progress` | INTEGER | 0-100 |
-| `current_step` | TEXT | Current processing stage |
-| `hs_agent_status` | TEXT | Health & Safety agent status |
-| `hs_agent_progress` | INTEGER | Health & Safety progress (0-100) |
-| `installer_agent_status` | TEXT | Installer agent status |
-| `installer_agent_progress` | INTEGER | Installer progress (0-100) |
-| `job_description` | TEXT | Work description |
-| `job_scale` | TEXT | domestic/commercial/industrial |
-| `project_info` | JSONB | Project metadata |
-| `rams_data` | JSONB | Risk assessment output |
-| `method_data` | JSONB | Method statement output |
-| `cache_hit` | BOOLEAN | Whether served from cache |
-| `error_message` | TEXT | Error details if failed |
+| Column                     | Type    | Description                                               |
+| -------------------------- | ------- | --------------------------------------------------------- |
+| `id`                       | UUID    | Job identifier                                            |
+| `user_id`                  | UUID    | Owner                                                     |
+| `status`                   | TEXT    | pending, processing, complete, partial, failed, cancelled |
+| `progress`                 | INTEGER | 0-100                                                     |
+| `current_step`             | TEXT    | Current processing stage                                  |
+| `hs_agent_status`          | TEXT    | Health & Safety agent status                              |
+| `hs_agent_progress`        | INTEGER | Health & Safety progress (0-100)                          |
+| `installer_agent_status`   | TEXT    | Installer agent status                                    |
+| `installer_agent_progress` | INTEGER | Installer progress (0-100)                                |
+| `job_description`          | TEXT    | Work description                                          |
+| `job_scale`                | TEXT    | domestic/commercial/industrial                            |
+| `project_info`             | JSONB   | Project metadata                                          |
+| `rams_data`                | JSONB   | Risk assessment output                                    |
+| `method_data`              | JSONB   | Method statement output                                   |
+| `cache_hit`                | BOOLEAN | Whether served from cache                                 |
+| `error_message`            | TEXT    | Error details if failed                                   |
 
 ## Progress Zones
 
 Overall progress is calculated from agent progress:
 
-| Zone | Range | Description |
-|------|-------|-------------|
-| Initialization | 0-10% | Job setup, cache checks |
-| H&S Agent | 10-50% | Health & Safety generation |
-| Installer Agent | 50-90% | Method statement generation |
-| Finalization | 90-100% | Merging, saving, caching |
+| Zone            | Range   | Description                 |
+| --------------- | ------- | --------------------------- |
+| Initialization  | 0-10%   | Job setup, cache checks     |
+| H&S Agent       | 10-50%  | Health & Safety generation  |
+| Installer Agent | 50-90%  | Method statement generation |
+| Finalization    | 90-100% | Merging, saving, caching    |
 
 ## Partial Success Handling
 
 The generator handles partial failures gracefully:
 
-| H&S | Installer | Result |
-|-----|-----------|--------|
-| ✓ | ✓ | Complete RAMS |
-| ✓ | ✗ | Partial (risk assessment only) |
-| ✗ | ✓ | Partial (method statement only) |
-| ✗ | ✗ | Failed |
+| H&S | Installer | Result                          |
+| --- | --------- | ------------------------------- |
+| ✓   | ✓         | Complete RAMS                   |
+| ✓   | ✗         | Partial (risk assessment only)  |
+| ✗   | ✓         | Partial (method statement only) |
+| ✗   | ✗         | Failed                          |
 
 ## Developer Notes
 
@@ -267,12 +269,13 @@ Both agents receive progress callbacks:
 async (progress: number, step: string) => {
   if (await checkCancelled()) throw new Error('Job cancelled');
   await updateAgentProgress('hs', progress, 'processing', step);
-}
+};
 ```
 
 ### Cancellation Support
 
 Job can be cancelled at any point:
+
 - Checks `status === 'cancelled'` in database
 - Throws error to stop agent execution
 - Frontend calls `cancel-rams-job` function

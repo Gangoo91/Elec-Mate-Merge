@@ -14,8 +14,10 @@ export async function saveRAMSPDFToStorage(
   status: string = 'draft'
 ): Promise<{ success: boolean; error?: string; documentId?: string }> {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     if (!user) {
       return { success: false, error: 'User not authenticated' };
     }
@@ -51,7 +53,7 @@ export async function saveRAMSPDFToStorage(
       .from('rams-pdfs')
       .upload(fileName, pdfBlob, {
         contentType: 'application/pdf',
-        upsert: false
+        upsert: false,
       });
 
     if (uploadError) {
@@ -64,27 +66,29 @@ export async function saveRAMSPDFToStorage(
     // Save reference in database with full RAMS data
     const { data: docData, error: dbError } = await supabase
       .from('rams_documents')
-      .insert([{
-        user_id: user.id,
-        project_name: projectName,
-        location: location,
-        date: ramsData.date || currentDate,
-        assessor: ramsData.assessor || 'AI Generated',
-        contractor: ramsData.contractor || methodData.contractor || null,
-        supervisor: ramsData.supervisor || methodData.supervisor || null,
-        activities: ramsData.activities || [],
-        risks: (ramsData.risks || []) as any,
-        required_ppe: ramsData.requiredPPE || [],
-        ppe_details: (ramsData.ppeDetails || null) as any,
-        status: status,
-        pdf_url: uploadData.path,
-        job_scale: (methodData as any)?.jobScale || null,
-        ai_generation_metadata: {
-          generated_at: new Date().toISOString(),
-          method_steps_count: methodData.steps?.length || 0,
-          risk_count: ramsData.risks?.length || 0
-        } as any
-      }])
+      .insert([
+        {
+          user_id: user.id,
+          project_name: projectName,
+          location: location,
+          date: ramsData.date || currentDate,
+          assessor: ramsData.assessor || 'AI Generated',
+          contractor: ramsData.contractor || methodData.contractor || null,
+          supervisor: ramsData.supervisor || methodData.supervisor || null,
+          activities: ramsData.activities || [],
+          risks: (ramsData.risks || []) as any,
+          required_ppe: ramsData.requiredPPE || [],
+          ppe_details: (ramsData.ppeDetails || null) as any,
+          status: status,
+          pdf_url: uploadData.path,
+          job_scale: (methodData as any)?.jobScale || null,
+          ai_generation_metadata: {
+            generated_at: new Date().toISOString(),
+            method_steps_count: methodData.steps?.length || 0,
+            risk_count: ramsData.risks?.length || 0,
+          } as any,
+        },
+      ])
       .select()
       .single();
 
@@ -112,8 +116,10 @@ export async function updateRAMSPDFInStorage(
   projectName: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     if (!user) {
       return { success: false, error: 'User not authenticated' };
     }
@@ -144,7 +150,7 @@ export async function updateRAMSPDFInStorage(
       .from('rams-pdfs')
       .upload(fileName, pdfBlob, {
         contentType: 'application/pdf',
-        upsert: false
+        upsert: false,
       });
 
     if (uploadError) {
@@ -154,9 +160,9 @@ export async function updateRAMSPDFInStorage(
     // Update database reference
     const { error: updateError } = await supabase
       .from('rams_documents')
-      .update({ 
+      .update({
         pdf_url: uploadData.path,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', documentId);
 
@@ -186,7 +192,9 @@ export async function saveUserUploadedRAMS(
   }
 ): Promise<{ success: boolean; error?: string; documentId?: string }> {
   try {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) {
       return { success: false, error: 'User not authenticated' };
@@ -219,7 +227,7 @@ export async function saveUserUploadedRAMS(
       .from('rams-pdfs')
       .upload(fileName, file, {
         contentType: 'application/pdf',
-        upsert: false
+        upsert: false,
       });
 
     if (uploadError) {
@@ -232,24 +240,26 @@ export async function saveUserUploadedRAMS(
     // Save reference in database
     const { data: docData, error: dbError } = await supabase
       .from('rams_documents')
-      .insert([{
-        user_id: user.id,
-        project_name: projectName,
-        location: location,
-        date: metadata.date || currentDate,
-        assessor: 'User Uploaded',
-        status: 'approved', // User-uploaded docs assumed approved
-        pdf_url: uploadData.path,
-        source: 'user-uploaded',
-        original_filename: file.name,
-        risks: [], // No AI-generated risks
-        activities: [],
-        ai_generation_metadata: {
-          uploaded_at: new Date().toISOString(),
-          original_size: file.size,
-          original_name: file.name
-        } as any
-      }])
+      .insert([
+        {
+          user_id: user.id,
+          project_name: projectName,
+          location: location,
+          date: metadata.date || currentDate,
+          assessor: 'User Uploaded',
+          status: 'approved', // User-uploaded docs assumed approved
+          pdf_url: uploadData.path,
+          source: 'user-uploaded',
+          original_filename: file.name,
+          risks: [], // No AI-generated risks
+          activities: [],
+          ai_generation_metadata: {
+            uploaded_at: new Date().toISOString(),
+            original_size: file.size,
+            original_name: file.name,
+          } as any,
+        },
+      ])
       .select()
       .single();
 

@@ -65,7 +65,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
       if (data.status === 'processing') {
         const hasProgressChanged = data.progress !== lastProgress;
         const hasStepChanged = data.current_step !== lastCurrentStep;
-        
+
         if (hasProgressChanged || hasStepChanged) {
           // Any activity detected - reset timer
           setLastProgress(data.progress);
@@ -80,7 +80,8 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
               .from('rams_generation_jobs')
               .update({
                 status: 'failed',
-                error_message: 'Generation timed out - no activity detected for 6 minutes. Please try again.'
+                error_message:
+                  'Generation timed out - no activity detected for 6 minutes. Please try again.',
               })
               .eq('id', jobId);
             setIsPolling(false);
@@ -90,7 +91,12 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
       }
 
       // Stop polling when complete, partial, failed, or cancelled
-      if (data.status === 'complete' || data.status === 'partial' || data.status === 'failed' || data.status === 'cancelled') {
+      if (
+        data.status === 'complete' ||
+        data.status === 'partial' ||
+        data.status === 'failed' ||
+        data.status === 'cancelled'
+      ) {
         setIsPolling(false);
       }
     } catch (error) {
@@ -112,7 +118,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     const poll = () => {
       pollJob();
       pollCount++;
-      
+
       // Progressive backoff:
       // 0-20 polls (0-20s): 1s interval (super fast initial feedback)
       // 21-40 polls (20s-1.5min): 5s interval
@@ -125,7 +131,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
         pollInterval = 10000;
         console.log('📊 Polling: Switching to 10s interval');
       }
-      
+
       timeoutId = window.setTimeout(poll, pollInterval);
     };
 
@@ -156,10 +162,13 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     installerAgentProgress: job?.installer_agent_progress || 0,
     hsAgentStatus: job?.hs_agent_status || 'pending',
     installerAgentStatus: job?.installer_agent_status || 'pending',
-    status: jobId ? ((job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') || 'pending') : 'idle',
+    status: jobId
+      ? (job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') ||
+        'pending'
+      : 'idle',
     currentStep: job?.current_step || '',
     ramsData: job?.rams_data,
     methodData: job?.method_data,
-    error: job?.error_message
+    error: job?.error_message,
   };
 };

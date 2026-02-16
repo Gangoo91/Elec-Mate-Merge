@@ -13,8 +13,9 @@ const SafetyRisksConsiderationsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Smart home installations present unique safety challenges that electricians must anticipate and mitigate. 
-          Understanding these risks is essential for safe and compliant installations.
+          Smart home installations present unique safety challenges that electricians must
+          anticipate and mitigate. Understanding these risks is essential for safe and compliant
+          installations.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -25,7 +26,8 @@ const SafetyRisksConsiderationsSection = () => {
                 Mixed Voltage Risks
               </h4>
               <p className="text-red-100 text-sm mb-3">
-                Some smart devices use both mains and low voltage — incorrect wiring can cause damage or danger.
+                Some smart devices use both mains and low voltage — incorrect wiring can cause
+                damage or danger.
               </p>
               <ul className="space-y-2 text-red-100 text-sm">
                 <li className="flex items-start gap-2">

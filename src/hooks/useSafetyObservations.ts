@@ -20,6 +20,8 @@ export interface SafetyObservation {
   assigned_to: string | null;
   due_date: string | null;
   completed_date: string | null;
+  observer_signature: string | null;
+  observer_name: string | null;
   created_at: string;
 }
 
@@ -71,6 +73,8 @@ export function useCreateObservation() {
       location?: string;
       severity?: ObservationSeverity;
       photos?: string[];
+      observer_signature?: string;
+      observer_name?: string;
     }) => {
       const {
         data: { user },
@@ -88,6 +92,8 @@ export function useCreateObservation() {
           location: observation.location,
           severity: observation.severity ?? null,
           photos: observation.photos ?? [],
+          observer_signature: observation.observer_signature ?? null,
+          observer_name: observation.observer_name ?? null,
         })
         .select()
         .single();

@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { User, Users, FileText } from "lucide-react";
-import { IncomeStream, ExpenseCategory } from "@/hooks/use-cash-flow";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { User, Users, FileText } from 'lucide-react';
+import { IncomeStream, ExpenseCategory } from '@/hooks/use-cash-flow';
 
 interface QuickStartTemplatesProps {
   onLoadTemplate: (
@@ -18,22 +18,22 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         amount: 4500,
         frequency: 'monthly',
         paymentDelayDays: 14,
-        growth: 0.05
+        growth: 0.05,
       },
       {
         name: 'Emergency Callouts',
         amount: 1200,
         frequency: 'monthly',
         paymentDelayDays: 0,
-        growth: 0.03
+        growth: 0.03,
       },
       {
         name: 'Maintenance Contracts',
         amount: 800,
         frequency: 'monthly',
         paymentDelayDays: 30,
-        growth: 0.08
-      }
+        growth: 0.08,
+      },
     ];
 
     const expenseCategories: Omit<ExpenseCategory, 'id'>[] = [
@@ -42,21 +42,21 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         amount: 1500,
         frequency: 'monthly',
         variable: true,
-        growth: 0.03
+        growth: 0.03,
       },
       {
         name: 'Van Costs (Fuel, Tax, etc.)',
         amount: 650,
         frequency: 'monthly',
         variable: true,
-        growth: 0.04
+        growth: 0.04,
       },
       {
         name: 'Tools & Equipment',
         amount: 300,
         frequency: 'monthly',
         variable: false,
-        growth: 0.02
+        growth: 0.02,
       },
       {
         name: 'Insurance (Van, Public Liability)',
@@ -64,7 +64,7 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         frequency: 'annual',
         timing: 3,
         variable: false,
-        growth: 0.05
+        growth: 0.05,
       },
       {
         name: 'Professional Fees (NICEIC/NAPIT)',
@@ -72,15 +72,15 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         frequency: 'annual',
         timing: 1,
         variable: false,
-        growth: 0.03
+        growth: 0.03,
       },
       {
         name: 'Marketing & Website',
         amount: 150,
         frequency: 'monthly',
         variable: false,
-        growth: 0.05
-      }
+        growth: 0.05,
+      },
     ];
 
     onLoadTemplate(incomeStreams, expenseCategories);
@@ -93,29 +93,29 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         amount: 12000,
         frequency: 'monthly',
         paymentDelayDays: 30,
-        growth: 0.06
+        growth: 0.06,
       },
       {
         name: 'Domestic Projects',
         amount: 5000,
         frequency: 'monthly',
         paymentDelayDays: 14,
-        growth: 0.04
+        growth: 0.04,
       },
       {
         name: 'Maintenance Contracts',
         amount: 3500,
         frequency: 'monthly',
         paymentDelayDays: 30,
-        growth: 0.08
+        growth: 0.08,
       },
       {
         name: 'Emergency Services',
         amount: 2000,
         frequency: 'monthly',
         paymentDelayDays: 7,
-        growth: 0.03
-      }
+        growth: 0.03,
+      },
     ];
 
     const expenseCategories: Omit<ExpenseCategory, 'id'>[] = [
@@ -124,35 +124,35 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         amount: 5500,
         frequency: 'monthly',
         variable: true,
-        growth: 0.03
+        growth: 0.03,
       },
       {
         name: 'Employee Wages (3 staff)',
         amount: 9000,
         frequency: 'monthly',
         variable: false,
-        growth: 0.04
+        growth: 0.04,
       },
       {
         name: 'Vehicle Fleet Costs',
         amount: 1800,
         frequency: 'monthly',
         variable: true,
-        growth: 0.04
+        growth: 0.04,
       },
       {
         name: 'Office & Storage Rent',
         amount: 1200,
         frequency: 'monthly',
         variable: false,
-        growth: 0.03
+        growth: 0.03,
       },
       {
         name: 'Tools & Equipment',
         amount: 800,
         frequency: 'monthly',
         variable: false,
-        growth: 0.02
+        growth: 0.02,
       },
       {
         name: 'Insurance (Full Coverage)',
@@ -160,7 +160,7 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         frequency: 'annual',
         timing: 3,
         variable: false,
-        growth: 0.05
+        growth: 0.05,
       },
       {
         name: 'Professional Fees & Memberships',
@@ -168,14 +168,14 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         frequency: 'annual',
         timing: 1,
         variable: false,
-        growth: 0.03
+        growth: 0.03,
       },
       {
         name: 'Marketing & Advertising',
         amount: 600,
         frequency: 'monthly',
         variable: false,
-        growth: 0.08
+        growth: 0.08,
       },
       {
         name: 'Accountancy & Legal',
@@ -183,8 +183,8 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         frequency: 'annual',
         timing: 12,
         variable: false,
-        growth: 0.04
-      }
+        growth: 0.04,
+      },
     ];
 
     onLoadTemplate(incomeStreams, expenseCategories);
@@ -197,10 +197,11 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
       </CardHeader>
       <CardContent>
         <p className="text-elec-light/80 text-sm mb-4">
-          Choose a template to get started quickly with pre-configured income and expenses based on typical UK electrician businesses.
+          Choose a template to get started quickly with pre-configured income and expenses based on
+          typical UK electrician businesses.
         </p>
         <div className="grid gap-3 sm:grid-cols-3">
-          <Button 
+          <Button
             onClick={loadSoleTraderTemplate}
             className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-auto py-4 flex flex-col items-center gap-2"
           >
@@ -210,8 +211,8 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
               <div className="text-xs opacity-90">1-2 person operation</div>
             </div>
           </Button>
-          
-          <Button 
+
+          <Button
             onClick={loadSmallBusinessTemplate}
             className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-auto py-4 flex flex-col items-center gap-2"
           >
@@ -221,8 +222,8 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
               <div className="text-xs opacity-90">3-5 employees</div>
             </div>
           </Button>
-          
-          <Button 
+
+          <Button
             variant="outline"
             className="h-auto py-4 flex flex-col items-center gap-2 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
           >

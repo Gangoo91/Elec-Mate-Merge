@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { SafetyScenario, safetyScenarios } from "./safetyScenarios";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { SafetyScenario, safetyScenarios } from './safetyScenarios';
 
-const STORAGE_KEY = "elec-mate-safety-progress";
+const STORAGE_KEY = 'elec-mate-safety-progress';
 
 interface ScenarioResult {
   completedAt: string;
@@ -40,9 +40,7 @@ function loadProgress(): ProgressData {
     if (parsed.lastCompletedDate) {
       const last = new Date(parsed.lastCompletedDate);
       const now = new Date();
-      const diffDays = Math.floor(
-        (now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24)
-      );
+      const diffDays = Math.floor((now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
       if (diffDays > 1) {
         parsed.currentStreak = 0;
       }
@@ -61,20 +59,18 @@ function saveProgress(data: ProgressData) {
   }
 }
 
-export type DifficultyFilter = "All" | "Beginner" | "Intermediate" | "Advanced";
+export type DifficultyFilter = 'All' | 'Beginner' | 'Intermediate' | 'Advanced';
 
 export const useScenarios = () => {
   const [progress, setProgress] = useState<ProgressData>(loadProgress);
-  const [selectedScenario, setSelectedScenario] =
-    useState<SafetyScenario | null>(null);
+  const [selectedScenario, setSelectedScenario] = useState<SafetyScenario | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [stepResults, setStepResults] = useState<StepResult[]>([]);
   const [isComplete, setIsComplete] = useState(false);
-  const [difficultyFilter, setDifficultyFilter] =
-    useState<DifficultyFilter>("All");
-  const [categoryFilter, setCategoryFilter] = useState<string>("All");
+  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>('All');
+  const [categoryFilter, setCategoryFilter] = useState<string>('All');
 
   const { toast } = useToast();
 
@@ -86,10 +82,8 @@ export const useScenarios = () => {
   // Filtered scenarios
   const scenarios = useMemo(() => {
     return safetyScenarios.filter((s) => {
-      if (difficultyFilter !== "All" && s.difficulty !== difficultyFilter)
-        return false;
-      if (categoryFilter !== "All" && s.category !== categoryFilter)
-        return false;
+      if (difficultyFilter !== 'All' && s.difficulty !== difficultyFilter) return false;
+      if (categoryFilter !== 'All' && s.category !== categoryFilter) return false;
       return true;
     });
   }, [difficultyFilter, categoryFilter]);
@@ -97,14 +91,13 @@ export const useScenarios = () => {
   // All unique categories
   const categories = useMemo(() => {
     const cats = new Set(safetyScenarios.map((s) => s.category));
-    return ["All", ...Array.from(cats).sort()];
+    return ['All', ...Array.from(cats).sort()];
   }, []);
 
   // Stats
   const completedCount = Object.keys(progress.completedScenarios).length;
   const totalCount = safetyScenarios.length;
-  const completionPercentage =
-    totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+  const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
   const isScenarioCompleted = useCallback(
     (id: number) => !!progress.completedScenarios[String(id)],
@@ -131,9 +124,9 @@ export const useScenarios = () => {
   const submitStep = useCallback(() => {
     if (!selectedOption || !selectedScenario) {
       toast({
-        title: "No option selected",
-        description: "Please select an option to continue",
-        variant: "destructive",
+        title: 'No option selected',
+        description: 'Please select an option to continue',
+        variant: 'destructive',
       });
       return;
     }
@@ -150,15 +143,15 @@ export const useScenarios = () => {
 
     if (isCorrect) {
       toast({
-        title: "Excellent decision!",
-        description: "You have made the safe and professional choice",
+        title: 'Excellent decision!',
+        description: 'You have made the safe and professional choice',
       });
     } else {
       const correct = step.options.find((o) => o.isCorrect);
       toast({
-        title: "Consider a different approach",
+        title: 'Consider a different approach',
         description: `The safer option would be: ${correct?.text}`,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   }, [selectedOption, selectedScenario, currentStepIndex, toast]);
@@ -178,23 +171,19 @@ export const useScenarios = () => {
       const stepsCorrect = allResults.filter((r) => r.isCorrect).length;
       const totalSteps = selectedScenario.steps.length;
       const score = Math.round((stepsCorrect / totalSteps) * 100);
-      const today = new Date().toISOString().split("T")[0];
+      const today = new Date().toISOString().split('T')[0];
 
       setProgress((prev) => {
-        const isNewCompletion =
-          !prev.completedScenarios[String(selectedScenario.id)];
+        const isNewCompletion = !prev.completedScenarios[String(selectedScenario.id)];
         const wasCompletedToday = prev.lastCompletedDate === today;
         let newStreak = prev.currentStreak;
 
         if (isNewCompletion && !wasCompletedToday) {
           const yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
-          const yesterdayStr = yesterday.toISOString().split("T")[0];
+          const yesterdayStr = yesterday.toISOString().split('T')[0];
 
-          if (
-            prev.lastCompletedDate === yesterdayStr ||
-            prev.currentStreak === 0
-          ) {
+          if (prev.lastCompletedDate === yesterdayStr || prev.currentStreak === 0) {
             newStreak = prev.currentStreak + 1;
           }
         }
@@ -216,7 +205,7 @@ export const useScenarios = () => {
       });
 
       toast({
-        title: "Scenario complete!",
+        title: 'Scenario complete!',
         description: `You scored ${score}% — ${stepsCorrect}/${totalSteps} steps correct`,
       });
     }
@@ -233,9 +222,7 @@ export const useScenarios = () => {
 
   const nextScenario = useCallback(() => {
     if (!selectedScenario) return;
-    const currentIdx = scenarios.findIndex(
-      (s) => s.id === selectedScenario.id
-    );
+    const currentIdx = scenarios.findIndex((s) => s.id === selectedScenario.id);
     if (currentIdx < scenarios.length - 1) {
       startScenario(scenarios[currentIdx + 1]);
     } else {

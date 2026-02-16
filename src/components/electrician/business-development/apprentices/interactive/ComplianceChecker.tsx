@@ -1,11 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, CheckCircle, AlertTriangle, ExternalLink, FileText } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Shield, CheckCircle, AlertTriangle, ExternalLink, FileText } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const ComplianceChecker = () => {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
@@ -13,152 +13,155 @@ const ComplianceChecker = () => {
 
   const complianceCategories = [
     {
-      category: "Legal Requirements",
-      priority: "critical" as const,
+      category: 'Legal Requirements',
+      priority: 'critical' as const,
       items: [
         {
-          id: "apprenticeship-agreement",
-          text: "Written apprenticeship agreement signed by all parties",
-          regulation: "Education and Skills Act 2008",
-          penalty: "Invalid apprenticeship"
+          id: 'apprenticeship-agreement',
+          text: 'Written apprenticeship agreement signed by all parties',
+          regulation: 'Education and Skills Act 2008',
+          penalty: 'Invalid apprenticeship',
         },
         {
-          id: "minimum-wage",
-          text: "Apprentice minimum wage compliance (£6.81/hour for under 19s or first year)",
-          regulation: "National Minimum Wage Act 1998",
-          penalty: "Fines up to £20,000 per apprentice"
+          id: 'minimum-wage',
+          text: 'Apprentice minimum wage compliance (£6.81/hour for under 19s or first year)',
+          regulation: 'National Minimum Wage Act 1998',
+          penalty: 'Fines up to £20,000 per apprentice',
         },
         {
-          id: "off-job-training",
-          text: "20% off-the-job training documented and tracked",
-          regulation: "Apprenticeship Funding Rules",
-          penalty: "Funding clawback"
+          id: 'off-job-training',
+          text: '20% off-the-job training documented and tracked',
+          regulation: 'Apprenticeship Funding Rules',
+          penalty: 'Funding clawback',
         },
         {
-          id: "training-provider",
-          text: "Approved training provider contract in place",
-          regulation: "Education and Skills Act 2008",
-          penalty: "Qualification invalid"
-        }
-      ]
+          id: 'training-provider',
+          text: 'Approved training provider contract in place',
+          regulation: 'Education and Skills Act 2008',
+          penalty: 'Qualification invalid',
+        },
+      ],
     },
     {
-      category: "Health & Safety",
-      priority: "critical" as const,
+      category: 'Health & Safety',
+      priority: 'critical' as const,
       items: [
         {
-          id: "risk-assessment",
-          text: "Young person risk assessment completed (under 18s)",
-          regulation: "Management of H&S at Work Regulations 1999",
-          penalty: "Prosecution, unlimited fines"
+          id: 'risk-assessment',
+          text: 'Young person risk assessment completed (under 18s)',
+          regulation: 'Management of H&S at Work Regulations 1999',
+          penalty: 'Prosecution, unlimited fines',
         },
         {
-          id: "safety-training",
-          text: "Comprehensive safety induction and ongoing training",
-          regulation: "Health and Safety at Work Act 1974",
-          penalty: "Prosecution, unlimited fines"
+          id: 'safety-training',
+          text: 'Comprehensive safety induction and ongoing training',
+          regulation: 'Health and Safety at Work Act 1974',
+          penalty: 'Prosecution, unlimited fines',
         },
         {
-          id: "supervision",
-          text: "Appropriate supervision arrangements for apprentice",
-          regulation: "Management of H&S at Work Regulations 1999",
-          penalty: "Prosecution, enforcement notices"
+          id: 'supervision',
+          text: 'Appropriate supervision arrangements for apprentice',
+          regulation: 'Management of H&S at Work Regulations 1999',
+          penalty: 'Prosecution, enforcement notices',
         },
         {
-          id: "ppe",
-          text: "Personal protective equipment provided and training given",
-          regulation: "Personal Protective Equipment at Work Regulations 2022",
-          penalty: "Improvement/prohibition notices"
-        }
-      ]
+          id: 'ppe',
+          text: 'Personal protective equipment provided and training given',
+          regulation: 'Personal Protective Equipment at Work Regulations 2022',
+          penalty: 'Improvement/prohibition notices',
+        },
+      ],
     },
     {
-      category: "Documentation & Records",
-      priority: "high" as const,
+      category: 'Documentation & Records',
+      priority: 'high' as const,
       items: [
         {
-          id: "progress-reviews",
-          text: "Regular progress reviews documented (minimum every 12 weeks)",
-          regulation: "Apprenticeship Funding Rules",
-          penalty: "Funding issues"
+          id: 'progress-reviews',
+          text: 'Regular progress reviews documented (minimum every 12 weeks)',
+          regulation: 'Apprenticeship Funding Rules',
+          penalty: 'Funding issues',
         },
         {
-          id: "evidence-portfolio",
-          text: "Digital portfolio maintained with regular evidence uploads",
-          regulation: "Apprenticeship Standard Assessment Plan",
-          penalty: "EPA failure"
+          id: 'evidence-portfolio',
+          text: 'Digital portfolio maintained with regular evidence uploads',
+          regulation: 'Apprenticeship Standard Assessment Plan',
+          penalty: 'EPA failure',
         },
         {
-          id: "time-records",
-          text: "Accurate time recording system for on/off-job training",
-          regulation: "Apprenticeship Funding Rules",
-          penalty: "Audit failure, funding clawback"
+          id: 'time-records',
+          text: 'Accurate time recording system for on/off-job training',
+          regulation: 'Apprenticeship Funding Rules',
+          penalty: 'Audit failure, funding clawback',
         },
         {
-          id: "qualifications",
-          text: "Functional skills and technical qualifications tracking",
-          regulation: "Apprenticeship Standard",
-          penalty: "EPA gateway failure"
-        }
-      ]
+          id: 'qualifications',
+          text: 'Functional skills and technical qualifications tracking',
+          regulation: 'Apprenticeship Standard',
+          penalty: 'EPA gateway failure',
+        },
+      ],
     },
     {
-      category: "Financial Compliance",
-      priority: "medium" as const,
+      category: 'Financial Compliance',
+      priority: 'medium' as const,
       items: [
         {
-          id: "funding-rules",
-          text: "Apprenticeship levy/co-investment rules followed",
-          regulation: "Apprenticeship Funding Rules",
-          penalty: "Funding recovery"
+          id: 'funding-rules',
+          text: 'Apprenticeship levy/co-investment rules followed',
+          regulation: 'Apprenticeship Funding Rules',
+          penalty: 'Funding recovery',
         },
         {
-          id: "incentive-claims",
-          text: "Government incentive payments claimed correctly",
-          regulation: "Apprenticeship Incentive Terms",
-          penalty: "Recovery of payments"
+          id: 'incentive-claims',
+          text: 'Government incentive payments claimed correctly',
+          regulation: 'Apprenticeship Incentive Terms',
+          penalty: 'Recovery of payments',
         },
         {
-          id: "payroll-setup",
-          text: "Apprentice correctly set up on payroll with appropriate deductions",
-          regulation: "PAYE Regulations",
-          penalty: "HMRC penalties"
-        }
-      ]
-    }
+          id: 'payroll-setup',
+          text: 'Apprentice correctly set up on payroll with appropriate deductions',
+          regulation: 'PAYE Regulations',
+          penalty: 'HMRC penalties',
+        },
+      ],
+    },
   ];
 
   const handleItemCheck = (itemId: string, checked: boolean) => {
-    setCheckedItems(prev => ({
+    setCheckedItems((prev) => ({
       ...prev,
-      [itemId]: checked
+      [itemId]: checked,
     }));
   };
 
   useEffect(() => {
-    const totalItems = complianceCategories.reduce((sum, category) => sum + category.items.length, 0);
+    const totalItems = complianceCategories.reduce(
+      (sum, category) => sum + category.items.length,
+      0
+    );
     const checkedCount = Object.values(checkedItems).filter(Boolean).length;
     setScore((checkedCount / totalItems) * 100);
   }, [checkedItems]);
 
   const getScoreColor = () => {
-    if (score >= 90) return "text-green-400";
-    if (score >= 75) return "text-blue-400";
-    if (score >= 60) return "text-amber-400";
-    return "text-red-400";
+    if (score >= 90) return 'text-green-400';
+    if (score >= 75) return 'text-blue-400';
+    if (score >= 60) return 'text-amber-400';
+    return 'text-red-400';
   };
 
   const getScoreLevel = () => {
-    if (score >= 90) return "Excellent";
-    if (score >= 75) return "Good";
-    if (score >= 60) return "Adequate";
-    return "Needs Attention";
+    if (score >= 90) return 'Excellent';
+    if (score >= 75) return 'Good';
+    if (score >= 60) return 'Adequate';
+    return 'Needs Attention';
   };
 
   const getCriticalIssues = () => {
-    const criticalCategories = complianceCategories.filter(cat => cat.priority === "critical");
-    const criticalItems = criticalCategories.flatMap(cat => cat.items);
-    return criticalItems.filter(item => !checkedItems[item.id]);
+    const criticalCategories = complianceCategories.filter((cat) => cat.priority === 'critical');
+    const criticalItems = criticalCategories.flatMap((cat) => cat.items);
+    return criticalItems.filter((item) => !checkedItems[item.id]);
   };
 
   return (
@@ -174,13 +177,11 @@ const ComplianceChecker = () => {
 
       {/* Score Overview - Simplified */}
       <div className="text-center p-6 bg-elec-gray rounded-lg border border-amber-500/30">
-        <div className={`text-4xl font-bold ${getScoreColor()} mb-2`}>
-          {score.toFixed(0)}%
-        </div>
+        <div className={`text-4xl font-bold ${getScoreColor()} mb-2`}>{score.toFixed(0)}%</div>
         <div className={`text-lg font-medium ${getScoreColor()} mb-3`}>{getScoreLevel()}</div>
         <div className="text-sm text-muted-foreground mb-4">Compliance Score</div>
         <Progress value={score} className="w-full max-w-md mx-auto mb-4" />
-        
+
         {getCriticalIssues().length > 0 && (
           <div className="flex items-center justify-center gap-2 mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded">
             <AlertTriangle className="h-4 w-4 text-red-400" />
@@ -197,21 +198,26 @@ const ComplianceChecker = () => {
           <div key={categoryIndex}>
             <div className="flex items-center justify-between mb-3 p-3 bg-elec-dark/30 rounded-lg">
               <h4 className="font-semibold text-foreground">{category.category}</h4>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className={`${
-                  category.priority === 'critical' ? 'border-red-400/30 text-red-300' :
-                  category.priority === 'high' ? 'border-amber-400/30 text-amber-300' : 
-                  'border-blue-400/30 text-blue-300'
+                  category.priority === 'critical'
+                    ? 'border-red-400/30 text-red-300'
+                    : category.priority === 'high'
+                      ? 'border-amber-400/30 text-amber-300'
+                      : 'border-blue-400/30 text-blue-300'
                 }`}
               >
                 {category.priority}
               </Badge>
             </div>
-            
+
             <div className="space-y-2">
               {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="p-4 bg-elec-gray/50 rounded-lg border border-amber-500/10 text-center">
+                <div
+                  key={itemIndex}
+                  className="p-4 bg-elec-gray/50 rounded-lg border border-amber-500/10 text-center"
+                >
                   {/* Checkbox at top center */}
                   <div className="flex justify-center mb-4">
                     <Checkbox
@@ -221,12 +227,15 @@ const ComplianceChecker = () => {
                       className="h-5 w-5"
                     />
                   </div>
-                  
+
                   {/* Main text centered */}
-                  <label htmlFor={item.id} className="block text-foreground font-medium cursor-pointer mb-4">
+                  <label
+                    htmlFor={item.id}
+                    className="block text-foreground font-medium cursor-pointer mb-4"
+                  >
                     {item.text}
                   </label>
-                  
+
                   {/* Regulation and Risk stacked centrally */}
                   <div className="space-y-3">
                     <div className="max-w-md mx-auto">
@@ -251,12 +260,12 @@ const ComplianceChecker = () => {
           <FileText className="h-4 w-4 mr-2" />
           Generate Report
         </Button>
-        
+
         <Button variant="outline" className="border-green-500/30">
           <ExternalLink className="h-4 w-4 mr-2" />
           ESFA Guidance
         </Button>
-        
+
         <Button variant="outline" className="border-purple-500/30">
           <CheckCircle className="h-4 w-4 mr-2" />
           Schedule Review

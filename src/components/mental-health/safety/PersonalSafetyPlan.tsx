@@ -1,8 +1,7 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Shield,
   AlertTriangle,
@@ -24,10 +23,10 @@ import {
   CloudOff,
   Download,
   Share2,
-  Award
-} from "lucide-react";
-import { useSafetyPlan } from "@/hooks/useMentalHealthSync";
-import { useAuth } from "@/contexts/AuthContext";
+  Award,
+} from 'lucide-react';
+import { useSafetyPlan } from '@/hooks/useMentalHealthSync';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface SafetyPlan {
   warning_signs: string[];
@@ -46,78 +45,78 @@ const defaultPlan: SafetyPlan = {
   support_people: [],
   professionals: [],
   safe_environment: [],
-  reasons_for_living: []
+  reasons_for_living: [],
 };
 
 const sections = [
   {
-    id: "warning_signs",
-    title: "Warning Signs",
-    description: "Thoughts, feelings, or situations that signal a crisis may be developing",
+    id: 'warning_signs',
+    title: 'Warning Signs',
+    description: 'Thoughts, feelings, or situations that signal a crisis may be developing',
     icon: AlertTriangle,
-    color: "amber",
-    placeholder: "e.g., Not sleeping well, feeling hopeless, isolating myself"
+    color: 'amber',
+    placeholder: 'e.g., Not sleeping well, feeling hopeless, isolating myself',
   },
   {
-    id: "coping_strategies",
-    title: "Coping Strategies",
-    description: "Things I can do to help myself feel better",
+    id: 'coping_strategies',
+    title: 'Coping Strategies',
+    description: 'Things I can do to help myself feel better',
     icon: Sparkles,
-    color: "purple",
-    placeholder: "e.g., Go for a walk, listen to music, take deep breaths"
+    color: 'purple',
+    placeholder: 'e.g., Go for a walk, listen to music, take deep breaths',
   },
   {
-    id: "distractions",
-    title: "Healthy Distractions",
-    description: "Activities that help take my mind off difficult thoughts",
+    id: 'distractions',
+    title: 'Healthy Distractions',
+    description: 'Activities that help take my mind off difficult thoughts',
     icon: Star,
-    color: "blue",
-    placeholder: "e.g., Watch a film, play games, exercise, cook"
+    color: 'blue',
+    placeholder: 'e.g., Watch a film, play games, exercise, cook',
   },
   {
-    id: "support_people",
-    title: "People I Can Reach Out To",
-    description: "Friends or family who can help during difficult times",
+    id: 'support_people',
+    title: 'People I Can Reach Out To',
+    description: 'Friends or family who can help during difficult times',
     icon: Users,
-    color: "green",
-    isContact: true
-  },
-  {
-    id: "professionals",
-    title: "Professional Support",
-    description: "Healthcare professionals or helplines I can contact",
-    icon: Phone,
-    color: "cyan",
+    color: 'green',
     isContact: true,
-    hasRole: true
   },
   {
-    id: "safe_environment",
-    title: "Making My Environment Safe",
-    description: "Steps to remove or limit access to things that could harm me",
+    id: 'professionals',
+    title: 'Professional Support',
+    description: 'Healthcare professionals or helplines I can contact',
+    icon: Phone,
+    color: 'cyan',
+    isContact: true,
+    hasRole: true,
+  },
+  {
+    id: 'safe_environment',
+    title: 'Making My Environment Safe',
+    description: 'Steps to remove or limit access to things that could harm me',
     icon: Home,
-    color: "rose",
-    placeholder: "e.g., Give medication to someone to hold, remove sharp objects"
+    color: 'rose',
+    placeholder: 'e.g., Give medication to someone to hold, remove sharp objects',
   },
   {
-    id: "reasons_for_living",
-    title: "Reasons for Living",
-    description: "What matters most to me and keeps me going",
+    id: 'reasons_for_living',
+    title: 'Reasons for Living',
+    description: 'What matters most to me and keeps me going',
     icon: Heart,
-    color: "red",
-    placeholder: "e.g., My family, my goals, my pets, seeing my niece grow up"
-  }
+    color: 'red',
+    placeholder: 'e.g., My family, my goals, my pets, seeing my niece grow up',
+  },
 ];
 
 const getColorClasses = (color: string) => {
   const colors: Record<string, { bg: string; text: string; border: string }> = {
-    amber: { bg: "bg-amber-500/20", text: "text-amber-400", border: "border-amber-500/20" },
-    purple: { bg: "bg-purple-500/20", text: "text-purple-400", border: "border-purple-500/20" },
-    blue: { bg: "bg-blue-500/20", text: "text-blue-400", border: "border-blue-500/20" },
-    green: { bg: "bg-green-500/20", text: "text-green-400", border: "border-green-500/20" },
-    cyan: { bg: "bg-cyan-500/20", text: "text-cyan-400", border: "border-cyan-500/20" },
-    rose: { bg: "bg-rose-500/20", text: "text-rose-400", border: "border-rose-500/20" },
-    red: { bg: "bg-red-500/20", text: "text-red-400", border: "border-red-500/20" }
+    amber: { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/20' },
+    purple: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/20' },
+    blue: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/20' },
+    green: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/20' },
+    cyan: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/20' },
+    rose: { bg: 'bg-rose-500/20', text: 'text-rose-400', border: 'border-rose-500/20' },
+    red: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/20' },
   };
   return colors[color] || colors.blue;
 };
@@ -127,8 +126,8 @@ const PersonalSafetyPlan = () => {
   const { plan: cloudPlan, savePlan: saveToCloud, isLoading } = useSafetyPlan();
   const [plan, setPlan] = useState<SafetyPlan>(defaultPlan);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [newItem, setNewItem] = useState("");
-  const [newContact, setNewContact] = useState({ name: "", phone: "", role: "" });
+  const [newItem, setNewItem] = useState('');
+  const [newContact, setNewContact] = useState({ name: '', phone: '', role: '' });
   const [isEditing, setIsEditing] = useState(false);
 
   // Sync with cloud plan when available
@@ -146,9 +145,12 @@ const PersonalSafetyPlan = () => {
 
   const addItem = (sectionId: string) => {
     if (!newItem.trim()) return;
-    const updated = { ...plan, [sectionId]: [...(plan[sectionId as keyof SafetyPlan] as string[]), newItem.trim()] };
+    const updated = {
+      ...plan,
+      [sectionId]: [...(plan[sectionId as keyof SafetyPlan] as string[]), newItem.trim()],
+    };
     savePlan(updated);
-    setNewItem("");
+    setNewItem('');
   };
 
   const removeItem = (sectionId: string, index: number) => {
@@ -162,7 +164,7 @@ const PersonalSafetyPlan = () => {
     const contacts = [...(plan[sectionId as keyof SafetyPlan] as any[])];
     contacts.push(hasRole ? { ...newContact } : { name: newContact.name, phone: newContact.phone });
     savePlan({ ...plan, [sectionId]: contacts });
-    setNewContact({ name: "", phone: "", role: "" });
+    setNewContact({ name: '', phone: '', role: '' });
   };
 
   const removeContact = (sectionId: string, index: number) => {
@@ -193,31 +195,31 @@ ${'='.repeat(50)}
 
 1. WARNING SIGNS
 Thoughts, feelings, or situations that signal a crisis may be developing:
-${plan.warning_signs.map(s => `• ${s}`).join('\n')}
+${plan.warning_signs.map((s) => `• ${s}`).join('\n')}
 
 2. COPING STRATEGIES
 Things I can do to help myself feel better:
-${plan.coping_strategies.map(s => `• ${s}`).join('\n')}
+${plan.coping_strategies.map((s) => `• ${s}`).join('\n')}
 
 3. HEALTHY DISTRACTIONS
 Activities that help take my mind off difficult thoughts:
-${plan.distractions.map(s => `• ${s}`).join('\n')}
+${plan.distractions.map((s) => `• ${s}`).join('\n')}
 
 4. PEOPLE I CAN REACH OUT TO
 Friends or family who can help during difficult times:
-${plan.support_people.map(c => `• ${c.name}${c.phone ? ` - ${c.phone}` : ''}`).join('\n')}
+${plan.support_people.map((c) => `• ${c.name}${c.phone ? ` - ${c.phone}` : ''}`).join('\n')}
 
 5. PROFESSIONAL SUPPORT
 Healthcare professionals or helplines I can contact:
-${plan.professionals.map(c => `• ${c.name}${c.role ? ` (${c.role})` : ''}${c.phone ? ` - ${c.phone}` : ''}`).join('\n')}
+${plan.professionals.map((c) => `• ${c.name}${c.role ? ` (${c.role})` : ''}${c.phone ? ` - ${c.phone}` : ''}`).join('\n')}
 
 6. MAKING MY ENVIRONMENT SAFE
 Steps to remove or limit access to things that could harm me:
-${plan.safe_environment.map(s => `• ${s}`).join('\n')}
+${plan.safe_environment.map((s) => `• ${s}`).join('\n')}
 
 7. REASONS FOR LIVING
 What matters most to me and keeps me going:
-${plan.reasons_for_living.map(s => `• ${s}`).join('\n')}
+${plan.reasons_for_living.map((s) => `• ${s}`).join('\n')}
 
 ${'='.repeat(50)}
 
@@ -242,7 +244,7 @@ Review and update it regularly, especially when you're feeling well.
 
   // Section detail view
   if (activeSection) {
-    const section = sections.find(s => s.id === activeSection)!;
+    const section = sections.find((s) => s.id === activeSection)!;
     const colors = getColorClasses(section.color);
     const Icon = section.icon;
     const items = plan[activeSection as keyof SafetyPlan] || [];
@@ -263,7 +265,7 @@ Review and update it regularly, especially when you're feeling well.
             <Button
               variant="ghost"
               onClick={() => setIsEditing(!isEditing)}
-              className={`h-11 w-11 touch-manipulation active:scale-[0.98] transition-all ${isEditing ? "text-green-400" : ""}`}
+              className={`h-11 w-11 touch-manipulation active:scale-[0.98] transition-all ${isEditing ? 'text-green-400' : ''}`}
             >
               {isEditing ? <CheckCircle className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
             </Button>
@@ -272,7 +274,9 @@ Review and update it regularly, especially when you're feeling well.
 
         {/* Section Header */}
         <div className="text-center py-2">
-          <div className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}>
+          <div
+            className={`inline-flex items-center justify-center w-14 h-14 rounded-full ${colors.bg} mb-3`}
+          >
             <Icon className={`h-7 w-7 ${colors.text}`} />
           </div>
           <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
@@ -288,21 +292,18 @@ Review and update it regularly, especially when you're feeling well.
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full ${colors.bg} flex items-center justify-center`}>
+                      <div
+                        className={`w-10 h-10 rounded-full ${colors.bg} flex items-center justify-center`}
+                      >
                         <span className="text-foreground font-medium">
                           {contact.name.charAt(0).toUpperCase()}
                         </span>
                       </div>
                       <div>
                         <div className="font-medium text-foreground">{contact.name}</div>
-                        {contact.role && (
-                          <div className="text-xs text-white">{contact.role}</div>
-                        )}
+                        {contact.role && <div className="text-xs text-white">{contact.role}</div>}
                         {contact.phone && (
-                          <a
-                            href={`tel:${contact.phone}`}
-                            className={`text-sm ${colors.text}`}
-                          >
+                          <a href={`tel:${contact.phone}`} className={`text-sm ${colors.text}`}>
                             {contact.phone}
                           </a>
                         )}
@@ -380,7 +381,9 @@ Review and update it regularly, especially when you're feeling well.
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full ${colors.text.replace("text-", "bg-")}`} />
+                      <div
+                        className={`w-2 h-2 rounded-full ${colors.text.replace('text-', 'bg-')}`}
+                      />
                       <span className="text-sm text-foreground">{item}</span>
                     </div>
                     {isEditing && (
@@ -404,7 +407,7 @@ Review and update it regularly, especially when you're feeling well.
                 <Input
                   value={newItem}
                   onChange={(e) => setNewItem(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && addItem(activeSection)}
+                  onKeyDown={(e) => e.key === 'Enter' && addItem(activeSection)}
                   placeholder={section.placeholder}
                   className="flex-1 h-12 text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
                 />
@@ -458,9 +461,7 @@ Review and update it regularly, especially when you're feeling well.
           <Shield className="h-6 w-6 text-red-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Personal Safety Plan</h2>
-        <p className="text-sm text-white">
-          Your personal guide for difficult moments
-        </p>
+        <p className="text-sm text-white">Your personal guide for difficult moments</p>
       </div>
 
       {/* Cloud Sync Status */}
@@ -483,7 +484,9 @@ Review and update it regularly, especially when you're feeling well.
         <CardContent className="p-3">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-white">Plan Completion</span>
-            <span className="text-sm font-medium text-foreground">{getCompletionCount()}/7 sections</span>
+            <span className="text-sm font-medium text-foreground">
+              {getCompletionCount()}/7 sections
+            </span>
           </div>
           <div className="h-2 bg-white/10 rounded-full overflow-hidden">
             <div
@@ -505,7 +508,8 @@ Review and update it regularly, especially when you're feeling well.
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-green-400 mb-1">Plan Complete! 🎉</h3>
                 <p className="text-sm text-white/90 leading-relaxed">
-                  Well done for completing your Personal Safety Plan. This is an important step in taking care of your mental health.
+                  Well done for completing your Personal Safety Plan. This is an important step in
+                  taking care of your mental health.
                 </p>
               </div>
             </div>
@@ -549,8 +553,8 @@ Review and update it regularly, especially when you're feeling well.
             <div>
               <p className="text-sm text-foreground font-medium">In an emergency, call 999</p>
               <p className="text-xs text-white mt-1">
-                This plan is a support tool, not a replacement for professional help.
-                If you're in immediate danger, please call emergency services.
+                This plan is a support tool, not a replacement for professional help. If you're in
+                immediate danger, please call emergency services.
               </p>
             </div>
           </div>
@@ -573,20 +577,20 @@ Review and update it regularly, especially when you're feeling well.
             >
               <CardContent className="p-3">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}>
+                  <div
+                    className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}
+                  >
                     <Icon className={`h-5 w-5 ${colors.text}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <h3 className="font-medium text-foreground text-sm">{section.title}</h3>
-                      {itemCount > 0 && (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                      )}
+                      {itemCount > 0 && <CheckCircle className="h-4 w-4 text-green-400" />}
                     </div>
                     <p className="text-xs text-white line-clamp-1">
                       {itemCount > 0
-                        ? `${itemCount} item${itemCount !== 1 ? "s" : ""} added`
-                        : "Tap to add"}
+                        ? `${itemCount} item${itemCount !== 1 ? 's' : ''} added`
+                        : 'Tap to add'}
                     </p>
                   </div>
                   <ChevronLeft className="h-5 w-5 text-white rotate-180" />

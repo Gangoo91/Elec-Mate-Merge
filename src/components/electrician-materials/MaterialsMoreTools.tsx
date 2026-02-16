@@ -1,21 +1,17 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { 
-  MoreHorizontal, 
-  Scale, 
-  Calculator, 
-  TrendingUp, 
-  Brain, 
+  MoreHorizontal,
+  Scale,
+  Calculator,
+  TrendingUp,
+  Brain,
   Users,
-  ChevronDown
-} from "lucide-react";
+  ChevronDown,
+} from 'lucide-react';
 
 interface MaterialsMoreToolsProps {
   selectedCount: number;
@@ -25,52 +21,52 @@ interface MaterialsMoreToolsProps {
   onAIInsightsClick: () => void;
 }
 
-const MaterialsMoreTools = ({ 
-  selectedCount, 
-  onCompareClick, 
-  onBulkPricingClick, 
-  onPriceAlertsClick, 
-  onAIInsightsClick 
+const MaterialsMoreTools = ({
+  selectedCount,
+  onCompareClick,
+  onBulkPricingClick,
+  onPriceAlertsClick,
+  onAIInsightsClick,
 }: MaterialsMoreToolsProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const tools = [
     {
-      id: "compare",
-      title: "Compare Materials",
-      description: "Side-by-side comparison",
+      id: 'compare',
+      title: 'Compare Materials',
+      description: 'Side-by-side comparison',
       icon: Scale,
       onClick: onCompareClick,
-      disabled: selectedCount === 0
+      disabled: selectedCount === 0,
     },
     {
-      id: "bulk-pricing",
-      title: "Bulk Pricing", 
-      description: "Calculate bulk discounts",
+      id: 'bulk-pricing',
+      title: 'Bulk Pricing',
+      description: 'Calculate bulk discounts',
       icon: Calculator,
       onClick: onBulkPricingClick,
-      disabled: false
+      disabled: false,
     },
     {
-      id: "price-alerts",
-      title: "Price Alerts",
-      description: "Track price changes", 
+      id: 'price-alerts',
+      title: 'Price Alerts',
+      description: 'Track price changes',
       icon: TrendingUp,
       onClick: onPriceAlertsClick,
-      disabled: false
+      disabled: false,
     },
     {
-      id: "ai-insights",
-      title: "AI Insights",
-      description: "Smart recommendations",
+      id: 'ai-insights',
+      title: 'AI Insights',
+      description: 'Smart recommendations',
       icon: Brain,
       onClick: onAIInsightsClick,
-      disabled: false
-    }
+      disabled: false,
+    },
   ];
 
   const handleToolClick = (toolId: string) => {
-    const tool = tools.find(t => t.id === toolId);
+    const tool = tools.find((t) => t.id === toolId);
     if (tool && !tool.disabled) {
       tool.onClick();
       setIsOpen(false);
@@ -87,10 +83,12 @@ const MaterialsMoreTools = ({
         >
           <MoreHorizontal className="h-4 w-4 mr-2" />
           More Tools
-          <ChevronDown className={`h-4 w-4 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown
+            className={`h-4 w-4 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          />
           {selectedCount > 0 && (
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="absolute -top-2 -right-2 h-5 w-5 p-0 text-xs bg-elec-yellow text-elec-dark border-elec-dark/20"
             >
               {selectedCount}
@@ -120,8 +118,11 @@ const MaterialsMoreTools = ({
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-sm truncate">{tool.title}</span>
-                        {tool.id === "compare" && selectedCount > 0 && (
-                          <Badge variant="secondary" className="bg-elec-yellow text-elec-dark text-xs">
+                        {tool.id === 'compare' && selectedCount > 0 && (
+                          <Badge
+                            variant="secondary"
+                            className="bg-elec-yellow text-elec-dark text-xs"
+                          >
                             {selectedCount}
                           </Badge>
                         )}

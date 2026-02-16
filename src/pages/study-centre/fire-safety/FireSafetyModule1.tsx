@@ -1,45 +1,45 @@
-import { ArrowLeft, Flame, BookOpen, AlertTriangle, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Flame, BookOpen, AlertTriangle, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The Fire Triangle",
+    title: 'The Fire Triangle',
     icon: Flame,
     description:
-      "The three elements required for combustion: heat, fuel, and oxygen. Remove any one element and the fire cannot sustain itself",
+      'The three elements required for combustion: heat, fuel, and oxygen. Remove any one element and the fire cannot sustain itself',
   },
   {
     id: 2,
-    title: "Classes of Fire",
+    title: 'Classes of Fire',
     icon: BookOpen,
     description:
-      "Six classifications of fire (A through F) based on fuel type, from ordinary combustibles to cooking oils and fats",
+      'Six classifications of fire (A through F) based on fuel type, from ordinary combustibles to cooking oils and fats',
   },
   {
     id: 3,
-    title: "Fire Behaviour & Development",
+    title: 'Fire Behaviour & Development',
     icon: AlertTriangle,
     description:
-      "How fires grow through ignition, growth, flashover, full development, and decay phases, including backdraught and flashover risks",
+      'How fires grow through ignition, growth, flashover, full development, and decay phases, including backdraught and flashover risks',
   },
   {
     id: 4,
-    title: "How Fires Start in the Workplace",
+    title: 'How Fires Start in the Workplace',
     icon: Zap,
     description:
-      "Common ignition sources in electrical and construction work: hot works, faulty wiring, overloaded circuits, and poor housekeeping",
+      'Common ignition sources in electrical and construction work: hot works, faulty wiring, overloaded circuits, and poor housekeeping',
   },
 ];
 
 export default function FireSafetyModule1() {
   useSEO({
-    title: "Module 1: Understanding Fire | Fire Safety & Fire Marshal",
+    title: 'Module 1: Understanding Fire | Fire Safety & Fire Marshal',
     description:
-      "Learn about the fire triangle, classes of fire, fire behaviour and development, and common causes of workplace fires.",
+      'Learn about the fire triangle, classes of fire, fire behaviour and development, and common causes of workplace fires.',
   });
 
   return (
@@ -72,9 +72,7 @@ export default function FireSafetyModule1() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">30 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Understanding Fire
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Understanding Fire</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Learn the science behind fire, explore the six classes of fire, understand how fires
               develop and spread, and discover the common causes of fires in electrical and

@@ -20,8 +20,7 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'fs-marshal-ratio',
-    question:
-      'What is the general recommended ratio of fire marshals to occupants per floor?',
+    question: 'What is the general recommended ratio of fire marshals to occupants per floor?',
     options: [
       '1 fire marshal per 20 occupants',
       '1 fire marshal per 50 occupants',
@@ -49,12 +48,7 @@ const quickCheckQuestions = [
   {
     id: 'fs-refresher-frequency',
     question: 'How frequently should fire marshal refresher training be provided?',
-    options: [
-      'Every 6 months',
-      'Annually',
-      'Every 2 years',
-      'Every 3 years',
-    ],
+    options: ['Every 6 months', 'Annually', 'Every 2 years', 'Every 3 years'],
     correctIndex: 1,
     explanation:
       'Fire marshal refresher training should be provided annually as a minimum. This ensures that fire marshals maintain their knowledge, stay up to date with any changes to the premises, fire strategy, or legislation, and have the opportunity to practise evacuation procedures. RRFSO Article 21 requires that training is repeated periodically and adapted to take account of any new or changed risks.',
@@ -63,26 +57,22 @@ const quickCheckQuestions = [
 
 const faqs = [
   {
-    question:
-      'Is it a legal requirement to have fire marshals in the workplace?',
+    question: 'Is it a legal requirement to have fire marshals in the workplace?',
     answer:
       'The RRFSO does not use the specific term "fire marshal" or "fire warden". However, Article 15(1)(b) requires the responsible person to nominate a sufficient number of competent persons to implement procedures for serious and imminent danger, including evacuation. Article 18 requires the appointment of one or more competent persons to assist in undertaking preventive and protective measures. In practice, this means that appointing trained fire marshals is the standard way to comply with these legal duties. While the title itself is not legally mandated, the functions that fire marshals perform are legally required.',
   },
   {
-    question:
-      'Should a fire marshal ever enter a burning building to search for missing persons?',
+    question: 'Should a fire marshal ever enter a burning building to search for missing persons?',
     answer:
-      'Absolutely not. A fire marshal must never re-enter a building that is on fire or filled with smoke to search for missing persons. This is the sole responsibility of the fire and rescue service, who have the specialist equipment, training, and breathing apparatus required to operate in such conditions. The fire marshal\'s role during an emergency ends at the assembly point — reporting the results of their sweep and any persons unaccounted for to the fire service upon their arrival. Attempting a rescue without proper equipment puts both the fire marshal and the missing persons at greater risk.',
+      "Absolutely not. A fire marshal must never re-enter a building that is on fire or filled with smoke to search for missing persons. This is the sole responsibility of the fire and rescue service, who have the specialist equipment, training, and breathing apparatus required to operate in such conditions. The fire marshal's role during an emergency ends at the assembly point — reporting the results of their sweep and any persons unaccounted for to the fire service upon their arrival. Attempting a rescue without proper equipment puts both the fire marshal and the missing persons at greater risk.",
   },
   {
-    question:
-      'Is practical extinguisher training a legal requirement for fire marshals?',
+    question: 'Is practical extinguisher training a legal requirement for fire marshals?',
     answer:
       'The RRFSO does not explicitly mandate practical (hands-on) extinguisher training. However, Article 21 requires that employees are provided with adequate safety training, and the guidance accompanying the Order recommends that fire marshals receive practical training in the use of first-aid firefighting equipment. Most fire safety training providers include practical extinguisher training as standard in their fire marshal courses. In practice, theory-only training is considered insufficient — a fire marshal who has never discharged an extinguisher is unlikely to use one effectively under the stress of a real emergency. Best practice is to include live-fire practical extinguisher training in both initial and annual refresher courses.',
   },
   {
-    question:
-      'What should a fire marshal do if they discover a fire during a routine inspection?',
+    question: 'What should a fire marshal do if they discover a fire during a routine inspection?',
     answer:
       'If a fire marshal discovers an actual fire during a routine inspection, they should follow the standard fire action procedure: raise the alarm immediately by activating the nearest manual call point; call 999 (or the site emergency number); only attempt to fight the fire if it is very small, they have been trained, they have the correct extinguisher, they have a clear escape route behind them, and they are confident they can extinguish it safely. If in any doubt, they should evacuate immediately, closing doors behind them as they leave. They should then proceed to the assembly point and report the location, size, and nature of the fire to the arriving fire service. The priority is always life safety — raising the alarm and evacuating — not firefighting.',
   },
@@ -119,10 +109,9 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'What does RRFSO Article 21 require regarding fire marshal training?',
+    question: 'What does RRFSO Article 21 require regarding fire marshal training?',
     options: [
-      'Training is optional and at the employer\'s discretion',
+      "Training is optional and at the employer's discretion",
       'Training must be provided only when the fire service requests it',
       'Adequate safety training must be provided during working hours, repeated periodically, and adapted to new or changed risks',
       'Training is only required for employees working with flammable substances',
@@ -134,7 +123,7 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'During an evacuation, a fire marshal\'s primary duty when sweeping their designated area is to:',
+      "During an evacuation, a fire marshal's primary duty when sweeping their designated area is to:",
     options: [
       'Fight any fires they encounter to prevent spread',
       'Ensure all persons have left, checking rooms, toilets, and closed areas, and close doors behind them',
@@ -143,12 +132,11 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'The fire marshal\'s primary duty during an area sweep is to ensure all persons have evacuated. This means systematically checking all rooms, toilets, meeting rooms, and any areas where people could be trapped or unaware of the alarm. Doors should be closed behind them to slow the spread of fire and smoke. The fire marshal must never delay their own evacuation to fight fires or collect property.',
+      "The fire marshal's primary duty during an area sweep is to ensure all persons have evacuated. This means systematically checking all rooms, toilets, meeting rooms, and any areas where people could be trapped or unaware of the alarm. Doors should be closed behind them to slow the spread of fire and smoke. The fire marshal must never delay their own evacuation to fight fires or collect property.",
   },
   {
     id: 5,
-    question:
-      'RRFSO Article 15 requires the responsible person to establish procedures for:',
+    question: 'RRFSO Article 15 requires the responsible person to establish procedures for:',
     options: [
       'Annual fire safety audits by the fire service',
       'Serious and imminent danger, including nominating competent persons for evacuation',
@@ -177,20 +165,14 @@ const quizQuestions = [
     id: 7,
     question:
       'How frequently should a fire marshal carry out routine checks of fire doors, exits, and extinguishers?',
-    options: [
-      'Daily',
-      'Weekly',
-      'Monthly',
-      'Quarterly',
-    ],
+    options: ['Daily', 'Weekly', 'Monthly', 'Quarterly'],
     correctAnswer: 1,
     explanation:
       'Fire marshals should carry out routine visual checks of fire safety provisions on a weekly basis as a minimum. This includes checking that fire doors close properly and are not propped open, escape routes are clear, fire extinguishers are in place and have not been discharged or tampered with, manual call points are unobstructed, and fire safety signage is intact and visible. Findings must be recorded and any deficiencies reported immediately.',
   },
   {
     id: 8,
-    question:
-      'What is the practical difference between a fire marshal and a fire warden?',
+    question: 'What is the practical difference between a fire marshal and a fire warden?',
     options: [
       'A fire warden is a legally defined senior role; a fire marshal is a junior assistant',
       'There is no legal distinction — the terms are often used interchangeably, though some organisations use "warden" for floor-level sweep duties and "marshal" for coordination roles',
@@ -253,13 +235,15 @@ export default function FireSafetyModule4Section1() {
             <p className="text-rose-400 text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>RRFSO Articles 15 &amp; 18:</strong> Legal basis for fire marshal appointment
+                <strong>RRFSO Articles 15 &amp; 18:</strong> Legal basis for fire marshal
+                appointment
               </li>
               <li>
                 <strong>Ratio:</strong> Minimum 1 fire marshal per 50 occupants per floor
               </li>
               <li>
-                <strong>Training:</strong> Initial half-day + annual refresher + practical extinguisher
+                <strong>Training:</strong> Initial half-day + annual refresher + practical
+                extinguisher
               </li>
             </ul>
           </div>
@@ -341,15 +325,19 @@ export default function FireSafetyModule4Section1() {
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
-                        Nominating a <strong className="text-white">sufficient number of
-                        competent persons</strong> to implement evacuation procedures
+                        Nominating a{' '}
+                        <strong className="text-white">
+                          sufficient number of competent persons
+                        </strong>{' '}
+                        to implement evacuation procedures
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
-                        Ensuring persons in danger are <strong className="text-white">informed
-                        of the hazard</strong> and the steps taken to protect them
+                        Ensuring persons in danger are{' '}
+                        <strong className="text-white">informed of the hazard</strong> and the steps
+                        taken to protect them
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -410,11 +398,12 @@ export default function FireSafetyModule4Section1() {
                 <p className="text-sm text-white/80">
                   The general recommendation is a minimum of{' '}
                   <strong className="text-white">1 fire marshal per 50 occupants per floor</strong>.
-                  This ratio is widely cited in fire safety guidance and training materials, although
-                  it is not a fixed legal requirement. The actual number should be determined by the
-                  fire risk assessment, taking into account the size and complexity of the premises,
-                  the level of risk, the nature of the occupants, and the availability of fire
-                  marshals at all times (including cover for absences, holidays, and shift patterns).
+                  This ratio is widely cited in fire safety guidance and training materials,
+                  although it is not a fixed legal requirement. The actual number should be
+                  determined by the fire risk assessment, taking into account the size and
+                  complexity of the premises, the level of risk, the nature of the occupants, and
+                  the availability of fire marshals at all times (including cover for absences,
+                  holidays, and shift patterns).
                 </p>
               </div>
             </div>
@@ -446,9 +435,9 @@ export default function FireSafetyModule4Section1() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-rose-400 mb-2">Fire Warden</p>
                   <p className="text-sm text-white/80 mb-3">
-                    In organisations that distinguish between the roles, the fire warden is typically
-                    assigned to a specific floor or zone within the building. Their primary duty
-                    during an evacuation is to:
+                    In organisations that distinguish between the roles, the fire warden is
+                    typically assigned to a specific floor or zone within the building. Their
+                    primary duty during an evacuation is to:
                   </p>
                   <ul className="text-sm text-white/80 space-y-2">
                     <li className="flex items-start gap-2">
@@ -465,7 +454,9 @@ export default function FireSafetyModule4Section1() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Report the status of their area to the fire marshal at the assembly point</span>
+                      <span>
+                        Report the status of their area to the fire marshal at the assembly point
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -479,7 +470,9 @@ export default function FireSafetyModule4Section1() {
                   <ul className="text-sm text-white/80 space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Coordinating the overall evacuation and receiving reports from wardens</span>
+                      <span>
+                        Coordinating the overall evacuation and receiving reports from wardens
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -487,7 +480,9 @@ export default function FireSafetyModule4Section1() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Liaising with the responsible person and the fire and rescue service</span>
+                      <span>
+                        Liaising with the responsible person and the fire and rescue service
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -500,10 +495,10 @@ export default function FireSafetyModule4Section1() {
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <p className="text-sm text-amber-300">
                   <strong>Important:</strong> Regardless of which title your organisation uses, the
-                  legal requirements remain the same. What matters is that the persons appointed have
-                  received adequate training, understand their duties, and are capable of performing
-                  them effectively. In this course, we use the term &ldquo;fire marshal&rdquo; to
-                  cover both roles unless specifically stated otherwise.
+                  legal requirements remain the same. What matters is that the persons appointed
+                  have received adequate training, understand their duties, and are capable of
+                  performing them effectively. In this course, we use the term &ldquo;fire
+                  marshal&rdquo; to cover both roles unless specifically stated otherwise.
                 </p>
               </div>
             </div>
@@ -542,20 +537,20 @@ export default function FireSafetyModule4Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Fire prevention awareness:</strong> Maintaining a
-                      general awareness of fire risks in the workplace and promoting fire safety among
-                      colleagues. This includes identifying unsafe practices, poor housekeeping, and
-                      potential ignition sources before they become a hazard.
+                      <strong className="text-white">Fire prevention awareness:</strong> Maintaining
+                      a general awareness of fire risks in the workplace and promoting fire safety
+                      among colleagues. This includes identifying unsafe practices, poor
+                      housekeeping, and potential ignition sources before they become a hazard.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Reporting hazards:</strong> Identifying and
-                      reporting fire hazards to the responsible person or facilities management. This
-                      includes blocked exits, propped-open fire doors, faulty electrical equipment,
-                      accumulation of combustible waste, and any other conditions that increase fire
-                      risk.
+                      reporting fire hazards to the responsible person or facilities management.
+                      This includes blocked exits, propped-open fire doors, faulty electrical
+                      equipment, accumulation of combustible waste, and any other conditions that
+                      increase fire risk.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -580,10 +575,10 @@ export default function FireSafetyModule4Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Knowing the emergency plan:</strong> Maintaining
-                      a thorough understanding of the fire emergency plan, evacuation routes, assembly
-                      points, and the location of all fire safety equipment in their area of
-                      responsibility.
+                      <strong className="text-white">Knowing the emergency plan:</strong>{' '}
+                      Maintaining a thorough understanding of the fire emergency plan, evacuation
+                      routes, assembly points, and the location of all fire safety equipment in
+                      their area of responsibility.
                     </span>
                   </li>
                 </ul>
@@ -604,10 +599,10 @@ export default function FireSafetyModule4Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Initiate evacuation:</strong> If the fire marshal
-                      discovers the fire, they should activate the nearest manual call point to raise
-                      the alarm and call 999. In all cases, they must immediately begin directing
-                      people to evacuate via the nearest safe escape route.
+                      <strong className="text-white">Initiate evacuation:</strong> If the fire
+                      marshal discovers the fire, they should activate the nearest manual call point
+                      to raise the alarm and call 999. In all cases, they must immediately begin
+                      directing people to evacuate via the nearest safe escape route.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -625,16 +620,16 @@ export default function FireSafetyModule4Section1() {
                       <strong className="text-white">Assist persons needing help:</strong> Identify
                       and assist any persons who may have difficulty evacuating — including persons
                       with mobility impairments, visual or hearing impairments, visitors unfamiliar
-                      with the building, and any person who appears confused or distressed. Implement
-                      Personal Emergency Evacuation Plans (PEEPs) where applicable.
+                      with the building, and any person who appears confused or distressed.
+                      Implement Personal Emergency Evacuation Plans (PEEPs) where applicable.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Close doors:</strong> Close all doors and windows
-                      as they leave each area. Closing doors is one of the most effective actions for
-                      slowing the spread of fire and smoke between compartments.
+                      <strong className="text-white">Close doors:</strong> Close all doors and
+                      windows as they leave each area. Closing doors is one of the most effective
+                      actions for slowing the spread of fire and smoke between compartments.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -671,27 +666,28 @@ export default function FireSafetyModule4Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Head count:</strong> Verify that all persons who
-                      were in their area have been accounted for at the assembly point. Cross-reference
-                      with visitor logs, contractor registers, and any other attendance records.
+                      <strong className="text-white">Head count:</strong> Verify that all persons
+                      who were in their area have been accounted for at the assembly point.
+                      Cross-reference with visitor logs, contractor registers, and any other
+                      attendance records.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Report to the fire service:</strong> Provide the
-                      fire service with information about the location and nature of the fire (if
-                      known), the status of the evacuation, any persons unaccounted for, and the
+                      <strong className="text-white">Report to the fire service:</strong> Provide
+                      the fire service with information about the location and nature of the fire
+                      (if known), the status of the evacuation, any persons unaccounted for, and the
                       location of hazardous materials or processes within the building.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Debrief:</strong> Participate in a post-incident
-                      debrief to review what happened, what went well, what could be improved, and
-                      whether any changes are needed to the fire emergency plan, evacuation
-                      procedures, or fire marshal arrangements.
+                      <strong className="text-white">Debrief:</strong> Participate in a
+                      post-incident debrief to review what happened, what went well, what could be
+                      improved, and whether any changes are needed to the fire emergency plan,
+                      evacuation procedures, or fire marshal arrangements.
                     </span>
                   </li>
                 </ul>
@@ -730,8 +726,8 @@ export default function FireSafetyModule4Section1() {
                     <span>
                       <strong className="text-white">Fire awareness:</strong> The fire triangle,
                       classes of fire, how fire develops and spreads, and the behaviour of smoke in
-                      buildings. Understanding fire behaviour is fundamental to making safe decisions
-                      during an emergency.
+                      buildings. Understanding fire behaviour is fundamental to making safe
+                      decisions during an emergency.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -739,8 +735,8 @@ export default function FireSafetyModule4Section1() {
                     <span>
                       <strong className="text-white">RRFSO basics:</strong> The structure and key
                       requirements of the Regulatory Reform (Fire Safety) Order 2005, the role of
-                      the responsible person, the concept of competent persons, and the duties
-                      that apply specifically to fire marshals.
+                      the responsible person, the concept of competent persons, and the duties that
+                      apply specifically to fire marshals.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -757,17 +753,17 @@ export default function FireSafetyModule4Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Evacuation procedures:</strong> The fire
-                      emergency plan for the specific premises, escape routes, assembly points,
-                      the fire marshal&rsquo;s sweep duties, assisting persons with disabilities,
-                      and the procedures for reporting to the assembly point and liaising with the
-                      fire service.
+                      emergency plan for the specific premises, escape routes, assembly points, the
+                      fire marshal&rsquo;s sweep duties, assisting persons with disabilities, and
+                      the procedures for reporting to the assembly point and liaising with the fire
+                      service.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">PEEPs awareness:</strong> Understanding Personal
-                      Emergency Evacuation Plans for persons with disabilities or mobility
+                      <strong className="text-white">PEEPs awareness:</strong> Understanding
+                      Personal Emergency Evacuation Plans for persons with disabilities or mobility
                       impairments, including the use of evacuation chairs, refuges, and buddy
                       systems. Fire marshals must know which persons in their area have PEEPs and
                       what those plans require.
@@ -804,7 +800,9 @@ export default function FireSafetyModule4Section1() {
                 </div>
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                  <p className="text-sm font-medium text-white mb-2">Practical Extinguisher Training</p>
+                  <p className="text-sm font-medium text-white mb-2">
+                    Practical Extinguisher Training
+                  </p>
                   <p className="text-sm text-white/80 mb-3">
                     While not explicitly mandated by the RRFSO, practical extinguisher training is
                     considered essential best practice for fire marshals:
@@ -839,10 +837,10 @@ export default function FireSafetyModule4Section1() {
                   Article 21 states that training must be provided{' '}
                   <strong className="text-white">during working hours</strong> and at{' '}
                   <strong className="text-white">no cost to the employee</strong>. It must be
-                  repeated periodically and adapted to take account of any new or changed risks.
-                  The responsible person must ensure that the training is adequate and effective —
-                  this means it should be delivered by a competent trainer and assessed to confirm
-                  that the fire marshal understands and can apply what they have learned.
+                  repeated periodically and adapted to take account of any new or changed risks. The
+                  responsible person must ensure that the training is adequate and effective — this
+                  means it should be delivered by a competent trainer and assessed to confirm that
+                  the fire marshal understands and can apply what they have learned.
                 </p>
               </div>
             </div>
@@ -862,9 +860,9 @@ export default function FireSafetyModule4Section1() {
               <p>
                 The number of fire marshals required is not fixed by legislation — it is{' '}
                 <strong>risk-based</strong> and must be determined by the fire risk assessment. The
-                assessment should consider the size and layout of the premises, the number and nature
-                of the occupants, the level of fire risk, and the availability of fire marshals at
-                all times including during absences, holidays, and shift changes.
+                assessment should consider the size and layout of the premises, the number and
+                nature of the occupants, the level of fire risk, and the availability of fire
+                marshals at all times including during absences, holidays, and shift changes.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -876,9 +874,9 @@ export default function FireSafetyModule4Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Minimum 1 per floor per 50 people:</strong> This
-                      is the most widely cited ratio. For a floor with 120 occupants, a minimum of 3
-                      fire marshals would be recommended — plus deputies to cover absences.
+                      <strong className="text-white">Minimum 1 per floor per 50 people:</strong>{' '}
+                      This is the most widely cited ratio. For a floor with 120 occupants, a minimum
+                      of 3 fire marshals would be recommended — plus deputies to cover absences.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -893,19 +891,19 @@ export default function FireSafetyModule4Section1() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Night shifts and out-of-hours:</strong> Premises
-                      occupied outside normal working hours must have fire marshal coverage during
-                      those periods. Night shifts often have fewer staff, making it even more critical
-                      that fire marshals are available and trained.
+                      <strong className="text-white">Night shifts and out-of-hours:</strong>{' '}
+                      Premises occupied outside normal working hours must have fire marshal coverage
+                      during those periods. Night shifts often have fewer staff, making it even more
+                      critical that fire marshals are available and trained.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Named individuals:</strong> Fire marshals must be
-                      named individuals with clearly defined areas of responsibility. A generic
-                      instruction to &ldquo;someone on each floor&rdquo; is not acceptable — specific
-                      persons must be identified and trained.
+                      <strong className="text-white">Named individuals:</strong> Fire marshals must
+                      be named individuals with clearly defined areas of responsibility. A generic
+                      instruction to &ldquo;someone on each floor&rdquo; is not acceptable —
+                      specific persons must be identified and trained.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -926,12 +924,30 @@ export default function FireSafetyModule4Section1() {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2">
                   {[
-                    { label: 'Higher-Risk Premises', desc: 'Premises with significant fire hazards, complex processes, or flammable materials storage' },
-                    { label: 'Complex Layouts', desc: 'Buildings with multiple wings, split levels, dead-end corridors, or limited escape routes' },
-                    { label: 'Vulnerable Occupants', desc: 'Premises with elderly, disabled, or very young occupants who need additional evacuation assistance' },
-                    { label: 'Public Access', desc: 'Premises open to the public where visitors are unfamiliar with the building layout and escape routes' },
-                    { label: 'Sleeping Risk', desc: 'Hotels, hostels, care homes, and other premises where occupants may be asleep when a fire occurs' },
-                    { label: 'Multi-Tenancy', desc: 'Buildings with multiple tenants where coordination between different organisations is required' },
+                    {
+                      label: 'Higher-Risk Premises',
+                      desc: 'Premises with significant fire hazards, complex processes, or flammable materials storage',
+                    },
+                    {
+                      label: 'Complex Layouts',
+                      desc: 'Buildings with multiple wings, split levels, dead-end corridors, or limited escape routes',
+                    },
+                    {
+                      label: 'Vulnerable Occupants',
+                      desc: 'Premises with elderly, disabled, or very young occupants who need additional evacuation assistance',
+                    },
+                    {
+                      label: 'Public Access',
+                      desc: 'Premises open to the public where visitors are unfamiliar with the building layout and escape routes',
+                    },
+                    {
+                      label: 'Sleeping Risk',
+                      desc: 'Hotels, hostels, care homes, and other premises where occupants may be asleep when a fire occurs',
+                    },
+                    {
+                      label: 'Multi-Tenancy',
+                      desc: 'Buildings with multiple tenants where coordination between different organisations is required',
+                    },
                   ].map((factor, i) => (
                     <div key={i} className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                       <p className="text-xs font-bold text-rose-400 mb-1">{factor.label}</p>
@@ -989,20 +1005,20 @@ export default function FireSafetyModule4Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Regular meetings:</strong> Fire marshals should
-                      meet regularly with the responsible person (or their representative) to discuss
-                      fire safety matters, review inspection findings, plan fire drills, and address
-                      any concerns or resource requirements.
+                      meet regularly with the responsible person (or their representative) to
+                      discuss fire safety matters, review inspection findings, plan fire drills, and
+                      address any concerns or resource requirements.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Feedback on hazards:</strong> The fire marshal
-                      is the responsible person&rsquo;s eyes and ears on the ground. They must have a
-                      clear, direct reporting line for fire safety hazards and deficiencies. When a
-                      fire marshal reports a hazard, the responsible person must act on it promptly —
-                      failure to do so undermines the entire fire safety management system and may
-                      constitute a breach of the RRFSO.
+                      is the responsible person&rsquo;s eyes and ears on the ground. They must have
+                      a clear, direct reporting line for fire safety hazards and deficiencies. When
+                      a fire marshal reports a hazard, the responsible person must act on it
+                      promptly — failure to do so undermines the entire fire safety management
+                      system and may constitute a breach of the RRFSO.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1021,11 +1037,11 @@ export default function FireSafetyModule4Section1() {
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <p className="text-sm text-amber-300">
                   <strong>Practical Tip:</strong> If you are appointed as a fire marshal and you
-                  identify a fire safety hazard that is not addressed after you report it, you should
-                  escalate the matter in writing. Document what you reported, when you reported it,
-                  and to whom. If the hazard remains unresolved, consider whether it needs to be
-                  escalated to senior management or, in extreme cases, reported to the local fire
-                  and rescue service.
+                  identify a fire safety hazard that is not addressed after you report it, you
+                  should escalate the matter in writing. Document what you reported, when you
+                  reported it, and to whom. If the hazard remains unresolved, consider whether it
+                  needs to be escalated to senior management or, in extreme cases, reported to the
+                  local fire and rescue service.
                 </p>
               </div>
             </div>
@@ -1044,8 +1060,8 @@ export default function FireSafetyModule4Section1() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Fire marshals must have access to appropriate equipment to carry out their duties
-                effectively during both routine inspections and emergency evacuations. They must also
-                be readily identifiable to building occupants and the fire and rescue service.
+                effectively during both routine inspections and emergency evacuations. They must
+                also be readily identifiable to building occupants and the fire and rescue service.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1069,8 +1085,9 @@ export default function FireSafetyModule4Section1() {
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
-                          <strong className="text-white">Name boards:</strong> Lists of fire marshals
-                          displayed in reception areas, fire action notices, and on each floor
+                          <strong className="text-white">Name boards:</strong> Lists of fire
+                          marshals displayed in reception areas, fire action notices, and on each
+                          floor
                         </span>
                       </li>
                     </ul>
@@ -1195,8 +1212,8 @@ export default function FireSafetyModule4Section1() {
                     <span>
                       <strong className="text-white">Fire extinguishers:</strong> Check that all
                       extinguishers are in their designated locations, that safety pins are intact,
-                      that pressure gauges (where fitted) are in the green zone, and that there is no
-                      visible damage or evidence of tampering or discharge.
+                      that pressure gauges (where fitted) are in the green zone, and that there is
+                      no visible damage or evidence of tampering or discharge.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1212,9 +1229,9 @@ export default function FireSafetyModule4Section1() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Fire safety signage:</strong> Check that all
-                      fire exit signs, fire action notices, fire door signs, and fire equipment signs
-                      are in place, visible, clean, and not obscured by furniture, posters, or other
-                      items.
+                      fire exit signs, fire action notices, fire door signs, and fire equipment
+                      signs are in place, visible, clean, and not obscured by furniture, posters, or
+                      other items.
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1241,8 +1258,8 @@ export default function FireSafetyModule4Section1() {
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
                         <strong className="text-white">Emergency lighting:</strong> Coordinate with
-                        maintenance to verify that emergency lighting operates correctly during
-                        the monthly brief discharge test (simulated mains failure)
+                        maintenance to verify that emergency lighting operates correctly during the
+                        monthly brief discharge test (simulated mains failure)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -1256,8 +1273,8 @@ export default function FireSafetyModule4Section1() {
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
-                        <strong className="text-white">Review PEEPs:</strong> Confirm that PEEPs
-                        are current and that the persons named in them are aware of their
+                        <strong className="text-white">Review PEEPs:</strong> Confirm that PEEPs are
+                        current and that the persons named in them are aware of their
                         responsibilities
                       </span>
                     </li>
@@ -1308,9 +1325,13 @@ export default function FireSafetyModule4Section1() {
               {/* Before */}
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <div className="flex items-center justify-center gap-2 mb-3">
-                  <span className="text-green-400 text-xs font-bold uppercase tracking-wider">Before</span>
+                  <span className="text-green-400 text-xs font-bold uppercase tracking-wider">
+                    Before
+                  </span>
                 </div>
-                <p className="text-xs font-semibold text-green-400 mb-2 text-center">Day-to-Day Prevention</p>
+                <p className="text-xs font-semibold text-green-400 mb-2 text-center">
+                  Day-to-Day Prevention
+                </p>
                 <ul className="text-xs text-white/80 space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1 w-1 h-1 rounded-full bg-green-400" />
@@ -1338,9 +1359,13 @@ export default function FireSafetyModule4Section1() {
               {/* During */}
               <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                 <div className="flex items-center justify-center gap-2 mb-3">
-                  <span className="text-rose-400 text-xs font-bold uppercase tracking-wider">During</span>
+                  <span className="text-rose-400 text-xs font-bold uppercase tracking-wider">
+                    During
+                  </span>
                 </div>
-                <p className="text-xs font-semibold text-rose-400 mb-2 text-center">Emergency Response</p>
+                <p className="text-xs font-semibold text-rose-400 mb-2 text-center">
+                  Emergency Response
+                </p>
                 <ul className="text-xs text-white/80 space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1 w-1 h-1 rounded-full bg-rose-400" />
@@ -1372,9 +1397,13 @@ export default function FireSafetyModule4Section1() {
               {/* After */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <div className="flex items-center justify-center gap-2 mb-3">
-                  <span className="text-blue-400 text-xs font-bold uppercase tracking-wider">After</span>
+                  <span className="text-blue-400 text-xs font-bold uppercase tracking-wider">
+                    After
+                  </span>
                 </div>
-                <p className="text-xs font-semibold text-blue-400 mb-2 text-center">Post-Incident</p>
+                <p className="text-xs font-semibold text-blue-400 mb-2 text-center">
+                  Post-Incident
+                </p>
                 <ul className="text-xs text-white/80 space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1 w-1 h-1 rounded-full bg-blue-400" />
@@ -1402,8 +1431,9 @@ export default function FireSafetyModule4Section1() {
 
             <div className="mt-4 text-center">
               <p className="text-xs text-white/50">
-                Most of a fire marshal&rsquo;s time is spent in the &ldquo;Before&rdquo; phase &mdash;
-                prevention and routine inspection are the foundation of effective fire safety management
+                Most of a fire marshal&rsquo;s time is spent in the &ldquo;Before&rdquo; phase
+                &mdash; prevention and routine inspection are the foundation of effective fire
+                safety management
               </p>
             </div>
           </div>

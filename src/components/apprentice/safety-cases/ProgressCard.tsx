@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Target, TrendingUp, Award, Sparkles } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Target, TrendingUp, Award, Sparkles } from 'lucide-react';
 
 interface ProgressCardProps {
   completedCount: number;
@@ -9,16 +8,15 @@ interface ProgressCardProps {
 }
 
 const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenarios }) => {
-  const progressPercentage = totalScenarios > 0
-    ? Math.round((completedCount / totalScenarios) * 100)
-    : 0;
+  const progressPercentage =
+    totalScenarios > 0 ? Math.round((completedCount / totalScenarios) * 100) : 0;
 
   const getProgressMessage = () => {
-    if (progressPercentage === 100) return "Excellent! All scenarios completed!";
-    if (progressPercentage >= 75) return "Almost there! Great progress!";
-    if (progressPercentage >= 50) return "Halfway through! Keep going!";
-    if (progressPercentage >= 25) return "Good start! Continue learning!";
-    return "Begin your safety journey!";
+    if (progressPercentage === 100) return 'Excellent! All scenarios completed!';
+    if (progressPercentage >= 75) return 'Almost there! Great progress!';
+    if (progressPercentage >= 50) return 'Halfway through! Keep going!';
+    if (progressPercentage >= 25) return 'Good start! Continue learning!';
+    return 'Begin your safety journey!';
   };
 
   return (
@@ -39,7 +37,9 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-white">Scenarios Completed</span>
-            <span className="text-sm font-bold text-elec-yellow">{completedCount}/{totalScenarios}</span>
+            <span className="text-sm font-bold text-elec-yellow">
+              {completedCount}/{totalScenarios}
+            </span>
           </div>
           <div className="h-3 bg-white/10 rounded-full overflow-hidden">
             <div
@@ -50,7 +50,9 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
         </div>
 
         {/* Progress Message */}
-        <div className={`p-4 rounded-xl ${progressPercentage === 100 ? 'bg-green-500/10 border border-green-500/30' : 'bg-white/10 border border-white/10'}`}>
+        <div
+          className={`p-4 rounded-xl ${progressPercentage === 100 ? 'bg-green-500/10 border border-green-500/30' : 'bg-white/10 border border-white/10'}`}
+        >
           <div className="flex items-center gap-3">
             {progressPercentage === 100 ? (
               <div className="p-2 rounded-lg bg-green-500/20">
@@ -62,7 +64,9 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
               </div>
             )}
             <div>
-              <h4 className={`font-medium ${progressPercentage === 100 ? 'text-green-400' : 'text-white'}`}>
+              <h4
+                className={`font-medium ${progressPercentage === 100 ? 'text-green-400' : 'text-white'}`}
+              >
                 {getProgressMessage()}
               </h4>
               {progressPercentage < 100 && (
@@ -81,7 +85,9 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
               <Sparkles className="h-4 w-4 text-blue-400" />
             </div>
             <p className="text-sm text-white/70">
-              Complete all scenarios to improve your understanding of electrical safety regulations and decision-making in the workplace. Your progress is tracked as you work through each scenario.
+              Complete all scenarios to improve your understanding of electrical safety regulations
+              and decision-making in the workplace. Your progress is tracked as you work through
+              each scenario.
             </p>
           </div>
         </div>

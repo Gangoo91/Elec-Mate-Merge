@@ -48,6 +48,10 @@ import {
   BookOpen,
   Bell,
   Gift,
+  RotateCcw,
+  BarChart3,
+  MousePointerClick,
+  AlertTriangle,
 } from 'lucide-react';
 
 // Campaign type definitions
@@ -136,6 +140,7 @@ export default function AdminApprenticeCampaigns() {
   const [featureKey, setFeatureKey] = useState('study_centre');
   const [contentTitle, setContentTitle] = useState('');
   const [contentDescription, setContentDescription] = useState('');
+  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2'>('v1');
 
   const campaignConfig = CAMPAIGN_TYPES[campaignType];
 
@@ -184,6 +189,7 @@ export default function AdminApprenticeCampaigns() {
     featureKey: campaignType === 'feature_spotlight' ? featureKey : undefined,
     contentTitle: campaignType === 'new_content' ? contentTitle : undefined,
     contentDescription: campaignType === 'new_content' ? contentDescription : undefined,
+    email_version: campaignType === 'trial_winback' ? emailVersion : undefined,
   };
 
   const sendSingleMutation = useMutation({
@@ -295,6 +301,33 @@ export default function AdminApprenticeCampaigns() {
     },
   });
 
+  const resetSentMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-apprentice-campaign', {
+        body: { action: 'reset_sent' },
+      });
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast.success(data.message || `${data.reset} users reset`);
+      queryClient.invalidateQueries({
+        queryKey: ['apprentice-campaign-stats'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['apprentice-campaign-eligible'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['apprentice-campaign-sent'],
+      });
+    },
+    onError: (err: any) => {
+      haptic.error();
+      toast.error(err.message || 'Failed to reset sent status');
+    },
+  });
+
   // ─── Filtering & Selection ─────────────────────────────
   const filteredUsers = useMemo(() => {
     if (!eligibleUsers) return [];
@@ -359,7 +392,7 @@ export default function AdminApprenticeCampaigns() {
           </div>
           <div>
             <h2 className="text-lg font-bold">Apprentice Campaigns</h2>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               Targeted email campaigns for apprentice users
             </p>
           </div>
@@ -380,7 +413,7 @@ export default function AdminApprenticeCampaigns() {
                 className={`shrink-0 gap-1.5 touch-manipulation h-11 px-3 text-xs ${
                   isActive
                     ? `bg-gradient-to-r ${config.colour} text-white hover:opacity-90`
-                    : 'text-muted-foreground'
+                    : 'text-white'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -391,7 +424,7 @@ export default function AdminApprenticeCampaigns() {
         </div>
 
         {/* Campaign Description */}
-        <p className="text-sm text-muted-foreground px-1">{campaignConfig.description}</p>
+        <p className="text-sm text-white px-1">{campaignConfig.description}</p>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -399,7 +432,7 @@ export default function AdminApprenticeCampaigns() {
             <CardContent className="pt-4 pb-3 px-4">
               <div className="flex items-center gap-2 mb-1">
                 <Target className="h-4 w-4 text-purple-400" />
-                <span className="text-xs text-muted-foreground">Eligible</span>
+                <span className="text-xs text-white">Eligible</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
                 {statsLoading ? '...' : stats?.totalEligible || 0}
@@ -410,7 +443,7 @@ export default function AdminApprenticeCampaigns() {
             <CardContent className="pt-4 pb-3 px-4">
               <div className="flex items-center gap-2 mb-1">
                 <Send className="h-4 w-4 text-blue-400" />
-                <span className="text-xs text-muted-foreground">Sent</span>
+                <span className="text-xs text-white">Sent</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
                 {statsLoading ? '...' : stats?.offersSent || 0}
@@ -421,7 +454,7 @@ export default function AdminApprenticeCampaigns() {
             <CardContent className="pt-4 pb-3 px-4">
               <div className="flex items-center gap-2 mb-1">
                 <CheckCheck className="h-4 w-4 text-green-400" />
-                <span className="text-xs text-muted-foreground">Converted</span>
+                <span className="text-xs text-white">Converted</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
                 {statsLoading ? '...' : stats?.conversions || 0}
@@ -432,7 +465,7 @@ export default function AdminApprenticeCampaigns() {
             <CardContent className="pt-4 pb-3 px-4">
               <div className="flex items-center gap-2 mb-1">
                 <TrendingUp className="h-4 w-4 text-amber-400" />
-                <span className="text-xs text-muted-foreground">Rate</span>
+                <span className="text-xs text-white">Rate</span>
               </div>
               <p className="text-xl sm:text-2xl font-bold">
                 {statsLoading ? '...' : `${stats?.conversionRate || 0}%`}
@@ -440,6 +473,84 @@ export default function AdminApprenticeCampaigns() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Engagement Funnel (trial_winback only) */}
+        {campaignType === 'trial_winback' && (
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm flex items-center gap-2">
+                <BarChart3 className="h-4 w-4 text-cyan-400" />
+                Engagement Funnel
+              </CardTitle>
+              <CardDescription>Email delivery and engagement metrics</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <CheckCheck className="h-4 w-4 text-green-400 shrink-0" />
+                  <div>
+                    <p className="text-xs text-white">Delivered</p>
+                    <p className="text-lg font-bold">—</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <Eye className="h-4 w-4 text-blue-400 shrink-0" />
+                  <div>
+                    <p className="text-xs text-white">Opened</p>
+                    <p className="text-lg font-bold">—</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                  <MousePointerClick className="h-4 w-4 text-purple-400 shrink-0" />
+                  <div>
+                    <p className="text-xs text-white">Clicked</p>
+                    <p className="text-lg font-bold">—</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <AlertTriangle className="h-4 w-4 text-red-400 shrink-0" />
+                  <div>
+                    <p className="text-xs text-white">Bounced</p>
+                    <p className="text-lg font-bold">—</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-white mt-3 text-center">
+                Wires up automatically once Resend webhook data is available
+              </p>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Reset & Resend (trial_winback only) */}
+        {campaignType === 'trial_winback' && (
+          <Card>
+            <CardContent className="pt-4 pb-4 px-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium">Reset Sent Users</p>
+                  <p className="text-xs text-white">
+                    Clears sent status for non-converted users (24h+ ago) so they can be resent
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => resetSentMutation.mutate()}
+                  disabled={resetSentMutation.isPending}
+                  className="gap-1.5 h-11 px-3 touch-manipulation shrink-0"
+                >
+                  {resetSentMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <RotateCcw className="h-4 w-4" />
+                  )}
+                  Reset (Resend)
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Campaign Config Card */}
         <Card>
@@ -452,7 +563,7 @@ export default function AdminApprenticeCampaigns() {
           <CardContent className="space-y-4">
             {campaignType === 'feature_spotlight' && (
               <div>
-                <label className="text-sm text-muted-foreground mb-2 block">
+                <label className="text-sm text-white mb-2 block">
                   Feature to highlight
                 </label>
                 <Select value={featureKey} onValueChange={setFeatureKey}>
@@ -473,7 +584,7 @@ export default function AdminApprenticeCampaigns() {
             {campaignType === 'new_content' && (
               <>
                 <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">Content title</label>
+                  <label className="text-sm text-white mb-2 block">Content title</label>
                   <Input
                     value={contentTitle}
                     onChange={(e) => setContentTitle(e.target.value)}
@@ -482,7 +593,7 @@ export default function AdminApprenticeCampaigns() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">Description</label>
+                  <label className="text-sm text-white mb-2 block">Description</label>
                   <Textarea
                     value={contentDescription}
                     onChange={(e) => setContentDescription(e.target.value)}
@@ -493,9 +604,42 @@ export default function AdminApprenticeCampaigns() {
               </>
             )}
 
+            {/* Email version toggle (trial_winback only) */}
+            {campaignType === 'trial_winback' && (
+              <div>
+                <label className="text-sm text-white mb-2 block">Email version</label>
+                <div className="flex gap-2">
+                  <Button
+                    variant={emailVersion === 'v1' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setEmailVersion('v1')}
+                    className={`flex-1 h-11 touch-manipulation ${
+                      emailVersion === 'v1'
+                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:opacity-90'
+                        : ''
+                    }`}
+                  >
+                    v1 — Full Feature List
+                  </Button>
+                  <Button
+                    variant={emailVersion === 'v2' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setEmailVersion('v2')}
+                    className={`flex-1 h-11 touch-manipulation ${
+                      emailVersion === 'v2'
+                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:opacity-90'
+                        : ''
+                    }`}
+                  >
+                    v2 — Short &amp; Punchy
+                  </Button>
+                </div>
+              </div>
+            )}
+
             {/* Test email */}
             <div>
-              <label className="text-sm text-muted-foreground mb-2 block">Send test email</label>
+              <label className="text-sm text-white mb-2 block">Send test email</label>
               <div className="flex gap-2">
                 <Input
                   type="email"
@@ -516,12 +660,12 @@ export default function AdminApprenticeCampaigns() {
                   )}
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-white mt-1">
                 Preview the {campaignConfig.label.toLowerCase()} email in your inbox
               </p>
             </div>
 
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-white text-center">
               All emails include CTA: "Grab it now before the app store launch"
             </p>
           </CardContent>
@@ -542,7 +686,7 @@ export default function AdminApprenticeCampaigns() {
                   variant="outline"
                   size="sm"
                   onClick={() => setShowSentHistory(!showSentHistory)}
-                  className="gap-1.5 h-11 px-2.5 touch-manipulation text-muted-foreground shrink-0"
+                  className="gap-1.5 h-11 px-2.5 touch-manipulation text-white shrink-0"
                 >
                   <Eye className="h-4 w-4" />
                   <span className="hidden sm:inline">History</span>
@@ -585,7 +729,7 @@ export default function AdminApprenticeCampaigns() {
                       onCheckedChange={toggleSelectAll}
                       className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
                     />
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-white">
                       {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
                     </span>
                   </div>
@@ -676,7 +820,7 @@ export default function AdminApprenticeCampaigns() {
                           Apprentice
                         </Badge>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-2 text-xs text-white">
                         <span className="truncate max-w-[150px]">{user.email}</span>
                         <span>&middot;</span>
                         <span className="flex items-center gap-1">
@@ -717,7 +861,7 @@ export default function AdminApprenticeCampaigns() {
                   <Mail className="h-5 w-5 text-blue-400" />
                   Sent History
                 </SheetTitle>
-                <p className="text-sm text-muted-foreground text-left">
+                <p className="text-sm text-white text-left">
                   Apprentices who have received campaign emails
                 </p>
               </SheetHeader>
@@ -731,8 +875,8 @@ export default function AdminApprenticeCampaigns() {
                   </div>
                 ) : !sentUsers || sentUsers.length === 0 ? (
                   <div className="text-center py-8">
-                    <Mail className="h-10 w-10 text-muted-foreground mx-auto mb-3 opacity-50" />
-                    <p className="text-sm text-muted-foreground">No campaign emails sent yet</p>
+                    <Mail className="h-10 w-10 text-white mx-auto mb-3 opacity-50" />
+                    <p className="text-sm text-white">No campaign emails sent yet</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
@@ -748,7 +892,7 @@ export default function AdminApprenticeCampaigns() {
                           <p className="font-medium text-sm truncate">
                             {user.full_name || user.username}
                           </p>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-2 text-xs text-white">
                             <span>
                               {CAMPAIGN_TYPES[user.apprentice_campaign_type as CampaignType]
                                 ?.label || user.apprentice_campaign_type}
@@ -793,7 +937,7 @@ export default function AdminApprenticeCampaigns() {
                   </div>
                   <div>
                     <p className="text-left">{selectedUser?.full_name || 'Unknown'}</p>
-                    <p className="text-sm font-normal text-muted-foreground">
+                    <p className="text-sm font-normal text-white">
                       {selectedUser?.email}
                     </p>
                   </div>
@@ -810,7 +954,7 @@ export default function AdminApprenticeCampaigns() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Signed Up</span>
+                      <span className="text-sm text-white">Signed Up</span>
                       <span className="text-sm">
                         {selectedUser?.created_at &&
                           format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
@@ -818,7 +962,7 @@ export default function AdminApprenticeCampaigns() {
                     </div>
                     {selectedUser?.last_sign_in && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Last Active</span>
+                        <span className="text-sm text-white">Last Active</span>
                         <span className="text-sm">
                           {formatDistanceToNow(parseISO(selectedUser.last_sign_in), {
                             addSuffix: true,
@@ -828,7 +972,7 @@ export default function AdminApprenticeCampaigns() {
                     )}
                     {selectedUser?.apprentice_campaign_sent_at && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">Last Campaign</span>
+                        <span className="text-sm text-white">Last Campaign</span>
                         <span className="text-sm">
                           {formatDistanceToNow(parseISO(selectedUser.apprentice_campaign_sent_at), {
                             addSuffix: true,

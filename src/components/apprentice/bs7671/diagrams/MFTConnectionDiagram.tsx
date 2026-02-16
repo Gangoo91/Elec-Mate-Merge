@@ -1,7 +1,6 @@
-
-import { Settings, Cable, Zap, AlertCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { BS7671StepData } from "@/data/bs7671-steps/enhancedStepData";
+import { Settings, Cable, Zap, AlertCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { BS7671StepData } from '@/data/bs7671-steps/enhancedStepData';
 
 interface MFTConnectionDiagramProps {
   stepData: BS7671StepData;
@@ -92,10 +91,10 @@ const MFTConnectionDiagram = ({ stepData, systemType }: MFTConnectionDiagramProp
       <div className="bg-amber-500/10 p-4 rounded border border-amber-500/30">
         <h4 className="font-medium text-amber-300 mb-2 flex items-center gap-2">
           <AlertCircle className="h-4 w-4" />
-          {systemType === "three-phase" ? "Three-Phase" : "Single-Phase"} System Notes
+          {systemType === 'three-phase' ? 'Three-Phase' : 'Single-Phase'} System Notes
         </h4>
         <div className="text-xs text-amber-200">
-          {systemType === "three-phase" ? (
+          {systemType === 'three-phase' ? (
             <ul className="space-y-1">
               <li>• Test each phase separately (L1, L2, L3)</li>
               <li>• Consider load balancing during testing</li>

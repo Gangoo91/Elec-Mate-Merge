@@ -25,25 +25,16 @@ const quickCheckQuestions = [
   {
     id: 'escape-route-lux',
     question: 'What is the minimum illumination on the centre line of an escape route?',
-    options: [
-      '0.5 lux',
-      '1 lux',
-      '2 lux',
-      '5 lux',
-    ],
+    options: ['0.5 lux', '1 lux', '2 lux', '5 lux'],
     correctIndex: 1,
     explanation:
       'BS 5266 Part 1 requires a minimum of 1 lux on the centre line of an escape route. This level of illumination is sufficient to allow safe movement along the route even in total darkness. The measurement is taken at floor level along the centre line of the defined escape route. In addition, a minimum of 50% of the centre line width must achieve at least 0.5 lux to ensure adequate uniformity across the route.',
   },
   {
     id: 'sleeping-duration',
-    question: 'What is the minimum emergency lighting duration for premises with sleeping accommodation?',
-    options: [
-      '1 hour',
-      '2 hours',
-      '3 hours',
-      '4 hours',
-    ],
+    question:
+      'What is the minimum emergency lighting duration for premises with sleeping accommodation?',
+    options: ['1 hour', '2 hours', '3 hours', '4 hours'],
     correctIndex: 2,
     explanation:
       'For premises with sleeping accommodation — such as hotels, care homes, hospitals, and hostels — emergency lighting must operate for a minimum of 3 hours. This extended duration accounts for the additional time required to wake, orientate, and evacuate persons who may be asleep when the emergency occurs. It also allows for the possibility that the normal mains supply may not be restored quickly, particularly during overnight incidents. For premises without sleeping risk, the minimum duration is 1 hour.',
@@ -51,12 +42,7 @@ const quickCheckQuestions = [
   {
     id: 'full-duration-test',
     question: 'How often must a full-duration test of emergency lighting be carried out?',
-    options: [
-      'Monthly',
-      'Every 6 months',
-      'Annually',
-      'Every 2 years',
-    ],
+    options: ['Monthly', 'Every 6 months', 'Annually', 'Every 2 years'],
     correctIndex: 2,
     explanation:
       'A full-duration test of emergency lighting must be carried out annually in accordance with BS 5266 Part 1. During this test, the normal supply is disconnected and the emergency lighting system is left to operate on its batteries for the full rated duration (1 hour or 3 hours depending on the premises type). This verifies that the batteries can sustain the required illumination for the entire rated period. Monthly functional tests (brief flick tests) and 6-monthly interim tests are also required, but the full-duration test is the most comprehensive and is performed annually.',
@@ -89,52 +75,36 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'Which British Standard governs the design, installation, and maintenance of emergency lighting systems?',
-    options: [
-      'BS 5839 Part 1',
-      'BS 5266 Part 1',
-      'BS 7671',
-      'BS 5499 Part 4',
-    ],
+    question:
+      'Which British Standard governs the design, installation, and maintenance of emergency lighting systems?',
+    options: ['BS 5839 Part 1', 'BS 5266 Part 1', 'BS 7671', 'BS 5499 Part 4'],
     correctAnswer: 1,
     explanation:
       'BS 5266 Part 1 is the Code of Practice for the emergency lighting of premises. It covers the design, installation, wiring, commissioning, maintenance, and testing of emergency lighting systems. BS 5839 Part 1 covers fire detection and alarm systems. BS 7671 is the IET Wiring Regulations. BS 5499 Part 4 covers safety signs.',
   },
   {
     id: 2,
-    question: 'What is the minimum illumination level required for open area (anti-panic) emergency lighting?',
-    options: [
-      '0.2 lux',
-      '0.5 lux',
-      '1 lux',
-      '5 lux',
-    ],
+    question:
+      'What is the minimum illumination level required for open area (anti-panic) emergency lighting?',
+    options: ['0.2 lux', '0.5 lux', '1 lux', '5 lux'],
     correctAnswer: 1,
     explanation:
       'Open area or anti-panic emergency lighting requires a minimum of 0.5 lux at floor level. This level is designed to reduce the risk of panic in large open areas (such as halls with a floor area exceeding 60 m\u00B2) by providing enough illumination for occupants to identify their surroundings and locate escape routes. Escape route lighting requires 1 lux on the centre line, and high-risk task area lighting requires the greater of 10% of normal illumination or 15 lux.',
   },
   {
     id: 3,
-    question: 'What is the minimum emergency lighting duration for premises without sleeping accommodation?',
-    options: [
-      '30 minutes',
-      '1 hour',
-      '2 hours',
-      '3 hours',
-    ],
+    question:
+      'What is the minimum emergency lighting duration for premises without sleeping accommodation?',
+    options: ['30 minutes', '1 hour', '2 hours', '3 hours'],
     correctAnswer: 1,
     explanation:
       'For premises without sleeping accommodation, emergency lighting must provide a minimum duration of 1 hour. This allows sufficient time for evacuation and for the mains supply to be restored or alternative arrangements to be made. For premises with sleeping accommodation (hotels, care homes, hospitals), the minimum duration is 3 hours because occupants may be asleep and require more time to wake, orientate, and evacuate.',
   },
   {
     id: 4,
-    question: 'Which type of emergency luminaire operates continuously regardless of mains supply status?',
-    options: [
-      'Non-maintained',
-      'Maintained',
-      'Sustained',
-      'Standby',
-    ],
+    question:
+      'Which type of emergency luminaire operates continuously regardless of mains supply status?',
+    options: ['Non-maintained', 'Maintained', 'Sustained', 'Standby'],
     correctAnswer: 1,
     explanation:
       'A maintained emergency luminaire operates continuously — the lamp is lit at all times from the mains supply, and when the mains fails, it continues to operate from its internal battery. Non-maintained luminaires only illuminate when the mains supply fails. Maintained luminaires are required in places of entertainment, sleeping accommodation, and where the emergency luminaire also serves as the normal room lighting. A sustained luminaire contains two lamps — one for normal use and one for emergency use — and the emergency lamp activates only on mains failure.',
@@ -154,7 +124,8 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'Which standard governs the green running man pictogram used on emergency exit signs?',
+    question:
+      'Which standard governs the green running man pictogram used on emergency exit signs?',
     options: [
       'BS 5266 Part 1',
       'BS 5839 Part 1',
@@ -167,7 +138,8 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'What is a key advantage of a central battery emergency lighting system over self-contained luminaires?',
+    question:
+      'What is a key advantage of a central battery emergency lighting system over self-contained luminaires?',
     options: [
       'It does not require any special wiring',
       'It is cheaper and simpler to install',
@@ -180,13 +152,9 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'Under BS 7671, which chapter requires that emergency lighting circuits are segregated from other circuits?',
-    options: [
-      'Chapter 41',
-      'Chapter 52',
-      'Chapter 56',
-      'Chapter 61',
-    ],
+    question:
+      'Under BS 7671, which chapter requires that emergency lighting circuits are segregated from other circuits?',
+    options: ['Chapter 41', 'Chapter 52', 'Chapter 56', 'Chapter 61'],
     correctAnswer: 2,
     explanation:
       'BS 7671 Chapter 56 covers safety services, including emergency lighting. It requires that the wiring of safety circuits (such as emergency lighting and fire alarm circuits) is segregated from other circuits so that a fault in one system does not affect the safety system. For central battery emergency lighting, fire-resistant cabling must be used to ensure that the circuit remains operational during a fire for a defined period. Chapter 41 covers protection against electric shock, Chapter 52 covers selection and erection of wiring systems, and Chapter 61 covers initial verification.',
@@ -233,7 +201,8 @@ export default function FireSafetyModule3Section4() {
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
             Emergency lighting systems, BS 5266 Part 1, maintained and non-maintained luminaires,
-            self-contained and central battery systems, exit signs, testing, and design considerations
+            self-contained and central battery systems, exit signs, testing, and design
+            considerations
           </p>
         </header>
 
@@ -302,21 +271,22 @@ export default function FireSafetyModule3Section4() {
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Emergency lighting is lighting that <strong>activates automatically when the normal
-                mains supply fails</strong>. Its primary purpose is to ensure that building occupants
-                can evacuate safely in the event of a power failure, whether caused by a fire, an
-                electrical fault, or any other incident. Without emergency lighting, corridors, stairways,
-                and exits would be plunged into total darkness, creating panic, disorientation, and a
-                serious risk of injury.
+                Emergency lighting is lighting that{' '}
+                <strong>activates automatically when the normal mains supply fails</strong>. Its
+                primary purpose is to ensure that building occupants can evacuate safely in the
+                event of a power failure, whether caused by a fire, an electrical fault, or any
+                other incident. Without emergency lighting, corridors, stairways, and exits would be
+                plunged into total darkness, creating panic, disorientation, and a serious risk of
+                injury.
               </p>
 
               <p>
-                Emergency lighting serves several critical functions: it illuminates escape routes so that
-                occupants can move safely towards the exits; it highlights exit doors and exit signs so
-                that the means of escape is clearly identifiable; it illuminates the locations of safety
-                equipment such as fire alarm call points, fire extinguishers, and first aid points; and
-                it provides sufficient light in open areas to reduce panic and allow orderly movement
-                towards escape routes.
+                Emergency lighting serves several critical functions: it illuminates escape routes
+                so that occupants can move safely towards the exits; it highlights exit doors and
+                exit signs so that the means of escape is clearly identifiable; it illuminates the
+                locations of safety equipment such as fire alarm call points, fire extinguishers,
+                and first aid points; and it provides sufficient light in open areas to reduce panic
+                and allow orderly movement towards escape routes.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -325,10 +295,10 @@ export default function FireSafetyModule3Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">RRFSO Article 14:</strong> The Regulatory Reform
-                      (Fire Safety) Order 2005, Article 14 requires the responsible person to ensure
-                      that emergency routes and exits are provided with emergency lighting where necessary
-                      to ensure the safety of relevant persons
+                      <strong className="text-white">RRFSO Article 14:</strong> The Regulatory
+                      Reform (Fire Safety) Order 2005, Article 14 requires the responsible person to
+                      ensure that emergency routes and exits are provided with emergency lighting
+                      where necessary to ensure the safety of relevant persons
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -336,8 +306,8 @@ export default function FireSafetyModule3Section4() {
                     <span>
                       <strong className="text-white">Building Regulations Part B:</strong> Approved
                       Document B (Fire Safety) requires emergency lighting in certain building types
-                      and situations as part of the means of escape provisions. It references BS 5266
-                      Part 1 as the appropriate standard for design and installation
+                      and situations as part of the means of escape provisions. It references BS
+                      5266 Part 1 as the appropriate standard for design and installation
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -354,7 +324,9 @@ export default function FireSafetyModule3Section4() {
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
-                  <p className="text-sm font-medium text-rose-400 mb-2">Emergency Escape Lighting</p>
+                  <p className="text-sm font-medium text-rose-400 mb-2">
+                    Emergency Escape Lighting
+                  </p>
                   <p className="text-sm text-white/80">
                     Lighting that provides illumination for the safe evacuation of people from a
                     building when the normal supply fails. This is the type most commonly referred
@@ -380,17 +352,15 @@ export default function FireSafetyModule3Section4() {
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
-                  <p className="text-sm font-medium text-amber-400">
-                    Key Distinction
-                  </p>
+                  <p className="text-sm font-medium text-amber-400">Key Distinction</p>
                 </div>
                 <p className="text-sm text-white/80">
                   Emergency escape lighting and standby lighting serve different purposes. Emergency
                   escape lighting is solely for safe evacuation and must meet the minimum lux levels
                   specified in BS 5266 Part 1. Standby lighting maintains normal working conditions
-                  during a power failure. A building may require both types, but standby lighting alone
-                  does not satisfy the legal requirement for emergency escape lighting. The fire risk
-                  assessment determines what level of emergency lighting is required.
+                  during a power failure. A building may require both types, but standby lighting
+                  alone does not satisfy the legal requirement for emergency escape lighting. The
+                  fire risk assessment determines what level of emergency lighting is required.
                 </p>
               </div>
             </div>
@@ -409,13 +379,15 @@ export default function FireSafetyModule3Section4() {
                 <strong>BS 5266 Part 1</strong> is the governing British Standard for the emergency
                 lighting of premises. It sets out the requirements for design, installation, wiring,
                 commissioning, servicing, and testing of emergency lighting systems. Every emergency
-                lighting installation in the UK should comply with this standard. The standard defines
-                three categories of emergency escape lighting, each with its own illumination
-                requirements.
+                lighting installation in the UK should comply with this standard. The standard
+                defines three categories of emergency escape lighting, each with its own
+                illumination requirements.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Categories of Emergency Escape Lighting</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Categories of Emergency Escape Lighting
+                </p>
                 <div className="grid gap-4">
                   <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
@@ -425,11 +397,17 @@ export default function FireSafetyModule3Section4() {
                     <ul className="text-sm text-white/80 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Minimum <strong className="text-white">1 lux</strong> on the centre line of the escape route at floor level</span>
+                        <span>
+                          Minimum <strong className="text-white">1 lux</strong> on the centre line
+                          of the escape route at floor level
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>50% of the centre line width must achieve at least 0.5 lux for adequate uniformity</span>
+                        <span>
+                          50% of the centre line width must achieve at least 0.5 lux for adequate
+                          uniformity
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -437,7 +415,10 @@ export default function FireSafetyModule3Section4() {
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Must be achieved within 5 seconds of mains failure (60 seconds for full output)</span>
+                        <span>
+                          Must be achieved within 5 seconds of mains failure (60 seconds for full
+                          output)
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -445,12 +426,17 @@ export default function FireSafetyModule3Section4() {
                   <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Eye className="h-5 w-5 text-rose-400" />
-                      <p className="text-sm font-medium text-rose-400">Open Area / Anti-Panic Lighting</p>
+                      <p className="text-sm font-medium text-rose-400">
+                        Open Area / Anti-Panic Lighting
+                      </p>
                     </div>
                     <ul className="text-sm text-white/80 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Minimum <strong className="text-white">0.5 lux</strong> at floor level throughout the area</span>
+                        <span>
+                          Minimum <strong className="text-white">0.5 lux</strong> at floor level
+                          throughout the area
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -458,7 +444,10 @@ export default function FireSafetyModule3Section4() {
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Reduces risk of panic by providing sufficient light to identify surroundings</span>
+                        <span>
+                          Reduces risk of panic by providing sufficient light to identify
+                          surroundings
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -470,24 +459,35 @@ export default function FireSafetyModule3Section4() {
                   <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Zap className="h-5 w-5 text-rose-400" />
-                      <p className="text-sm font-medium text-rose-400">High-Risk Task Area Lighting</p>
+                      <p className="text-sm font-medium text-rose-400">
+                        High-Risk Task Area Lighting
+                      </p>
                     </div>
                     <ul className="text-sm text-white/80 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Minimum <strong className="text-white">10% of normal illumination</strong> or <strong className="text-white">15 lux</strong>, whichever is greater</span>
+                        <span>
+                          Minimum <strong className="text-white">10% of normal illumination</strong>{' '}
+                          or <strong className="text-white">15 lux</strong>, whichever is greater
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Required where a sudden loss of light would create an immediate danger</span>
+                        <span>
+                          Required where a sudden loss of light would create an immediate danger
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Examples: operating machinery, chemical handling, laboratory work</span>
+                        <span>
+                          Examples: operating machinery, chemical handling, laboratory work
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                        <span>Uniformity ratio must not exceed 10:1 (stricter than escape route)</span>
+                        <span>
+                          Uniformity ratio must not exceed 10:1 (stricter than escape route)
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -504,8 +504,8 @@ export default function FireSafetyModule3Section4() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">1 hour minimum:</strong> For escape routes in
-                      premises without sleeping accommodation. This allows time for evacuation and for
-                      the mains supply to be restored or alternative arrangements to be made
+                      premises without sleeping accommodation. This allows time for evacuation and
+                      for the mains supply to be restored or alternative arrangements to be made
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -558,11 +558,16 @@ export default function FireSafetyModule3Section4() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>The lamp remains off during normal conditions &mdash; the battery charges from the mains</span>
+                      <span>
+                        The lamp remains off during normal conditions &mdash; the battery charges
+                        from the mains
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Most common type in non-domestic premises (offices, retail, warehouses)</span>
+                      <span>
+                        Most common type in non-domestic premises (offices, retail, warehouses)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -570,7 +575,9 @@ export default function FireSafetyModule3Section4() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Cannot be used where the luminaire also serves as normal room lighting</span>
+                      <span>
+                        Cannot be used where the luminaire also serves as normal room lighting
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -580,49 +587,63 @@ export default function FireSafetyModule3Section4() {
                   <ul className="text-sm text-white/80 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Operates continuously &mdash; the lamp is lit at all times from the mains</span>
+                      <span>
+                        Operates continuously &mdash; the lamp is lit at all times from the mains
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>On mains failure, continues to operate from its internal battery seamlessly</span>
+                      <span>
+                        On mains failure, continues to operate from its internal battery seamlessly
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Required in places of public entertainment (cinemas, theatres, concert halls)</span>
+                      <span>
+                        Required in places of public entertainment (cinemas, theatres, concert
+                        halls)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Required where the emergency luminaire also serves as normal room lighting</span>
+                      <span>
+                        Required where the emergency luminaire also serves as normal room lighting
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Required in sleeping accommodation where lighting is dimmed but never fully off</span>
+                      <span>
+                        Required in sleeping accommodation where lighting is dimmed but never fully
+                        off
+                      </span>
                     </li>
                   </ul>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Sustained &amp; Combined Luminaires</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Sustained &amp; Combined Luminaires
+                </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Sustained</p>
                     <p className="text-xs text-white/80">
                       A luminaire containing two or more lamps, at least one of which is fed from
                       the emergency supply and the other(s) from the normal supply. In normal
-                      conditions, both lamps may operate. On mains failure, only the emergency
-                      lamp continues to operate from the battery. The emergency lamp may or may
-                      not be illuminated in normal conditions.
+                      conditions, both lamps may operate. On mains failure, only the emergency lamp
+                      continues to operate from the battery. The emergency lamp may or may not be
+                      illuminated in normal conditions.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Combined</p>
                     <p className="text-xs text-white/80">
-                      A luminaire containing two or more lamps where at least one lamp operates
-                      from the normal supply and at least one lamp is capable of operating from
-                      the emergency supply. The emergency lamp only illuminates when the normal
-                      supply fails. This allows a single fitting to serve both normal lighting
-                      and emergency lighting functions, reducing the total number of luminaires.
+                      A luminaire containing two or more lamps where at least one lamp operates from
+                      the normal supply and at least one lamp is capable of operating from the
+                      emergency supply. The emergency lamp only illuminates when the normal supply
+                      fails. This allows a single fitting to serve both normal lighting and
+                      emergency lighting functions, reducing the total number of luminaires.
                     </p>
                   </div>
                 </div>
@@ -631,14 +652,14 @@ export default function FireSafetyModule3Section4() {
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
                   <strong className="text-rose-400">Choosing the Right Type:</strong> The fire risk
-                  assessment determines whether maintained or non-maintained luminaires are required.
-                  In most offices, warehouses, and retail premises, non-maintained luminaires are
-                  sufficient because the normal lighting is always on when the premises are occupied.
-                  Maintained luminaires are essential where the normal lighting may be dimmed or
-                  switched off while people are present &mdash; such as in cinemas during a performance,
-                  hotel corridors at night, or care home bedrooms. Where in doubt, the fire risk
-                  assessment should be consulted, and the advice of a competent fire safety professional
-                  sought.
+                  assessment determines whether maintained or non-maintained luminaires are
+                  required. In most offices, warehouses, and retail premises, non-maintained
+                  luminaires are sufficient because the normal lighting is always on when the
+                  premises are occupied. Maintained luminaires are essential where the normal
+                  lighting may be dimmed or switched off while people are present &mdash; such as in
+                  cinemas during a performance, hotel corridors at night, or care home bedrooms.
+                  Where in doubt, the fire risk assessment should be consulted, and the advice of a
+                  competent fire safety professional sought.
                 </p>
               </div>
             </div>
@@ -670,15 +691,22 @@ export default function FireSafetyModule3Section4() {
                   <ul className="text-sm text-white/80 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Each luminaire contains its own battery, charger, and control circuit</span>
+                      <span>
+                        Each luminaire contains its own battery, charger, and control circuit
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Simple installation &mdash; no special wiring required beyond normal mains</span>
+                      <span>
+                        Simple installation &mdash; no special wiring required beyond normal mains
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Battery types: NiCd (nickel-cadmium), NiMH (nickel-metal hydride), or LiFePO4 (lithium iron phosphate)</span>
+                      <span>
+                        Battery types: NiCd (nickel-cadmium), NiMH (nickel-metal hydride), or
+                        LiFePO4 (lithium iron phosphate)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -703,23 +731,34 @@ export default function FireSafetyModule3Section4() {
                   <ul className="text-sm text-white/80 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>A single battery set in a dedicated room feeds all emergency luminaires</span>
+                      <span>
+                        A single battery set in a dedicated room feeds all emergency luminaires
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Requires fire-resistant cabling (BS 8519 or BS 7629) to maintain circuit integrity</span>
+                      <span>
+                        Requires fire-resistant cabling (BS 8519 or BS 7629) to maintain circuit
+                        integrity
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Industrial-grade batteries with longer service life (10&ndash;25 years)</span>
+                      <span>
+                        Industrial-grade batteries with longer service life (10&ndash;25 years)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Centralised battery management &mdash; easier monitoring and maintenance</span>
+                      <span>
+                        Centralised battery management &mdash; easier monitoring and maintenance
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                      <span>Higher initial installation cost but lower long-term maintenance cost</span>
+                      <span>
+                        Higher initial installation cost but lower long-term maintenance cost
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
@@ -736,11 +775,11 @@ export default function FireSafetyModule3Section4() {
                   commercial buildings &mdash; a standby generator provides an extended power supply
                   that can feed emergency lighting (and other essential services) for many hours or
                   even days. Where a generator is used, battery backup is still required to provide
-                  illumination during the <strong className="text-white">changeover period</strong> between
-                  mains failure and generator start-up (typically 5&ndash;15 seconds). The battery
-                  system bridges this gap to ensure there is no period of total darkness. Generator-fed
-                  emergency lighting is common in healthcare settings where extended duration is
-                  essential for patient safety.
+                  illumination during the <strong className="text-white">changeover period</strong>{' '}
+                  between mains failure and generator start-up (typically 5&ndash;15 seconds). The
+                  battery system bridges this gap to ensure there is no period of total darkness.
+                  Generator-fed emergency lighting is common in healthcare settings where extended
+                  duration is essential for patient safety.
                 </p>
               </div>
             </div>
@@ -759,10 +798,10 @@ export default function FireSafetyModule3Section4() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 BS 5266 Part 1 specifies a comprehensive list of locations where emergency lighting
-                must be provided. The fundamental principle is that every part of the means of escape
-                &mdash; from the point where a person begins their evacuation to the point where they
-                reach a place of ultimate safety outside the building &mdash; must be adequately
-                illuminated in the event of a mains failure.
+                must be provided. The fundamental principle is that every part of the means of
+                escape &mdash; from the point where a person begins their evacuation to the point
+                where they reach a place of ultimate safety outside the building &mdash; must be
+                adequately illuminated in the event of a mains failure.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-lg">
@@ -771,59 +810,73 @@ export default function FireSafetyModule3Section4() {
                   {[
                     {
                       location: 'At each exit door',
-                      detail: 'Final exit doors and doors on escape routes must be clearly illuminated so that occupants can see and operate the door mechanism',
+                      detail:
+                        'Final exit doors and doors on escape routes must be clearly illuminated so that occupants can see and operate the door mechanism',
                     },
                     {
                       location: 'Along escape routes',
-                      detail: 'Corridors, passageways, and other routes forming part of the means of escape must achieve minimum 1 lux on the centre line',
+                      detail:
+                        'Corridors, passageways, and other routes forming part of the means of escape must achieve minimum 1 lux on the centre line',
                     },
                     {
                       location: 'At changes of direction',
-                      detail: 'Any point where the escape route changes direction \u2014 corners, junctions, and intersections \u2014 must be illuminated to prevent confusion',
+                      detail:
+                        'Any point where the escape route changes direction \u2014 corners, junctions, and intersections \u2014 must be illuminated to prevent confusion',
                     },
                     {
                       location: 'At stairways',
-                      detail: 'Every stairway on an escape route must be illuminated so that each tread is visible. Stairways present the greatest risk of injury during evacuation',
+                      detail:
+                        'Every stairway on an escape route must be illuminated so that each tread is visible. Stairways present the greatest risk of injury during evacuation',
                     },
                     {
                       location: 'At changes of floor level',
-                      detail: 'Ramps, steps, and level changes along escape routes must be highlighted to prevent trips and falls',
+                      detail:
+                        'Ramps, steps, and level changes along escape routes must be highlighted to prevent trips and falls',
                     },
                     {
                       location: 'In windowless rooms',
-                      detail: 'Any room or area that has no natural light and where people may be present requires emergency lighting to prevent total darkness',
+                      detail:
+                        'Any room or area that has no natural light and where people may be present requires emergency lighting to prevent total darkness',
                     },
                     {
                       location: 'At fire alarm call points',
-                      detail: 'Manual call points must be illuminated so that they can be located and operated in the dark',
+                      detail:
+                        'Manual call points must be illuminated so that they can be located and operated in the dark',
                     },
                     {
                       location: 'At firefighting equipment',
-                      detail: 'Fire extinguisher positions, hose reels, and dry risers must be illuminated so that occupants or the fire service can locate them',
+                      detail:
+                        'Fire extinguisher positions, hose reels, and dry risers must be illuminated so that occupants or the fire service can locate them',
                     },
                     {
                       location: 'At exit signs',
-                      detail: 'Exit and directional signs must be illuminated (internally or externally) to ensure they remain visible during a mains failure',
+                      detail:
+                        'Exit and directional signs must be illuminated (internally or externally) to ensure they remain visible during a mains failure',
                     },
                     {
                       location: 'At first aid posts',
-                      detail: 'First aid stations and equipment locations must be illuminated for use during an emergency',
+                      detail:
+                        'First aid stations and equipment locations must be illuminated for use during an emergency',
                     },
                     {
                       location: 'At lifts',
-                      detail: 'Lift lobbies and lift cars must have emergency lighting. Lift cars must have self-contained emergency lighting to assist trapped passengers',
+                      detail:
+                        'Lift lobbies and lift cars must have emergency lighting. Lift cars must have self-contained emergency lighting to assist trapped passengers',
                     },
                     {
                       location: 'In toilets exceeding 8 m\u00B2',
-                      detail: 'Toilets, washrooms, and changing rooms with a floor area exceeding 8 m\u00B2 or without borrowed light require emergency lighting',
+                      detail:
+                        'Toilets, washrooms, and changing rooms with a floor area exceeding 8 m\u00B2 or without borrowed light require emergency lighting',
                     },
                     {
                       location: 'Generator & switchgear rooms',
-                      detail: 'Rooms containing generator plant, main electrical switchgear, or fire safety system control equipment must have emergency lighting for access and operation',
+                      detail:
+                        'Rooms containing generator plant, main electrical switchgear, or fire safety system control equipment must have emergency lighting for access and operation',
                     },
                     {
                       location: 'Covered car parks',
-                      detail: 'Enclosed or covered car parks where daylight does not penetrate require emergency lighting on pedestrian escape routes',
+                      detail:
+                        'Enclosed or covered car parks where daylight does not penetrate require emergency lighting on pedestrian escape routes',
                     },
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
@@ -868,9 +921,10 @@ export default function FireSafetyModule3Section4() {
                 visual guidance to building occupants, directing them towards the nearest exit and
                 along the escape route. The design of exit signs is governed by{' '}
                 <strong>BS 5499 Part 4</strong> (aligned with <strong>BS ISO 7010</strong>), which
-                specifies the use of the internationally recognised <strong>green running man
-                pictogram</strong>. This pictogram is understood regardless of language, making it
-                effective for all building occupants including visitors and non-English speakers.
+                specifies the use of the internationally recognised{' '}
+                <strong>green running man pictogram</strong>. This pictogram is understood
+                regardless of language, making it effective for all building occupants including
+                visitors and non-English speakers.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -882,17 +936,18 @@ export default function FireSafetyModule3Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Green running man:</strong> The standard pictogram
-                      shows a white figure running towards a door on a green background. It must conform
-                      to BS ISO 7010 reference E001 (exit left) or E002 (exit right)
+                      <strong className="text-white">Green running man:</strong> The standard
+                      pictogram shows a white figure running towards a door on a green background.
+                      It must conform to BS ISO 7010 reference E001 (exit left) or E002 (exit right)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Directional arrows:</strong> Where the exit is not
-                      directly ahead, directional arrows must be used to indicate the direction of travel.
-                      Arrows point in the direction the person must move &mdash; not towards the sign
+                      <strong className="text-white">Directional arrows:</strong> Where the exit is
+                      not directly ahead, directional arrows must be used to indicate the direction
+                      of travel. Arrows point in the direction the person must move &mdash; not
+                      towards the sign
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -906,9 +961,10 @@ export default function FireSafetyModule3Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Mounting height:</strong> Signs should be mounted
-                      at a height where they are clearly visible above door frames and above head height.
-                      Low-level signs (below 2 m) are also used in some premises for visibility in smoke
+                      <strong className="text-white">Mounting height:</strong> Signs should be
+                      mounted at a height where they are clearly visible above door frames and above
+                      head height. Low-level signs (below 2 m) are also used in some premises for
+                      visibility in smoke
                     </span>
                   </li>
                 </ul>
@@ -978,7 +1034,8 @@ export default function FireSafetyModule3Section4() {
                   photoluminescent strips along skirting boards, stair nosings, and door frames, or
                   low-mounted electrically powered directional signs. Low-level systems are
                   particularly valuable in hotels, hospitals, and care homes where occupants may be
-                  unfamiliar with the building and where smoke could quickly obscure high-level signs.
+                  unfamiliar with the building and where smoke could quickly obscure high-level
+                  signs.
                 </p>
               </div>
             </div>
@@ -999,8 +1056,9 @@ export default function FireSafetyModule3Section4() {
                 Regular testing and maintenance is essential to ensure that the emergency lighting
                 system will operate correctly when it is needed. BS 5266 Part 1 sets out a
                 structured testing regime that must be followed throughout the life of the
-                installation. All tests must be recorded in the <strong>emergency lighting log
-                book</strong>, which forms part of the building&rsquo;s fire safety records.
+                installation. All tests must be recorded in the{' '}
+                <strong>emergency lighting log book</strong>, which forms part of the
+                building&rsquo;s fire safety records.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1012,15 +1070,18 @@ export default function FireSafetyModule3Section4() {
                   {[
                     {
                       period: 'Monthly Functional Test',
-                      detail: 'Simulate a mains failure briefly (by operating the test facility or isolating the supply) to verify that each luminaire illuminates correctly. Check the charging indicator restores when the mains is reconnected. Record any failures in the log book and arrange repair.',
+                      detail:
+                        'Simulate a mains failure briefly (by operating the test facility or isolating the supply) to verify that each luminaire illuminates correctly. Check the charging indicator restores when the mains is reconnected. Record any failures in the log book and arrange repair.',
                     },
                     {
                       period: '6-Monthly Interim Test',
-                      detail: 'A more thorough test than the monthly check. Simulate mains failure for a minimum period (typically one-third of the rated duration) and check that all luminaires maintain adequate illumination. Inspect for damage, dirt on diffusers, and obstructions.',
+                      detail:
+                        'A more thorough test than the monthly check. Simulate mains failure for a minimum period (typically one-third of the rated duration) and check that all luminaires maintain adequate illumination. Inspect for damage, dirt on diffusers, and obstructions.',
                     },
                     {
                       period: 'Annual Full-Duration Test',
-                      detail: 'Disconnect the normal supply and allow the emergency lighting to operate for its full rated duration (1 hour or 3 hours). At the end of the test, check that every luminaire is still illuminated. This is the most critical test as it verifies that the batteries can sustain the required illumination for the entire rated period.',
+                      detail:
+                        'Disconnect the normal supply and allow the emergency lighting to operate for its full rated duration (1 hour or 3 hours). At the end of the test, check that every luminaire is still illuminated. This is the most critical test as it verifies that the batteries can sustain the required illumination for the entire rated period.',
                     },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -1040,12 +1101,12 @@ export default function FireSafetyModule3Section4() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Battery Replacement</p>
                   <p className="text-sm text-white/80">
-                    Batteries in self-contained luminaires have a finite lifespan (typically 4&ndash;6
-                    years for NiCd cells). When a luminaire fails the annual full-duration test, the
-                    battery should be replaced. Some modern self-contained luminaires include an
-                    automatic self-test function that simplifies the testing process and provides a
-                    visible fault indication (LED) when the battery or lamp has failed. Battery
-                    replacement must be recorded in the log book.
+                    Batteries in self-contained luminaires have a finite lifespan (typically
+                    4&ndash;6 years for NiCd cells). When a luminaire fails the annual full-duration
+                    test, the battery should be replaced. Some modern self-contained luminaires
+                    include an automatic self-test function that simplifies the testing process and
+                    provides a visible fault indication (LED) when the battery or lamp has failed.
+                    Battery replacement must be recorded in the log book.
                   </p>
                 </div>
 
@@ -1056,8 +1117,8 @@ export default function FireSafetyModule3Section4() {
                     lighting log book. The log should include: date and time of each test, type of
                     test performed (monthly, 6-monthly, or annual), results for each luminaire, any
                     faults found, corrective actions taken, and the name of the person who carried
-                    out the test. The log book must be available for inspection by the fire authority
-                    and should be retained for at least 5 years.
+                    out the test. The log book must be available for inspection by the fire
+                    authority and should be retained for at least 5 years.
                   </p>
                 </div>
               </div>
@@ -1076,9 +1137,9 @@ export default function FireSafetyModule3Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Periodic inspection certificate:</strong> Issued
-                      following a periodic inspection and test of an existing system, detailing the
-                      condition of the installation and any deficiencies found
+                      <strong className="text-white">Periodic inspection certificate:</strong>{' '}
+                      Issued following a periodic inspection and test of an existing system,
+                      detailing the condition of the installation and any deficiencies found
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1108,8 +1169,8 @@ export default function FireSafetyModule3Section4() {
                 commissioning of emergency lighting systems. BS 7671 (the IET Wiring Regulations)
                 contains specific requirements for safety services &mdash; including emergency
                 lighting &mdash; in <strong>Chapter 56</strong>. Understanding these requirements
-                ensures that your installations are safe, compliant, and will function correctly
-                in an emergency.
+                ensures that your installations are safe, compliant, and will function correctly in
+                an emergency.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1122,35 +1183,36 @@ export default function FireSafetyModule3Section4() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Circuit separation:</strong> Emergency lighting
-                      circuits must be segregated from normal lighting circuits. A fault on the normal
-                      lighting circuit must not affect the emergency lighting system. This is a
-                      fundamental requirement of BS 7671 Chapter 56
+                      circuits must be segregated from normal lighting circuits. A fault on the
+                      normal lighting circuit must not affect the emergency lighting system. This is
+                      a fundamental requirement of BS 7671 Chapter 56
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Multiple final circuits:</strong> Self-contained
-                      emergency luminaires should be distributed across at least two separate final
-                      circuits. This ensures that a single circuit failure does not disable all
-                      emergency lighting in an area
+                      <strong className="text-white">Multiple final circuits:</strong>{' '}
+                      Self-contained emergency luminaires should be distributed across at least two
+                      separate final circuits. This ensures that a single circuit failure does not
+                      disable all emergency lighting in an area
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      <strong className="text-white">Fire-resistant cabling:</strong> Central battery
-                      systems require fire-resistant cables (to BS 8519 or BS 7629) that maintain
-                      circuit integrity during a fire for a minimum defined period. Standard PVC or
-                      XLPE cables are not acceptable for central battery distribution circuits
+                      <strong className="text-white">Fire-resistant cabling:</strong> Central
+                      battery systems require fire-resistant cables (to BS 8519 or BS 7629) that
+                      maintain circuit integrity during a fire for a minimum defined period.
+                      Standard PVC or XLPE cables are not acceptable for central battery
+                      distribution circuits
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
                       <strong className="text-white">Charging arrangements:</strong> Self-contained
-                      luminaires are typically connected to the local normal lighting circuit so that
-                      they detect mains failure at the luminaire. The charging circuit must be
+                      luminaires are typically connected to the local normal lighting circuit so
+                      that they detect mains failure at the luminaire. The charging circuit must be
                       permanently live (unswitched) to ensure continuous battery charging
                     </span>
                   </li>
@@ -1160,8 +1222,8 @@ export default function FireSafetyModule3Section4() {
                       <strong className="text-white">Fire alarm integration:</strong> In some
                       installations, the emergency lighting system is triggered by the fire alarm
                       system rather than (or in addition to) mains failure. This ensures that
-                      emergency lighting activates whenever the fire alarm sounds, even if the
-                      mains supply has not failed
+                      emergency lighting activates whenever the fire alarm sounds, even if the mains
+                      supply has not failed
                     </span>
                   </li>
                 </ul>
@@ -1194,12 +1256,20 @@ export default function FireSafetyModule3Section4() {
                   {/* System types */}
                   <div className="grid grid-cols-2 gap-2 w-full max-w-md">
                     <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-2 text-center">
-                      <p className="text-[10px] sm:text-xs text-rose-400 font-medium">Self-Contained</p>
-                      <p className="text-[9px] sm:text-[10px] text-white/50">Own battery per luminaire</p>
+                      <p className="text-[10px] sm:text-xs text-rose-400 font-medium">
+                        Self-Contained
+                      </p>
+                      <p className="text-[9px] sm:text-[10px] text-white/50">
+                        Own battery per luminaire
+                      </p>
                     </div>
                     <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-2 text-center">
-                      <p className="text-[10px] sm:text-xs text-rose-400 font-medium">Central Battery</p>
-                      <p className="text-[9px] sm:text-[10px] text-white/50">Single battery set + fire-rated cables</p>
+                      <p className="text-[10px] sm:text-xs text-rose-400 font-medium">
+                        Central Battery
+                      </p>
+                      <p className="text-[9px] sm:text-[10px] text-white/50">
+                        Single battery set + fire-rated cables
+                      </p>
                     </div>
                   </div>
 
@@ -1222,7 +1292,9 @@ export default function FireSafetyModule3Section4() {
                         key={i}
                         className="bg-white/5 border border-white/20 rounded-lg p-2 text-center"
                       >
-                        <p className="text-[10px] sm:text-xs text-white/80 font-medium">{item.label}</p>
+                        <p className="text-[10px] sm:text-xs text-white/80 font-medium">
+                          {item.label}
+                        </p>
                         <p className="text-[9px] sm:text-[10px] text-white/50">{item.sub}</p>
                       </div>
                     ))}
@@ -1246,7 +1318,9 @@ export default function FireSafetyModule3Section4() {
                         key={i}
                         className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-2 text-center"
                       >
-                        <p className="text-[10px] sm:text-xs text-rose-400 font-medium">{item.label}</p>
+                        <p className="text-[10px] sm:text-xs text-rose-400 font-medium">
+                          {item.label}
+                        </p>
                         <p className="text-[9px] sm:text-[10px] text-white/50">{item.sub}</p>
                       </div>
                     ))}
@@ -1279,8 +1353,8 @@ export default function FireSafetyModule3Section4() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
-                      Position luminaires to avoid glare that could dazzle evacuees and impair
-                      their vision in a dark environment
+                      Position luminaires to avoid glare that could dazzle evacuees and impair their
+                      vision in a dark environment
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1305,21 +1379,19 @@ export default function FireSafetyModule3Section4() {
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
-                  <p className="text-sm font-medium text-amber-400">
-                    Common Installation Errors
-                  </p>
+                  <p className="text-sm font-medium text-amber-400">Common Installation Errors</p>
                 </div>
                 <p className="text-sm text-white/80">
-                  The most common errors found in emergency lighting installations include: connecting
-                  self-contained luminaires to the switched side of the lighting circuit (so the
-                  battery does not charge when the room light is switched off); failing to provide
-                  emergency lighting in windowless toilets and plant rooms; using standard (non
-                  fire-resistant) cabling for central battery distribution circuits; inadequate
-                  illumination at changes of direction and stairways; failing to provide as-installed
-                  drawings and a log book to the building owner; and neglecting to commission and
-                  verify illumination levels after installation. These errors can compromise the
-                  system and may be identified during a fire safety audit, potentially leading to
-                  enforcement action by the fire authority.
+                  The most common errors found in emergency lighting installations include:
+                  connecting self-contained luminaires to the switched side of the lighting circuit
+                  (so the battery does not charge when the room light is switched off); failing to
+                  provide emergency lighting in windowless toilets and plant rooms; using standard
+                  (non fire-resistant) cabling for central battery distribution circuits; inadequate
+                  illumination at changes of direction and stairways; failing to provide
+                  as-installed drawings and a log book to the building owner; and neglecting to
+                  commission and verify illumination levels after installation. These errors can
+                  compromise the system and may be identified during a fire safety audit,
+                  potentially leading to enforcement action by the fire authority.
                 </p>
               </div>
             </div>

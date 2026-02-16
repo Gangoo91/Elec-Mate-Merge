@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { IOSInput } from '@/components/ui/ios-input';
 import {
   ChevronLeft,
   RotateCcw,
@@ -14,10 +14,10 @@ import {
   Calendar,
   TrendingUp,
   CheckCircle2,
-  AlertTriangle
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+  AlertTriangle,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface BusinessInputs {
   annualSalary: number;
@@ -42,11 +42,11 @@ const HourlyRateCalculator = () => {
     training: 1000,
     billableHoursPerWeek: 35,
     weeksWorkedPerYear: 48,
-    desiredProfitMargin: 20
+    desiredProfitMargin: 20,
   });
 
   const updateInput = (field: keyof BusinessInputs, value: number) => {
-    setInputs(prev => ({ ...prev, [field]: value }));
+    setInputs((prev) => ({ ...prev, [field]: value }));
   };
 
   const resetCalculator = () => {
@@ -59,13 +59,18 @@ const HourlyRateCalculator = () => {
       training: 1000,
       billableHoursPerWeek: 35,
       weeksWorkedPerYear: 48,
-      desiredProfitMargin: 20
+      desiredProfitMargin: 20,
     });
   };
 
   // Calculations
-  const totalAnnualCosts = inputs.annualSalary + inputs.annualOverheads + inputs.toolsAndEquipment +
-                          inputs.insurance + inputs.vehicleCosts + inputs.training;
+  const totalAnnualCosts =
+    inputs.annualSalary +
+    inputs.annualOverheads +
+    inputs.toolsAndEquipment +
+    inputs.insurance +
+    inputs.vehicleCosts +
+    inputs.training;
   const totalBillableHours = inputs.billableHoursPerWeek * inputs.weeksWorkedPerYear;
   const breakEvenRate = totalBillableHours > 0 ? totalAnnualCosts / totalBillableHours : 0;
   const recommendedRate = breakEvenRate * (1 + inputs.desiredProfitMargin / 100);
@@ -104,7 +109,6 @@ const HourlyRateCalculator = () => {
 
       {/* Main Content */}
       <main className="px-4 py-6 space-y-6 pb-32 sm:pb-6 max-w-2xl mx-auto">
-
         {/* Hero Result Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,7 +119,9 @@ const HourlyRateCalculator = () => {
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
           <div className="relative">
-            <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Recommended Rate</p>
+            <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+              Recommended Rate
+            </p>
             <p className="text-4xl sm:text-5xl font-bold text-elec-yellow mt-1 tabular-nums">
               £{recommendedRate.toFixed(2)}
               <span className="text-lg text-white/50 font-normal">/hour</span>
@@ -145,7 +151,9 @@ const HourlyRateCalculator = () => {
             className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
           >
             <p className="text-ios-caption-1 text-white/50">Annual Costs</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">£{totalAnnualCosts.toLocaleString()}</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              £{totalAnnualCosts.toLocaleString()}
+            </p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -154,7 +162,9 @@ const HourlyRateCalculator = () => {
             className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
           >
             <p className="text-ios-caption-1 text-white/50">Billable Hours</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">{totalBillableHours.toLocaleString()}</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              {totalBillableHours.toLocaleString()}
+            </p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -163,7 +173,9 @@ const HourlyRateCalculator = () => {
             className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
           >
             <p className="text-ios-caption-1 text-white/50">Break-Even</p>
-            <p className="text-ios-title-3 font-semibold text-white mt-1">£{breakEvenRate.toFixed(2)}</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">
+              £{breakEvenRate.toFixed(2)}
+            </p>
           </motion.div>
         </div>
 
@@ -177,8 +189,8 @@ const HourlyRateCalculator = () => {
               label="Annual Salary/Drawings"
               icon={<PoundSterling className="h-5 w-5" />}
               type="number"
-              value={inputs.annualSalary || ""}
-              onChange={(e) => updateInput("annualSalary", parseFloat(e.target.value) || 0)}
+              value={inputs.annualSalary || ''}
+              onChange={(e) => updateInput('annualSalary', parseFloat(e.target.value) || 0)}
               hint="Your target annual income"
             />
           </div>
@@ -194,40 +206,40 @@ const HourlyRateCalculator = () => {
               label="Overheads"
               icon={<Building2 className="h-5 w-5" />}
               type="number"
-              value={inputs.annualOverheads || ""}
-              onChange={(e) => updateInput("annualOverheads", parseFloat(e.target.value) || 0)}
+              value={inputs.annualOverheads || ''}
+              onChange={(e) => updateInput('annualOverheads', parseFloat(e.target.value) || 0)}
               hint="Office, utilities, admin"
             />
             <IOSInput
               label="Tools & Equipment"
               icon={<Wrench className="h-5 w-5" />}
               type="number"
-              value={inputs.toolsAndEquipment || ""}
-              onChange={(e) => updateInput("toolsAndEquipment", parseFloat(e.target.value) || 0)}
+              value={inputs.toolsAndEquipment || ''}
+              onChange={(e) => updateInput('toolsAndEquipment', parseFloat(e.target.value) || 0)}
               hint="Annual replacements"
             />
             <IOSInput
               label="Insurance"
               icon={<Shield className="h-5 w-5" />}
               type="number"
-              value={inputs.insurance || ""}
-              onChange={(e) => updateInput("insurance", parseFloat(e.target.value) || 0)}
+              value={inputs.insurance || ''}
+              onChange={(e) => updateInput('insurance', parseFloat(e.target.value) || 0)}
               hint="Public liability, tools"
             />
             <IOSInput
               label="Vehicle Costs"
               icon={<Car className="h-5 w-5" />}
               type="number"
-              value={inputs.vehicleCosts || ""}
-              onChange={(e) => updateInput("vehicleCosts", parseFloat(e.target.value) || 0)}
+              value={inputs.vehicleCosts || ''}
+              onChange={(e) => updateInput('vehicleCosts', parseFloat(e.target.value) || 0)}
               hint="Fuel, maintenance"
             />
             <IOSInput
               label="Training & CPD"
               icon={<GraduationCap className="h-5 w-5" />}
               type="number"
-              value={inputs.training || ""}
-              onChange={(e) => updateInput("training", parseFloat(e.target.value) || 0)}
+              value={inputs.training || ''}
+              onChange={(e) => updateInput('training', parseFloat(e.target.value) || 0)}
               hint="Courses, certifications"
             />
           </div>
@@ -243,16 +255,16 @@ const HourlyRateCalculator = () => {
               label="Billable Hours/Week"
               icon={<Clock className="h-5 w-5" />}
               type="number"
-              value={inputs.billableHoursPerWeek || ""}
-              onChange={(e) => updateInput("billableHoursPerWeek", parseFloat(e.target.value) || 0)}
+              value={inputs.billableHoursPerWeek || ''}
+              onChange={(e) => updateInput('billableHoursPerWeek', parseFloat(e.target.value) || 0)}
               hint="Hours you can charge"
             />
             <IOSInput
               label="Weeks Worked/Year"
               icon={<Calendar className="h-5 w-5" />}
               type="number"
-              value={inputs.weeksWorkedPerYear || ""}
-              onChange={(e) => updateInput("weeksWorkedPerYear", parseFloat(e.target.value) || 0)}
+              value={inputs.weeksWorkedPerYear || ''}
+              onChange={(e) => updateInput('weeksWorkedPerYear', parseFloat(e.target.value) || 0)}
               hint="Typically 48-50 weeks"
             />
           </div>
@@ -268,8 +280,8 @@ const HourlyRateCalculator = () => {
               label="Profit Margin %"
               icon={<TrendingUp className="h-5 w-5" />}
               type="number"
-              value={inputs.desiredProfitMargin || ""}
-              onChange={(e) => updateInput("desiredProfitMargin", parseFloat(e.target.value) || 0)}
+              value={inputs.desiredProfitMargin || ''}
+              onChange={(e) => updateInput('desiredProfitMargin', parseFloat(e.target.value) || 0)}
               hint="Target profit percentage"
             />
           </div>

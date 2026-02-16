@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 import {
   TrendingUp,
   Download,
@@ -7,14 +7,14 @@ import {
   CheckCircle,
   AlertCircle,
   FileText,
-} from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+} from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 interface CashFlowHeaderProps {
   isHealthy: boolean;
@@ -36,7 +36,7 @@ export const CashFlowHeader = ({
   className,
 }: CashFlowHeaderProps) => {
   return (
-    <div className={cn("px-4 sm:px-6 lg:px-8 py-4", className)}>
+    <div className={cn('px-4 sm:px-6 lg:px-8 py-4', className)}>
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Title and Health */}
         <div className="flex items-center gap-3 min-w-0">
@@ -44,9 +44,7 @@ export const CashFlowHeader = ({
             <TrendingUp className="h-5 w-5 text-blue-400" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-lg sm:text-xl font-bold text-white truncate">
-              Cash Flow Planner
-            </h1>
+            <h1 className="text-lg sm:text-xl font-bold text-white truncate">Cash Flow Planner</h1>
             {hasData && (
               <div className="flex items-center gap-1.5 mt-0.5">
                 {isHealthy ? (
@@ -56,8 +54,8 @@ export const CashFlowHeader = ({
                 )}
                 <span
                   className={cn(
-                    "text-xs font-medium truncate",
-                    isHealthy ? "text-green-400" : "text-red-400"
+                    'text-xs font-medium truncate',
+                    isHealthy ? 'text-green-400' : 'text-red-400'
                   )}
                 >
                   {healthMessage}
@@ -88,10 +86,7 @@ export const CashFlowHeader = ({
                 <span className="hidden sm:inline">Export</span>
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="bg-card border-white/10 w-48"
-            >
+            <DropdownMenuContent align="end" className="bg-card border-white/10 w-48">
               <DropdownMenuItem
                 onClick={onExportCSV}
                 className="text-white py-3 cursor-pointer focus:bg-white/10"

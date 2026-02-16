@@ -1,25 +1,24 @@
-
-import React from "react";
-import { ShieldAlert } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React from 'react';
+import { ShieldAlert } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const PPEAndSafetyEquipment = () => {
   const isMobile = useIsMobile();
-  
+
   return (
     <div className="mb-8">
       <h3 className="text-xl font-bold text-elec-yellow flex items-center mb-4">
         <ShieldAlert className="h-6 w-6 mr-2" />
         PPE & Safety Equipment
       </h3>
-      
+
       <p className="mb-4 text-elec-light/90">
-        Personal Protective Equipment (PPE) is the last line of defence against electrical hazards. 
-        The Electricity at Work Regulations 1989 requires employers to provide suitable PPE, 
-        and workers must use it correctly. All electrical safety equipment should conform to 
-        relevant British Standards.
+        Personal Protective Equipment (PPE) is the last line of defence against electrical hazards.
+        The Electricity at Work Regulations 1989 requires employers to provide suitable PPE, and
+        workers must use it correctly. All electrical safety equipment should conform to relevant
+        British Standards.
       </p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {!isMobile ? (
           <>

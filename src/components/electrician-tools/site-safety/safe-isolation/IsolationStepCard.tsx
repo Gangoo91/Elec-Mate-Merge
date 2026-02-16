@@ -10,6 +10,8 @@ export interface StepCompletionData {
   voltageReadings?: VoltageReadings;
   lockOffNumber?: string;
   provingUnitSerial?: string;
+  instrumentModel?: string;
+  instrumentSerial?: string;
 }
 
 interface IsolationStepCardProps {
@@ -45,8 +47,10 @@ export function IsolationStepCard({
   // Step 5 lock-off state
   const [lockOffNumber, setLockOffNumber] = useState<string>('');
 
-  // Steps 3 & 7 proving unit state
+  // Steps 3 & 7 proving unit + instrument state
   const [provingUnitSerial, setProvingUnitSerial] = useState<string>('');
+  const [instrumentModel, setInstrumentModel] = useState<string>('');
+  const [instrumentSerial, setInstrumentSerial] = useState<string>('');
 
   // Step 6: determine if all readings are provided and dead
   const isStep6 = stepNumber === 6;
@@ -74,13 +78,20 @@ export function IsolationStepCard({
     const data: StepCompletionData = {};
 
     if (isStep6) {
-      data.voltageReadings = { ln: parsedLN, le: parsedLE, ne: parsedNE };
+      data.voltageReadings = {
+        ln: parsedLN,
+        le: parsedLE,
+        ne: parsedNE,
+        testedAt: new Date().toISOString(),
+      };
     }
     if (isStep5 && lockOffNumber.trim()) {
       data.lockOffNumber = lockOffNumber.trim();
     }
-    if (isStep3or7 && provingUnitSerial.trim()) {
-      data.provingUnitSerial = provingUnitSerial.trim();
+    if (isStep3or7) {
+      if (provingUnitSerial.trim()) data.provingUnitSerial = provingUnitSerial.trim();
+      if (instrumentModel.trim()) data.instrumentModel = instrumentModel.trim();
+      if (instrumentSerial.trim()) data.instrumentSerial = instrumentSerial.trim();
     }
 
     onComplete(Object.keys(data).length > 0 ? data : undefined);
@@ -183,6 +194,13 @@ export function IsolationStepCard({
                   <p className="text-sm font-bold text-white">{step.voltageReadings.ne ?? '-'}V</p>
                 </div>
               </div>
+              {step.voltageReadings.testedAt && (
+                <p className="text-[10px] text-white mt-1.5 text-right">
+                  Tested: {new Date(step.voltageReadings.testedAt).toLocaleString('en-GB', {
+                    day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit',
+                  })}
+                </p>
+              )}
             </div>
           )}
 
@@ -194,11 +212,21 @@ export function IsolationStepCard({
             </div>
           )}
 
-          {/* Completed proving unit display */}
-          {isCompleted && step.provingUnitSerial && (
-            <div className="mt-2 flex items-center gap-1.5 text-xs text-white">
-              <Zap className="h-3 w-3 text-elec-yellow" />
-              Proving unit: {step.provingUnitSerial}
+          {/* Completed instrument + proving unit display */}
+          {isCompleted && (step.instrumentModel || step.instrumentSerial || step.provingUnitSerial) && (
+            <div className="mt-2 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] space-y-1">
+              {(step.instrumentModel || step.instrumentSerial) && (
+                <div className="flex items-center gap-1.5 text-xs text-white">
+                  <Zap className="h-3 w-3 text-elec-yellow" />
+                  Test instrument: {[step.instrumentModel, step.instrumentSerial].filter(Boolean).join(' \u2014 ')}
+                </div>
+              )}
+              {step.provingUnitSerial && (
+                <div className="flex items-center gap-1.5 text-xs text-white">
+                  <ShieldCheck className="h-3 w-3 text-elec-yellow" />
+                  Proving unit: {step.provingUnitSerial}
+                </div>
+              )}
             </div>
           )}
 
@@ -329,23 +357,57 @@ export function IsolationStepCard({
             </motion.div>
           )}
 
-          {/* Steps 3 & 7: Proving unit serial input */}
+          {/* Steps 3 & 7: Test instrument + proving unit inputs */}
           {isActive && isStep3or7 && (
             <motion.div
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="mt-3"
+              className="mt-3 space-y-3"
             >
-              <label className="text-xs font-semibold text-white mb-1.5 block">
-                Proving Unit Serial No. (Optional)
-              </label>
-              <Input
-                placeholder="e.g. PU-12345"
-                className="h-11 bg-white/5 border-white/10 text-white touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
-                value={provingUnitSerial}
-                onChange={(e) => setProvingUnitSerial(e.target.value)}
-              />
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className="h-4 w-4 text-amber-400" />
+                  <span className="text-xs font-semibold text-white">
+                    Test Instrument Details (GS38)
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  <div>
+                    <label className="text-[10px] font-semibold text-white mb-1 block">
+                      Instrument Make / Model
+                    </label>
+                    <Input
+                      placeholder="e.g. Fluke T6-1000, Martindale VI-15000"
+                      className="h-11 bg-white/5 border-white/10 text-white touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
+                      value={instrumentModel}
+                      onChange={(e) => setInstrumentModel(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-semibold text-white mb-1 block">
+                      Instrument Serial No.
+                    </label>
+                    <Input
+                      placeholder="e.g. SN-987654"
+                      className="h-11 bg-white/5 border-white/10 text-white touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
+                      value={instrumentSerial}
+                      onChange={(e) => setInstrumentSerial(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-semibold text-white mb-1 block">
+                      Proving Unit Serial No. (Optional)
+                    </label>
+                    <Input
+                      placeholder="e.g. PU-12345"
+                      className="h-11 bg-white/5 border-white/10 text-white touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
+                      value={provingUnitSerial}
+                      onChange={(e) => setProvingUnitSerial(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
             </motion.div>
           )}
 

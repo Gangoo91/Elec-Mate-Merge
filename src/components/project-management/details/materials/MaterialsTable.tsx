@@ -1,8 +1,7 @@
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import { ProjectMaterial } from "@/types/project";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
+import { ProjectMaterial } from '@/types/project';
 
 type MaterialsTableProps = {
   materials: ProjectMaterial[];
@@ -56,7 +55,9 @@ export const MaterialsTable = ({ materials, onDeleteMaterial }: MaterialsTablePr
             </tbody>
             <tfoot>
               <tr className="border-t border-elec-yellow/20">
-                <td colSpan={3} className="py-3 text-right font-medium">Total:</td>
+                <td colSpan={3} className="py-3 text-right font-medium">
+                  Total:
+                </td>
                 <td className="py-3 text-right font-bold">£{totalMaterialsCost.toFixed(2)}</td>
                 <td></td>
               </tr>

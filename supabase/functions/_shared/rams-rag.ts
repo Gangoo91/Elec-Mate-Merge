@@ -5,104 +5,111 @@
 
 import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-const createClient = () => createSupabaseClient(
-  Deno.env.get('SUPABASE_URL')!,
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-);
+const createClient = () =>
+  createSupabaseClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
 export async function generateEmbedding(text: string): Promise<number[]> {
   const response = await fetch('https://api.openai.com/v1/embeddings', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+      Authorization: `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       input: text.slice(0, 8000),
-      model: 'text-embedding-3-small'
-    })
+      model: 'text-embedding-3-small',
+    }),
   });
-  
+
   if (!response.ok) {
     throw new Error(`Embedding generation failed: ${await response.text()}`);
   }
-  
+
   const data = await response.json();
   return data.data[0].embedding;
 }
 
-export async function searchHealthSafetyKnowledge(query: string, onProgress?: (msg: string) => void) {
+export async function searchHealthSafetyKnowledge(
+  query: string,
+  onProgress?: (msg: string) => void
+) {
   const supabase = createClient();
-  
+
   if (onProgress) onProgress('Generating query embedding...');
   const queryEmbedding = await generateEmbedding(query);
-  
+
   if (onProgress) onProgress('Searching 10 H&S regulations...');
   const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
     query_embedding: queryEmbedding,
     query_text: query,
-    match_count: 10 // ⚡ Reduced from 20 to 10 (Phase 1 optimization)
+    match_count: 10, // ⚡ Reduced from 20 to 10 (Phase 1 optimization)
   });
-  
+
   if (error) {
     console.error('Health & Safety RAG error:', error);
     return [];
   }
-  
+
   if (onProgress) onProgress(`Found ${data?.length || 0} matching regulations`);
   return data || [];
 }
 
-export async function searchRegulationsIntelligence(query: string, onProgress?: (msg: string) => void) {
+export async function searchRegulationsIntelligence(
+  query: string,
+  onProgress?: (msg: string) => void
+) {
   const supabase = createClient();
-  
+
   if (onProgress) onProgress('Searching regulations database...');
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
-    match_count: 10
+    match_count: 10,
   });
-  
+
   if (error) {
     console.error('Regulations RAG error:', error);
     return [];
   }
-  
+
   if (onProgress) onProgress(`Found ${data?.length || 0} regulations`);
   return data || [];
 }
 
-export async function searchPracticalWorkIntelligence(query: string, onProgress?: (msg: string) => void) {
+export async function searchPracticalWorkIntelligence(
+  query: string,
+  onProgress?: (msg: string) => void
+) {
   const supabase = createClient();
-  
+
   if (onProgress) onProgress('Searching practical installation guides...');
   const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
     query_text: query,
     match_count: 10,
-    filter_trade: null
+    filter_trade: null,
   });
-  
+
   if (error) {
     console.error('Practical Work RAG error:', error);
     return [];
   }
-  
+
   if (onProgress) onProgress(`Found ${data?.length || 0} practical guides`);
   return data || [];
 }
 
 export async function searchBS7671Intelligence(query: string) {
   const supabase = createClient();
-  
+
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
-    match_count: 10
+    match_count: 10,
   });
-  
+
   if (error) {
     console.error('BS 7671 RAG error:', error);
     return [];
   }
-  
+
   return data || [];
 }
 
@@ -111,7 +118,7 @@ export async function callOpenAI(
     messages,
     model,
     tools,
-    tool_choice
+    tool_choice,
   }: {
     messages: any[];
     model: string;
@@ -127,9 +134,9 @@ export async function callOpenAI(
     messages,
     max_completion_tokens: isNewModel ? 30000 : undefined,
     max_tokens: isNewModel ? undefined : 30000,
-    temperature: isNewModel ? undefined : 0.7
+    temperature: isNewModel ? undefined : 0.7,
   };
-  
+
   if (tools) {
     body.tools = tools;
     if (tool_choice) body.tool_choice = tool_choice;
@@ -153,11 +160,11 @@ export async function callOpenAI(
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${key}`,
+        Authorization: `Bearer ${key}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
-      signal: controller.signal
+      signal: controller.signal,
     });
 
     if (!response.ok) {
@@ -168,7 +175,7 @@ export async function callOpenAI(
     const data = await response.json();
     return {
       content: data.choices[0].message.content,
-      toolCalls: data.choices[0].message.tool_calls
+      toolCalls: data.choices[0].message.tool_calls,
     };
   } catch (error) {
     const err: any = error;

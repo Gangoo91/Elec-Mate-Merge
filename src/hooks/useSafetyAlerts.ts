@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface SafetyAlert {
   id: string;
@@ -18,13 +18,13 @@ export interface SafetyAlert {
 
 export function useSafetyAlerts() {
   return useQuery({
-    queryKey: ["safety-alerts"],
+    queryKey: ['safety-alerts'],
     queryFn: async (): Promise<SafetyAlert[]> => {
       const { data, error } = await supabase
-        .from("safety_alerts")
-        .select("*")
-        .eq("is_active", true)
-        .order("date_published", { ascending: false })
+        .from('safety_alerts')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_published', { ascending: false })
         .limit(20);
 
       if (error) throw error;

@@ -1,11 +1,12 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
-import { captureException } from "../_shared/sentry.ts";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { Resend } from 'npm:resend@2.0.0';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface InvoiceEmailRequest {
@@ -74,7 +75,7 @@ function formatDate(dateInput: any): string {
     return date.toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   } catch (e) {
     console.warn('⚠️ Date format failed:', e);
@@ -116,7 +117,7 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 1: Validate environment
     // ========================================================================
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
 
@@ -147,7 +148,10 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     const jwt = authHeader.replace('Bearer ', '').trim();
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(jwt);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
       console.error('❌ User authentication error:', userError);
@@ -210,7 +214,9 @@ const handler = async (req: Request): Promise<Response> => {
     if (!isValidEmail(clientEmail)) {
       console.error('❌ Invalid client email:', clientEmail);
       console.error('❌ Client data:', JSON.stringify(clientData).substring(0, 300));
-      throw new Error(`Invalid client email address: "${clientEmail || 'missing'}". Please update the invoice with a valid email.`);
+      throw new Error(
+        `Invalid client email address: "${clientEmail || 'missing'}". Please update the invoice with a valid email.`
+      );
     }
 
     console.log(`✅ Client: ${clientName} <${clientEmail}>`);
@@ -231,8 +237,8 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 7: Handle Stripe payment link (optional, non-blocking)
     // ========================================================================
     let stripePaymentUrl: string | null = null;
-    const stripeConnectActive = companyProfile?.stripe_account_id &&
-                                 companyProfile?.stripe_account_status === 'active';
+    const stripeConnectActive =
+      companyProfile?.stripe_account_id && companyProfile?.stripe_account_status === 'active';
 
     if (stripeConnectActive) {
       try {
@@ -246,7 +252,7 @@ const handler = async (req: Request): Promise<Response> => {
             {
               method: 'POST',
               headers: {
-                'Authorization': authHeader,
+                Authorization: authHeader,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ invoiceId }),
@@ -277,22 +283,19 @@ const handler = async (req: Request): Promise<Response> => {
     const regeneratePdf = async (): Promise<string | null> => {
       console.log('🔄 Regenerating PDF...');
       try {
-        const pdfResponse = await fetch(
-          `${supabaseUrl}/functions/v1/generate-pdf-monkey`,
-          {
-            method: 'POST',
-            headers: {
-              'Authorization': authHeader,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              quote: invoice,
-              companyProfile: companyProfile,
-              invoice_mode: true,
-              force_regenerate: true,
-            }),
-          }
-        );
+        const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
+          method: 'POST',
+          headers: {
+            Authorization: authHeader,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            quote: invoice,
+            companyProfile: companyProfile,
+            invoice_mode: true,
+            force_regenerate: true,
+          }),
+        });
 
         if (pdfResponse.ok) {
           const pdfData = await pdfResponse.json();
@@ -384,7 +387,7 @@ const handler = async (req: Request): Promise<Response> => {
         labour: 'Labour',
         materials: 'Materials',
         equipment: 'Equipment Hire',
-        manual: 'Other'
+        manual: 'Other',
       };
 
       for (const item of items) {
@@ -399,7 +402,7 @@ const handler = async (req: Request): Promise<Response> => {
       // Build summary rows
       const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
       itemsHtml = categoryOrder
-        .filter(cat => categoryTotals[cat] && categoryTotals[cat] > 0)
+        .filter((cat) => categoryTotals[cat] && categoryTotals[cat] > 0)
         .map((category, index) => {
           const label = categoryLabels[category] || category;
           const total = categoryTotals[category];
@@ -411,16 +414,18 @@ const handler = async (req: Request): Promise<Response> => {
               <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(total)}</td>
             </tr>
           `;
-        }).join('');
+        })
+        .join('');
     } else {
       // Detailed view: Show all items individually
-      itemsHtml = items.map((item: any, index: number) => {
-        const description = safeGet(item, 'description', 'Item');
-        const quantity = safeGet(item, 'quantity', 0);
-        const unitPrice = safeGet(item, 'unitPrice', 0);
-        const lineTotal = item.total ?? item.totalPrice ?? (quantity * unitPrice);
+      itemsHtml = items
+        .map((item: any, index: number) => {
+          const description = safeGet(item, 'description', 'Item');
+          const quantity = safeGet(item, 'quantity', 0);
+          const unitPrice = safeGet(item, 'unitPrice', 0);
+          const lineTotal = item.total ?? item.totalPrice ?? quantity * unitPrice;
 
-        return `
+          return `
           <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
             <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${description}</td>
             <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${quantity}</td>
@@ -428,7 +433,8 @@ const handler = async (req: Request): Promise<Response> => {
             <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(lineTotal)}</td>
           </tr>
         `;
-      }).join('');
+        })
+        .join('');
     }
 
     // ========================================================================
@@ -501,7 +507,9 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
 
           <!-- View PDF Button -->
-          ${pdfUrl ? `
+          ${
+            pdfUrl
+              ? `
           <tr>
             <td style="padding: 0 24px 24px;">
               <a href="${pdfUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
@@ -512,10 +520,14 @@ const handler = async (req: Request): Promise<Response> => {
               </p>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
 
           <!-- Pay Now Button -->
-          ${stripePaymentUrl ? `
+          ${
+            stripePaymentUrl
+              ? `
           <tr>
             <td style="padding: 0 24px 24px;">
               <a href="${stripePaymentUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);">
@@ -526,10 +538,14 @@ const handler = async (req: Request): Promise<Response> => {
               </p>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
 
           <!-- Bank Details -->
-          ${bankDetails ? `
+          ${
+            bankDetails
+              ? `
           <tr>
             <td style="padding: 0 24px 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; border-radius: 8px;">
@@ -548,10 +564,14 @@ const handler = async (req: Request): Promise<Response> => {
               </table>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
 
           <!-- Items Table -->
-          ${items.length > 0 ? `
+          ${
+            items.length > 0
+              ? `
           <tr>
             <td style="padding: 0 24px 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
@@ -565,7 +585,9 @@ const handler = async (req: Request): Promise<Response> => {
               </table>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
 
           <!-- Totals -->
           <tr>
@@ -580,7 +602,9 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
 
           <!-- Notes -->
-          ${invoice.invoice_notes ? `
+          ${
+            invoice.invoice_notes
+              ? `
           <tr>
             <td style="padding: 0 24px 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #fffbeb; border-left: 4px solid #FFD700; border-radius: 8px;">
@@ -593,7 +617,9 @@ const handler = async (req: Request): Promise<Response> => {
               </table>
             </td>
           </tr>
-          ` : ''}
+          `
+              : ''
+          }
 
           <!-- Footer -->
           <tr>
@@ -650,10 +676,12 @@ const handler = async (req: Request): Promise<Response> => {
     };
 
     if (pdfAttachmentSuccess && pdfBase64) {
-      emailOptions.attachments = [{
-        filename: `Invoice_${invoiceNumber}.pdf`,
-        content: pdfBase64,
-      }];
+      emailOptions.attachments = [
+        {
+          filename: `Invoice_${invoiceNumber}.pdf`,
+          content: pdfBase64,
+        },
+      ];
       console.log('📎 Invoice PDF attached');
     }
 
@@ -688,7 +716,9 @@ const handler = async (req: Request): Promise<Response> => {
             content: certPdfBase64,
           });
 
-          console.log(`📎 Certificate PDF attached: ${certFilename} (${certPdfArrayBuffer.byteLength} bytes)`);
+          console.log(
+            `📎 Certificate PDF attached: ${certFilename} (${certPdfArrayBuffer.byteLength} bytes)`
+          );
         } else {
           console.warn('⚠️ Failed to download certificate PDF, continuing without it');
         }
@@ -713,7 +743,7 @@ const handler = async (req: Request): Promise<Response> => {
       .from('quotes')
       .update({
         invoice_status: 'sent',
-        invoice_sent_at: new Date().toISOString()
+        invoice_sent_at: new Date().toISOString(),
       })
       .eq('id', invoiceId);
 
@@ -729,26 +759,25 @@ const handler = async (req: Request): Promise<Response> => {
     if (connectedAccounting) {
       console.log(`📊 Auto-syncing to ${connectedAccounting.provider}...`);
       try {
-        const syncResponse = await fetch(
-          `${supabaseUrl}/functions/v1/accounting-sync-invoice`,
-          {
-            method: 'POST',
-            headers: {
-              'Authorization': authHeader,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              invoiceId,
-              provider: connectedAccounting.provider,
-            }),
-          }
-        );
+        const syncResponse = await fetch(`${supabaseUrl}/functions/v1/accounting-sync-invoice`, {
+          method: 'POST',
+          headers: {
+            Authorization: authHeader,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            invoiceId,
+            provider: connectedAccounting.provider,
+          }),
+        });
 
         if (syncResponse.ok) {
           const syncData = await syncResponse.json();
           if (syncData.success) {
             accountingSynced = true;
-            console.log(`✅ Invoice synced to ${connectedAccounting.provider}: ${syncData.externalInvoiceId}`);
+            console.log(
+              `✅ Invoice synced to ${connectedAccounting.provider}: ${syncData.externalInvoiceId}`
+            );
           } else {
             console.warn(`⚠️ Accounting sync returned error: ${syncData.error}`);
           }
@@ -767,7 +796,9 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: pdfAttachmentSuccess ? 'Invoice sent with PDF attachment' : 'Invoice sent (link only)',
+        message: pdfAttachmentSuccess
+          ? 'Invoice sent with PDF attachment'
+          : 'Invoice sent (link only)',
         emailId: emailData?.id,
         pdfAttached: pdfAttachmentSuccess,
         payNowIncluded: !!stripePaymentUrl,
@@ -777,7 +808,6 @@ const handler = async (req: Request): Promise<Response> => {
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);
@@ -787,7 +817,7 @@ const handler = async (req: Request): Promise<Response> => {
       functionName: 'send-invoice-resend',
       requestUrl: req.url,
       requestMethod: req.method,
-      extra: { duration, hasResendKey: !!Deno.env.get("RESEND_API_KEY") }
+      extra: { duration, hasResendKey: !!Deno.env.get('RESEND_API_KEY') },
     });
 
     return new Response(

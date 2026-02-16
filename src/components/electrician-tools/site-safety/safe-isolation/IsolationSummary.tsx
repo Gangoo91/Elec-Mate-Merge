@@ -26,11 +26,13 @@ import {
   getIsolationDuration,
   hasRequiredSignatures,
   useIsolationExpiryCheck,
+  useUpdateIsolationRecord,
   ISOLATION_TIMEOUT_HOURS,
 } from '@/hooks/useSafeIsolationRecords';
 import { AuditTimeline } from '../common/AuditTimeline';
 import { ApprovalBadge, ApprovalInfoCard } from '../common/ApprovalBadge';
 import { ApprovalSheet } from '../common/ApprovalSheet';
+import { SignaturePad } from '../common/SignaturePad';
 import { useRequestApproval } from '@/hooks/useSupervisorApproval';
 import { ReEnergisationSheet } from './ReEnergisationSheet';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
@@ -98,11 +100,46 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
   const [showApproval, setShowApproval] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const requestApproval = useRequestApproval();
+  const updateRecord = useUpdateIsolationRecord();
+
+  // Inline signature capture state
+  const [isolatorName, setIsolatorName] = useState(record.isolator_name || '');
+  const [isolatorDate, setIsolatorDate] = useState(
+    record.created_at ? new Date(record.created_at).toISOString().split('T')[0] : ''
+  );
+  const [isolatorSigDataUrl, setIsolatorSigDataUrl] = useState(record.isolator_signature || '');
+  const [verifierName, setVerifierName] = useState(record.verifier_name || '');
+  const [verifierDate, setVerifierDate] = useState('');
+  const [verifierSigDataUrl, setVerifierSigDataUrl] = useState(record.verifier_signature || '');
+  const [isSavingSigs, setIsSavingSigs] = useState(false);
 
   // GS38 compliance hooks
   useIsolationExpiryCheck();
   const duration = getIsolationDuration(record);
   const signaturesPresent = hasRequiredSignatures(record);
+
+  // Check if inline sigs satisfy the requirement (live check)
+  const inlineSignaturesValid =
+    isolatorName.trim().length > 0 &&
+    isolatorSigDataUrl.length > 0 &&
+    verifierName.trim().length > 0 &&
+    verifierSigDataUrl.length > 0;
+
+  const handleSaveSignatures = async () => {
+    if (!inlineSignaturesValid) return;
+    setIsSavingSigs(true);
+    try {
+      await updateRecord.mutateAsync({
+        id: record.id,
+        isolator_name: isolatorName.trim(),
+        isolator_signature: isolatorSigDataUrl,
+        verifier_name: verifierName.trim(),
+        verifier_signature: verifierSigDataUrl,
+      } as any);
+    } finally {
+      setIsSavingSigs(false);
+    }
+  };
 
   const statusConf = STATUS_BADGES[record.status];
   const StatusIcon = statusConf.icon;
@@ -201,20 +238,60 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </motion.div>
         )}
 
-        {/* Signature enforcement warning */}
+        {/* Signature enforcement warning + inline capture */}
         {record.status === 'isolated' && !signaturesPresent && (
-          <motion.div
-            variants={itemVariants}
-            className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 flex items-start gap-3"
-          >
-            <ShieldAlert className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-bold text-amber-400">Signatures Required</p>
-              <p className="text-xs text-white mt-0.5 leading-relaxed">
-                Both isolator and verifier signatures are required before re-energisation. This is a
-                GS38 compliance requirement.
-              </p>
+          <motion.div variants={itemVariants} className="space-y-3">
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 flex items-start gap-3">
+              <ShieldAlert className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-amber-400">Signatures Required</p>
+                <p className="text-xs text-white mt-0.5 leading-relaxed">
+                  Both isolator and verifier signatures are required before re-energisation. Sign
+                  below to proceed.
+                </p>
+              </div>
             </div>
+
+            {/* Inline Isolator Signature */}
+            <SignaturePad
+              label="Isolator Signature"
+              name={isolatorName}
+              date={isolatorDate}
+              signatureDataUrl={isolatorSigDataUrl}
+              onSignatureChange={setIsolatorSigDataUrl}
+              onNameChange={setIsolatorName}
+              onDateChange={setIsolatorDate}
+            />
+
+            {/* Inline Verifier Signature */}
+            <SignaturePad
+              label="Verifier Signature"
+              name={verifierName}
+              date={verifierDate}
+              signatureDataUrl={verifierSigDataUrl}
+              onSignatureChange={setVerifierSigDataUrl}
+              onNameChange={setVerifierName}
+              onDateChange={setVerifierDate}
+            />
+
+            {/* Save signatures button */}
+            <Button
+              onClick={handleSaveSignatures}
+              disabled={!inlineSignaturesValid || isSavingSigs}
+              className="w-full h-11 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+            >
+              {isSavingSigs ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Saving Signatures...
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  Save Signatures
+                </>
+              )}
+            </Button>
           </motion.div>
         )}
 
@@ -261,27 +338,100 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
           </div>
         </motion.div>
 
-        {/* Voltage detector info */}
-        {(record.voltage_detector_serial || record.voltage_detector_calibration_date) && (
-          <motion.div
-            variants={itemVariants}
-            className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 space-y-2"
-          >
-            <h3 className="text-sm font-bold text-white flex items-center gap-2">
-              <Zap className="h-4 w-4 text-amber-400" />
-              Voltage Detector
-            </h3>
-            {record.voltage_detector_serial && (
-              <p className="text-sm text-white">Serial: {record.voltage_detector_serial}</p>
-            )}
-            {record.voltage_detector_calibration_date && (
-              <p className="text-sm text-white">
-                Calibration:{' '}
-                {new Date(record.voltage_detector_calibration_date).toLocaleDateString('en-GB')}
-              </p>
-            )}
-          </motion.div>
-        )}
+        {/* Test instrument details */}
+        {(() => {
+          const step3 = record.steps.find((s) => s.stepNumber === 3);
+          const step6 = record.steps.find((s) => s.stepNumber === 6);
+          const hasInstrument = step3?.instrumentModel || step3?.instrumentSerial || record.voltage_detector_serial;
+          const hasReadings = step6?.voltageReadings;
+
+          if (!hasInstrument && !record.voltage_detector_calibration_date && !hasReadings) return null;
+
+          return (
+            <motion.div
+              variants={itemVariants}
+              className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 space-y-3"
+            >
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <Zap className="h-4 w-4 text-amber-400" />
+                Test Instrument &amp; Readings
+              </h3>
+
+              {/* Instrument details */}
+              <div className="space-y-1.5">
+                {step3?.instrumentModel && (
+                  <p className="text-sm text-white">Make/Model: {step3.instrumentModel}</p>
+                )}
+                {(step3?.instrumentSerial || record.voltage_detector_serial) && (
+                  <p className="text-sm text-white">
+                    Serial: {step3?.instrumentSerial || record.voltage_detector_serial}
+                  </p>
+                )}
+                {record.voltage_detector_calibration_date && (
+                  <p className="text-sm text-white">
+                    Calibration:{' '}
+                    {new Date(record.voltage_detector_calibration_date).toLocaleDateString('en-GB')}
+                  </p>
+                )}
+                {step3?.provingUnitSerial && (
+                  <p className="text-sm text-white">Proving unit: {step3.provingUnitSerial}</p>
+                )}
+              </div>
+
+              {/* Dead test log */}
+              {hasReadings && (
+                <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08]">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-white">Dead Test Log</span>
+                    {step6.voltageReadings!.testedAt && (
+                      <span className="text-[10px] text-white">
+                        {new Date(step6.voltageReadings!.testedAt).toLocaleString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                        })}
+                      </span>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div>
+                      <p className="text-[10px] text-white">L-N</p>
+                      <p className="text-sm font-bold text-white">
+                        {step6.voltageReadings!.ln ?? '-'}V
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-white">L-E</p>
+                      <p className="text-sm font-bold text-white">
+                        {step6.voltageReadings!.le ?? '-'}V
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-white">N-E</p>
+                      <p className="text-sm font-bold text-white">
+                        {step6.voltageReadings!.ne ?? '-'}V
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-2 flex items-center justify-center gap-1.5">
+                    {step6.voltageReadings!.ln !== null &&
+                    step6.voltageReadings!.le !== null &&
+                    step6.voltageReadings!.ne !== null &&
+                    step6.voltageReadings!.ln < 50 &&
+                    step6.voltageReadings!.le < 50 &&
+                    step6.voltageReadings!.ne < 50 ? (
+                      <span className="text-xs font-bold text-green-400">CONFIRMED DEAD</span>
+                    ) : (
+                      <span className="text-xs font-bold text-red-400">LIVE DETECTED</span>
+                    )}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          );
+        })()}
 
         {/* Steps */}
         <motion.div variants={itemVariants} className="space-y-2">
@@ -473,7 +623,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
             variants={itemVariants}
             className="pb-[max(1rem,env(safe-area-inset-bottom))]"
           >
-            {!signaturesPresent && (
+            {!signaturesPresent && !inlineSignaturesValid && (
               <p className="text-xs text-amber-400 text-center mb-2">
                 Both isolator and verifier signatures are required before re-energisation
               </p>

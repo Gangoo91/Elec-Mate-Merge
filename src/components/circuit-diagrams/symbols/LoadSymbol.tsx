@@ -2,7 +2,16 @@
 // Socket, Light, Cooker, Shower, etc.
 
 export interface LoadSymbolProps {
-  type: 'socket' | 'light' | 'cooker' | 'shower' | 'immersion' | 'heating' | 'ev-charger' | 'motor' | 'generic';
+  type:
+    | 'socket'
+    | 'light'
+    | 'cooker'
+    | 'shower'
+    | 'immersion'
+    | 'heating'
+    | 'ev-charger'
+    | 'motor'
+    | 'generic';
   x: number;
   y: number;
   label?: string;
@@ -22,7 +31,7 @@ export const LoadSymbol = ({ type, x, y, label, rating }: LoadSymbolProps) => {
             <rect x="17" y="22" width="6" height="8" fill="black" rx="1" />
           </>
         );
-      
+
       case 'light':
         return (
           <>
@@ -38,24 +47,42 @@ export const LoadSymbol = ({ type, x, y, label, rating }: LoadSymbolProps) => {
             <line x1="32" y1="22" x2="36" y2="26" stroke="black" strokeWidth="2" />
           </>
         );
-      
+
       case 'cooker':
         return (
           <>
             {/* Cooker symbol */}
-            <rect x="5" y="5" width="30" height="30" fill="white" stroke="black" strokeWidth="2" rx="2" />
+            <rect
+              x="5"
+              y="5"
+              width="30"
+              height="30"
+              fill="white"
+              stroke="black"
+              strokeWidth="2"
+              rx="2"
+            />
             <circle cx="13" cy="13" r="4" fill="none" stroke="black" strokeWidth="1.5" />
             <circle cx="27" cy="13" r="4" fill="none" stroke="black" strokeWidth="1.5" />
             <circle cx="13" cy="27" r="4" fill="none" stroke="black" strokeWidth="1.5" />
             <circle cx="27" cy="27" r="4" fill="none" stroke="black" strokeWidth="1.5" />
           </>
         );
-      
+
       case 'shower':
         return (
           <>
             {/* Shower symbol */}
-            <rect x="8" y="5" width="24" height="10" fill="white" stroke="black" strokeWidth="2" rx="2" />
+            <rect
+              x="8"
+              y="5"
+              width="24"
+              height="10"
+              fill="white"
+              stroke="black"
+              strokeWidth="2"
+              rx="2"
+            />
             {/* Water droplets */}
             <circle cx="12" cy="20" r="1.5" fill="black" />
             <circle cx="16" cy="24" r="1.5" fill="black" />
@@ -67,12 +94,21 @@ export const LoadSymbol = ({ type, x, y, label, rating }: LoadSymbolProps) => {
             <circle cx="26" cy="28" r="1.5" fill="black" />
           </>
         );
-      
+
       case 'immersion':
         return (
           <>
             {/* Immersion heater symbol */}
-            <rect x="10" y="5" width="20" height="30" fill="white" stroke="black" strokeWidth="2" rx="2" />
+            <rect
+              x="10"
+              y="5"
+              width="20"
+              height="30"
+              fill="white"
+              stroke="black"
+              strokeWidth="2"
+              rx="2"
+            />
             {/* Heating element */}
             <path
               d="M 15 12 Q 18 15, 15 18 Q 12 21, 15 24 Q 18 27, 15 30"
@@ -88,21 +124,32 @@ export const LoadSymbol = ({ type, x, y, label, rating }: LoadSymbolProps) => {
             />
           </>
         );
-      
+
       case 'motor':
         return (
           <>
             {/* Motor symbol */}
             <circle cx="20" cy="20" r="15" fill="white" stroke="black" strokeWidth="2" />
-            <text x="20" y="26" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">M</text>
+            <text x="20" y="26" textAnchor="middle" fontSize="18" fontWeight="bold" fill="black">
+              M
+            </text>
           </>
         );
-      
+
       case 'ev-charger':
         return (
           <>
             {/* EV Charger symbol */}
-            <rect x="10" y="5" width="20" height="30" fill="white" stroke="black" strokeWidth="2" rx="3" />
+            <rect
+              x="10"
+              y="5"
+              width="20"
+              height="30"
+              fill="white"
+              stroke="black"
+              strokeWidth="2"
+              rx="3"
+            />
             {/* Charging bolt */}
             <path
               d="M 20 12 L 16 20 L 20 20 L 16 28 L 24 20 L 20 20 Z"
@@ -112,13 +159,24 @@ export const LoadSymbol = ({ type, x, y, label, rating }: LoadSymbolProps) => {
             />
           </>
         );
-      
+
       default:
         return (
           <>
             {/* Generic load symbol */}
-            <rect x="8" y="8" width="24" height="24" fill="white" stroke="black" strokeWidth="2" rx="2" />
-            <text x="20" y="24" textAnchor="middle" fontSize="16" fontWeight="bold" fill="black">L</text>
+            <rect
+              x="8"
+              y="8"
+              width="24"
+              height="24"
+              fill="white"
+              stroke="black"
+              strokeWidth="2"
+              rx="2"
+            />
+            <text x="20" y="24" textAnchor="middle" fontSize="16" fontWeight="bold" fill="black">
+              L
+            </text>
           </>
         );
     }
@@ -128,32 +186,17 @@ export const LoadSymbol = ({ type, x, y, label, rating }: LoadSymbolProps) => {
     <g transform={`translate(${x}, ${y})`} className="load-symbol">
       {/* Connection point */}
       <line x1="20" y1="-10" x2="20" y2="0" stroke="black" strokeWidth="2" />
-      
+
       {/* Load icon */}
-      <g>
-        {renderLoadIcon()}
-      </g>
-      
+      <g>{renderLoadIcon()}</g>
+
       {/* Label and rating */}
-      <text
-        x="20"
-        y="50"
-        textAnchor="middle"
-        fontSize="12"
-        fontWeight="bold"
-        fill="black"
-      >
+      <text x="20" y="50" textAnchor="middle" fontSize="12" fontWeight="bold" fill="black">
         {label}
       </text>
-      
+
       {rating && (
-        <text
-          x="20"
-          y="63"
-          textAnchor="middle"
-          fontSize="11"
-          fill="black"
-        >
+        <text x="20" y="63" textAnchor="middle" fontSize="11" fill="black">
           {rating}W
         </text>
       )}

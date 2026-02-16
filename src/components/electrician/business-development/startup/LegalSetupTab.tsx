@@ -1,81 +1,88 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { FileText, Shield, Users, AlertTriangle, CheckCircle, ExternalLink } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { FileText, Shield, Users, AlertTriangle, CheckCircle, ExternalLink } from 'lucide-react';
 
 const LegalSetupTab = () => {
   const legalSteps = [
     {
       id: 1,
-      title: "Choose Business Structure",
-      status: "required",
-      description: "Decide between sole trader, limited company, or partnership",
-      timeframe: "1-2 weeks",
-      cost: "£12-£50"
+      title: 'Choose Business Structure',
+      status: 'required',
+      description: 'Decide between sole trader, limited company, or partnership',
+      timeframe: '1-2 weeks',
+      cost: '£12-£50',
     },
     {
       id: 2,
-      title: "Register with Companies House",
-      status: "required",
-      description: "Register your limited company (if applicable)",
-      timeframe: "1-3 days",
-      cost: "£12"
+      title: 'Register with Companies House',
+      status: 'required',
+      description: 'Register your limited company (if applicable)',
+      timeframe: '1-3 days',
+      cost: '£12',
     },
     {
       id: 3,
-      title: "Get Public Liability Insurance",
-      status: "essential",
-      description: "Minimum £2 million cover required for electrical work",
-      timeframe: "1-2 days",
-      cost: "£200-£500/year"
+      title: 'Get Public Liability Insurance',
+      status: 'essential',
+      description: 'Minimum £2 million cover required for electrical work',
+      timeframe: '1-2 days',
+      cost: '£200-£500/year',
     },
     {
       id: 4,
-      title: "Professional Indemnity Insurance",
-      status: "recommended",
-      description: "Protection against professional negligence claims",
-      timeframe: "1-2 days",
-      cost: "£300-£800/year"
-    }
+      title: 'Professional Indemnity Insurance',
+      status: 'recommended',
+      description: 'Protection against professional negligence claims',
+      timeframe: '1-2 days',
+      cost: '£300-£800/year',
+    },
   ];
 
   const complianceItems = [
     {
-      title: "NICEIC/NAPIT Registration",
-      description: "Essential for Part P compliance and customer confidence",
-      priority: "high",
-      annualCost: "£500-£800"
+      title: 'NICEIC/NAPIT Registration',
+      description: 'Essential for Part P compliance and customer confidence',
+      priority: 'high',
+      annualCost: '£500-£800',
     },
     {
-      title: "JIB Membership",
-      description: "Industry recognition and grading scheme",
-      priority: "medium",
-      annualCost: "£150-£300"
+      title: 'JIB Membership',
+      description: 'Industry recognition and grading scheme',
+      priority: 'medium',
+      annualCost: '£150-£300',
     },
     {
-      title: "ECA Membership",
+      title: 'ECA Membership',
       description: "Electrical Contractors' Association benefits",
-      priority: "medium",
-      annualCost: "£200-£400"
-    }
+      priority: 'medium',
+      annualCost: '£200-£400',
+    },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'required': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'essential': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'recommended': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      default: return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
+      case 'required':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'essential':
+        return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'recommended':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      default:
+        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-500/20 text-red-400';
-      case 'medium': return 'bg-amber-500/20 text-amber-400';
-      case 'low': return 'bg-green-500/20 text-green-400';
-      default: return 'bg-elec-yellow/20 text-elec-yellow';
+      case 'high':
+        return 'bg-red-500/20 text-red-400';
+      case 'medium':
+        return 'bg-amber-500/20 text-amber-400';
+      case 'low':
+        return 'bg-green-500/20 text-green-400';
+      default:
+        return 'bg-elec-yellow/20 text-elec-yellow';
     }
   };
 
@@ -119,9 +126,7 @@ const LegalSetupTab = () => {
               <div key={step.id} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-semibold text-foreground">{step.title}</h4>
-                  <Badge className={getStatusColor(step.status)}>
-                    {step.status}
-                  </Badge>
+                  <Badge className={getStatusColor(step.status)}>{step.status}</Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
                 <div className="flex justify-between text-xs">
@@ -145,9 +150,7 @@ const LegalSetupTab = () => {
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-semibold text-foreground">{item.title}</h4>
-                  <Badge className={getPriorityColor(item.priority)}>
-                    {item.priority}
-                  </Badge>
+                  <Badge className={getPriorityColor(item.priority)}>{item.priority}</Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
                 <div className="text-xs text-green-400">{item.annualCost}/year</div>
@@ -185,7 +188,7 @@ const LegalSetupTab = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="mt-6 pt-4 border-t border-amber-500/20">
             <Button className="bg-amber-500 text-amber-900 hover:bg-amber-400">
               <ExternalLink className="h-4 w-4 mr-2" />

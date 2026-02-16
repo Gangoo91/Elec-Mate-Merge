@@ -1,9 +1,9 @@
-import { useState, useMemo, useRef, useEffect } from "react";
-import { Search, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { Search, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface MaterialSmartSearchProps {
   value: string;
@@ -12,7 +12,12 @@ interface MaterialSmartSearchProps {
   placeholder?: string;
 }
 
-const MaterialSmartSearch = ({ value, onChange, materials, placeholder = "Search materials..." }: MaterialSmartSearchProps) => {
+const MaterialSmartSearch = ({
+  value,
+  onChange,
+  materials,
+  placeholder = 'Search materials...',
+}: MaterialSmartSearchProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,21 +31,21 @@ const MaterialSmartSearch = ({ value, onChange, materials, placeholder = "Search
     const suggestionSet = new Set<string>();
 
     // Add matching material names
-    materials.forEach(material => {
+    materials.forEach((material) => {
       if (material.name?.toLowerCase().includes(query)) {
         suggestionSet.add(material.name);
       }
     });
 
     // Add matching categories
-    materials.forEach(material => {
+    materials.forEach((material) => {
       if (material.category?.toLowerCase().includes(query)) {
         suggestionSet.add(material.category);
       }
     });
 
     // Add matching suppliers
-    materials.forEach(material => {
+    materials.forEach((material) => {
       if (material.supplier?.toLowerCase().includes(query)) {
         suggestionSet.add(material.supplier);
       }
@@ -48,20 +53,20 @@ const MaterialSmartSearch = ({ value, onChange, materials, placeholder = "Search
 
     // Add smart category suggestions for common terms
     const categoryMap: Record<string, string[]> = {
-      'cement': ['Cement Bags', 'Ready-Mix', 'Portland Cement'],
-      'steel': ['Rebar', 'Steel Beams', 'Structural Steel'],
-      'cable': ['Twin & Earth', 'SWA Cable', 'Data Cable'],
-      'wire': ['Single Core', 'Flex Cable', 'Control Wire'],
-      'socket': ['Sockets', 'USB Sockets', 'Switched Sockets'],
-      'switch': ['Light Switches', 'Dimmer Switches', 'Smart Switches'],
-      'lighting': ['LED Downlights', 'Emergency Lighting', 'Battens'],
-      'protection': ['MCBs', 'RCDs', 'SPDs'],
-      'component': ['Consumer Units', 'Distribution Boards', 'Isolators'],
+      cement: ['Cement Bags', 'Ready-Mix', 'Portland Cement'],
+      steel: ['Rebar', 'Steel Beams', 'Structural Steel'],
+      cable: ['Twin & Earth', 'SWA Cable', 'Data Cable'],
+      wire: ['Single Core', 'Flex Cable', 'Control Wire'],
+      socket: ['Sockets', 'USB Sockets', 'Switched Sockets'],
+      switch: ['Light Switches', 'Dimmer Switches', 'Smart Switches'],
+      lighting: ['LED Downlights', 'Emergency Lighting', 'Battens'],
+      protection: ['MCBs', 'RCDs', 'SPDs'],
+      component: ['Consumer Units', 'Distribution Boards', 'Isolators'],
     };
 
     Object.entries(categoryMap).forEach(([term, categories]) => {
       if (query.includes(term)) {
-        categories.forEach(cat => suggestionSet.add(cat));
+        categories.forEach((cat) => suggestionSet.add(cat));
       }
     });
 
@@ -119,9 +124,9 @@ const MaterialSmartSearch = ({ value, onChange, materials, placeholder = "Search
           onChange={(e) => handleInputChange(e.target.value)}
           onFocus={handleInputFocus}
           className={cn(
-            "pr-10 h-12 border-elec-yellow/20 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200",
+            'pr-10 h-12 border-elec-yellow/20 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200',
             isFocused && 'ring-2 ring-elec-yellow/20',
-            !value && "pl-10"
+            !value && 'pl-10'
           )}
         />
         {value && (

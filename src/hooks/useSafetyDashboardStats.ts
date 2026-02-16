@@ -18,6 +18,7 @@ export interface SafetyDashboardStats {
   recentInspectionsPassed: number;
   recentInspectionsFailed: number;
   accidentCount30Days: number;
+  riddorPendingCount: number;
 }
 
 export interface RecentDocument {
@@ -52,6 +53,7 @@ function useComplianceStats() {
         nearMissCountRes,
         nearMissLatestRes,
         photosRes,
+        riddorPendingRes,
       ] = await Promise.all([
         supabase
           .from('permits_to_work')
@@ -96,6 +98,13 @@ function useComplianceStats() {
           .select('id', { count: 'exact', head: true })
           .eq('user_id', user.id)
           .gte('created_at', sevenDaysAgo),
+        // 1.4 — RIDDOR pending reports
+        supabase
+          .from('accident_records')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .eq('is_riddor_reportable', true)
+          .eq('riddor_reported', false),
       ]);
 
       const inspections = inspectionsRes.data ?? [];
@@ -120,6 +129,7 @@ function useComplianceStats() {
         totalNearMisses: nearMissCountRes.count ?? 0,
         daysSinceLastNearMiss,
         totalPhotosThisWeek: photosRes.count ?? 0,
+        riddorPendingCount: riddorPendingRes.count ?? 0,
       };
     },
     staleTime: 60_000,
@@ -266,6 +276,7 @@ export function useSafetyDashboardStats() {
     recentInspectionsPassed: complianceStats?.recentInspectionsPassed ?? 0,
     recentInspectionsFailed: complianceStats?.recentInspectionsFailed ?? 0,
     accidentCount30Days: complianceStats?.accidentCount30Days ?? 0,
+    riddorPendingCount: complianceStats?.riddorPendingCount ?? 0,
   };
 
   return {

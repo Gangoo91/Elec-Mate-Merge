@@ -1,4 +1,3 @@
-
 export interface SafetyValidationResult {
   isValid: boolean;
   errors: string[];
@@ -23,26 +22,48 @@ export class SafetyValidator {
   static getTemperatureDerating(ambientTemp: number, installationType: string): number {
     const deratingFactors = {
       'clipped-direct': {
-        30: 1.0, 35: 0.94, 40: 0.87, 45: 0.79, 50: 0.71, 55: 0.61, 60: 0.50
+        30: 1.0,
+        35: 0.94,
+        40: 0.87,
+        45: 0.79,
+        50: 0.71,
+        55: 0.61,
+        60: 0.5,
       },
       'in-conduit': {
-        30: 1.0, 35: 0.96, 40: 0.91, 45: 0.87, 50: 0.82, 55: 0.76, 60: 0.71
+        30: 1.0,
+        35: 0.96,
+        40: 0.91,
+        45: 0.87,
+        50: 0.82,
+        55: 0.76,
+        60: 0.71,
       },
       'buried-direct': {
-        15: 1.04, 20: 1.0, 25: 0.96, 30: 0.93, 35: 0.89, 40: 0.85, 45: 0.80
-      }
+        15: 1.04,
+        20: 1.0,
+        25: 0.96,
+        30: 0.93,
+        35: 0.89,
+        40: 0.85,
+        45: 0.8,
+      },
     };
 
-    const factors = deratingFactors[installationType as keyof typeof deratingFactors] || deratingFactors['clipped-direct'];
-    const temps = Object.keys(factors).map(Number).sort((a, b) => a - b);
-    
+    const factors =
+      deratingFactors[installationType as keyof typeof deratingFactors] ||
+      deratingFactors['clipped-direct'];
+    const temps = Object.keys(factors)
+      .map(Number)
+      .sort((a, b) => a - b);
+
     // Find appropriate derating factor
     for (let i = 0; i < temps.length; i++) {
       if (ambientTemp <= temps[i]) {
         return factors[temps[i] as keyof typeof factors];
       }
     }
-    
+
     return 0.5; // Safety minimum for extreme temperatures
   }
 
@@ -50,26 +71,57 @@ export class SafetyValidator {
   static getGroupingFactor(numberOfCables: number, installationType: string): number {
     const groupingFactors = {
       'clipped-direct': {
-        1: 1.0, 2: 0.80, 3: 0.70, 4: 0.65, 5: 0.60, 6: 0.57, 9: 0.52, 12: 0.48, 16: 0.45, 20: 0.43
+        1: 1.0,
+        2: 0.8,
+        3: 0.7,
+        4: 0.65,
+        5: 0.6,
+        6: 0.57,
+        9: 0.52,
+        12: 0.48,
+        16: 0.45,
+        20: 0.43,
       },
       'in-conduit': {
-        1: 1.0, 2: 0.80, 3: 0.70, 4: 0.65, 5: 0.60, 6: 0.55, 9: 0.50, 12: 0.45, 16: 0.40, 20: 0.38
+        1: 1.0,
+        2: 0.8,
+        3: 0.7,
+        4: 0.65,
+        5: 0.6,
+        6: 0.55,
+        9: 0.5,
+        12: 0.45,
+        16: 0.4,
+        20: 0.38,
       },
       'in-trunking': {
-        1: 1.0, 2: 0.85, 3: 0.79, 4: 0.75, 5: 0.73, 6: 0.72, 9: 0.68, 12: 0.66, 16: 0.64, 20: 0.63
-      }
+        1: 1.0,
+        2: 0.85,
+        3: 0.79,
+        4: 0.75,
+        5: 0.73,
+        6: 0.72,
+        9: 0.68,
+        12: 0.66,
+        16: 0.64,
+        20: 0.63,
+      },
     };
 
-    const factors = groupingFactors[installationType as keyof typeof groupingFactors] || groupingFactors['in-conduit'];
-    const counts = Object.keys(factors).map(Number).sort((a, b) => a - b);
-    
+    const factors =
+      groupingFactors[installationType as keyof typeof groupingFactors] ||
+      groupingFactors['in-conduit'];
+    const counts = Object.keys(factors)
+      .map(Number)
+      .sort((a, b) => a - b);
+
     // Find appropriate grouping factor
     for (let i = counts.length - 1; i >= 0; i--) {
       if (numberOfCables >= counts[i]) {
         return factors[counts[i] as keyof typeof factors];
       }
     }
-    
+
     return 1.0;
   }
 
@@ -98,7 +150,7 @@ export class SafetyValidator {
       '4.0': { 'clipped-direct': 37, 'in-conduit': 31, 'buried-direct': 43 },
       '6.0': { 'clipped-direct': 47, 'in-conduit': 39, 'buried-direct': 54 },
       '10.0': { 'clipped-direct': 65, 'in-conduit': 54, 'buried-direct': 75 },
-      '16.0': { 'clipped-direct': 85, 'in-conduit': 73, 'buried-direct': 100 }
+      '16.0': { 'clipped-direct': 85, 'in-conduit': 73, 'buried-direct': 100 },
     };
 
     const baseCableRating = cableRatings[cableSize]?.[installationType] || 0;
@@ -106,21 +158,29 @@ export class SafetyValidator {
 
     // Critical safety checks
     if (designCurrent > deratedCableRating) {
-      criticalAlerts.push(`DANGER: Design current (${designCurrent}A) exceeds derated cable capacity (${deratedCableRating.toFixed(1)}A). Risk of overheating and fire.`);
+      criticalAlerts.push(
+        `DANGER: Design current (${designCurrent}A) exceeds derated cable capacity (${deratedCableRating.toFixed(1)}A). Risk of overheating and fire.`
+      );
     }
 
     if (designCurrent > baseCableRating * 0.8) {
-      warnings.push(`High loading: Cable operating at ${((designCurrent / baseCableRating) * 100).toFixed(1)}% of base capacity`);
+      warnings.push(
+        `High loading: Cable operating at ${((designCurrent / baseCableRating) * 100).toFixed(1)}% of base capacity`
+      );
     }
 
     // Temperature warnings
     if (ambientTemp > 40) {
-      warnings.push(`High ambient temperature (${ambientTemp}°C) significantly reduces cable capacity`);
+      warnings.push(
+        `High ambient temperature (${ambientTemp}°C) significantly reduces cable capacity`
+      );
     }
 
     // Grouping warnings
     if (numberOfCables > 6) {
-      warnings.push(`High cable grouping (${numberOfCables} cables) reduces capacity to ${(groupingFactor * 100).toFixed(0)}%`);
+      warnings.push(
+        `High cable grouping (${numberOfCables} cables) reduces capacity to ${(groupingFactor * 100).toFixed(0)}%`
+      );
     }
 
     // Long circuit voltage drop warning
@@ -137,14 +197,14 @@ export class SafetyValidator {
         temperatureDerating: tempDerating,
         groupingFactor,
         diversityFactor: 1.0,
-        safetyMargin: deratedCableRating / designCurrent
+        safetyMargin: deratedCableRating / designCurrent,
       },
       complianceChecks: {
         bs7671: criticalAlerts.length === 0,
         iet: true,
         buildingRegs: true,
-        cdm: true
-      }
+        cdm: true,
+      },
     };
   }
 
@@ -165,7 +225,9 @@ export class SafetyValidator {
 
     // Critical safety checks
     if (correctedZs > maxZs) {
-      criticalAlerts.push(`DANGER: Temperature-corrected Zs (${correctedZs.toFixed(3)}Ω) exceeds maximum permitted (${maxZs}Ω). Protective device may not operate in time.`);
+      criticalAlerts.push(
+        `DANGER: Temperature-corrected Zs (${correctedZs.toFixed(3)}Ω) exceeds maximum permitted (${maxZs}Ω). Protective device may not operate in time.`
+      );
     }
 
     if (measuredZs > maxZs * 0.8) {
@@ -174,7 +236,9 @@ export class SafetyValidator {
 
     // Temperature differential warning
     if (Math.abs(testTemperature - 20) > 10) {
-      warnings.push(`Test temperature (${testTemperature}°C) significantly different from standard 20°C`);
+      warnings.push(
+        `Test temperature (${testTemperature}°C) significantly different from standard 20°C`
+      );
     }
 
     return {
@@ -186,14 +250,14 @@ export class SafetyValidator {
         temperatureDerating: tempCorrectionFactor,
         groupingFactor: 1.0,
         diversityFactor: 1.0,
-        safetyMargin: maxZs / correctedZs
+        safetyMargin: maxZs / correctedZs,
       },
       complianceChecks: {
         bs7671: criticalAlerts.length === 0,
         iet: true,
         buildingRegs: true,
-        cdm: true
-      }
+        cdm: true,
+      },
     };
   }
 
@@ -209,20 +273,28 @@ export class SafetyValidator {
 
     // Power factor thresholds
     if (powerFactor < 0.85) {
-      warnings.push(`Poor power factor (${powerFactor}) - energy efficiency penalty and increased losses`);
+      warnings.push(
+        `Poor power factor (${powerFactor}) - energy efficiency penalty and increased losses`
+      );
     }
 
     if (powerFactor < 0.7) {
-      criticalAlerts.push(`Very poor power factor (${powerFactor}) - risk of voltage regulation issues and equipment stress`);
+      criticalAlerts.push(
+        `Very poor power factor (${powerFactor}) - risk of voltage regulation issues and equipment stress`
+      );
     }
 
     // Harmonic warnings for non-linear loads
     if (loadType === 'non-linear' && harmonicDistortion > 5) {
-      warnings.push(`High harmonic distortion (${harmonicDistortion}%) with non-linear loads - consider harmonic filtering`);
+      warnings.push(
+        `High harmonic distortion (${harmonicDistortion}%) with non-linear loads - consider harmonic filtering`
+      );
     }
 
     if (harmonicDistortion > 8) {
-      criticalAlerts.push(`Excessive harmonic distortion (${harmonicDistortion}%) - risk of equipment malfunction and overheating`);
+      criticalAlerts.push(
+        `Excessive harmonic distortion (${harmonicDistortion}%) - risk of equipment malfunction and overheating`
+      );
     }
 
     return {
@@ -234,14 +306,14 @@ export class SafetyValidator {
         temperatureDerating: 1.0,
         groupingFactor: 1.0,
         diversityFactor: 1.0,
-        safetyMargin: powerFactor > 0 ? 1 / powerFactor : 0
+        safetyMargin: powerFactor > 0 ? 1 / powerFactor : 0,
       },
       complianceChecks: {
         bs7671: powerFactor >= 0.85,
         iet: true,
         buildingRegs: true,
-        cdm: true
-      }
+        cdm: true,
+      },
     };
   }
 
@@ -257,7 +329,7 @@ export class SafetyValidator {
 
     const [i1, i2, i3] = phaseCurrents;
     const avgCurrent = (i1 + i2 + i3) / 3;
-    
+
     // Calculate imbalance percentage
     const maxDeviation = Math.max(
       Math.abs(i1 - avgCurrent),
@@ -268,11 +340,15 @@ export class SafetyValidator {
 
     // Imbalance warnings
     if (imbalancePercent > 5) {
-      warnings.push(`Phase imbalance ${imbalancePercent.toFixed(1)}% - may cause motor overheating and reduced efficiency`);
+      warnings.push(
+        `Phase imbalance ${imbalancePercent.toFixed(1)}% - may cause motor overheating and reduced efficiency`
+      );
     }
 
     if (imbalancePercent > 10) {
-      criticalAlerts.push(`Severe phase imbalance ${imbalancePercent.toFixed(1)}% - risk of equipment damage and premature failure`);
+      criticalAlerts.push(
+        `Severe phase imbalance ${imbalancePercent.toFixed(1)}% - risk of equipment damage and premature failure`
+      );
     }
 
     // Neutral current warnings
@@ -293,14 +369,14 @@ export class SafetyValidator {
         temperatureDerating: 1.0,
         groupingFactor: 1.0,
         diversityFactor: 1.0,
-        safetyMargin: 100 / imbalancePercent
+        safetyMargin: 100 / imbalancePercent,
       },
       complianceChecks: {
         bs7671: imbalancePercent <= 10,
         iet: true,
         buildingRegs: true,
-        cdm: true
-      }
+        cdm: true,
+      },
     };
   }
 }

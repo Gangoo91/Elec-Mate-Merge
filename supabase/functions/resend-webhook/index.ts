@@ -1,11 +1,12 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { captureException } from '../_shared/sentry.ts';
 
 // CORS headers for webhook requests
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, svix-id, svix-timestamp, svix-signature',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, svix-id, svix-timestamp, svix-signature',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
@@ -19,8 +20,8 @@ Deno.serve(async (req) => {
     return new Response('ok', { headers: corsHeaders });
   }
 
-  if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405, headers: corsHeaders });
+  if (req.method !== 'POST') {
+    return new Response('Method not allowed', { status: 405, headers: corsHeaders });
   }
 
   try {
@@ -30,101 +31,120 @@ Deno.serve(async (req) => {
     console.log(`Resend webhook received: ${type}`, JSON.stringify(data));
 
     const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
     const emailId = data?.email_id;
+    const toEmail = data?.to?.[0] || data?.email || null;
+    const clickedLink = data?.click?.link || null;
+
+    // Always log to email_tracking_events for campaign analytics
+    if (emailId) {
+      try {
+        await supabaseAdmin.from('email_tracking_events').insert({
+          email_id: emailId,
+          user_email: toEmail,
+          event_type: type,
+          link_url: clickedLink,
+          raw_payload: payload,
+        });
+        console.log(`Tracking event logged: ${type} for ${emailId}`);
+      } catch (trackErr: any) {
+        console.error('Failed to log tracking event:', trackErr.message);
+      }
+    }
+
     if (!emailId) {
-      console.log("No email_id in webhook payload");
-      return new Response("OK", { status: 200, headers: corsHeaders });
+      console.log('No email_id in webhook payload');
+      return new Response('OK', { status: 200, headers: corsHeaders });
     }
 
     // Try to find the invite in founder_invites first
     let invite: { id: string; opened_at?: string; clicked_at?: string } | null = null;
-    let tableName: "founder_invites" | "early_access_invites" | null = null;
+    let tableName: 'founder_invites' | 'early_access_invites' | null = null;
 
     const { data: founderInvite } = await supabaseAdmin
-      .from("founder_invites")
-      .select("id, opened_at, clicked_at")
-      .eq("resend_email_id", emailId)
+      .from('founder_invites')
+      .select('id, opened_at, clicked_at')
+      .eq('resend_email_id', emailId)
       .single();
 
     if (founderInvite) {
       invite = founderInvite;
-      tableName = "founder_invites";
+      tableName = 'founder_invites';
       console.log(`Found invite in founder_invites: ${invite.id}`);
     } else {
       // Try early_access_invites
       const { data: earlyAccessInvite } = await supabaseAdmin
-        .from("early_access_invites")
-        .select("id, opened_at, clicked_at")
-        .eq("resend_email_id", emailId)
+        .from('early_access_invites')
+        .select('id, opened_at, clicked_at')
+        .eq('resend_email_id', emailId)
         .single();
 
       if (earlyAccessInvite) {
         invite = earlyAccessInvite;
-        tableName = "early_access_invites";
+        tableName = 'early_access_invites';
         console.log(`Found invite in early_access_invites: ${invite.id}`);
       }
     }
 
     if (!invite || !tableName) {
       console.log(`No invite found for email_id ${emailId} in either table`);
-      return new Response("OK", { status: 200, headers: corsHeaders });
+      return new Response('OK', { status: 200, headers: corsHeaders });
     }
 
     // Handle different event types
     switch (type) {
-      case "email.delivered":
+      case 'email.delivered':
         await supabaseAdmin
           .from(tableName)
           .update({ delivered_at: new Date().toISOString() })
-          .eq("id", invite.id);
+          .eq('id', invite.id);
         console.log(`Delivery confirmed for ${tableName} invite ${invite.id}`);
         break;
 
-      case "email.bounced":
+      case 'email.bounced':
         await supabaseAdmin
           .from(tableName)
           .update({
             bounced_at: new Date().toISOString(),
-            bounce_type: data?.bounce?.type || "unknown",
+            bounce_type: data?.bounce?.type || 'unknown',
           })
-          .eq("id", invite.id);
+          .eq('id', invite.id);
         console.log(`Bounce recorded for ${tableName} invite ${invite.id}: ${data?.bounce?.type}`);
         break;
 
-      case "email.complained":
+      case 'email.complained':
         await supabaseAdmin
           .from(tableName)
           .update({
             bounced_at: new Date().toISOString(),
-            bounce_type: "complaint",
+            bounce_type: 'complaint',
           })
-          .eq("id", invite.id);
+          .eq('id', invite.id);
         console.log(`Complaint recorded for ${tableName} invite ${invite.id}`);
         break;
 
-      case "email.opened":
+      case 'email.opened':
         // Only record first open
         if (!invite.opened_at) {
           await supabaseAdmin
             .from(tableName)
             .update({ opened_at: new Date().toISOString() })
-            .eq("id", invite.id);
+            .eq('id', invite.id);
           console.log(`Open tracked for ${tableName} invite ${invite.id}`);
         }
         break;
 
-      case "email.clicked":
+      case 'email.clicked':
         // Only record first click
         if (!invite.clicked_at) {
           await supabaseAdmin
             .from(tableName)
             .update({ clicked_at: new Date().toISOString() })
-            .eq("id", invite.id);
+            .eq('id', invite.id);
           console.log(`Click tracked for ${tableName} invite ${invite.id}`);
         }
         break;
@@ -133,10 +153,14 @@ Deno.serve(async (req) => {
         console.log(`Unhandled event type: ${type}`);
     }
 
-    return new Response("OK", { status: 200, headers: corsHeaders });
+    return new Response('OK', { status: 200, headers: corsHeaders });
   } catch (error) {
-    console.error("Webhook error:", error);
-    await captureException(error, { functionName: 'resend-webhook', requestUrl: req.url, requestMethod: req.method });
-    return new Response("Error", { status: 500, headers: corsHeaders });
+    console.error('Webhook error:', error);
+    await captureException(error, {
+      functionName: 'resend-webhook',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
+    return new Response('Error', { status: 500, headers: corsHeaders });
   }
 });

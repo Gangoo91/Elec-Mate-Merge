@@ -9,29 +9,29 @@ const PPERequirementsCard = () => {
       items: ['Safety helmet', 'Arc flash hood', 'Face shield'],
       icon: HardHat,
       color: 'text-blue-400',
-      regulation: 'BS EN 397'
+      regulation: 'BS EN 397',
     },
     {
       category: 'Eye Protection',
       items: ['Safety glasses', 'Goggles', 'Welding mask'],
       icon: Eye,
       color: 'text-green-400',
-      regulation: 'BS EN 166'
+      regulation: 'BS EN 166',
     },
     {
       category: 'Body Protection',
       items: ['Arc flash suit', 'High-vis clothing', 'Insulated clothing'],
       icon: Shield,
       color: 'text-orange-400',
-      regulation: 'BS EN 61482'
+      regulation: 'BS EN 61482',
     },
     {
       category: 'Electrical Protection',
       items: ['Insulated gloves', 'Voltage detector', 'Earth bond leads'],
       icon: Zap,
       color: 'text-yellow-400',
-      regulation: 'BS 7671'
-    }
+      regulation: 'BS 7671',
+    },
   ];
 
   return (
@@ -76,10 +76,19 @@ const PPERequirementsCard = () => {
         <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
           <h4 className="font-medium text-orange-400 mb-3">PPE Selection Risk Assessment</h4>
           <div className="space-y-2 text-sm text-gray-300">
-            <p><strong>Voltage Level:</strong> Determine appropriate insulation rating</p>
-            <p><strong>Arc Flash Risk:</strong> Calculate incident energy and select appropriate arc rating</p>
-            <p><strong>Environmental Factors:</strong> Consider moisture, chemicals, and temperature</p>
-            <p><strong>Task Duration:</strong> Ensure comfort and mobility for extended work periods</p>
+            <p>
+              <strong>Voltage Level:</strong> Determine appropriate insulation rating
+            </p>
+            <p>
+              <strong>Arc Flash Risk:</strong> Calculate incident energy and select appropriate arc
+              rating
+            </p>
+            <p>
+              <strong>Environmental Factors:</strong> Consider moisture, chemicals, and temperature
+            </p>
+            <p>
+              <strong>Task Duration:</strong> Ensure comfort and mobility for extended work periods
+            </p>
           </div>
         </div>
 
@@ -88,7 +97,9 @@ const PPERequirementsCard = () => {
           <h4 className="font-medium text-blue-400 mb-3">PPE Inspection & Maintenance</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-300">
             <div>
-              <p><strong>Before Each Use:</strong></p>
+              <p>
+                <strong>Before Each Use:</strong>
+              </p>
               <ul className="mt-1 space-y-1 text-xs">
                 <li>• Visual inspection for damage</li>
                 <li>• Check certification dates</li>
@@ -96,7 +107,9 @@ const PPERequirementsCard = () => {
               </ul>
             </div>
             <div>
-              <p><strong>Regular Testing:</strong></p>
+              <p>
+                <strong>Regular Testing:</strong>
+              </p>
               <ul className="mt-1 space-y-1 text-xs">
                 <li>• Electrical testing of insulated items</li>
                 <li>• Certification renewals</li>

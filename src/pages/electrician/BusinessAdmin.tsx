@@ -1,54 +1,54 @@
-import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Settings, FileText, Calendar, BarChart3, Users, CreditCard } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Settings, FileText, Calendar, BarChart3, Users, CreditCard } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const BusinessAdmin = () => {
   const adminTools = [
     {
       id: 1,
-      title: "Document Management",
+      title: 'Document Management',
       icon: FileText,
-      description: "Manage contracts, invoices, and business documents",
-      link: "#"
+      description: 'Manage contracts, invoices, and business documents',
+      link: '#',
     },
     {
       id: 2,
-      title: "Staff Management",
+      title: 'Staff Management',
       icon: Users,
-      description: "Employee records, payroll, and scheduling",
-      link: "#"
+      description: 'Employee records, payroll, and scheduling',
+      link: '#',
     },
     {
       id: 3,
-      title: "Financial Tracking",
+      title: 'Financial Tracking',
       icon: CreditCard,
-      description: "Expense tracking, profit/loss, and financial reports",
-      link: "#"
+      description: 'Expense tracking, profit/loss, and financial reports',
+      link: '#',
     },
     {
       id: 4,
-      title: "Business Analytics",
+      title: 'Business Analytics',
       icon: BarChart3,
-      description: "Performance metrics and business insights",
-      link: "#"
+      description: 'Performance metrics and business insights',
+      link: '#',
     },
     {
       id: 5,
-      title: "Schedule Management",
+      title: 'Schedule Management',
       icon: Calendar,
-      description: "Job scheduling and resource planning",
-      link: "#"
+      description: 'Job scheduling and resource planning',
+      link: '#',
     },
     {
       id: 6,
-      title: "System Settings",
+      title: 'System Settings',
       icon: Settings,
-      description: "Business settings and configuration",
-      link: "#"
-    }
+      description: 'Business settings and configuration',
+      link: '#',
+    },
   ];
 
   const canonical = `${window.location.origin}/electrician/business-admin`;
@@ -80,8 +80,8 @@ const BusinessAdmin = () => {
             <div className="h-2 w-2 bg-amber-500 rounded-full animate-pulse"></div>
           </div>
           <p className="text-muted-foreground text-sm">
-            Advanced business administration tools are currently in development. 
-            These comprehensive features will help you manage every aspect of your electrical business efficiently.
+            Advanced business administration tools are currently in development. These comprehensive
+            features will help you manage every aspect of your electrical business efficiently.
           </p>
         </CardContent>
       </Card>
@@ -101,7 +101,9 @@ const BusinessAdmin = () => {
                 <Card className="border-elec-yellow/20 bg-elec-gray/50 h-full opacity-60 transition-all duration-200 cursor-not-allowed">
                   <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
                     <tool.icon className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow/60" />
-                    <CardTitle className="text-base sm:text-lg leading-tight mb-2">{tool.title}</CardTitle>
+                    <CardTitle className="text-base sm:text-lg leading-tight mb-2">
+                      {tool.title}
+                    </CardTitle>
                     <p className="text-xs text-muted-foreground">{tool.description}</p>
                   </CardHeader>
                 </Card>
