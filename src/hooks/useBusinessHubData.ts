@@ -1,5 +1,4 @@
 import { useMemo, useCallback } from 'react';
-import { useProfitabilitySummary, useCashFlowSummary, formatCurrency } from './useFinanceReports';
 import { useQuoteStorage } from './useQuoteStorage';
 import { useInvoiceStorage } from './useInvoiceStorage';
 import { Quote } from '@/types/quote';
@@ -19,9 +18,16 @@ export interface BusinessHubData {
   formatCurrency: (amount: number) => string;
 }
 
+function gbp(amount: number): string {
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
 export function useBusinessHubData(): BusinessHubData {
-  const { data: profitability, isLoading: profitLoading } = useProfitabilitySummary();
-  const { data: cashFlow, isLoading: cashLoading } = useCashFlowSummary();
   const {
     savedQuotes,
     loading: quotesLoading,
@@ -35,17 +41,64 @@ export function useBusinessHubData(): BusinessHubData {
     lastUpdated: invoicesLastUpdated,
   } = useInvoiceStorage();
 
-  // Win rate: (accepted / (sent + accepted)) * 100
+  // All KPIs derived from the electrician's own quotes + invoices
+  const kpis = useMemo(() => {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    // Paid this month — invoices marked paid with invoice_paid_at in current month
+    const paidThisMonth = invoices
+      .filter(
+        (inv) =>
+          inv.invoice_status === 'paid' &&
+          inv.invoice_paid_at &&
+          new Date(inv.invoice_paid_at) >= startOfMonth
+      )
+      .reduce((sum, inv) => sum + (inv.total || 0), 0);
+
+    // Outstanding — sent but not yet paid
+    const outstandingInvoices = invoices.filter(
+      (inv) => inv.invoice_status === 'sent' || inv.invoice_status === 'overdue'
+    );
+    const outstanding = outstandingInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0);
+
+    // Overdue — explicitly overdue OR due date has passed and not paid
+    const overdueInvoices = invoices.filter((inv) => {
+      if (inv.invoice_status === 'paid') return false;
+      if (inv.invoice_status === 'overdue') return true;
+      if (
+        inv.invoice_due_date &&
+        new Date(inv.invoice_due_date) < now &&
+        inv.invoice_status === 'sent'
+      )
+        return true;
+      return false;
+    });
+    const overdueAmount = overdueInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0);
+    const overdueCount = overdueInvoices.length;
+
+    // Total revenue — all paid invoices ever
+    const revenue = invoices
+      .filter((inv) => inv.invoice_status === 'paid')
+      .reduce((sum, inv) => sum + (inv.total || 0), 0);
+
+    return { paidThisMonth, outstanding, overdueAmount, overdueCount, revenue };
+  }, [invoices]);
+
+  // Win rate: (accepted / total decided) * 100
   const winRate = useMemo(() => {
-    const sent = savedQuotes.filter(
-      (q) => q.status === 'sent' || q.acceptance_status === 'accepted' || q.acceptance_status === 'rejected'
+    const decided = savedQuotes.filter(
+      (q) =>
+        q.status === 'sent' ||
+        q.acceptance_status === 'accepted' ||
+        q.acceptance_status === 'rejected'
     );
     const accepted = savedQuotes.filter((q) => q.acceptance_status === 'accepted');
-    if (sent.length === 0) return 0;
-    return Math.round((accepted.length / sent.length) * 100);
+    if (decided.length === 0) return 0;
+    return Math.round((accepted.length / decided.length) * 100);
   }, [savedQuotes]);
 
-  const isLoading = profitLoading || cashLoading || quotesLoading || invoicesLoading;
+  const isLoading = quotesLoading || invoicesLoading;
 
   const lastUpdated = useMemo(() => {
     const dates = [quotesLastUpdated, invoicesLastUpdated].filter(Boolean) as Date[];
@@ -58,17 +111,17 @@ export function useBusinessHubData(): BusinessHubData {
   }, [refreshQuotes, fetchInvoices]);
 
   return {
-    revenue: profitability.totalRevenue,
-    paidThisMonth: cashFlow.paidThisMonth,
-    outstanding: cashFlow.totalOutstanding,
-    overdueAmount: cashFlow.overdueAmount,
-    overdueCount: cashFlow.overdueCount,
+    revenue: kpis.revenue,
+    paidThisMonth: kpis.paidThisMonth,
+    outstanding: kpis.outstanding,
+    overdueAmount: kpis.overdueAmount,
+    overdueCount: kpis.overdueCount,
     winRate,
     quotes: savedQuotes,
     invoices,
     isLoading,
     lastUpdated,
     refresh,
-    formatCurrency,
+    formatCurrency: gbp,
   };
 }
