@@ -1,7 +1,11 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { Job } from "@/services/jobService";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { Job } from '@/services/jobService';
+
+// employer_job_financials table does not exist yet — all queries disabled
+// to prevent 400 errors. Set to true once the migration has been run.
+const TABLE_EXISTS = false;
 
 // Types
 export interface JobFinancial {
@@ -69,13 +73,16 @@ export interface UpdateJobFinancialData {
 export function useJobFinancials() {
   return useQuery({
     queryKey: ['job-financials'],
+    enabled: TABLE_EXISTS,
     queryFn: async (): Promise<JobFinancialWithJob[]> => {
       const { data, error } = await supabase
         .from('employer_job_financials')
-        .select(`
+        .select(
+          `
           *,
           job:employer_jobs(*)
-        `)
+        `
+        )
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -102,15 +109,18 @@ export function useJobFinancials() {
 export function useJobFinancial(jobId: string | undefined) {
   return useQuery({
     queryKey: ['job-financials', jobId],
+    enabled: TABLE_EXISTS && !!jobId,
     queryFn: async (): Promise<JobFinancialWithJob | null> => {
       if (!jobId) return null;
 
       const { data, error } = await supabase
         .from('employer_job_financials')
-        .select(`
+        .select(
+          `
           *,
           job:employer_jobs(*)
-        `)
+        `
+        )
         .eq('job_id', jobId)
         .single();
 
@@ -141,27 +151,57 @@ export function useUpdateJobFinancial() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ jobId, data }: { jobId: string; data: UpdateJobFinancialData }): Promise<JobFinancial> => {
+    mutationFn: async ({
+      jobId,
+      data,
+    }: {
+      jobId: string;
+      data: UpdateJobFinancialData;
+    }): Promise<JobFinancial> => {
       // Calculate totals and margin if budget/actual values are updated
-      const updates: any = { ...data };
+      const updates: UpdateJobFinancialData & {
+        budget_total?: number;
+        actual_total?: number;
+        margin?: number;
+        status?: string;
+      } = { ...data };
 
-      if (data.budget_labour !== undefined || data.budget_materials !== undefined ||
-          data.budget_equipment !== undefined || data.budget_overheads !== undefined) {
-        updates.budget_total = (data.budget_labour || 0) + (data.budget_materials || 0) +
-                               (data.budget_equipment || 0) + (data.budget_overheads || 0);
+      if (
+        data.budget_labour !== undefined ||
+        data.budget_materials !== undefined ||
+        data.budget_equipment !== undefined ||
+        data.budget_overheads !== undefined
+      ) {
+        updates.budget_total =
+          (data.budget_labour || 0) +
+          (data.budget_materials || 0) +
+          (data.budget_equipment || 0) +
+          (data.budget_overheads || 0);
       }
 
-      if (data.actual_labour !== undefined || data.actual_materials !== undefined ||
-          data.actual_equipment !== undefined || data.actual_overheads !== undefined) {
-        updates.actual_total = (data.actual_labour || 0) + (data.actual_materials || 0) +
-                               (data.actual_equipment || 0) + (data.actual_overheads || 0);
+      if (
+        data.actual_labour !== undefined ||
+        data.actual_materials !== undefined ||
+        data.actual_equipment !== undefined ||
+        data.actual_overheads !== undefined
+      ) {
+        updates.actual_total =
+          (data.actual_labour || 0) +
+          (data.actual_materials || 0) +
+          (data.actual_equipment || 0) +
+          (data.actual_overheads || 0);
       }
 
       // Calculate margin
       if (updates.budget_total && updates.actual_total) {
-        updates.margin = ((updates.budget_total - updates.actual_total) / updates.budget_total) * 100;
-        updates.status = updates.actual_total > updates.budget_total ? 'Over Budget' :
-                        updates.actual_total < updates.budget_total * 0.9 ? 'Under Budget' : 'On Budget';
+        updates.margin =
+          ((updates.budget_total - updates.actual_total) / updates.budget_total) * 100;
+        updates.status =
+          updates.actual_total > updates.budget_total
+            ? 'Over Budget'
+            : updates.actual_total < updates.budget_total * 0.9
+              ? 'Under Budget'
+              : 'On Budget';
       }
 
       const { data: result, error } = await supabase
@@ -178,15 +218,15 @@ export function useUpdateJobFinancial() {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
       toast({
-        title: "Financials Updated",
-        description: "Job financial data has been updated.",
+        title: 'Financials Updated',
+        description: 'Job financial data has been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -198,7 +238,12 @@ export function useCreateVariationOrder() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (data: { job_id: string; description: string; value: number; notes?: string }): Promise<VariationOrder> => {
+    mutationFn: async (data: {
+      job_id: string;
+      description: string;
+      value: number;
+      notes?: string;
+    }): Promise<VariationOrder> => {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) throw new Error('Not authenticated');
 
@@ -218,15 +263,15 @@ export function useCreateVariationOrder() {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       queryClient.invalidateQueries({ queryKey: ['job-financials', variables.job_id] });
       toast({
-        title: "Variation Order Created",
-        description: "The variation order has been added.",
+        title: 'Variation Order Created',
+        description: 'The variation order has been added.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -238,7 +283,15 @@ export function useUpdateVariationOrderStatus() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, status, approvedBy }: { id: string; status: VariationOrder['status']; approvedBy?: string }): Promise<VariationOrder> => {
+    mutationFn: async ({
+      id,
+      status,
+      approvedBy,
+    }: {
+      id: string;
+      status: VariationOrder['status'];
+      approvedBy?: string;
+    }): Promise<VariationOrder> => {
       const updates: Partial<VariationOrder> = { status };
 
       if (status === 'Approved' && approvedBy) {
@@ -259,15 +312,15 @@ export function useUpdateVariationOrderStatus() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       toast({
-        title: "Status Updated",
-        description: "Variation order status has been updated.",
+        title: 'Status Updated',
+        description: 'Variation order status has been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -280,25 +333,22 @@ export function useDeleteVariationOrder() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from('employer_variation_orders')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('employer_variation_orders').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       toast({
-        title: "Deleted",
-        description: "Variation order has been removed.",
+        title: 'Deleted',
+        description: 'Variation order has been removed.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -314,10 +364,11 @@ export function useJobFinancialStats() {
     totalInvoiced: financials.reduce((sum, f) => sum + Number(f.invoiced), 0),
     totalPaid: financials.reduce((sum, f) => sum + Number(f.paid), 0),
     totalOutstanding: financials.reduce((sum, f) => sum + Number(f.invoiced) - Number(f.paid), 0),
-    avgMargin: financials.length > 0
-      ? financials.reduce((sum, f) => sum + Number(f.margin), 0) / financials.length
-      : 0,
-    overBudgetCount: financials.filter(f => f.status === 'Over Budget').length,
+    avgMargin:
+      financials.length > 0
+        ? financials.reduce((sum, f) => sum + Number(f.margin), 0) / financials.length
+        : 0,
+    overBudgetCount: financials.filter((f) => f.status === 'Over Budget').length,
     jobCount: financials.length,
   };
 }
@@ -344,7 +395,13 @@ export function useRecordActualCost() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ jobId, entry }: { jobId: string; entry: ActualCostEntry }): Promise<JobFinancial> => {
+    mutationFn: async ({
+      jobId,
+      entry,
+    }: {
+      jobId: string;
+      entry: ActualCostEntry;
+    }): Promise<JobFinancial> => {
       // First get current values
       const { data: current, error: fetchError } = await supabase
         .from('employer_job_financials')
@@ -372,10 +429,14 @@ export function useRecordActualCost() {
       };
 
       // Recalculate actual_total
-      const actualLabour = entry.category === 'labour' ? newValue : Number(current.actual_labour || 0);
-      const actualMaterials = entry.category === 'materials' ? newValue : Number(current.actual_materials || 0);
-      const actualEquipment = entry.category === 'equipment' ? newValue : Number(current.actual_equipment || 0);
-      const actualOverheads = entry.category === 'overheads' ? newValue : Number(current.actual_overheads || 0);
+      const actualLabour =
+        entry.category === 'labour' ? newValue : Number(current.actual_labour || 0);
+      const actualMaterials =
+        entry.category === 'materials' ? newValue : Number(current.actual_materials || 0);
+      const actualEquipment =
+        entry.category === 'equipment' ? newValue : Number(current.actual_equipment || 0);
+      const actualOverheads =
+        entry.category === 'overheads' ? newValue : Number(current.actual_overheads || 0);
 
       updates.actual_total = actualLabour + actualMaterials + actualEquipment + actualOverheads;
 
@@ -383,15 +444,20 @@ export function useRecordActualCost() {
       const budgetTotal = Number(current.budget_total || 0);
       if (budgetTotal > 0) {
         updates.margin = ((budgetTotal - updates.actual_total) / budgetTotal) * 100;
-        updates.status = updates.actual_total > budgetTotal ? 'Over Budget' :
-                        updates.actual_total < budgetTotal * 0.9 ? 'Under Budget' : 'On Budget';
+        updates.status =
+          updates.actual_total > budgetTotal
+            ? 'Over Budget'
+            : updates.actual_total < budgetTotal * 0.9
+              ? 'Under Budget'
+              : 'On Budget';
       }
 
       // Add notes if provided
       if (entry.notes) {
         const existingNotes = current.notes || '';
         const dateStr = new Date(entry.date).toLocaleDateString('en-GB');
-        updates.notes = `${existingNotes}\n[${dateStr}] ${entry.category}: £${entry.amount} - ${entry.notes}`.trim();
+        updates.notes =
+          `${existingNotes}\n[${dateStr}] ${entry.category}: £${entry.amount} - ${entry.notes}`.trim();
       }
 
       const { data: result, error } = await supabase
@@ -408,15 +474,15 @@ export function useRecordActualCost() {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
       toast({
-        title: "Cost Recorded",
-        description: "Actual cost has been added to the job.",
+        title: 'Cost Recorded',
+        description: 'Actual cost has been added to the job.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -431,14 +497,29 @@ export function useJobCostComparison(jobId: string | undefined) {
   if (financial) {
     const categories = [
       { key: 'labour', label: 'Labour', budget: 'budget_labour', actual: 'actual_labour' },
-      { key: 'materials', label: 'Materials', budget: 'budget_materials', actual: 'actual_materials' },
-      { key: 'equipment', label: 'Equipment', budget: 'budget_equipment', actual: 'actual_equipment' },
-      { key: 'overheads', label: 'Overheads', budget: 'budget_overheads', actual: 'actual_overheads' },
+      {
+        key: 'materials',
+        label: 'Materials',
+        budget: 'budget_materials',
+        actual: 'actual_materials',
+      },
+      {
+        key: 'equipment',
+        label: 'Equipment',
+        budget: 'budget_equipment',
+        actual: 'actual_equipment',
+      },
+      {
+        key: 'overheads',
+        label: 'Overheads',
+        budget: 'budget_overheads',
+        actual: 'actual_overheads',
+      },
     ];
 
-    categories.forEach(cat => {
-      const budgeted = Number((financial as any)[cat.budget] || 0);
-      const actual = Number((financial as any)[cat.actual] || 0);
+    categories.forEach((cat) => {
+      const budgeted = Number((financial as Record<string, unknown>)[cat.budget] || 0);
+      const actual = Number((financial as Record<string, unknown>)[cat.actual] || 0);
       const variance = budgeted - actual;
       const variancePercent = budgeted > 0 ? (variance / budgeted) * 100 : 0;
 
@@ -470,7 +551,10 @@ export function useUpdateBudgetValues() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ jobId, budgets }: {
+    mutationFn: async ({
+      jobId,
+      budgets,
+    }: {
       jobId: string;
       budgets: {
         labour?: number;
@@ -510,8 +594,12 @@ export function useUpdateBudgetValues() {
       const actualTotal = Number(current.actual_total || 0);
       if (updates.budget_total > 0) {
         updates.margin = ((updates.budget_total - actualTotal) / updates.budget_total) * 100;
-        updates.status = actualTotal > updates.budget_total ? 'Over Budget' :
-                        actualTotal < updates.budget_total * 0.9 ? 'Under Budget' : 'On Budget';
+        updates.status =
+          actualTotal > updates.budget_total
+            ? 'Over Budget'
+            : actualTotal < updates.budget_total * 0.9
+              ? 'Under Budget'
+              : 'On Budget';
       }
 
       const { data: result, error } = await supabase
@@ -528,15 +616,15 @@ export function useUpdateBudgetValues() {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
       toast({
-        title: "Budget Updated",
-        description: "Job budget has been updated.",
+        title: 'Budget Updated',
+        description: 'Job budget has been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -590,15 +678,15 @@ export function useCreateJobFinancial() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       toast({
-        title: "Budget Created",
-        description: "Job budget sheet has been created.",
+        title: 'Budget Created',
+        description: 'Job budget sheet has been created.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -610,7 +698,10 @@ export function useUpdateVariationOrder() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, updates }: {
+    mutationFn: async ({
+      id,
+      updates,
+    }: {
       id: string;
       updates: Partial<Omit<VariationOrder, 'id' | 'created_at' | 'user_id'>>;
     }): Promise<VariationOrder> => {
@@ -630,15 +721,15 @@ export function useUpdateVariationOrder() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       toast({
-        title: "Variation Order Updated",
-        description: "The variation order has been updated.",
+        title: 'Variation Order Updated',
+        description: 'The variation order has been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -648,13 +739,18 @@ export function useUpdateVariationOrder() {
 export function useVariationOrdersByStatus(status?: VariationOrder['status']) {
   return useQuery({
     queryKey: ['variation-orders', 'status', status],
-    queryFn: async (): Promise<(VariationOrder & { job?: { title: string; client: string } })[]> => {
+    enabled: TABLE_EXISTS,
+    queryFn: async (): Promise<
+      (VariationOrder & { job?: { title: string; client: string } })[]
+    > => {
       let query = supabase
         .from('employer_variation_orders')
-        .select(`
+        .select(
+          `
           *,
           job:employer_jobs(title, client)
-        `)
+        `
+        )
         .order('created_at', { ascending: false });
 
       if (status) {
@@ -674,7 +770,11 @@ export function useUpdateJobPayments() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ jobId, invoiced, paid }: {
+    mutationFn: async ({
+      jobId,
+      invoiced,
+      paid,
+    }: {
       jobId: string;
       invoiced?: number;
       paid?: number;
@@ -697,15 +797,15 @@ export function useUpdateJobPayments() {
       queryClient.invalidateQueries({ queryKey: ['job-financials'] });
       queryClient.invalidateQueries({ queryKey: ['job-financials', jobId] });
       toast({
-        title: "Payments Updated",
-        description: "Invoiced/paid amounts have been updated.",
+        title: 'Payments Updated',
+        description: 'Invoiced/paid amounts have been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

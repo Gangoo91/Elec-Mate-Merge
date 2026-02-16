@@ -1,6 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useMemo } from "react";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useMemo } from 'react';
+
+// employer_job_financials table does not exist yet — disable query until migration is run
+const JOB_FINANCIALS_TABLE_EXISTS = false;
 
 // Types
 export interface ProfitabilitySummary {
@@ -62,9 +65,9 @@ export interface MonthlyFinancials {
 // Fetch invoices for cash flow analysis
 async function fetchInvoices() {
   const { data, error } = await supabase
-    .from("employer_invoices")
-    .select("id, invoice_number, client, amount, status, due_date, paid_date, job_id, created_at")
-    .order("created_at", { ascending: false });
+    .from('employer_invoices')
+    .select('id, invoice_number, client, amount, status, due_date, paid_date, job_id, created_at')
+    .order('created_at', { ascending: false });
 
   if (error) throw error;
   return data || [];
@@ -73,9 +76,9 @@ async function fetchInvoices() {
 // Fetch expenses for trends
 async function fetchExpenses() {
   const { data, error } = await supabase
-    .from("employer_expense_claims")
-    .select("id, amount, category, status, submitted_date, paid_date")
-    .order("submitted_date", { ascending: false });
+    .from('employer_expense_claims')
+    .select('id, amount, category, status, submitted_date, paid_date')
+    .order('submitted_date', { ascending: false });
 
   if (error) throw error;
   return data || [];
@@ -84,12 +87,14 @@ async function fetchExpenses() {
 // Fetch job financials for profitability
 async function fetchJobFinancials() {
   const { data, error } = await supabase
-    .from("employer_job_financials")
-    .select(`
+    .from('employer_job_financials')
+    .select(
+      `
       *,
       job:employer_jobs(id, title, client, status)
-    `)
-    .order("created_at", { ascending: false });
+    `
+    )
+    .order('created_at', { ascending: false });
 
   if (error) throw error;
   return data || [];
@@ -98,18 +103,19 @@ async function fetchJobFinancials() {
 // Main hook for finance reports data
 export function useFinanceData() {
   const invoicesQuery = useQuery({
-    queryKey: ["finance-reports", "invoices"],
+    queryKey: ['finance-reports', 'invoices'],
     queryFn: fetchInvoices,
   });
 
   const expensesQuery = useQuery({
-    queryKey: ["finance-reports", "expenses"],
+    queryKey: ['finance-reports', 'expenses'],
     queryFn: fetchExpenses,
   });
 
   const jobFinancialsQuery = useQuery({
-    queryKey: ["finance-reports", "job-financials"],
+    queryKey: ['finance-reports', 'job-financials'],
     queryFn: fetchJobFinancials,
+    enabled: JOB_FINANCIALS_TABLE_EXISTS,
   });
 
   return {
@@ -153,7 +159,7 @@ export function useProfitabilitySummary() {
     // Also sum from invoices table for more accuracy
     const invoicedFromInvoices = invoices.reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
     const paidFromInvoices = invoices
-      .filter((inv) => inv.status === "Paid")
+      .filter((inv) => inv.status === 'Paid')
       .reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
 
     const effectiveInvoiced = Math.max(totalInvoiced, invoicedFromInvoices);
@@ -200,14 +206,14 @@ export function useCashFlowSummary() {
 
     // Overdue
     const overdueInvoices = invoices.filter(
-      (inv) => inv.status !== "Paid" && inv.due_date && new Date(inv.due_date) < now
+      (inv) => inv.status !== 'Paid' && inv.due_date && new Date(inv.due_date) < now
     );
     const overdueAmount = overdueInvoices.reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
 
     // Due this week
     const dueThisWeekInvoices = invoices.filter(
       (inv) =>
-        inv.status !== "Paid" &&
+        inv.status !== 'Paid' &&
         inv.due_date &&
         new Date(inv.due_date) >= now &&
         new Date(inv.due_date) <= endOfWeek
@@ -227,7 +233,7 @@ export function useCashFlowSummary() {
 
     // Total outstanding
     const totalOutstanding = invoices
-      .filter((inv) => inv.status !== "Paid")
+      .filter((inv) => inv.status !== 'Paid')
       .reduce((sum, inv) => sum + Number(inv.amount || 0), 0);
 
     return {
@@ -256,7 +262,7 @@ export function useExpenseTrends(months: number = 6) {
     for (let i = months - 1; i >= 0; i--) {
       const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
       const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-      const monthLabel = date.toLocaleDateString("en-GB", { month: "short", year: "2-digit" });
+      const monthLabel = date.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' });
 
       const monthExpenses = expenses.filter((exp) => {
         const expDate = new Date(exp.submitted_date);
@@ -269,7 +275,7 @@ export function useExpenseTrends(months: number = 6) {
       monthExpenses.forEach((exp) => {
         const amount = Number(exp.amount || 0);
         total += amount;
-        const cat = exp.category || "Other";
+        const cat = exp.category || 'Other';
         categories[cat] = (categories[cat] || 0) + amount;
       });
 
@@ -292,7 +298,7 @@ export function useExpensesByCategory() {
 
     expenses.forEach((exp) => {
       const amount = Number(exp.amount || 0);
-      const cat = exp.category || "Other";
+      const cat = exp.category || 'Other';
       grandTotal += amount;
 
       if (!categoryMap[cat]) {
@@ -332,15 +338,15 @@ export function useJobProfitability() {
 
         return {
           jobId: jf.job_id,
-          jobTitle: jf.job?.title || "Unknown Job",
-          client: jf.job?.client || "Unknown Client",
+          jobTitle: jf.job?.title || 'Unknown Job',
+          client: jf.job?.client || 'Unknown Client',
           budgetTotal,
           actualTotal,
           invoiced,
           paid,
           profit,
           margin,
-          status: jf.status || "Unknown",
+          status: jf.status || 'Unknown',
         };
       })
       .sort((a, b) => b.profit - a.profit);
@@ -360,7 +366,7 @@ export function useMonthlyFinancials(months: number = 12) {
     for (let i = months - 1; i >= 0; i--) {
       const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
       const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-      const monthLabel = date.toLocaleDateString("en-GB", { month: "short", year: "2-digit" });
+      const monthLabel = date.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' });
 
       // Revenue from paid invoices
       const revenue = invoices
@@ -374,7 +380,7 @@ export function useMonthlyFinancials(months: number = 12) {
       const expenseTotal = expenses
         .filter((exp) => {
           const expDate = new Date(exp.submitted_date);
-          return expDate >= date && expDate <= monthEnd && exp.status === "Paid";
+          return expDate >= date && expDate <= monthEnd && exp.status === 'Paid';
         })
         .reduce((sum, exp) => sum + Number(exp.amount || 0), 0);
 
@@ -411,16 +417,16 @@ export function useFinanceQuickStats() {
     overdueAmount: cashFlow.overdueAmount,
     overdueCount: cashFlow.overdueCount,
     avgDaysToPayment: cashFlow.avgDaysToPayment,
-    topExpenseCategory: topExpenseCategory?.category || "N/A",
+    topExpenseCategory: topExpenseCategory?.category || 'N/A',
     topExpenseAmount: topExpenseCategory?.total || 0,
   };
 }
 
 // Format currency helper (UK pounds)
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP",
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
@@ -428,5 +434,5 @@ export function formatCurrency(amount: number): string {
 
 // Format percentage helper
 export function formatPercentage(value: number): string {
-  return `${value >= 0 ? "+" : ""}${value.toFixed(1)}%`;
+  return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
 }
