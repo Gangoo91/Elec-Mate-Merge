@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback, type ReactNode } from "react";
-import { RefreshCw } from "lucide-react";
+import { useState, useRef, useCallback, type ReactNode } from 'react';
+import { RefreshCw } from 'lucide-react';
 
 interface PullToRefreshProps {
   onRefresh: () => Promise<void> | void;
@@ -14,7 +14,7 @@ const MAX_PULL = 120;
 export default function PullToRefresh({
   onRefresh,
   children,
-  className = "",
+  className = '',
   disabled = false,
 }: PullToRefreshProps) {
   const [pullDistance, setPullDistance] = useState(0);
@@ -31,7 +31,7 @@ export default function PullToRefresh({
       startY.current = e.touches[0].clientY;
       pulling.current = true;
     },
-    [disabled, isRefreshing],
+    [disabled, isRefreshing]
   );
 
   const handleTouchMove = useCallback(
@@ -47,7 +47,7 @@ export default function PullToRefresh({
       const distance = Math.min(MAX_PULL, diff * 0.4);
       setPullDistance(distance);
     },
-    [disabled, isRefreshing],
+    [disabled, isRefreshing]
   );
 
   const handleTouchEnd = useCallback(async () => {
@@ -91,7 +91,7 @@ export default function PullToRefresh({
           }}
         >
           <RefreshCw
-            className={`h-5 w-5 text-muted-foreground ${isRefreshing ? "animate-spin" : ""}`}
+            className={`h-5 w-5 text-muted-foreground ${isRefreshing ? 'animate-spin' : ''}`}
           />
         </div>
       </div>

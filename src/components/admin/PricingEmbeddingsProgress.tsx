@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
-import { Loader2, CheckCircle2, XCircle, RefreshCw } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { Loader2, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface PricingEmbeddingsProgressProps {
   jobId?: string;
@@ -12,10 +12,10 @@ interface PricingEmbeddingsProgressProps {
   onRetry?: () => void;
 }
 
-export default function PricingEmbeddingsProgress({ 
-  jobId, 
+export default function PricingEmbeddingsProgress({
+  jobId,
   cacheId,
-  onRetry 
+  onRetry,
 }: PricingEmbeddingsProgressProps) {
   const [status, setStatus] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function PricingEmbeddingsProgress({
   const fetchStatus = async () => {
     try {
       const { data, error } = await supabase.functions.invoke('pricing-embeddings-status', {
-        body: { job_id: jobId, cache_id: cacheId }
+        body: { job_id: jobId, cache_id: cacheId },
       });
 
       if (error) throw error;
@@ -32,9 +32,9 @@ export default function PricingEmbeddingsProgress({
     } catch (error) {
       console.error('Failed to fetch status:', error);
       toast({
-        title: "Status check failed",
-        description: "Could not retrieve embedding progress",
-        variant: "destructive",
+        title: 'Status check failed',
+        description: 'Could not retrieve embedding progress',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -96,14 +96,15 @@ export default function PricingEmbeddingsProgress({
           )}
         </div>
         <CardDescription>
-          {isProcessing && `Processing ${status.processed.toLocaleString()} of ${status.total.toLocaleString()} products`}
+          {isProcessing &&
+            `Processing ${status.processed.toLocaleString()} of ${status.total.toLocaleString()} products`}
           {isCompleted && `Successfully processed ${status.processed.toLocaleString()} products`}
           {isFailed && `Failed: ${status.error_message || 'Unknown error'}`}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <Progress value={percentage} className="h-2" />
-        
+
         <div className="grid grid-cols-4 gap-4 text-sm">
           <div>
             <p className="text-muted-foreground">Total</p>

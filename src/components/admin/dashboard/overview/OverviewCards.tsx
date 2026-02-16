@@ -1,7 +1,6 @@
-
-import RecentActivity from "./RecentActivity";
-import QuickTasks from "./QuickTasks";
-import { SystemEvent } from "../types";
+import RecentActivity from './RecentActivity';
+import QuickTasks from './QuickTasks';
+import { SystemEvent } from '../types';
 
 interface OverviewCardsProps {
   events: SystemEvent[];

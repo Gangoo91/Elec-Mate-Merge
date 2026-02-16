@@ -1,6 +1,6 @@
-import { useState, useRef, type ReactNode } from "react";
-import { useSwipeable } from "react-swipeable";
-import { useHaptic } from "@/hooks/useHaptic";
+import { useState, useRef, type ReactNode } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface SwipeAction {
   icon: ReactNode;
@@ -21,7 +21,7 @@ const ACTION_WIDTH = 72;
 export default function SwipeableAdminRow({
   children,
   actions,
-  className = "",
+  className = '',
   disabled = false,
 }: SwipeableAdminRowProps) {
   const [offset, setOffset] = useState(0);
@@ -34,14 +34,14 @@ export default function SwipeableAdminRow({
   const handlers = useSwipeable({
     onSwiping: (e) => {
       if (disabled) return;
-      if (e.dir === "Left") {
+      if (e.dir === 'Left') {
         const distance = Math.min(maxOffset, Math.abs(e.deltaX) * 0.8);
         setOffset(-distance);
         if (distance >= maxOffset * 0.6 && !triggeredHaptic.current) {
           haptic.light();
           triggeredHaptic.current = true;
         }
-      } else if (e.dir === "Right" && isOpen) {
+      } else if (e.dir === 'Right' && isOpen) {
         const distance = Math.max(-maxOffset, offset + e.deltaX * 0.8);
         setOffset(Math.min(0, distance));
       }
@@ -77,10 +77,7 @@ export default function SwipeableAdminRow({
   return (
     <div className={`relative overflow-hidden ${className}`} {...handlers}>
       {/* Action buttons behind */}
-      <div
-        className="absolute inset-y-0 right-0 flex items-stretch"
-        style={{ width: maxOffset }}
-      >
+      <div className="absolute inset-y-0 right-0 flex items-stretch" style={{ width: maxOffset }}>
         {actions.map((action, i) => (
           <button
             key={i}
@@ -104,7 +101,7 @@ export default function SwipeableAdminRow({
         className="relative bg-background transition-transform duration-200 ease-out"
         style={{
           transform: `translateX(${offset}px)`,
-          transition: offset === 0 || offset === -maxOffset ? "transform 0.2s ease-out" : "none",
+          transition: offset === 0 || offset === -maxOffset ? 'transform 0.2s ease-out' : 'none',
         }}
       >
         {children}

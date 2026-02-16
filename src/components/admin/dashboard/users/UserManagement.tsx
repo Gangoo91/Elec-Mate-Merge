@@ -1,9 +1,15 @@
-
-import { Users } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { MockUser } from "../types";
+import { Users } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { MockUser } from '../types';
 
 interface UserManagementProps {
   users: MockUser[];
@@ -23,7 +29,7 @@ const UserManagement = ({ users }: UserManagementProps) => {
           </button>
         </div>
       </div>
-      
+
       <div className="rounded-md border border-elec-yellow/20 overflow-hidden">
         <Table>
           <TableHeader>
@@ -59,11 +65,16 @@ const UserManagement = ({ users }: UserManagementProps) => {
           </TableBody>
         </Table>
       </div>
-      
+
       <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
         <span>Showing 1-4 of 2,431 users</span>
         <div className="flex gap-1">
-          <button className="px-2 py-1 rounded hover:bg-elec-gray-light/30 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Previous</button>
+          <button
+            className="px-2 py-1 rounded hover:bg-elec-gray-light/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
+          >
+            Previous
+          </button>
           <button className="px-2 py-1 rounded bg-elec-yellow/20 text-elec-yellow">1</button>
           <button className="px-2 py-1 rounded hover:bg-elec-gray-light/30">2</button>
           <button className="px-2 py-1 rounded hover:bg-elec-gray-light/30">3</button>

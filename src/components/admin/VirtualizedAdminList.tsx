@@ -1,5 +1,5 @@
-import React, { CSSProperties } from "react";
-import { FixedSizeList as List } from "react-window";
+import React, { CSSProperties } from 'react';
+import { FixedSizeList as List } from 'react-window';
 
 interface VirtualizedAdminListProps<T> {
   items: T[];

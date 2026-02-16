@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Database, FileText } from "lucide-react";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { BookOpen, Database, FileText } from 'lucide-react';
 
 export const KnowledgeStatusPanel = () => {
   const { data: stats, isLoading } = useQuery({
@@ -9,13 +9,16 @@ export const KnowledgeStatusPanel = () => {
     queryFn: async () => {
       const [bs7671Result, installationResult] = await Promise.all([
         supabase.from('bs7671_embeddings').select('source, id', { count: 'exact', head: false }),
-        supabase.from('installation_knowledge').select('source, id', { count: 'exact', head: false })
+        supabase
+          .from('installation_knowledge')
+          .select('source, id', { count: 'exact', head: false }),
       ]);
 
-      const installationBySource = installationResult.data?.reduce((acc: Record<string, number>, item) => {
-        acc[item.source] = (acc[item.source] || 0) + 1;
-        return acc;
-      }, {}) || {};
+      const installationBySource =
+        installationResult.data?.reduce((acc: Record<string, number>, item) => {
+          acc[item.source] = (acc[item.source] || 0) + 1;
+          return acc;
+        }, {}) || {};
 
       return {
         bs7671_total: bs7671Result.data?.length || 0,
@@ -53,21 +56,96 @@ export const KnowledgeStatusPanel = () => {
   }
 
   const sources = [
-    { name: 'BS 7671 Wiring Regulations', count: stats.bs7671_total ?? 0, icon: BookOpen, table: 'bs7671_embeddings' },
-    { name: 'On-Site Guide', count: stats.onsite_guide ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'City & Guilds Book 1', count: stats.city_guilds_book_1 ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'City & Guilds Book 2', count: stats.city_guilds_book_2 ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'City & Guilds Level 2', count: stats.city_guilds_level_2 ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'City & Guilds Level 3', count: stats.city_guilds_level_3 ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'Emergency Lighting Guide', count: stats.emergency_lighting ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'Guidance Note 3', count: stats.guidance_note_3 ?? 0, icon: BookOpen, table: 'installation_knowledge' },
-    { name: 'Design Guide', count: stats.design_guide ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'Wiring Diagrams', count: stats.wiring_diagrams ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'EV Charging', count: stats.ev_charging ?? 0, icon: BookOpen, table: 'installation_knowledge' },
-    { name: 'Calculations: Basic', count: stats.calculations_basic ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'In-service Testing', count: stats.inservice_testing ?? 0, icon: BookOpen, table: 'installation_knowledge' },
-    { name: 'Health & Safety Management', count: stats.health_safety_management ?? 0, icon: FileText, table: 'installation_knowledge' },
-    { name: 'NEBOSH IGC', count: stats.nebosh_igc ?? 0, icon: FileText, table: 'installation_knowledge' },
+    {
+      name: 'BS 7671 Wiring Regulations',
+      count: stats.bs7671_total ?? 0,
+      icon: BookOpen,
+      table: 'bs7671_embeddings',
+    },
+    {
+      name: 'On-Site Guide',
+      count: stats.onsite_guide ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'City & Guilds Book 1',
+      count: stats.city_guilds_book_1 ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'City & Guilds Book 2',
+      count: stats.city_guilds_book_2 ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'City & Guilds Level 2',
+      count: stats.city_guilds_level_2 ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'City & Guilds Level 3',
+      count: stats.city_guilds_level_3 ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'Emergency Lighting Guide',
+      count: stats.emergency_lighting ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'Guidance Note 3',
+      count: stats.guidance_note_3 ?? 0,
+      icon: BookOpen,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'Design Guide',
+      count: stats.design_guide ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'Wiring Diagrams',
+      count: stats.wiring_diagrams ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'EV Charging',
+      count: stats.ev_charging ?? 0,
+      icon: BookOpen,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'Calculations: Basic',
+      count: stats.calculations_basic ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'In-service Testing',
+      count: stats.inservice_testing ?? 0,
+      icon: BookOpen,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'Health & Safety Management',
+      count: stats.health_safety_management ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
+    {
+      name: 'NEBOSH IGC',
+      count: stats.nebosh_igc ?? 0,
+      icon: FileText,
+      table: 'installation_knowledge',
+    },
   ];
 
   const totalChunks = sources.reduce((sum, s) => sum + (s.count ?? 0), 0);
@@ -80,7 +158,8 @@ export const KnowledgeStatusPanel = () => {
           Knowledge Base Status
         </CardTitle>
         <CardDescription>
-          {totalChunks.toLocaleString()} total knowledge chunks across {sources.filter(s => s.count > 0).length} sources
+          {totalChunks.toLocaleString()} total knowledge chunks across{' '}
+          {sources.filter((s) => s.count > 0).length} sources
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -88,7 +167,10 @@ export const KnowledgeStatusPanel = () => {
           {sources.map((source) => {
             const Icon = source.icon;
             return (
-              <div key={source.name} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+              <div
+                key={source.name}
+                className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
+              >
                 <div className="flex items-center gap-3">
                   <Icon className="h-4 w-4 text-muted-foreground" />
                   <div>

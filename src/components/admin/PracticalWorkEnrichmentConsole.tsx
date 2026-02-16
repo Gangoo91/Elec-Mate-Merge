@@ -5,9 +5,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { toast } from 'sonner';
-import { 
-  Play, Database, GitMerge, CheckCircle2, AlertCircle, 
-  Loader2, Activity, TrendingUp 
+import {
+  Play,
+  Database,
+  GitMerge,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  Activity,
+  TrendingUp,
 } from 'lucide-react';
 
 interface EnrichmentStats {
@@ -32,7 +38,7 @@ export default function PracticalWorkEnrichmentConsole() {
     installation_complete: 0,
     maintenance_complete: 0,
     testing_complete: 0,
-    costing_complete: 0
+    costing_complete: 0,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [unificationRunning, setUnificationRunning] = useState(false);
@@ -66,17 +72,19 @@ export default function PracticalWorkEnrichmentConsole() {
       // Count enrichment stage completeness by checking populated fields
       const { data: enrichmentData } = await supabase
         .from('practical_work_intelligence')
-        .select('activity_types, installation_method, maintenance_intervals, test_procedures, typical_duration_minutes');
+        .select(
+          'activity_types, installation_method, maintenance_intervals, test_procedures, typical_duration_minutes'
+        );
 
       const stageCounts = {
         primary: 0,
         installation: 0,
         maintenance: 0,
         testing: 0,
-        costing: 0
+        costing: 0,
       };
 
-      enrichmentData?.forEach(record => {
+      enrichmentData?.forEach((record) => {
         if (record.activity_types && record.activity_types.length > 0) stageCounts.primary++;
         if (record.installation_method) stageCounts.installation++;
         if (record.maintenance_intervals) stageCounts.maintenance++;
@@ -93,7 +101,7 @@ export default function PracticalWorkEnrichmentConsole() {
         installation_complete: stageCounts.installation,
         maintenance_complete: stageCounts.maintenance,
         testing_complete: stageCounts.testing,
-        costing_complete: stageCounts.costing
+        costing_complete: stageCounts.costing,
       });
     } catch (error) {
       console.error('Failed to load stats:', error);
@@ -104,7 +112,7 @@ export default function PracticalWorkEnrichmentConsole() {
     setUnificationRunning(true);
     try {
       const { data, error } = await supabase.functions.invoke('practical-work-unify', {
-        body: { action: 'unify' }
+        body: { action: 'unify' },
       });
 
       if (error) throw error;
@@ -122,13 +130,13 @@ export default function PracticalWorkEnrichmentConsole() {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { 
+        body: {
           action: 'start',
           scope: 'single',
           jobType,
           workers: jobType === 'enrich-practical-work-primary' ? 6 : 3,
-          chunkSize: 15
-        }
+          chunkSize: 15,
+        },
       });
 
       if (error) throw error;
@@ -142,9 +150,10 @@ export default function PracticalWorkEnrichmentConsole() {
     }
   };
 
-  const progress = stats.canonical_records > 0 
-    ? Math.round((stats.enriched_count / stats.canonical_records) * 100) 
-    : 0;
+  const progress =
+    stats.canonical_records > 0
+      ? Math.round((stats.enriched_count / stats.canonical_records) * 100)
+      : 0;
 
   return (
     <div className="space-y-6">
@@ -160,28 +169,23 @@ export default function PracticalWorkEnrichmentConsole() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard 
-              label="Total Records" 
-              value={stats.total_records.toLocaleString()} 
+            <StatCard
+              label="Total Records"
+              value={stats.total_records.toLocaleString()}
               icon={Database}
             />
-            <StatCard 
-              label="Canonical (Unique)" 
-              value={stats.canonical_records.toLocaleString()} 
+            <StatCard
+              label="Canonical (Unique)"
+              value={stats.canonical_records.toLocaleString()}
               icon={CheckCircle2}
               highlight
             />
-            <StatCard 
-              label="Clusters" 
-              value={stats.cluster_count.toLocaleString()} 
+            <StatCard
+              label="Clusters"
+              value={stats.cluster_count.toLocaleString()}
               icon={GitMerge}
             />
-            <StatCard 
-              label="Enriched" 
-              value={`${progress}%`} 
-              icon={TrendingUp}
-              highlight
-            />
+            <StatCard label="Enriched" value={`${progress}%`} icon={TrendingUp} highlight />
           </div>
         </CardContent>
       </Card>
@@ -198,14 +202,17 @@ export default function PracticalWorkEnrichmentConsole() {
             <CardHeader>
               <CardTitle>Step 1: Unification & Deduplication</CardTitle>
               <CardDescription>
-                Cluster duplicates and identify {stats.total_records.toLocaleString()} → ~10,250 canonical records
+                Cluster duplicates and identify {stats.total_records.toLocaleString()} → ~10,250
+                canonical records
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <div className="text-sm text-muted-foreground">Canonical Records</div>
-                  <div className="text-2xl font-bold">{stats.canonical_records.toLocaleString()}</div>
+                  <div className="text-2xl font-bold">
+                    {stats.canonical_records.toLocaleString()}
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Duplicates Removed</div>
@@ -257,14 +264,16 @@ export default function PracticalWorkEnrichmentConsole() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <EnrichmentProgress 
+              <EnrichmentProgress
                 completed={stats.primary_complete}
                 total={stats.canonical_records}
                 label="Primary Enrichment"
               />
 
               <MobileButton
-                onClick={() => startEnrichmentJob('enrich-practical-work-primary', 'Primary Enrichment')}
+                onClick={() =>
+                  startEnrichmentJob('enrich-practical-work-primary', 'Primary Enrichment')
+                }
                 disabled={isLoading || stats.canonical_records === 0}
                 variant="default"
                 className="w-full"
@@ -283,9 +292,7 @@ export default function PracticalWorkEnrichmentConsole() {
               </MobileButton>
 
               {stats.canonical_records === 0 && (
-                <div className="text-sm text-yellow-600">
-                  ⚠️ Complete unification first
-                </div>
+                <div className="text-sm text-yellow-600">⚠️ Complete unification first</div>
               )}
             </CardContent>
           </Card>
@@ -305,7 +312,9 @@ export default function PracticalWorkEnrichmentConsole() {
                 description="Fixing intervals, cable routes, termination methods"
                 completed={stats.installation_complete}
                 total={stats.canonical_records}
-                onStart={() => startEnrichmentJob('enrich-practical-installation', 'Installation Specialist')}
+                onStart={() =>
+                  startEnrichmentJob('enrich-practical-installation', 'Installation Specialist')
+                }
                 isLoading={isLoading}
                 disabled={stats.primary_complete === 0}
               />
@@ -315,7 +324,9 @@ export default function PracticalWorkEnrichmentConsole() {
                 description="Maintenance intervals, common defects, degradation signs"
                 completed={stats.maintenance_complete}
                 total={stats.canonical_records}
-                onStart={() => startEnrichmentJob('enrich-practical-maintenance', 'Maintenance Specialist')}
+                onStart={() =>
+                  startEnrichmentJob('enrich-practical-maintenance', 'Maintenance Specialist')
+                }
                 isLoading={isLoading}
                 disabled={stats.primary_complete === 0}
               />
@@ -355,7 +366,9 @@ export default function PracticalWorkEnrichmentConsole() {
 
 function StatCard({ label, value, icon: Icon, highlight }: any) {
   return (
-    <div className={`p-4 rounded-lg border ${highlight ? 'border-elec-yellow/30 bg-elec-yellow/5' : 'border-white/10'}`}>
+    <div
+      className={`p-4 rounded-lg border ${highlight ? 'border-elec-yellow/30 bg-elec-yellow/5' : 'border-white/10'}`}
+    >
       <div className="flex items-center gap-2 mb-1">
         <Icon className="h-4 w-4 text-muted-foreground" />
         <div className="text-xs text-muted-foreground">{label}</div>
@@ -367,15 +380,17 @@ function StatCard({ label, value, icon: Icon, highlight }: any) {
 
 function EnrichmentProgress({ completed, total, label }: any) {
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-  
+
   return (
     <div>
       <div className="flex justify-between text-sm mb-2">
         <span>{label}</span>
-        <span className="text-muted-foreground">{completed.toLocaleString()} / {total.toLocaleString()}</span>
+        <span className="text-muted-foreground">
+          {completed.toLocaleString()} / {total.toLocaleString()}
+        </span>
       </div>
       <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-        <div 
+        <div
           className="h-full bg-elec-yellow transition-all duration-500"
           style={{ width: `${percentage}%` }}
         />
@@ -385,7 +400,15 @@ function EnrichmentProgress({ completed, total, label }: any) {
   );
 }
 
-function SpecialistJobCard({ label, description, completed, total, onStart, isLoading, disabled }: any) {
+function SpecialistJobCard({
+  label,
+  description,
+  completed,
+  total,
+  onStart,
+  isLoading,
+  disabled,
+}: any) {
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return (
@@ -395,13 +418,11 @@ function SpecialistJobCard({ label, description, completed, total, onStart, isLo
           <div className="font-medium">{label}</div>
           <div className="text-sm text-muted-foreground">{description}</div>
         </div>
-        <Badge variant={percentage === 100 ? 'default' : 'outline'}>
-          {percentage}%
-        </Badge>
+        <Badge variant={percentage === 100 ? 'default' : 'outline'}>{percentage}%</Badge>
       </div>
 
       <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-        <div 
+        <div
           className="h-full bg-elec-yellow transition-all duration-500"
           style={{ width: `${percentage}%` }}
         />

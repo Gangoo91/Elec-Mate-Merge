@@ -1,10 +1,18 @@
-import { KnowledgeStatusPanel } from "@/components/admin/KnowledgeStatusPanel";
-import { DocumentProcessor } from "@/components/admin/DocumentProcessor";
-import { MaintenanceEnrichmentTester } from "@/components/admin/MaintenanceEnrichmentTester";
-import { BookOpen, GraduationCap, Lightbulb, FileText, Zap, CheckCircle2, XCircle } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { KnowledgeStatusPanel } from '@/components/admin/KnowledgeStatusPanel';
+import { DocumentProcessor } from '@/components/admin/DocumentProcessor';
+import { MaintenanceEnrichmentTester } from '@/components/admin/MaintenanceEnrichmentTester';
+import {
+  BookOpen,
+  GraduationCap,
+  Lightbulb,
+  FileText,
+  Zap,
+  CheckCircle2,
+  XCircle,
+} from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 const AdminRAGProcessor = () => {
   const { data: stats } = useQuery({
@@ -12,16 +20,20 @@ const AdminRAGProcessor = () => {
     queryFn: async () => {
       const [bs7671Result, installationResult] = await Promise.all([
         supabase.from('bs7671_embeddings').select('id', { count: 'exact', head: false }),
-        supabase.from('installation_knowledge').select('source', { count: 'exact', head: false })
+        supabase.from('installation_knowledge').select('source', { count: 'exact', head: false }),
       ]);
 
-      const sourceCounts = installationResult.data?.reduce((acc: Record<string, number>, item) => {
-        acc[item.source] = (acc[item.source] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>) || {};
+      const sourceCounts =
+        installationResult.data?.reduce(
+          (acc: Record<string, number>, item) => {
+            acc[item.source] = (acc[item.source] || 0) + 1;
+            return acc;
+          },
+          {} as Record<string, number>
+        ) || {};
 
       return {
-        'bs7671': bs7671Result.data?.length || 0,
+        bs7671: bs7671Result.data?.length || 0,
         'on-site-guide': sourceCounts['on-site-guide'] || 0,
         'city-guilds-book-1': sourceCounts['city-guilds-book-1'] || 0,
         'city-guilds-book-2': sourceCounts['city-guilds-book-2'] || 0,
@@ -71,7 +83,9 @@ const AdminRAGProcessor = () => {
           <AlertDescription>
             <strong>BS 7671:</strong> Upload the text file directly below.
             <br />
-            <strong>Other documents:</strong> Must be in Supabase Storage bucket <code>safety-resources</code> as: CITY-GUILDS-BOOK-1.txt, CITY-GUILDS-BOOK-2.txt, EMERGENCY-LIGHTING.txt
+            <strong>Other documents:</strong> Must be in Supabase Storage bucket{' '}
+            <code>safety-resources</code> as: CITY-GUILDS-BOOK-1.txt, CITY-GUILDS-BOOK-2.txt,
+            EMERGENCY-LIGHTING.txt
           </AlertDescription>
         </Alert>
 

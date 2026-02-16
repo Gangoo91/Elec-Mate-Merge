@@ -1,9 +1,15 @@
-
-import { FileText } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { ContentItem } from "../types";
+import { FileText } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { ContentItem } from '../types';
 
 interface ContentManagementProps {
   contentItems: ContentItem[];
@@ -23,7 +29,7 @@ const ContentManagement = ({ contentItems }: ContentManagementProps) => {
           </button>
         </div>
       </div>
-      
+
       <div className="rounded-md border border-elec-yellow/20 overflow-hidden">
         <Table>
           <TableHeader>
@@ -44,8 +50,8 @@ const ContentManagement = ({ contentItems }: ContentManagementProps) => {
                 <TableCell>{item.author}</TableCell>
                 <TableCell>{item.lastUpdated}</TableCell>
                 <TableCell>
-                  <Badge 
-                    variant={item.status === 'Published' ? 'gold' : 'outline'} 
+                  <Badge
+                    variant={item.status === 'Published' ? 'gold' : 'outline'}
                     className={item.status === 'Draft' ? 'bg-blue-900/20 text-blue-300' : ''}
                   >
                     {item.status}
@@ -64,11 +70,16 @@ const ContentManagement = ({ contentItems }: ContentManagementProps) => {
           </TableBody>
         </Table>
       </div>
-      
+
       <div className="flex justify-between items-center mt-4 text-sm text-gray-400">
         <span>Showing 1-4 of 872 content items</span>
         <div className="flex gap-1">
-          <button className="px-2 py-1 rounded hover:bg-elec-gray-light/30 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Previous</button>
+          <button
+            className="px-2 py-1 rounded hover:bg-elec-gray-light/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
+          >
+            Previous
+          </button>
           <button className="px-2 py-1 rounded bg-elec-yellow/20 text-elec-yellow">1</button>
           <button className="px-2 py-1 rounded hover:bg-elec-gray-light/30">2</button>
           <button className="px-2 py-1 rounded hover:bg-elec-gray-light/30">3</button>

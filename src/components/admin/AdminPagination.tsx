@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/select';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface AdminPaginationProps {
   currentPage: number;
@@ -37,10 +37,9 @@ export default function AdminPagination({
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
   return (
-    <div className={cn(
-      "flex flex-col sm:flex-row items-center justify-between gap-3 py-3",
-      className
-    )}>
+    <div
+      className={cn('flex flex-col sm:flex-row items-center justify-between gap-3 py-3', className)}
+    >
       {/* Item count and per-page selector */}
       <div className="flex items-center gap-3 text-sm text-muted-foreground">
         <span>
@@ -94,24 +93,26 @@ export default function AdminPagination({
 
         {/* Page numbers */}
         <div className="flex items-center gap-1 mx-1">
-          {generatePageNumbers(currentPage, totalPages).map((page, idx) => (
-            page === "..." ? (
-              <span key={`ellipsis-${idx}`} className="px-2 text-muted-foreground">...</span>
+          {generatePageNumbers(currentPage, totalPages).map((page, idx) =>
+            page === '...' ? (
+              <span key={`ellipsis-${idx}`} className="px-2 text-muted-foreground">
+                ...
+              </span>
             ) : (
               <Button
                 key={page}
-                variant={currentPage === page ? "default" : "outline"}
+                variant={currentPage === page ? 'default' : 'outline'}
                 size="icon"
                 className={cn(
-                  "h-9 w-9 touch-manipulation",
-                  currentPage === page && "bg-yellow-500 hover:bg-yellow-600 text-black"
+                  'h-9 w-9 touch-manipulation',
+                  currentPage === page && 'bg-yellow-500 hover:bg-yellow-600 text-black'
                 )}
                 onClick={() => onPageChange(page as number)}
               >
                 {page}
               </Button>
             )
-          ))}
+          )}
         </div>
 
         {/* Next page */}
@@ -143,12 +144,12 @@ export default function AdminPagination({
 /**
  * Generate page numbers with ellipsis for large page counts
  */
-function generatePageNumbers(current: number, total: number): (number | "...")[] {
+function generatePageNumbers(current: number, total: number): (number | '...')[] {
   if (total <= 5) {
     return Array.from({ length: total }, (_, i) => i + 1);
   }
 
-  const pages: (number | "...")[] = [];
+  const pages: (number | '...')[] = [];
 
   // Always show first page
   pages.push(1);
@@ -159,7 +160,7 @@ function generatePageNumbers(current: number, total: number): (number | "...")[]
 
   // Add ellipsis if needed before range
   if (rangeStart > 2) {
-    pages.push("...");
+    pages.push('...');
   }
 
   // Add range pages
@@ -169,7 +170,7 @@ function generatePageNumbers(current: number, total: number): (number | "...")[]
 
   // Add ellipsis if needed after range
   if (rangeEnd < total - 1) {
-    pages.push("...");
+    pages.push('...');
   }
 
   // Always show last page

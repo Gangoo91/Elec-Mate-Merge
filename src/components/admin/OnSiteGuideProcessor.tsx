@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Loader2, FileText, Database } from "lucide-react";
-import { processOnSiteGuide } from "@/utils/onsiteGuideProcessor";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Loader2, FileText, Database } from 'lucide-react';
+import { processOnSiteGuide } from '@/utils/onsiteGuideProcessor';
+import { toast } from 'sonner';
 
 export const OnSiteGuideProcessor = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -12,23 +12,22 @@ export const OnSiteGuideProcessor = () => {
   const handleProcess = async () => {
     setIsProcessing(true);
     setResult(null);
-    
+
     try {
-      toast.info("Starting On-Site Guide processing...", {
-        description: "This may take 5-10 minutes to chunk and embed all content"
+      toast.info('Starting On-Site Guide processing...', {
+        description: 'This may take 5-10 minutes to chunk and embed all content',
       });
-      
+
       const data = await processOnSiteGuide();
-      
+
       setResult(data);
       toast.success(`Successfully processed ${data.chunksCreated} chunks!`, {
-        description: `${data.embeddingsProcessed} embeddings added to RAG database`
+        description: `${data.embeddingsProcessed} embeddings added to RAG database`,
       });
-      
     } catch (error) {
       console.error('Processing error:', error);
-      toast.error("Failed to process On-Site Guide", {
-        description: error instanceof Error ? error.message : "Unknown error"
+      toast.error('Failed to process On-Site Guide', {
+        description: error instanceof Error ? error.message : 'Unknown error',
       });
     } finally {
       setIsProcessing(false);
@@ -49,11 +48,7 @@ export const OnSiteGuideProcessor = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button 
-            onClick={handleProcess} 
-            disabled={isProcessing}
-            className="gap-2"
-          >
+          <Button onClick={handleProcess} disabled={isProcessing} className="gap-2">
             {isProcessing ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -66,11 +61,9 @@ export const OnSiteGuideProcessor = () => {
               </>
             )}
           </Button>
-          
+
           {isProcessing && (
-            <span className="text-sm text-muted-foreground">
-              This will take 5-10 minutes...
-            </span>
+            <span className="text-sm text-muted-foreground">This will take 5-10 minutes...</span>
           )}
         </div>
 
@@ -78,9 +71,13 @@ export const OnSiteGuideProcessor = () => {
           <div className="mt-4 p-4 bg-muted rounded-lg space-y-2">
             <div className="font-semibold text-green-600">✅ Processing Complete</div>
             <div className="text-sm space-y-1">
-              <p>Chunks Created: <strong>{result.chunksCreated}</strong></p>
-              <p>Embeddings Processed: <strong>{result.embeddingsProcessed}</strong></p>
-              
+              <p>
+                Chunks Created: <strong>{result.chunksCreated}</strong>
+              </p>
+              <p>
+                Embeddings Processed: <strong>{result.embeddingsProcessed}</strong>
+              </p>
+
               {result.sampleChunks && (
                 <div className="mt-3">
                   <p className="font-semibold mb-2">Sample Chunks:</p>

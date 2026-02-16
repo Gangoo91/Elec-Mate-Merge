@@ -1,10 +1,10 @@
-import React, { memo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronRight, Crown, Zap, Gift, IdCard, ShieldCheck, Clock } from "lucide-react";
-import { getInitials } from "@/utils/adminUtils";
+import React, { memo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ChevronRight, Crown, Zap, Gift, IdCard, ShieldCheck, Clock } from 'lucide-react';
+import { getInitials } from '@/utils/adminUtils';
 
 interface UserProfile {
   id: string;
@@ -52,8 +52,8 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
     <Card
       className={`touch-manipulation transition-all duration-150 cursor-pointer ${
         isSelected
-          ? "border-yellow-500/50 bg-yellow-500/5"
-          : "border-transparent hover:border-primary/20"
+          ? 'border-yellow-500/50 bg-yellow-500/5'
+          : 'border-transparent hover:border-primary/20'
       }`}
     >
       <CardContent className="p-3 sm:p-4">
@@ -69,10 +69,7 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
           </div>
 
           {/* Clickable area for user details */}
-          <div
-            className="flex items-center gap-4 flex-1 min-w-0"
-            onClick={() => onClick(user)}
-          >
+          <div className="flex items-center gap-4 flex-1 min-w-0" onClick={() => onClick(user)}>
             {/* Avatar */}
             <div className="relative shrink-0">
               <Avatar className="h-12 w-12 rounded-xl border-2 border-muted">
@@ -95,9 +92,11 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
               )}
               {/* Elec-ID indicator on avatar */}
               {user.elec_id_profile && (
-                <div className={`absolute -bottom-0.5 -left-0.5 w-4 h-4 rounded-full flex items-center justify-center border-2 border-background ${
-                  user.elec_id_profile.is_verified ? "bg-green-500" : "bg-amber-500"
-                }`}>
+                <div
+                  className={`absolute -bottom-0.5 -left-0.5 w-4 h-4 rounded-full flex items-center justify-center border-2 border-background ${
+                    user.elec_id_profile.is_verified ? 'bg-green-500' : 'bg-amber-500'
+                  }`}
+                >
                   <IdCard className="h-2.5 w-2.5 text-white" />
                 </div>
               )}
@@ -107,22 +106,18 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <p className="font-semibold text-sm line-clamp-2 sm:truncate">
-                  {user.full_name || "No name"}
+                  {user.full_name || 'No name'}
                 </p>
-                {user.subscribed && (
-                  <Zap className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-                )}
+                {user.subscribed && <Zap className="h-3.5 w-3.5 text-amber-400 shrink-0" />}
                 {user.free_access_granted && (
                   <Gift className="h-3.5 w-3.5 text-green-400 shrink-0" />
                 )}
               </div>
               {user.email ? (
-                <p className="text-xs text-muted-foreground truncate">
-                  {user.email}
-                </p>
+                <p className="text-xs text-muted-foreground truncate">{user.email}</p>
               ) : (
                 <p className="text-xs text-muted-foreground truncate">
-                  @{user.username || "unknown"}
+                  @{user.username || 'unknown'}
                 </p>
               )}
               <div className="flex items-center gap-1.5 mt-1">
@@ -130,7 +125,7 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
                   variant="outline"
                   className={`text-[10px] px-1.5 py-0 h-4 ${roleStyle.bg} ${roleStyle.text} ${roleStyle.border}`}
                 >
-                  {user.role || "visitor"}
+                  {user.role || 'visitor'}
                 </Badge>
                 {/* Elec-ID badge with verification status */}
                 {user.elec_id_profile ? (
@@ -138,8 +133,8 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
                     variant="outline"
                     className={`text-[10px] px-1.5 py-0 h-4 flex items-center gap-1 ${
                       user.elec_id_profile.is_verified
-                        ? "bg-green-500/10 text-green-400 border-green-500/30"
-                        : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                        ? 'bg-green-500/10 text-green-400 border-green-500/30'
+                        : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
                     }`}
                   >
                     {user.elec_id_profile.is_verified ? (
@@ -159,7 +154,7 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
                 ) : null}
                 {user.admin_role && (
                   <Badge className="text-[10px] px-1.5 py-0 h-4 bg-red-500/20 text-red-400 border-red-500/30">
-                    {user.admin_role === "super_admin" ? "Super" : "Admin"}
+                    {user.admin_role === 'super_admin' ? 'Super' : 'Admin'}
                   </Badge>
                 )}
               </div>

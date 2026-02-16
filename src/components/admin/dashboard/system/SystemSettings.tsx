@@ -1,12 +1,11 @@
+import { Settings } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import SystemStatus from './SystemStatus';
+import ResourceUsage from './ResourceUsage';
+import SystemEvents from './SystemEvents';
+import MaintenanceCard from './MaintenanceCard';
 
-import { Settings } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import SystemStatus from "./SystemStatus";
-import ResourceUsage from "./ResourceUsage";
-import SystemEvents from "./SystemEvents";
-import MaintenanceCard from "./MaintenanceCard";
-
-import { SystemEvent } from "../types";
+import { SystemEvent } from '../types';
 
 interface SystemSettingsProps {
   events: SystemEvent[];
@@ -21,7 +20,7 @@ const SystemSettings = ({ events }: SystemSettingsProps) => {
           System Settings
         </h3>
       </div>
-      
+
       <div className="grid gap-6 md:grid-cols-2">
         <SystemStatus />
         <ResourceUsage />

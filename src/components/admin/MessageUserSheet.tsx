@@ -11,15 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import {
-  Send,
-  Mail,
-  Bell,
-  Loader2,
-  CheckCircle,
-  User,
-  MessageSquare,
-} from 'lucide-react';
+import { Send, Mail, Bell, Loader2, CheckCircle, User, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getInitials, getRoleColor } from '@/utils/adminUtils';
 
@@ -107,11 +99,12 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
 
   const roleColors = getRoleColor(user.role);
 
-  const messageTypes: { id: MessageType; label: string; icon: typeof Mail; description: string }[] = [
-    { id: 'both', label: 'Both', icon: Send, description: 'Email + In-app' },
-    { id: 'email', label: 'Email', icon: Mail, description: 'Send email only' },
-    { id: 'in_app', label: 'In-App', icon: Bell, description: 'Notification only' },
-  ];
+  const messageTypes: { id: MessageType; label: string; icon: typeof Mail; description: string }[] =
+    [
+      { id: 'both', label: 'Both', icon: Send, description: 'Email + In-app' },
+      { id: 'email', label: 'Email', icon: Mail, description: 'Send email only' },
+      { id: 'in_app', label: 'In-App', icon: Bell, description: 'Notification only' },
+    ];
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
@@ -141,17 +134,22 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
               {/* Recipient Card */}
               <div className="p-4 border-b border-white/[0.06]">
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03]">
-                  <div className={cn(
-                    "w-12 h-12 rounded-xl flex items-center justify-center font-bold",
-                    roleColors.bg, roleColors.text
-                  )}>
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-xl flex items-center justify-center font-bold',
+                      roleColors.bg,
+                      roleColors.text
+                    )}
+                  >
                     {getInitials(user.full_name)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="font-medium text-white truncate">{user.full_name || 'Unknown'}</p>
+                      <p className="font-medium text-white truncate">
+                        {user.full_name || 'Unknown'}
+                      </p>
                       {user.role && (
-                        <Badge className={cn("text-[10px] capitalize", roleColors.badge)}>
+                        <Badge className={cn('text-[10px] capitalize', roleColors.badge)}>
                           {user.role}
                         </Badge>
                       )}
@@ -177,20 +175,24 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                         key={type.id}
                         onClick={() => setMessageType(type.id)}
                         className={cn(
-                          "flex-1 flex flex-col items-center gap-1 p-3 rounded-xl border transition-all touch-manipulation",
+                          'flex-1 flex flex-col items-center gap-1 p-3 rounded-xl border transition-all touch-manipulation',
                           isSelected
-                            ? "bg-elec-yellow/20 border-elec-yellow/50"
-                            : "bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.05]"
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50'
+                            : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.05]'
                         )}
                       >
-                        <Icon className={cn(
-                          "h-5 w-5",
-                          isSelected ? "text-elec-yellow" : "text-muted-foreground"
-                        )} />
-                        <span className={cn(
-                          "text-xs font-medium",
-                          isSelected ? "text-elec-yellow" : "text-white"
-                        )}>
+                        <Icon
+                          className={cn(
+                            'h-5 w-5',
+                            isSelected ? 'text-elec-yellow' : 'text-muted-foreground'
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            'text-xs font-medium',
+                            isSelected ? 'text-elec-yellow' : 'text-white'
+                          )}
+                        >
                           {type.label}
                         </span>
                       </button>
@@ -232,9 +234,24 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { label: 'Welcome', subject: 'Welcome to Elec-Mate!', message: "Thanks for joining Elec-Mate! We're excited to have you on board. If you have any questions, don't hesitate to reach out." },
-                      { label: 'Feature Update', subject: 'New Feature Available', message: "We've just released a new feature that we think you'll love. Check it out in your dashboard!" },
-                      { label: 'Support', subject: 'Following up on your query', message: "Hi! Just following up to see if you need any help with your account or have any questions." },
+                      {
+                        label: 'Welcome',
+                        subject: 'Welcome to Elec-Mate!',
+                        message:
+                          "Thanks for joining Elec-Mate! We're excited to have you on board. If you have any questions, don't hesitate to reach out.",
+                      },
+                      {
+                        label: 'Feature Update',
+                        subject: 'New Feature Available',
+                        message:
+                          "We've just released a new feature that we think you'll love. Check it out in your dashboard!",
+                      },
+                      {
+                        label: 'Support',
+                        subject: 'Following up on your query',
+                        message:
+                          'Hi! Just following up to see if you need any help with your account or have any questions.',
+                      },
                     ].map((template) => (
                       <button
                         key={template.label}

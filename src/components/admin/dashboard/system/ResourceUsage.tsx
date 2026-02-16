@@ -1,4 +1,3 @@
-
 const ResourceUsage = () => {
   return (
     <div className="bg-elec-gray-light/10 p-4 rounded-lg">

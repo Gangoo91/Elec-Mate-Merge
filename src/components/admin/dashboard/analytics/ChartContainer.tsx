@@ -1,4 +1,3 @@
-
 interface Metric {
   label: string;
   value: string;
@@ -17,7 +16,7 @@ const ChartContainer = ({ title, metrics, showBarMetrics = false }: ChartContain
       <div className="h-48 flex items-center justify-center border border-dashed border-elec-yellow/20 rounded">
         <p className="text-sm text-gray-400">{title} chart would render here</p>
       </div>
-      
+
       {metrics && (
         <div className="mt-4 grid grid-cols-3 gap-2 text-center">
           {metrics.map((metric, index) => (
@@ -28,7 +27,7 @@ const ChartContainer = ({ title, metrics, showBarMetrics = false }: ChartContain
           ))}
         </div>
       )}
-      
+
       {showBarMetrics && (
         <div className="mt-4">
           <div className="text-xs mb-1">

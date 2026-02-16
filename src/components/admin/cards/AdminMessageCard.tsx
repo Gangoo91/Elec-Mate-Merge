@@ -1,8 +1,8 @@
-import React, { memo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Clock, ThumbsUp, ChevronRight } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
+import React, { memo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Clock, ThumbsUp, ChevronRight } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
 
 interface ChatMessage {
   id: string;
@@ -36,20 +36,14 @@ const AdminMessageCardComponent: React.FC<AdminMessageCardProps> = ({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <p className="font-medium text-sm truncate">
-                {message.author_name}
-              </p>
+              <p className="font-medium text-sm truncate">{message.author_name}</p>
               {message.category && (
-                <Badge
-                  className={`${getCategoryColor(message.category)} text-[10px] py-0`}
-                >
+                <Badge className={`${getCategoryColor(message.category)} text-[10px] py-0`}>
                   {message.category}
                 </Badge>
               )}
             </div>
-            <p className="text-sm text-muted-foreground line-clamp-2">
-              {message.content}
-            </p>
+            <p className="text-sm text-muted-foreground line-clamp-2">{message.content}</p>
             <div className="flex items-center gap-3 mt-2">
               <span className="text-xs text-muted-foreground flex items-center gap-1">
                 <Clock className="h-3 w-3" />

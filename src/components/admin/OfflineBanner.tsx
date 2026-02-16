@@ -1,6 +1,6 @@
-import { WifiOff } from "lucide-react";
-import { useNetworkStatus } from "@/hooks/useNetworkStatus";
-import { AnimatePresence, motion } from "framer-motion";
+import { WifiOff } from 'lucide-react';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function OfflineBanner() {
   const { isOnline } = useNetworkStatus();
@@ -10,7 +10,7 @@ export default function OfflineBanner() {
       {!isOnline && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
+          animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="overflow-hidden"

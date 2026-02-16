@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Loader2, FileText } from "lucide-react";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Loader2, FileText } from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface DocumentProcessorProps {
   title: string;
@@ -16,15 +16,15 @@ interface DocumentProcessorProps {
   statusText?: string;
 }
 
-export const DocumentProcessor = ({ 
-  title, 
-  description, 
-  functionName, 
+export const DocumentProcessor = ({
+  title,
+  description,
+  functionName,
   estimatedTime,
   icon,
   requiresFileUpload = false,
   statusIcon,
-  statusText
+  statusText,
 }: DocumentProcessorProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
@@ -47,10 +47,10 @@ export const DocumentProcessor = ({
     setIsProcessing(true);
     setResult(null);
     setError(null);
-    
+
     try {
       toast.info(`Starting ${title} processing...`, {
-        description: estimatedTime
+        description: estimatedTime,
       });
 
       let body = {};
@@ -58,11 +58,11 @@ export const DocumentProcessor = ({
         const fileContent = await selectedFile.text();
         body = { fileContent };
       }
-      
+
       const { data, error: funcError } = await supabase.functions.invoke(functionName, {
-        body
+        body,
       });
-      
+
       if (funcError) {
         throw new Error(funcError.message || `Function invocation failed: ${funcError}`);
       }
@@ -70,14 +70,13 @@ export const DocumentProcessor = ({
       if (data?.error) {
         throw new Error(data.error);
       }
-      
+
       setResult(data);
       toast.success(`Successfully processed ${title}!`, {
-        description: `${data.chunks_processed || data.chunksProcessed || 'Multiple'} chunks added to database`
+        description: `${data.chunks_processed || data.chunksProcessed || 'Multiple'} chunks added to database`,
       });
-      
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       console.error(`${title} processing error:`, err);
       setError(errorMessage);
       toast.error(`Failed to process ${title}`, {
@@ -124,8 +123,8 @@ export const DocumentProcessor = ({
         )}
 
         <div className="flex items-center gap-4">
-          <Button 
-            onClick={handleProcess} 
+          <Button
+            onClick={handleProcess}
             disabled={isProcessing || (requiresFileUpload && !selectedFile)}
             className="gap-2"
           >
@@ -141,10 +140,8 @@ export const DocumentProcessor = ({
               </>
             )}
           </Button>
-          
-          {isProcessing && (
-            <span className="text-sm text-muted-foreground">{estimatedTime}</span>
-          )}
+
+          {isProcessing && <span className="text-sm text-muted-foreground">{estimatedTime}</span>}
         </div>
 
         {error && (
@@ -158,8 +155,21 @@ export const DocumentProcessor = ({
           <div className="mt-4 p-4 bg-muted rounded-lg space-y-2">
             <div className="font-semibold text-green-600">✅ Processing Complete</div>
             <div className="text-sm space-y-1">
-              <p>Chunks Created: <strong>{result.chunks_created || result.chunksCreated || result.chunksProcessed || 'N/A'}</strong></p>
-              <p>Embeddings Processed: <strong>{result.chunks_processed || result.embeddingsProcessed || result.processed || 'N/A'}</strong></p>
+              <p>
+                Chunks Created:{' '}
+                <strong>
+                  {result.chunks_created || result.chunksCreated || result.chunksProcessed || 'N/A'}
+                </strong>
+              </p>
+              <p>
+                Embeddings Processed:{' '}
+                <strong>
+                  {result.chunks_processed ||
+                    result.embeddingsProcessed ||
+                    result.processed ||
+                    'N/A'}
+                </strong>
+              </p>
               {result.message && <p className="text-muted-foreground italic">{result.message}</p>}
             </div>
           </div>

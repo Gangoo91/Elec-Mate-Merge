@@ -1,4 +1,3 @@
-
 export interface MockUser {
   id: number;
   name: string;

@@ -1,6 +1,5 @@
-
-import { LucideIcon } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { LucideIcon } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 
 interface StatCardProps {
   title: string;
@@ -10,7 +9,13 @@ interface StatCardProps {
   iconColor?: string;
 }
 
-const StatCard = ({ title, value, change, icon: Icon, iconColor = "text-elec-yellow" }: StatCardProps) => {
+const StatCard = ({
+  title,
+  value,
+  change,
+  icon: Icon,
+  iconColor = 'text-elec-yellow',
+}: StatCardProps) => {
   return (
     <Card className="p-4">
       <div className="flex items-center gap-2">

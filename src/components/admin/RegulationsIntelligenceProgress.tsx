@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
-import { Loader2, CheckCircle2, XCircle, PlayCircle, Pause, Play, Zap, Rocket } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { useKeepalive } from "@/hooks/useKeepalive";
-import { formatDistanceToNow } from "date-fns";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { Loader2, CheckCircle2, XCircle, PlayCircle, Pause, Play, Zap, Rocket } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { useKeepalive } from '@/hooks/useKeepalive';
+import { formatDistanceToNow } from 'date-fns';
+import { Badge } from '@/components/ui/badge';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface RegulationsIntelligenceProgressProps {
@@ -16,10 +16,10 @@ interface RegulationsIntelligenceProgressProps {
   title?: string;
 }
 
-export default function RegulationsIntelligenceProgress({ 
+export default function RegulationsIntelligenceProgress({
   jobType = 'enrich_bs7671_embeddings',
   targetTable = 'regulations_intelligence',
-  title = 'BS 7671 Intelligence'
+  title = 'BS 7671 Intelligence',
 }: RegulationsIntelligenceProgressProps) {
   const [status, setStatus] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,8 +29,8 @@ export default function RegulationsIntelligenceProgress({
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const isProcessing = status?.status === 'processing' && 
-    status?.completedBatches < status?.totalBatches;
+  const isProcessing =
+    status?.status === 'processing' && status?.completedBatches < status?.totalBatches;
 
   const fetchStatus = async () => {
     try {
@@ -51,10 +51,13 @@ export default function RegulationsIntelligenceProgress({
       setRowCount(count || 0);
 
       if (jobData) {
-        const completedBatches = jobData.batch_progress?.filter((b: any) => b.status === 'completed').length || 0;
-        const processingBatches = jobData.batch_progress?.filter((b: any) => b.status === 'processing').length || 0;
-        const failedBatches = jobData.batch_progress?.filter((b: any) => b.status === 'failed').length || 0;
-        
+        const completedBatches =
+          jobData.batch_progress?.filter((b: any) => b.status === 'completed').length || 0;
+        const processingBatches =
+          jobData.batch_progress?.filter((b: any) => b.status === 'processing').length || 0;
+        const failedBatches =
+          jobData.batch_progress?.filter((b: any) => b.status === 'failed').length || 0;
+
         const latestProgress = jobData.batch_progress?.[0];
         const processed = latestProgress?.items_processed || 0;
         const progressData = latestProgress?.data as any;
@@ -74,7 +77,7 @@ export default function RegulationsIntelligenceProgress({
           failedBatches,
           avgProcessingTime: avgTime,
           lastUpdate: latestProgress?.created_at,
-          jobId: jobData.id
+          jobId: jobData.id,
         });
       } else {
         setStatus(null);
@@ -90,19 +93,22 @@ export default function RegulationsIntelligenceProgress({
     setIsRecovering(true);
     try {
       // Step 1: Recover stuck batches
-      const { error: recoverError } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'recover' }
-      });
+      const { error: recoverError } = await supabase.functions.invoke(
+        'master-enrichment-scheduler',
+        {
+          body: { action: 'recover' },
+        }
+      );
 
       if (recoverError) throw recoverError;
 
       // Step 2: Start continuous processing for the specific job
       const { error: startError } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { 
+        body: {
           action: 'start',
           scope: 'single',
-          jobType: jobType
-        }
+          jobType: jobType,
+        },
       });
 
       if (startError) throw startError;
@@ -110,12 +116,12 @@ export default function RegulationsIntelligenceProgress({
       if (!keepaliveEnabled) {
         setKeepaliveEnabled(true);
         toast({
-          title: "Auto-refresh enabled",
+          title: 'Auto-refresh enabled',
           description: `${title} will auto-refresh every 2 minutes`,
         });
       } else {
         toast({
-          title: "Continuous processing started",
+          title: 'Continuous processing started',
           description: `${title} worker is now running continuously`,
         });
       }
@@ -125,9 +131,9 @@ export default function RegulationsIntelligenceProgress({
     } catch (error: any) {
       console.error('Recovery error:', error);
       toast({
-        title: "Failed to start processing",
+        title: 'Failed to start processing',
         description: error.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     } finally {
       setIsRecovering(false);
@@ -147,12 +153,12 @@ export default function RegulationsIntelligenceProgress({
     // Aggressive cache clearing on mount
     queryClient.clear();
     queryClient.invalidateQueries();
-    
+
     // Reset state and force fresh fetch
     setStatus(null);
     setIsLoading(true);
     fetchStatus();
-    
+
     // Poll every 5 seconds if processing
     const interval = setInterval(() => {
       if (status?.status === 'processing') {
@@ -168,7 +174,7 @@ export default function RegulationsIntelligenceProgress({
     if (keepaliveEnabled && !isProcessing && status?.completedBatches === status?.totalBatches) {
       setKeepaliveEnabled(false);
       toast({
-        title: "Job completed!",
+        title: 'Job completed!',
         description: `${title} enrichment finished successfully`,
       });
     }
@@ -193,16 +199,18 @@ export default function RegulationsIntelligenceProgress({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {title}
-            <Badge variant="outline" className="gap-1 border-elec-yellow/30 text-elec-yellow text-xs">
+            <Badge
+              variant="outline"
+              className="gap-1 border-elec-yellow/30 text-elec-yellow text-xs"
+            >
               <Rocket className="w-3 h-3" />
               10 Workers Ready
             </Badge>
           </CardTitle>
           <CardDescription>
-            {rowCount > 0 
-              ? `${rowCount.toLocaleString()} regulations enriched - Ready to start fresh` 
-              : 'Ready to enrich 2,557 regulations'
-            }
+            {rowCount > 0
+              ? `${rowCount.toLocaleString()} regulations enriched - Ready to start fresh`
+              : 'Ready to enrich 2,557 regulations'}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -217,7 +225,7 @@ export default function RegulationsIntelligenceProgress({
               <span>~25-30 min with parallel processing</span>
             </div>
           </div>
-          
+
           <div className="flex flex-col gap-2">
             <Badge variant="outline" className="text-xs justify-center">
               GPT-5 Model Enabled
@@ -232,17 +240,18 @@ export default function RegulationsIntelligenceProgress({
   }
 
   const percentage = status.total > 0 ? (status.processed / status.total) * 100 : 0;
-  const eta = status.avgProcessingTime > 0 && status.total > status.processed
-    ? ((status.total - status.processed) * status.avgProcessingTime / 1000 / 60).toFixed(1)
-    : null;
+  const eta =
+    status.avgProcessingTime > 0 && status.total > status.processed
+      ? (((status.total - status.processed) * status.avgProcessingTime) / 1000 / 60).toFixed(1)
+      : null;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 flex-wrap">
-          {status.status === "completed" && <CheckCircle2 className="h-5 w-5 text-green-500" />}
-          {status.status === "failed" && <XCircle className="h-5 w-5 text-destructive" />}
-          {status.status === "processing" && <Loader2 className="h-5 w-5 animate-spin" />}
+          {status.status === 'completed' && <CheckCircle2 className="h-5 w-5 text-green-500" />}
+          {status.status === 'failed' && <XCircle className="h-5 w-5 text-destructive" />}
+          {status.status === 'processing' && <Loader2 className="h-5 w-5 animate-spin" />}
           {title} Enrichment
           {status.processingBatches > 0 && (
             <Badge variant="outline" className="gap-1 border-elec-yellow/30 text-elec-yellow">
@@ -251,9 +260,7 @@ export default function RegulationsIntelligenceProgress({
             </Badge>
           )}
         </CardTitle>
-        <CardDescription>
-          {rowCount.toLocaleString()} entries in database
-        </CardDescription>
+        <CardDescription>{rowCount.toLocaleString()} entries in database</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Auto-refresh Status */}
@@ -272,17 +279,16 @@ export default function RegulationsIntelligenceProgress({
                   className="h-7"
                 >
                   {keepalive.isPaused ? (
-                    <><Play className="h-3 w-3 mr-1" /> Resume</>
+                    <>
+                      <Play className="h-3 w-3 mr-1" /> Resume
+                    </>
                   ) : (
-                    <><Pause className="h-3 w-3 mr-1" /> Pause</>
+                    <>
+                      <Pause className="h-3 w-3 mr-1" /> Pause
+                    </>
                   )}
                 </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={keepalive.pingNow}
-                  className="h-7"
-                >
+                <Button size="sm" variant="outline" onClick={keepalive.pingNow} className="h-7">
                   <Zap className="h-3 w-3 mr-1" /> Process Now
                 </Button>
               </div>
@@ -291,7 +297,9 @@ export default function RegulationsIntelligenceProgress({
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <span>Next refresh in: {keepalive.secondsUntilNext}s</span>
                 {keepalive.lastPingTime && (
-                  <span>Last ping: {formatDistanceToNow(keepalive.lastPingTime, { addSuffix: true })}</span>
+                  <span>
+                    Last ping: {formatDistanceToNow(keepalive.lastPingTime, { addSuffix: true })}
+                  </span>
                 )}
               </div>
             )}
@@ -308,7 +316,9 @@ export default function RegulationsIntelligenceProgress({
           </div>
           <Progress value={percentage} className="h-2" />
           <div className="flex justify-between text-xs text-muted-foreground">
-            <span>{status.processed.toLocaleString()} / {status.total.toLocaleString()} processed</span>
+            <span>
+              {status.processed.toLocaleString()} / {status.total.toLocaleString()} processed
+            </span>
             {eta && <span>ETA: {eta} min</span>}
           </div>
         </div>
@@ -316,7 +326,9 @@ export default function RegulationsIntelligenceProgress({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <p className="text-muted-foreground">Batches</p>
-            <p className="font-medium">{status.completedBatches} / {status.totalBatches}</p>
+            <p className="font-medium">
+              {status.completedBatches} / {status.totalBatches}
+            </p>
           </div>
           <div>
             <p className="text-muted-foreground">Processing</p>
@@ -338,19 +350,19 @@ export default function RegulationsIntelligenceProgress({
           </p>
         )}
 
-        {status.status === "completed" && (
+        {status.status === 'completed' && (
           <div className="text-sm text-green-600 dark:text-green-400">
             ✓ Enrichment completed successfully
           </div>
         )}
 
-        {status.status === "failed" && (
+        {status.status === 'failed' && (
           <div className="text-sm text-destructive">
             ✗ Enrichment failed - check logs for details
           </div>
         )}
 
-        {(status.status === "processing" || status.processingBatches > 0) && (
+        {(status.status === 'processing' || status.processingBatches > 0) && (
           <div className="flex gap-2">
             {!keepaliveEnabled ? (
               <Button
@@ -379,8 +391,8 @@ export default function RegulationsIntelligenceProgress({
                 onClick={() => {
                   setKeepaliveEnabled(false);
                   toast({
-                    title: "Auto-refresh disabled",
-                    description: "Processing will stop after current cycle completes",
+                    title: 'Auto-refresh disabled',
+                    description: 'Processing will stop after current cycle completes',
                   });
                 }}
                 className="w-full"
