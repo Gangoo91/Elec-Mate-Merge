@@ -106,12 +106,6 @@ const TeamBriefingTemplates = () => {
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
   const [activeTab, setActiveTab] = useState<TabId>('active');
 
-  useEffect(() => {
-    fetchBriefings();
-    checkForNearMissData();
-     
-  }, [checkForNearMissData]);
-
   const checkForNearMissData = useCallback(() => {
     const nearMissSessionId = searchParams.get('nearMissSessionId');
     if (nearMissSessionId) {
@@ -181,6 +175,11 @@ const TeamBriefingTemplates = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchBriefings();
+    checkForNearMissData();
+  }, [checkForNearMissData]);
 
   const handleEdit = (briefing: TeamBriefing) => {
     setEditingBriefing(briefing);
