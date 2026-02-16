@@ -59,11 +59,7 @@ import {
   useAddILPTarget,
   useUpdateILPTargetStatus,
 } from '@/hooks/college/useCollegeILP';
-import {
-  useCollegeEPAs,
-  useCreateEPA,
-  useUpdateEPA,
-} from '@/hooks/college/useCollegeEPA';
+import { useCollegeEPAs, useCreateEPA, useUpdateEPA } from '@/hooks/college/useCollegeEPA';
 import {
   useCollegeLessonPlans,
   useUpcomingLessons,
@@ -74,14 +70,14 @@ import {
 } from '@/hooks/college/useCollegeLessonPlans';
 
 // Import types from services
-import type {
-  CollegeStaff,
-  StaffRole,
-} from '@/services/college/collegeStaffService';
+import type { CollegeStaff, StaffRole } from '@/services/college/collegeStaffService';
 import type { CollegeStudent } from '@/services/college/collegeStudentService';
 import type { CollegeCohort } from '@/services/college/collegeCohortService';
 import type { CollegeCourse } from '@/services/college/collegeCourseService';
-import type { CollegeAttendance, AttendanceStatus } from '@/services/college/collegeAttendanceService';
+import type {
+  CollegeAttendance,
+  AttendanceStatus,
+} from '@/services/college/collegeAttendanceService';
 import type { CollegeGrade } from '@/services/college/collegeGradeService';
 import type { CollegeILP, ILPTarget } from '@/services/college/collegeILPService';
 import type { CollegeEPA } from '@/services/college/collegeEPAService';
@@ -146,19 +142,31 @@ interface CollegeSupabaseContextType {
   // Grade/Assessment Actions
   addGrade: (grade: Omit<CollegeGrade, 'id' | 'created_at'>) => Promise<void>;
   updateGrade: (id: string, updates: Partial<CollegeGrade>) => Promise<void>;
-  gradeAssessment: (id: string, grade: string, score: number, feedback: string, assessorId: string) => Promise<void>;
+  gradeAssessment: (
+    id: string,
+    grade: string,
+    score: number,
+    feedback: string,
+    assessorId: string
+  ) => Promise<void>;
   verifyGrade: (id: string) => Promise<void>;
 
   // Attendance Actions
   recordAttendance: (record: Omit<CollegeAttendance, 'id' | 'created_at'>) => Promise<void>;
-  bulkRecordAttendance: (records: Array<Omit<CollegeAttendance, 'id' | 'created_at'>>) => Promise<void>;
+  bulkRecordAttendance: (
+    records: Array<Omit<CollegeAttendance, 'id' | 'created_at'>>
+  ) => Promise<void>;
   updateAttendance: (id: string, updates: Partial<CollegeAttendance>) => Promise<void>;
 
   // ILP Actions
   addILP: (ilp: Omit<CollegeILP, 'id' | 'created_at'>) => Promise<void>;
   updateILP: (id: string, updates: Partial<CollegeILP>) => Promise<void>;
   addILPTarget: (ilpId: string, target: ILPTarget) => Promise<void>;
-  updateILPTargetStatus: (ilpId: string, targetIndex: number, status: ILPTarget['status']) => Promise<void>;
+  updateILPTargetStatus: (
+    ilpId: string,
+    targetIndex: number,
+    status: ILPTarget['status']
+  ) => Promise<void>;
 
   // EPA Actions
   addEPARecord: (record: Omit<CollegeEPA, 'id' | 'created_at' | 'updated_at'>) => Promise<void>;
@@ -235,143 +243,236 @@ export function CollegeSupabaseProvider({ children, collegeId }: CollegeSupabase
   const updateEPAMutation = useUpdateEPA();
 
   // Aggregate loading state
-  const isLoading = staffLoading || studentsLoading || coursesLoading ||
-    cohortsLoading || lessonPlansLoading || attendanceLoading ||
-    gradesLoading || ilpsLoading || epaLoading;
+  const isLoading =
+    staffLoading ||
+    studentsLoading ||
+    coursesLoading ||
+    cohortsLoading ||
+    lessonPlansLoading ||
+    attendanceLoading ||
+    gradesLoading ||
+    ilpsLoading ||
+    epaLoading;
 
   // Staff Actions
-  const addStaff = useCallback(async (staff: Omit<CollegeStaff, 'id' | 'created_at' | 'updated_at'>) => {
-    await createStaffMutation.mutateAsync(staff);
-  }, [createStaffMutation]);
+  const addStaff = useCallback(
+    async (staff: Omit<CollegeStaff, 'id' | 'created_at' | 'updated_at'>) => {
+      await createStaffMutation.mutateAsync(staff);
+    },
+    [createStaffMutation]
+  );
 
-  const updateStaff = useCallback(async (id: string, updates: Partial<CollegeStaff>) => {
-    await updateStaffMutation.mutateAsync({ id, updates });
-  }, [updateStaffMutation]);
+  const updateStaff = useCallback(
+    async (id: string, updates: Partial<CollegeStaff>) => {
+      await updateStaffMutation.mutateAsync({ id, updates });
+    },
+    [updateStaffMutation]
+  );
 
-  const deleteStaff = useCallback(async (id: string) => {
-    await archiveStaffMutation.mutateAsync(id);
-  }, [archiveStaffMutation]);
+  const deleteStaff = useCallback(
+    async (id: string) => {
+      await archiveStaffMutation.mutateAsync(id);
+    },
+    [archiveStaffMutation]
+  );
 
   // Student Actions
-  const addStudent = useCallback(async (student: Omit<CollegeStudent, 'id' | 'created_at' | 'updated_at'>) => {
-    await createStudentMutation.mutateAsync(student);
-  }, [createStudentMutation]);
+  const addStudent = useCallback(
+    async (student: Omit<CollegeStudent, 'id' | 'created_at' | 'updated_at'>) => {
+      await createStudentMutation.mutateAsync(student);
+    },
+    [createStudentMutation]
+  );
 
-  const updateStudent = useCallback(async (id: string, updates: Partial<CollegeStudent>) => {
-    await updateStudentMutation.mutateAsync({ id, updates });
-  }, [updateStudentMutation]);
+  const updateStudent = useCallback(
+    async (id: string, updates: Partial<CollegeStudent>) => {
+      await updateStudentMutation.mutateAsync({ id, updates });
+    },
+    [updateStudentMutation]
+  );
 
-  const withdrawStudent = useCallback(async (id: string) => {
-    await withdrawStudentMutation.mutateAsync(id);
-  }, [withdrawStudentMutation]);
+  const withdrawStudent = useCallback(
+    async (id: string) => {
+      await withdrawStudentMutation.mutateAsync(id);
+    },
+    [withdrawStudentMutation]
+  );
 
-  const assignStudentToCohort = useCallback(async (studentId: string, cohortId: string) => {
-    await assignCohortMutation.mutateAsync({ studentId, cohortId });
-  }, [assignCohortMutation]);
+  const assignStudentToCohort = useCallback(
+    async (studentId: string, cohortId: string) => {
+      await assignCohortMutation.mutateAsync({ studentId, cohortId });
+    },
+    [assignCohortMutation]
+  );
 
   // Course Actions
-  const addCourse = useCallback(async (course: Omit<CollegeCourse, 'id' | 'created_at'>) => {
-    await createCourseMutation.mutateAsync(course);
-  }, [createCourseMutation]);
+  const addCourse = useCallback(
+    async (course: Omit<CollegeCourse, 'id' | 'created_at'>) => {
+      await createCourseMutation.mutateAsync(course);
+    },
+    [createCourseMutation]
+  );
 
-  const updateCourse = useCallback(async (id: string, updates: Partial<CollegeCourse>) => {
-    await updateCourseMutation.mutateAsync({ id, updates });
-  }, [updateCourseMutation]);
+  const updateCourse = useCallback(
+    async (id: string, updates: Partial<CollegeCourse>) => {
+      await updateCourseMutation.mutateAsync({ id, updates });
+    },
+    [updateCourseMutation]
+  );
 
   // Cohort Actions
-  const addCohort = useCallback(async (cohort: Omit<CollegeCohort, 'id' | 'created_at'>) => {
-    await createCohortMutation.mutateAsync(cohort);
-  }, [createCohortMutation]);
+  const addCohort = useCallback(
+    async (cohort: Omit<CollegeCohort, 'id' | 'created_at'>) => {
+      await createCohortMutation.mutateAsync(cohort);
+    },
+    [createCohortMutation]
+  );
 
-  const updateCohort = useCallback(async (id: string, updates: Partial<CollegeCohort>) => {
-    await updateCohortMutation.mutateAsync({ id, updates });
-  }, [updateCohortMutation]);
+  const updateCohort = useCallback(
+    async (id: string, updates: Partial<CollegeCohort>) => {
+      await updateCohortMutation.mutateAsync({ id, updates });
+    },
+    [updateCohortMutation]
+  );
 
   // Lesson Plan Actions
-  const addLessonPlan = useCallback(async (plan: Omit<CollegeLessonPlan, 'id' | 'created_at'>) => {
-    await createLessonPlanMutation.mutateAsync(plan);
-  }, [createLessonPlanMutation]);
+  const addLessonPlan = useCallback(
+    async (plan: Omit<CollegeLessonPlan, 'id' | 'created_at'>) => {
+      await createLessonPlanMutation.mutateAsync(plan);
+    },
+    [createLessonPlanMutation]
+  );
 
-  const updateLessonPlan = useCallback(async (id: string, updates: Partial<CollegeLessonPlan>) => {
-    await updateLessonPlanMutation.mutateAsync({ id, updates });
-  }, [updateLessonPlanMutation]);
+  const updateLessonPlan = useCallback(
+    async (id: string, updates: Partial<CollegeLessonPlan>) => {
+      await updateLessonPlanMutation.mutateAsync({ id, updates });
+    },
+    [updateLessonPlanMutation]
+  );
 
-  const approveLessonPlan = useCallback(async (id: string) => {
-    await approveLessonPlanMutation.mutateAsync(id);
-  }, [approveLessonPlanMutation]);
+  const approveLessonPlan = useCallback(
+    async (id: string) => {
+      await approveLessonPlanMutation.mutateAsync(id);
+    },
+    [approveLessonPlanMutation]
+  );
 
-  const markLessonDelivered = useCallback(async (id: string) => {
-    await markDeliveredMutation.mutateAsync(id);
-  }, [markDeliveredMutation]);
+  const markLessonDelivered = useCallback(
+    async (id: string) => {
+      await markDeliveredMutation.mutateAsync(id);
+    },
+    [markDeliveredMutation]
+  );
 
   // Grade Actions
-  const addGrade = useCallback(async (grade: Omit<CollegeGrade, 'id' | 'created_at'>) => {
-    await createGradeMutation.mutateAsync(grade);
-  }, [createGradeMutation]);
+  const addGrade = useCallback(
+    async (grade: Omit<CollegeGrade, 'id' | 'created_at'>) => {
+      await createGradeMutation.mutateAsync(grade);
+    },
+    [createGradeMutation]
+  );
 
-  const updateGrade = useCallback(async (id: string, updates: Partial<CollegeGrade>) => {
-    await updateGradeMutation.mutateAsync({ id, updates });
-  }, [updateGradeMutation]);
+  const updateGrade = useCallback(
+    async (id: string, updates: Partial<CollegeGrade>) => {
+      await updateGradeMutation.mutateAsync({ id, updates });
+    },
+    [updateGradeMutation]
+  );
 
-  const gradeAssessment = useCallback(async (
-    id: string, grade: string, score: number, feedback: string, assessorId: string
-  ) => {
-    await gradeAssessmentMutation.mutateAsync({ id, grade, score, feedback, assessorId });
-  }, [gradeAssessmentMutation]);
+  const gradeAssessment = useCallback(
+    async (id: string, grade: string, score: number, feedback: string, assessorId: string) => {
+      await gradeAssessmentMutation.mutateAsync({ id, grade, score, feedback, assessorId });
+    },
+    [gradeAssessmentMutation]
+  );
 
-  const verifyGrade = useCallback(async (id: string) => {
-    await verifyGradeMutation.mutateAsync(id);
-  }, [verifyGradeMutation]);
+  const verifyGrade = useCallback(
+    async (id: string) => {
+      await verifyGradeMutation.mutateAsync(id);
+    },
+    [verifyGradeMutation]
+  );
 
   // Attendance Actions
-  const recordAttendance = useCallback(async (record: Omit<CollegeAttendance, 'id' | 'created_at'>) => {
-    await recordAttendanceMutation.mutateAsync(record);
-  }, [recordAttendanceMutation]);
+  const recordAttendance = useCallback(
+    async (record: Omit<CollegeAttendance, 'id' | 'created_at'>) => {
+      await recordAttendanceMutation.mutateAsync(record);
+    },
+    [recordAttendanceMutation]
+  );
 
-  const bulkRecordAttendance = useCallback(async (records: Array<Omit<CollegeAttendance, 'id' | 'created_at'>>) => {
-    await bulkRecordMutation.mutateAsync(records);
-  }, [bulkRecordMutation]);
+  const bulkRecordAttendance = useCallback(
+    async (records: Array<Omit<CollegeAttendance, 'id' | 'created_at'>>) => {
+      await bulkRecordMutation.mutateAsync(records);
+    },
+    [bulkRecordMutation]
+  );
 
-  const updateAttendance = useCallback(async (id: string, updates: Partial<CollegeAttendance>) => {
-    await updateAttendanceMutation.mutateAsync({ id, updates });
-  }, [updateAttendanceMutation]);
+  const updateAttendance = useCallback(
+    async (id: string, updates: Partial<CollegeAttendance>) => {
+      await updateAttendanceMutation.mutateAsync({ id, updates });
+    },
+    [updateAttendanceMutation]
+  );
 
   // ILP Actions
-  const addILP = useCallback(async (ilp: Omit<CollegeILP, 'id' | 'created_at'>) => {
-    await createILPMutation.mutateAsync(ilp);
-  }, [createILPMutation]);
+  const addILP = useCallback(
+    async (ilp: Omit<CollegeILP, 'id' | 'created_at'>) => {
+      await createILPMutation.mutateAsync(ilp);
+    },
+    [createILPMutation]
+  );
 
-  const updateILP = useCallback(async (id: string, updates: Partial<CollegeILP>) => {
-    await updateILPMutation.mutateAsync({ id, updates });
-  }, [updateILPMutation]);
+  const updateILP = useCallback(
+    async (id: string, updates: Partial<CollegeILP>) => {
+      await updateILPMutation.mutateAsync({ id, updates });
+    },
+    [updateILPMutation]
+  );
 
-  const addILPTarget = useCallback(async (ilpId: string, target: ILPTarget) => {
-    await addTargetMutation.mutateAsync({ id: ilpId, target });
-  }, [addTargetMutation]);
+  const addILPTarget = useCallback(
+    async (ilpId: string, target: ILPTarget) => {
+      await addTargetMutation.mutateAsync({ id: ilpId, target });
+    },
+    [addTargetMutation]
+  );
 
-  const updateILPTargetStatus = useCallback(async (
-    ilpId: string, targetIndex: number, status: ILPTarget['status']
-  ) => {
-    await updateTargetStatusMutation.mutateAsync({ id: ilpId, targetIndex, status });
-  }, [updateTargetStatusMutation]);
+  const updateILPTargetStatus = useCallback(
+    async (ilpId: string, targetIndex: number, status: ILPTarget['status']) => {
+      await updateTargetStatusMutation.mutateAsync({ id: ilpId, targetIndex, status });
+    },
+    [updateTargetStatusMutation]
+  );
 
   // EPA Actions
-  const addEPARecord = useCallback(async (record: Omit<CollegeEPA, 'id' | 'created_at' | 'updated_at'>) => {
-    await createEPAMutation.mutateAsync(record);
-  }, [createEPAMutation]);
+  const addEPARecord = useCallback(
+    async (record: Omit<CollegeEPA, 'id' | 'created_at' | 'updated_at'>) => {
+      await createEPAMutation.mutateAsync(record);
+    },
+    [createEPAMutation]
+  );
 
-  const updateEPARecord = useCallback(async (id: string, updates: Partial<CollegeEPA>) => {
-    await updateEPAMutation.mutateAsync({ id, updates });
-  }, [updateEPAMutation]);
+  const updateEPARecord = useCallback(
+    async (id: string, updates: Partial<CollegeEPA>) => {
+      await updateEPAMutation.mutateAsync({ id, updates });
+    },
+    [updateEPAMutation]
+  );
 
   // Calculated value getters
-  const getStudentsByCohort = useCallback((cohortId: string) => {
-    return (studentsData || []).filter(s => s.cohort_id === cohortId && s.status === 'Active');
-  }, [studentsData]);
+  const getStudentsByCohort = useCallback(
+    (cohortId: string) => {
+      return (studentsData || []).filter((s) => s.cohort_id === cohortId && s.status === 'Active');
+    },
+    [studentsData]
+  );
 
-  const getStaffByRole = useCallback((role: StaffRole) => {
-    return (staffData || []).filter(s => s.role === role && s.status === 'Active');
-  }, [staffData]);
+  const getStaffByRole = useCallback(
+    (role: StaffRole) => {
+      return (staffData || []).filter((s) => s.role === role && s.status === 'Active');
+    },
+    [staffData]
+  );
 
   const getUpcomingLessonsData = useCallback(() => {
     return upcomingLessonsData || [];
@@ -389,92 +490,171 @@ export function CollegeSupabaseProvider({ children, collegeId }: CollegeSupabase
     return pendingGradesData || [];
   }, [pendingGradesData]);
 
-  const value: CollegeSupabaseContextType = useMemo(() => ({
-    isLoading,
+  const value: CollegeSupabaseContextType = useMemo(
+    () => ({
+      isLoading,
 
-    // Data arrays
-    staff: staffData || [],
-    students: studentsData || [],
-    courses: coursesData || [],
-    cohorts: cohortsData || [],
-    lessonPlans: lessonPlansData || [],
-    attendance: attendanceData || [],
-    grades: gradesData || [],
-    ilps: ilpsData || [],
-    epaRecords: epaData || [],
+      // Data arrays
+      staff: staffData || [],
+      students: studentsData || [],
+      courses: coursesData || [],
+      cohorts: cohortsData || [],
+      lessonPlans: lessonPlansData || [],
+      attendance: attendanceData || [],
+      grades: gradesData || [],
+      ilps: ilpsData || [],
+      epaRecords: epaData || [],
 
-    // Actions
-    addStaff,
-    updateStaff,
-    deleteStaff,
-    addStudent,
-    updateStudent,
-    withdrawStudent,
-    assignStudentToCohort,
-    addCourse,
-    updateCourse,
-    addCohort,
-    updateCohort,
-    addLessonPlan,
-    updateLessonPlan,
-    approveLessonPlan,
-    markLessonDelivered,
-    addGrade,
-    updateGrade,
-    gradeAssessment,
-    verifyGrade,
-    recordAttendance,
-    bulkRecordAttendance,
-    updateAttendance,
-    addILP,
-    updateILP,
-    addILPTarget,
-    updateILPTargetStatus,
-    addEPARecord,
-    updateEPARecord,
+      // Actions
+      addStaff,
+      updateStaff,
+      deleteStaff,
+      addStudent,
+      updateStudent,
+      withdrawStudent,
+      assignStudentToCohort,
+      addCourse,
+      updateCourse,
+      addCohort,
+      updateCohort,
+      addLessonPlan,
+      updateLessonPlan,
+      approveLessonPlan,
+      markLessonDelivered,
+      addGrade,
+      updateGrade,
+      gradeAssessment,
+      verifyGrade,
+      recordAttendance,
+      bulkRecordAttendance,
+      updateAttendance,
+      addILP,
+      updateILP,
+      addILPTarget,
+      updateILPTargetStatus,
+      addEPARecord,
+      updateEPARecord,
 
-    // Getters
-    getStudentsByCohort,
-    getStaffByRole,
-    getUpcomingLessonsData,
-    getStudentsAtRiskData,
-    getOverdueILPReviewsData,
-    getPendingGradesData,
-  }), [
-    isLoading,
-    staffData, studentsData, coursesData, cohortsData,
-    lessonPlansData, attendanceData, gradesData, ilpsData, epaData,
-    addStaff, updateStaff, deleteStaff,
-    addStudent, updateStudent, withdrawStudent, assignStudentToCohort,
-    addCourse, updateCourse,
-    addCohort, updateCohort,
-    addLessonPlan, updateLessonPlan, approveLessonPlan, markLessonDelivered,
-    addGrade, updateGrade, gradeAssessment, verifyGrade,
-    recordAttendance, bulkRecordAttendance, updateAttendance,
-    addILP, updateILP, addILPTarget, updateILPTargetStatus,
-    addEPARecord, updateEPARecord,
-    getStudentsByCohort, getStaffByRole, getUpcomingLessonsData,
-    getStudentsAtRiskData, getOverdueILPReviewsData, getPendingGradesData,
-  ]);
+      // Getters
+      getStudentsByCohort,
+      getStaffByRole,
+      getUpcomingLessonsData,
+      getStudentsAtRiskData,
+      getOverdueILPReviewsData,
+      getPendingGradesData,
+    }),
+    [
+      isLoading,
+      staffData,
+      studentsData,
+      coursesData,
+      cohortsData,
+      lessonPlansData,
+      attendanceData,
+      gradesData,
+      ilpsData,
+      epaData,
+      addStaff,
+      updateStaff,
+      deleteStaff,
+      addStudent,
+      updateStudent,
+      withdrawStudent,
+      assignStudentToCohort,
+      addCourse,
+      updateCourse,
+      addCohort,
+      updateCohort,
+      addLessonPlan,
+      updateLessonPlan,
+      approveLessonPlan,
+      markLessonDelivered,
+      addGrade,
+      updateGrade,
+      gradeAssessment,
+      verifyGrade,
+      recordAttendance,
+      bulkRecordAttendance,
+      updateAttendance,
+      addILP,
+      updateILP,
+      addILPTarget,
+      updateILPTargetStatus,
+      addEPARecord,
+      updateEPARecord,
+      getStudentsByCohort,
+      getStaffByRole,
+      getUpcomingLessonsData,
+      getStudentsAtRiskData,
+      getOverdueILPReviewsData,
+      getPendingGradesData,
+    ]
+  );
 
   return (
-    <CollegeSupabaseContext.Provider value={value}>
-      {children}
-    </CollegeSupabaseContext.Provider>
+    <CollegeSupabaseContext.Provider value={value}>{children}</CollegeSupabaseContext.Provider>
   );
 }
+
+// Default empty context for graceful fallback when provider is missing
+const emptyContext: CollegeSupabaseContextType = {
+  isLoading: false,
+  staff: [],
+  students: [],
+  courses: [],
+  cohorts: [],
+  lessonPlans: [],
+  attendance: [],
+  grades: [],
+  ilps: [],
+  epaRecords: [],
+  addStaff: async () => {},
+  updateStaff: async () => {},
+  deleteStaff: async () => {},
+  addStudent: async () => {},
+  updateStudent: async () => {},
+  withdrawStudent: async () => {},
+  assignStudentToCohort: async () => {},
+  addCourse: async () => {},
+  updateCourse: async () => {},
+  addCohort: async () => {},
+  updateCohort: async () => {},
+  addLessonPlan: async () => {},
+  updateLessonPlan: async () => {},
+  approveLessonPlan: async () => {},
+  markLessonDelivered: async () => {},
+  addGrade: async () => {},
+  updateGrade: async () => {},
+  gradeAssessment: async () => {},
+  verifyGrade: async () => {},
+  recordAttendance: async () => {},
+  bulkRecordAttendance: async () => {},
+  updateAttendance: async () => {},
+  addILP: async () => {},
+  updateILP: async () => {},
+  addILPTarget: async () => {},
+  updateILPTargetStatus: async () => {},
+  addEPARecord: async () => {},
+  updateEPARecord: async () => {},
+  getStudentsByCohort: () => [],
+  getStaffByRole: () => [],
+  getUpcomingLessonsData: () => [],
+  getStudentsAtRiskData: () => [],
+  getOverdueILPReviewsData: () => [],
+  getPendingGradesData: () => [],
+};
 
 export function useCollegeSupabase() {
   const context = useContext(CollegeSupabaseContext);
   if (context === undefined) {
-    throw new Error('useCollegeSupabase must be used within a CollegeSupabaseProvider');
+    console.warn(
+      'useCollegeSupabase called outside CollegeSupabaseProvider — returning empty defaults'
+    );
+    return emptyContext;
   }
   return context;
 }
 
-// Export a hook that can switch between mock and Supabase based on env
 export function useCollegeData() {
-  // For now, use the Supabase context
-  // To use mock data, components can still use the original useCollege() from CollegeContext
   return useCollegeSupabase();
 }

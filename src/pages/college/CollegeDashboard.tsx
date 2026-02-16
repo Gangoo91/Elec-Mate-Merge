@@ -1,8 +1,8 @@
 import { useState, useCallback, lazy, Suspense } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CollegeProvider } from '@/contexts/CollegeContext';
+import { CollegeSupabaseProvider } from '@/contexts/CollegeSupabaseContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
-import { QuickActions } from '@/components/college/QuickActions';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { Button } from '@/components/ui/button';
 import { Search, ArrowLeft, School, Settings, Loader2 } from 'lucide-react';
@@ -47,11 +47,6 @@ const TeachingResourcesSection = lazy(() =>
     default: m.TeachingResourcesSection,
   }))
 );
-const SchemesOfWorkSection = lazy(() =>
-  import('@/components/college/sections/SchemesOfWorkSection').then((m) => ({
-    default: m.SchemesOfWorkSection,
-  }))
-);
 const GradingSection = lazy(() =>
   import('@/components/college/sections/GradingSection').then((m) => ({
     default: m.GradingSection,
@@ -85,11 +80,6 @@ const PortfolioSection = lazy(() =>
 const WorkQueueSection = lazy(() =>
   import('@/components/college/sections/WorkQueueSection').then((m) => ({
     default: m.WorkQueueSection,
-  }))
-);
-const DocumentLibrarySection = lazy(() =>
-  import('@/components/college/sections/DocumentLibrarySection').then((m) => ({
-    default: m.DocumentLibrarySection,
   }))
 );
 const ComplianceDocsSection = lazy(() =>
@@ -153,7 +143,6 @@ export type CollegeSection =
   | 'courses'
   | 'lessonplans'
   | 'teachingresources'
-  | 'schemesofwork'
   | 'tutornotebook'
   // Assessment Hub sections
   | 'grading'
@@ -164,7 +153,6 @@ export type CollegeSection =
   | 'portfolio'
   | 'workqueue'
   // Resources Hub sections
-  | 'documentlibrary'
   | 'compliancedocs'
   | 'ltisettings'
   | 'collegesettings'
@@ -185,7 +173,6 @@ const sectionTitles: Record<CollegeSection, string> = {
   courses: 'Courses',
   lessonplans: 'Lesson Plans',
   teachingresources: 'Teaching Resources',
-  schemesofwork: 'Schemes of Work',
   tutornotebook: 'Tutor Notebook',
   grading: 'Grading',
   attendance: 'Attendance',
@@ -194,7 +181,6 @@ const sectionTitles: Record<CollegeSection, string> = {
   progresstracking: 'Progress Tracking',
   portfolio: 'Portfolio',
   workqueue: 'Work Queue',
-  documentlibrary: 'Document Library',
   compliancedocs: 'Compliance Docs',
   ltisettings: 'LTI Settings',
   collegesettings: 'College Settings',
@@ -203,6 +189,7 @@ const sectionTitles: Record<CollegeSection, string> = {
 
 const CollegeDashboard = () => {
   const navigate = useNavigate();
+  const { profile } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = (searchParams.get('section') as CollegeSection) || 'overview';
   const setActiveSection = (section: CollegeSection) =>
@@ -276,10 +263,6 @@ const CollegeDashboard = () => {
       teachingresources: 'teachingresources',
       'teaching resources': 'teachingresources',
       materials: 'teachingresources',
-      'schemes-of-work': 'schemesofwork',
-      schemesofwork: 'schemesofwork',
-      'schemes of work': 'schemesofwork',
-      schemes: 'schemesofwork',
       'tutor-notebook': 'tutornotebook',
       tutornotebook: 'tutornotebook',
       'tutor notebook': 'tutornotebook',
@@ -314,10 +297,6 @@ const CollegeDashboard = () => {
       queue: 'workqueue',
 
       // Resources Hub sections
-      'document-library': 'documentlibrary',
-      documentlibrary: 'documentlibrary',
-      'document library': 'documentlibrary',
-      documents: 'documentlibrary',
       'compliance-docs': 'compliancedocs',
       compliancedocs: 'compliancedocs',
       'compliance docs': 'compliancedocs',
@@ -353,7 +332,6 @@ const CollegeDashboard = () => {
       'courses',
       'lessonplans',
       'teachingresources',
-      'schemesofwork',
       'tutornotebook',
     ];
     const assessmentSubSections: CollegeSection[] = [
@@ -366,7 +344,6 @@ const CollegeDashboard = () => {
       'workqueue',
     ];
     const resourcesSubSections: CollegeSection[] = [
-      'documentlibrary',
       'compliancedocs',
       'ltisettings',
       'collegesettings',
@@ -426,8 +403,6 @@ const CollegeDashboard = () => {
         return <LessonPlansSection />;
       case 'teachingresources':
         return <TeachingResourcesSection />;
-      case 'schemesofwork':
-        return <SchemesOfWorkSection />;
       case 'tutornotebook':
         return <TutorNotebookSection />;
 
@@ -448,8 +423,6 @@ const CollegeDashboard = () => {
         return <WorkQueueSection onNavigate={handleNavigate} />;
 
       // Resources Hub sections
-      case 'documentlibrary':
-        return <DocumentLibrarySection />;
       case 'compliancedocs':
         return <ComplianceDocsSection />;
       case 'ltisettings':
@@ -467,8 +440,8 @@ const CollegeDashboard = () => {
   };
 
   return (
-    <CollegeProvider>
-      <div className="mobile-safe-area">
+    <CollegeSupabaseProvider collegeId={profile?.college_id ?? undefined}>
+      <div className="mobile-safe-area bg-elec-dark">
         <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 py-4 md:py-6 pb-20 sm:pb-12">
           {/* Header - Native App Style (non-sticky) */}
           <div className="relative w-full">
@@ -530,7 +503,7 @@ const CollegeDashboard = () => {
                 <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-foreground mb-2">
                   {sectionTitles[activeSection]}
                 </h1>
-                <p className="text-sm sm:text-base text-muted-foreground">
+                <p className="text-sm sm:text-base text-white">
                   {activeSection === 'overview' ? 'Manage your apprenticeship programme' : ''}
                 </p>
               </div>
@@ -546,12 +519,9 @@ const CollegeDashboard = () => {
             onOpenChange={setCommandPaletteOpen}
             onNavigate={handleNavigate}
           />
-
-          {/* Quick Actions FAB */}
-          <QuickActions onNavigate={handleNavigate} />
         </div>
       </div>
-    </CollegeProvider>
+    </CollegeSupabaseProvider>
   );
 };
 

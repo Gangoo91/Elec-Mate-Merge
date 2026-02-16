@@ -115,7 +115,14 @@ interface CollegeContextType {
   // Assessment Actions
   addAssessment: (assessment: Omit<CollegeAssessment, 'id'>) => void;
   updateAssessment: (id: string, updates: Partial<CollegeAssessment>) => void;
-  gradeAssessment: (id: string, grade: string, score: number, feedback: string, assessorId: string, assessorName: string) => void;
+  gradeAssessment: (
+    id: string,
+    grade: string,
+    score: number,
+    feedback: string,
+    assessorId: string,
+    assessorName: string
+  ) => void;
   verifyAssessment: (id: string) => void;
 
   // Attendance Actions
@@ -127,7 +134,11 @@ interface CollegeContextType {
   addILP: (ilp: Omit<CollegeILP, 'id'>) => void;
   updateILP: (id: string, updates: Partial<CollegeILP>) => void;
   addILPTarget: (ilpId: string, target: CollegeILP['shortTermTargets'][0]) => void;
-  updateILPTarget: (ilpId: string, targetIndex: number, status: 'Pending' | 'Achieved' | 'Overdue' | 'In Progress') => void;
+  updateILPTarget: (
+    ilpId: string,
+    targetIndex: number,
+    status: 'Pending' | 'Achieved' | 'Overdue' | 'In Progress'
+  ) => void;
 
   // EPA Actions
   addEPARecord: (record: Omit<CollegeEPARecord, 'id'>) => void;
@@ -137,7 +148,9 @@ interface CollegeContextType {
   updateStudentProgress: (id: string, updates: Partial<CollegeStudentProgress>) => void;
 
   // Resource Actions
-  addTeachingResource: (resource: Omit<CollegeTeachingResource, 'id' | 'downloadCount' | 'createdAt'>) => void;
+  addTeachingResource: (
+    resource: Omit<CollegeTeachingResource, 'id' | 'downloadCount' | 'createdAt'>
+  ) => void;
   updateTeachingResource: (id: string, updates: Partial<CollegeTeachingResource>) => void;
   deleteTeachingResource: (id: string) => void;
   incrementResourceDownload: (id: string) => void;
@@ -147,7 +160,13 @@ interface CollegeContextType {
   updatePortfolio: (id: string, updates: Partial<CollegePortfolio>) => void;
   addEvidence: (evidence: Omit<PortfolioEvidence, 'id'>) => void;
   updateEvidence: (id: string, updates: Partial<PortfolioEvidence>) => void;
-  reviewEvidence: (id: string, status: EvidenceStatus, feedback: string, reviewerId: string, reviewerName: string) => void;
+  reviewEvidence: (
+    id: string,
+    status: EvidenceStatus,
+    feedback: string,
+    reviewerId: string,
+    reviewerName: string
+  ) => void;
 
   // Comment Actions
   addComment: (comment: Omit<CollegeComment, 'id'>) => void;
@@ -181,7 +200,8 @@ interface CollegeContextType {
 const CollegeContext = createContext<CollegeContextType | undefined>(undefined);
 
 // Generate unique ID
-const generateId = (prefix: string) => `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+const generateId = (prefix: string) =>
+  `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
 export function CollegeProvider({ children }: { children: ReactNode }) {
   const [staff, setStaff] = useState<CollegeStaff[]>(mockStaff);
@@ -193,10 +213,13 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
   const [attendance, setAttendance] = useState<CollegeAttendance[]>(mockAttendance);
   const [ilps, setILPs] = useState<CollegeILP[]>(mockILPs);
   const [epaRecords, setEPARecords] = useState<CollegeEPARecord[]>(mockEPARecords);
-  const [studentProgress, setStudentProgress] = useState<CollegeStudentProgress[]>(mockStudentProgress);
-  const [teachingResources, setTeachingResources] = useState<CollegeTeachingResource[]>(mockTeachingResources);
+  const [studentProgress, setStudentProgress] =
+    useState<CollegeStudentProgress[]>(mockStudentProgress);
+  const [teachingResources, setTeachingResources] =
+    useState<CollegeTeachingResource[]>(mockTeachingResources);
   const [portfolios, setPortfolios] = useState<CollegePortfolio[]>(mockPortfolios);
-  const [portfolioEvidence, setPortfolioEvidence] = useState<PortfolioEvidence[]>(mockPortfolioEvidence);
+  const [portfolioEvidence, setPortfolioEvidence] =
+    useState<PortfolioEvidence[]>(mockPortfolioEvidence);
   const [comments, setComments] = useState<CollegeComment[]>(mockComments);
   const [workAssignments, setWorkAssignments] = useState<WorkAssignment[]>(mockWorkAssignments);
 
@@ -208,15 +231,15 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newStaff,
       id: generateId('staff'),
     };
-    setStaff(prev => [...prev, staffMember]);
+    setStaff((prev) => [...prev, staffMember]);
   }, []);
 
   const updateStaff = useCallback((id: string, updates: Partial<CollegeStaff>) => {
-    setStaff(prev => prev.map(s => s.id === id ? { ...s, ...updates } : s));
+    setStaff((prev) => prev.map((s) => (s.id === id ? { ...s, ...updates } : s)));
   }, []);
 
   const deleteStaff = useCallback((id: string) => {
-    setStaff(prev => prev.map(s => s.id === id ? { ...s, status: 'Archived' as const } : s));
+    setStaff((prev) => prev.map((s) => (s.id === id ? { ...s, status: 'Archived' as const } : s)));
   }, []);
 
   // ============================================
@@ -227,53 +250,65 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newStudent,
       id: generateId('student'),
     };
-    setStudents(prev => [...prev, student]);
+    setStudents((prev) => [...prev, student]);
 
     // Update cohort student count if assigned
     if (newStudent.cohortId) {
-      setCohorts(prev => prev.map(c =>
-        c.id === newStudent.cohortId ? { ...c, currentStudents: c.currentStudents + 1 } : c
-      ));
+      setCohorts((prev) =>
+        prev.map((c) =>
+          c.id === newStudent.cohortId ? { ...c, currentStudents: c.currentStudents + 1 } : c
+        )
+      );
     }
   }, []);
 
   const updateStudent = useCallback((id: string, updates: Partial<CollegeStudent>) => {
-    setStudents(prev => prev.map(s => s.id === id ? { ...s, ...updates } : s));
+    setStudents((prev) => prev.map((s) => (s.id === id ? { ...s, ...updates } : s)));
   }, []);
 
-  const withdrawStudent = useCallback((id: string) => {
-    const student = students.find(s => s.id === id);
-    setStudents(prev => prev.map(s =>
-      s.id === id ? { ...s, status: 'Withdrawn' as const } : s
-    ));
+  const withdrawStudent = useCallback(
+    (id: string) => {
+      const student = students.find((s) => s.id === id);
+      setStudents((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, status: 'Withdrawn' as const } : s))
+      );
 
-    // Update cohort count
-    if (student?.cohortId) {
-      setCohorts(prev => prev.map(c =>
-        c.id === student.cohortId ? { ...c, currentStudents: Math.max(0, c.currentStudents - 1) } : c
-      ));
-    }
-  }, [students]);
-
-  const assignStudentToCohort = useCallback((studentId: string, cohortId: string) => {
-    const student = students.find(s => s.id === studentId);
-    const oldCohortId = student?.cohortId;
-
-    setStudents(prev => prev.map(s =>
-      s.id === studentId ? { ...s, cohortId } : s
-    ));
-
-    // Update cohort counts
-    setCohorts(prev => prev.map(c => {
-      if (c.id === oldCohortId) {
-        return { ...c, currentStudents: Math.max(0, c.currentStudents - 1) };
+      // Update cohort count
+      if (student?.cohortId) {
+        setCohorts((prev) =>
+          prev.map((c) =>
+            c.id === student.cohortId
+              ? { ...c, currentStudents: Math.max(0, c.currentStudents - 1) }
+              : c
+          )
+        );
       }
-      if (c.id === cohortId) {
-        return { ...c, currentStudents: c.currentStudents + 1 };
-      }
-      return c;
-    }));
-  }, [students]);
+    },
+    [students]
+  );
+
+  const assignStudentToCohort = useCallback(
+    (studentId: string, cohortId: string) => {
+      const student = students.find((s) => s.id === studentId);
+      const oldCohortId = student?.cohortId;
+
+      setStudents((prev) => prev.map((s) => (s.id === studentId ? { ...s, cohortId } : s)));
+
+      // Update cohort counts
+      setCohorts((prev) =>
+        prev.map((c) => {
+          if (c.id === oldCohortId) {
+            return { ...c, currentStudents: Math.max(0, c.currentStudents - 1) };
+          }
+          if (c.id === cohortId) {
+            return { ...c, currentStudents: c.currentStudents + 1 };
+          }
+          return c;
+        })
+      );
+    },
+    [students]
+  );
 
   // ============================================
   // Course Actions
@@ -283,11 +318,11 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newCourse,
       id: generateId('course'),
     };
-    setCourses(prev => [...prev, course]);
+    setCourses((prev) => [...prev, course]);
   }, []);
 
   const updateCourse = useCallback((id: string, updates: Partial<CollegeCourse>) => {
-    setCourses(prev => prev.map(c => c.id === id ? { ...c, ...updates } : c));
+    setCourses((prev) => prev.map((c) => (c.id === id ? { ...c, ...updates } : c)));
   }, []);
 
   // ============================================
@@ -299,11 +334,11 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       id: generateId('cohort'),
       currentStudents: 0,
     };
-    setCohorts(prev => [...prev, cohort]);
+    setCohorts((prev) => [...prev, cohort]);
   }, []);
 
   const updateCohort = useCallback((id: string, updates: Partial<CollegeCohort>) => {
-    setCohorts(prev => prev.map(c => c.id === id ? { ...c, ...updates } : c));
+    setCohorts((prev) => prev.map((c) => (c.id === id ? { ...c, ...updates } : c)));
   }, []);
 
   // ============================================
@@ -314,23 +349,23 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newPlan,
       id: generateId('lp'),
     };
-    setLessonPlans(prev => [...prev, plan]);
+    setLessonPlans((prev) => [...prev, plan]);
   }, []);
 
   const updateLessonPlan = useCallback((id: string, updates: Partial<CollegeLessonPlan>) => {
-    setLessonPlans(prev => prev.map(lp => lp.id === id ? { ...lp, ...updates } : lp));
+    setLessonPlans((prev) => prev.map((lp) => (lp.id === id ? { ...lp, ...updates } : lp)));
   }, []);
 
   const approveLessonPlan = useCallback((id: string) => {
-    setLessonPlans(prev => prev.map(lp =>
-      lp.id === id ? { ...lp, status: 'Approved' as const } : lp
-    ));
+    setLessonPlans((prev) =>
+      prev.map((lp) => (lp.id === id ? { ...lp, status: 'Approved' as const } : lp))
+    );
   }, []);
 
   const markLessonDelivered = useCallback((id: string) => {
-    setLessonPlans(prev => prev.map(lp =>
-      lp.id === id ? { ...lp, status: 'Delivered' as const } : lp
-    ));
+    setLessonPlans((prev) =>
+      prev.map((lp) => (lp.id === id ? { ...lp, status: 'Delivered' as const } : lp))
+    );
   }, []);
 
   // ============================================
@@ -341,39 +376,46 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newAssessment,
       id: generateId('assess'),
     };
-    setAssessments(prev => [...prev, assessment]);
+    setAssessments((prev) => [...prev, assessment]);
   }, []);
 
   const updateAssessment = useCallback((id: string, updates: Partial<CollegeAssessment>) => {
-    setAssessments(prev => prev.map(a => a.id === id ? { ...a, ...updates } : a));
+    setAssessments((prev) => prev.map((a) => (a.id === id ? { ...a, ...updates } : a)));
   }, []);
 
-  const gradeAssessment = useCallback((
-    id: string,
-    grade: string,
-    score: number,
-    feedback: string,
-    assessorId: string,
-    assessorName: string
-  ) => {
-    setAssessments(prev => prev.map(a =>
-      a.id === id ? {
-        ...a,
-        grade,
-        score,
-        feedback,
-        assessorId,
-        assessorName,
-        gradedDate: new Date().toISOString().split('T')[0],
-        status: 'Graded' as const
-      } : a
-    ));
-  }, []);
+  const gradeAssessment = useCallback(
+    (
+      id: string,
+      grade: string,
+      score: number,
+      feedback: string,
+      assessorId: string,
+      assessorName: string
+    ) => {
+      setAssessments((prev) =>
+        prev.map((a) =>
+          a.id === id
+            ? {
+                ...a,
+                grade,
+                score,
+                feedback,
+                assessorId,
+                assessorName,
+                gradedDate: new Date().toISOString().split('T')[0],
+                status: 'Graded' as const,
+              }
+            : a
+        )
+      );
+    },
+    []
+  );
 
   const verifyAssessment = useCallback((id: string) => {
-    setAssessments(prev => prev.map(a =>
-      a.id === id ? { ...a, status: 'Verified' as const } : a
-    ));
+    setAssessments((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, status: 'Verified' as const } : a))
+    );
   }, []);
 
   // ============================================
@@ -384,19 +426,19 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...record,
       id: generateId('att'),
     };
-    setAttendance(prev => [...prev, newRecord]);
+    setAttendance((prev) => [...prev, newRecord]);
   }, []);
 
   const bulkRecordAttendance = useCallback((records: Array<Omit<CollegeAttendance, 'id'>>) => {
-    const newRecords = records.map(r => ({
+    const newRecords = records.map((r) => ({
       ...r,
       id: generateId('att'),
     }));
-    setAttendance(prev => [...prev, ...newRecords]);
+    setAttendance((prev) => [...prev, ...newRecords]);
   }, []);
 
   const updateAttendance = useCallback((id: string, updates: Partial<CollegeAttendance>) => {
-    setAttendance(prev => prev.map(a => a.id === id ? { ...a, ...updates } : a));
+    setAttendance((prev) => prev.map((a) => (a.id === id ? { ...a, ...updates } : a)));
   }, []);
 
   // ============================================
@@ -407,35 +449,42 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newILP,
       id: generateId('ilp'),
     };
-    setILPs(prev => [...prev, ilp]);
+    setILPs((prev) => [...prev, ilp]);
   }, []);
 
   const updateILP = useCallback((id: string, updates: Partial<CollegeILP>) => {
-    setILPs(prev => prev.map(ilp => ilp.id === id ? { ...ilp, ...updates } : ilp));
+    setILPs((prev) => prev.map((ilp) => (ilp.id === id ? { ...ilp, ...updates } : ilp)));
   }, []);
 
   const addILPTarget = useCallback((ilpId: string, target: CollegeILP['shortTermTargets'][0]) => {
-    setILPs(prev => prev.map(ilp =>
-      ilp.id === ilpId ? { ...ilp, shortTermTargets: [...ilp.shortTermTargets, target] } : ilp
-    ));
+    setILPs((prev) =>
+      prev.map((ilp) =>
+        ilp.id === ilpId ? { ...ilp, shortTermTargets: [...ilp.shortTermTargets, target] } : ilp
+      )
+    );
   }, []);
 
-  const updateILPTarget = useCallback((
-    ilpId: string,
-    targetIndex: number,
-    status: 'Pending' | 'Achieved' | 'Overdue' | 'In Progress'
-  ) => {
-    setILPs(prev => prev.map(ilp => {
-      if (ilp.id === ilpId) {
-        const newTargets = [...ilp.shortTermTargets];
-        if (newTargets[targetIndex]) {
-          newTargets[targetIndex] = { ...newTargets[targetIndex], status };
-        }
-        return { ...ilp, shortTermTargets: newTargets };
-      }
-      return ilp;
-    }));
-  }, []);
+  const updateILPTarget = useCallback(
+    (
+      ilpId: string,
+      targetIndex: number,
+      status: 'Pending' | 'Achieved' | 'Overdue' | 'In Progress'
+    ) => {
+      setILPs((prev) =>
+        prev.map((ilp) => {
+          if (ilp.id === ilpId) {
+            const newTargets = [...ilp.shortTermTargets];
+            if (newTargets[targetIndex]) {
+              newTargets[targetIndex] = { ...newTargets[targetIndex], status };
+            }
+            return { ...ilp, shortTermTargets: newTargets };
+          }
+          return ilp;
+        })
+      );
+    },
+    []
+  );
 
   // ============================================
   // EPA Actions
@@ -445,45 +494,54 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...record,
       id: generateId('epa'),
     };
-    setEPARecords(prev => [...prev, epaRecord]);
+    setEPARecords((prev) => [...prev, epaRecord]);
   }, []);
 
   const updateEPARecord = useCallback((id: string, updates: Partial<CollegeEPARecord>) => {
-    setEPARecords(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e));
+    setEPARecords((prev) => prev.map((e) => (e.id === id ? { ...e, ...updates } : e)));
   }, []);
 
   // ============================================
   // Progress Actions
   // ============================================
-  const updateStudentProgress = useCallback((id: string, updates: Partial<CollegeStudentProgress>) => {
-    setStudentProgress(prev => prev.map(p => p.id === id ? { ...p, ...updates } : p));
-  }, []);
+  const updateStudentProgress = useCallback(
+    (id: string, updates: Partial<CollegeStudentProgress>) => {
+      setStudentProgress((prev) => prev.map((p) => (p.id === id ? { ...p, ...updates } : p)));
+    },
+    []
+  );
 
   // ============================================
   // Teaching Resource Actions
   // ============================================
-  const addTeachingResource = useCallback((resource: Omit<CollegeTeachingResource, 'id' | 'downloadCount' | 'createdAt'>) => {
-    const newResource: CollegeTeachingResource = {
-      ...resource,
-      id: generateId('res'),
-      downloadCount: 0,
-      createdAt: new Date().toISOString().split('T')[0],
-    };
-    setTeachingResources(prev => [...prev, newResource]);
-  }, []);
+  const addTeachingResource = useCallback(
+    (resource: Omit<CollegeTeachingResource, 'id' | 'downloadCount' | 'createdAt'>) => {
+      const newResource: CollegeTeachingResource = {
+        ...resource,
+        id: generateId('res'),
+        downloadCount: 0,
+        createdAt: new Date().toISOString().split('T')[0],
+      };
+      setTeachingResources((prev) => [...prev, newResource]);
+    },
+    []
+  );
 
-  const updateTeachingResource = useCallback((id: string, updates: Partial<CollegeTeachingResource>) => {
-    setTeachingResources(prev => prev.map(r => r.id === id ? { ...r, ...updates } : r));
-  }, []);
+  const updateTeachingResource = useCallback(
+    (id: string, updates: Partial<CollegeTeachingResource>) => {
+      setTeachingResources((prev) => prev.map((r) => (r.id === id ? { ...r, ...updates } : r)));
+    },
+    []
+  );
 
   const deleteTeachingResource = useCallback((id: string) => {
-    setTeachingResources(prev => prev.filter(r => r.id !== id));
+    setTeachingResources((prev) => prev.filter((r) => r.id !== id));
   }, []);
 
   const incrementResourceDownload = useCallback((id: string) => {
-    setTeachingResources(prev => prev.map(r =>
-      r.id === id ? { ...r, downloadCount: r.downloadCount + 1 } : r
-    ));
+    setTeachingResources((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, downloadCount: r.downloadCount + 1 } : r))
+    );
   }, []);
 
   // ============================================
@@ -494,11 +552,15 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newPortfolio,
       id: generateId('portfolio'),
     };
-    setPortfolios(prev => [...prev, portfolio]);
+    setPortfolios((prev) => [...prev, portfolio]);
   }, []);
 
   const updatePortfolio = useCallback((id: string, updates: Partial<CollegePortfolio>) => {
-    setPortfolios(prev => prev.map(p => p.id === id ? { ...p, ...updates, updatedAt: new Date().toISOString().split('T')[0] } : p));
+    setPortfolios((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, ...updates, updatedAt: new Date().toISOString().split('T')[0] } : p
+      )
+    );
   }, []);
 
   const addEvidence = useCallback((newEvidence: Omit<PortfolioEvidence, 'id'>) => {
@@ -506,74 +568,86 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newEvidence,
       id: generateId('evidence'),
     };
-    setPortfolioEvidence(prev => [...prev, evidence]);
+    setPortfolioEvidence((prev) => [...prev, evidence]);
 
     // Update portfolio evidence counts
-    setPortfolios(prev => prev.map(p => {
-      if (p.id === newEvidence.portfolioId) {
-        return {
-          ...p,
-          totalEvidence: p.totalEvidence + 1,
-          pendingEvidence: p.pendingEvidence + 1,
-          updatedAt: new Date().toISOString().split('T')[0],
-        };
-      }
-      return p;
-    }));
+    setPortfolios((prev) =>
+      prev.map((p) => {
+        if (p.id === newEvidence.portfolioId) {
+          return {
+            ...p,
+            totalEvidence: p.totalEvidence + 1,
+            pendingEvidence: p.pendingEvidence + 1,
+            updatedAt: new Date().toISOString().split('T')[0],
+          };
+        }
+        return p;
+      })
+    );
   }, []);
 
   const updateEvidence = useCallback((id: string, updates: Partial<PortfolioEvidence>) => {
-    setPortfolioEvidence(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e));
+    setPortfolioEvidence((prev) => prev.map((e) => (e.id === id ? { ...e, ...updates } : e)));
   }, []);
 
-  const reviewEvidence = useCallback((
-    id: string,
-    status: EvidenceStatus,
-    feedback: string,
-    reviewerId: string,
-    reviewerName: string
-  ) => {
-    const evidence = portfolioEvidence.find(e => e.id === id);
-    if (!evidence) return;
+  const reviewEvidence = useCallback(
+    (
+      id: string,
+      status: EvidenceStatus,
+      feedback: string,
+      reviewerId: string,
+      reviewerName: string
+    ) => {
+      const evidence = portfolioEvidence.find((e) => e.id === id);
+      if (!evidence) return;
 
-    setPortfolioEvidence(prev => prev.map(e =>
-      e.id === id ? {
-        ...e,
-        status,
-        reviewFeedback: feedback,
-        reviewedBy: reviewerId,
-        reviewedByName: reviewerName,
-        reviewedAt: new Date().toISOString().split('T')[0],
-        resubmissionCount: status === 'Resubmit Required' ? e.resubmissionCount + 1 : e.resubmissionCount,
-      } : e
-    ));
+      setPortfolioEvidence((prev) =>
+        prev.map((e) =>
+          e.id === id
+            ? {
+                ...e,
+                status,
+                reviewFeedback: feedback,
+                reviewedBy: reviewerId,
+                reviewedByName: reviewerName,
+                reviewedAt: new Date().toISOString().split('T')[0],
+                resubmissionCount:
+                  status === 'Resubmit Required' ? e.resubmissionCount + 1 : e.resubmissionCount,
+              }
+            : e
+        )
+      );
 
-    // Update portfolio counts
-    setPortfolios(prev => prev.map(p => {
-      if (p.id === evidence.portfolioId) {
-        let approvedEvidence = p.approvedEvidence;
-        let pendingEvidence = p.pendingEvidence;
+      // Update portfolio counts
+      setPortfolios((prev) =>
+        prev.map((p) => {
+          if (p.id === evidence.portfolioId) {
+            let approvedEvidence = p.approvedEvidence;
+            let pendingEvidence = p.pendingEvidence;
 
-        if (status === 'Approved') {
-          approvedEvidence++;
-          pendingEvidence = Math.max(0, pendingEvidence - 1);
-        } else if (status === 'Rejected' || status === 'Resubmit Required') {
-          pendingEvidence = Math.max(0, pendingEvidence - 1);
-        }
+            if (status === 'Approved') {
+              approvedEvidence++;
+              pendingEvidence = Math.max(0, pendingEvidence - 1);
+            } else if (status === 'Rejected' || status === 'Resubmit Required') {
+              pendingEvidence = Math.max(0, pendingEvidence - 1);
+            }
 
-        const completionPercentage = Math.round((approvedEvidence / p.totalEvidence) * 100);
+            const completionPercentage = Math.round((approvedEvidence / p.totalEvidence) * 100);
 
-        return {
-          ...p,
-          approvedEvidence,
-          pendingEvidence,
-          completionPercentage,
-          updatedAt: new Date().toISOString().split('T')[0],
-        };
-      }
-      return p;
-    }));
-  }, [portfolioEvidence]);
+            return {
+              ...p,
+              approvedEvidence,
+              pendingEvidence,
+              completionPercentage,
+              updatedAt: new Date().toISOString().split('T')[0],
+            };
+          }
+          return p;
+        })
+      );
+    },
+    [portfolioEvidence]
+  );
 
   // ============================================
   // Comment Actions
@@ -583,24 +657,30 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newComment,
       id: generateId('comment'),
     };
-    setComments(prev => [...prev, comment]);
+    setComments((prev) => [...prev, comment]);
   }, []);
 
   const updateComment = useCallback((id: string, updates: Partial<CollegeComment>) => {
-    setComments(prev => prev.map(c => c.id === id ? { ...c, ...updates, updatedAt: new Date().toISOString() } : c));
+    setComments((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, ...updates, updatedAt: new Date().toISOString() } : c))
+    );
   }, []);
 
   const resolveComment = useCallback((id: string, resolverId: string, resolverName: string) => {
-    setComments(prev => prev.map(c =>
-      c.id === id ? {
-        ...c,
-        isResolved: true,
-        resolvedBy: resolverId,
-        resolvedByName: resolverName,
-        resolvedAt: new Date().toISOString(),
-        requiresAction: false,
-      } : c
-    ));
+    setComments((prev) =>
+      prev.map((c) =>
+        c.id === id
+          ? {
+              ...c,
+              isResolved: true,
+              resolvedBy: resolverId,
+              resolvedByName: resolverName,
+              resolvedAt: new Date().toISOString(),
+              requiresAction: false,
+            }
+          : c
+      )
+    );
   }, []);
 
   // ============================================
@@ -611,88 +691,110 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       ...newAssignment,
       id: generateId('work'),
     };
-    setWorkAssignments(prev => [...prev, assignment]);
+    setWorkAssignments((prev) => [...prev, assignment]);
   }, []);
 
   const updateWorkAssignment = useCallback((id: string, updates: Partial<WorkAssignment>) => {
-    setWorkAssignments(prev => prev.map(w => w.id === id ? { ...w, ...updates } : w));
+    setWorkAssignments((prev) => prev.map((w) => (w.id === id ? { ...w, ...updates } : w)));
   }, []);
 
   const completeWorkAssignment = useCallback((id: string) => {
-    setWorkAssignments(prev => prev.map(w =>
-      w.id === id ? {
-        ...w,
-        status: 'Completed' as const,
-        completedAt: new Date().toISOString().split('T')[0],
-      } : w
-    ));
+    setWorkAssignments((prev) =>
+      prev.map((w) =>
+        w.id === id
+          ? {
+              ...w,
+              status: 'Completed' as const,
+              completedAt: new Date().toISOString().split('T')[0],
+            }
+          : w
+      )
+    );
   }, []);
 
   // ============================================
   // Calculated Values
   // ============================================
-  const getStudentsByCohort = useCallback((cohortId: string) => {
-    return students.filter(s => s.cohortId === cohortId && s.status === 'Active');
-  }, [students]);
+  const getStudentsByCohort = useCallback(
+    (cohortId: string) => {
+      return students.filter((s) => s.cohortId === cohortId && s.status === 'Active');
+    },
+    [students]
+  );
 
-  const getCohortAttendanceRate = useCallback((cohortId: string) => {
-    const cohortAttendance = attendance.filter(a => a.cohortId === cohortId);
-    if (cohortAttendance.length === 0) return 100;
+  const getCohortAttendanceRate = useCallback(
+    (cohortId: string) => {
+      const cohortAttendance = attendance.filter((a) => a.cohortId === cohortId);
+      if (cohortAttendance.length === 0) return 100;
 
-    const present = cohortAttendance.filter(a =>
-      a.status === 'Present' || a.status === 'Late'
-    ).length;
+      const present = cohortAttendance.filter(
+        (a) => a.status === 'Present' || a.status === 'Late'
+      ).length;
 
-    return Math.round((present / cohortAttendance.length) * 100);
-  }, [attendance]);
+      return Math.round((present / cohortAttendance.length) * 100);
+    },
+    [attendance]
+  );
 
-  const getStudentAttendanceRate = useCallback((studentId: string) => {
-    const studentAttendance = attendance.filter(a => a.studentId === studentId);
-    if (studentAttendance.length === 0) return 100;
+  const getStudentAttendanceRate = useCallback(
+    (studentId: string) => {
+      const studentAttendance = attendance.filter((a) => a.studentId === studentId);
+      if (studentAttendance.length === 0) return 100;
 
-    const present = studentAttendance.filter(a =>
-      a.status === 'Present' || a.status === 'Late'
-    ).length;
+      const present = studentAttendance.filter(
+        (a) => a.status === 'Present' || a.status === 'Late'
+      ).length;
 
-    return Math.round((present / studentAttendance.length) * 100);
-  }, [attendance]);
+      return Math.round((present / studentAttendance.length) * 100);
+    },
+    [attendance]
+  );
 
-  const getStudentProgressPercentage = useCallback((studentId: string) => {
-    const progress = studentProgress.filter(p => p.studentId === studentId);
-    if (progress.length === 0) return 0;
+  const getStudentProgressPercentage = useCallback(
+    (studentId: string) => {
+      const progress = studentProgress.filter((p) => p.studentId === studentId);
+      if (progress.length === 0) return 0;
 
-    const completed = progress.filter(p => p.status === 'Completed').length;
-    return Math.round((completed / progress.length) * 100);
-  }, [studentProgress]);
+      const completed = progress.filter((p) => p.status === 'Completed').length;
+      return Math.round((completed / progress.length) * 100);
+    },
+    [studentProgress]
+  );
 
   const getOverdueILPReviews = useCallback(() => {
     const today = new Date();
-    return ilps.filter(ilp =>
-      ilp.status === 'Active' && new Date(ilp.nextReviewDate) < today
-    );
+    return ilps.filter((ilp) => ilp.status === 'Active' && new Date(ilp.nextReviewDate) < today);
   }, [ilps]);
 
   const getPendingAssessments = useCallback(() => {
-    return assessments.filter(a => a.status === 'Pending' || a.status === 'Submitted');
+    return assessments.filter((a) => a.status === 'Pending' || a.status === 'Submitted');
   }, [assessments]);
 
-  const getStaffByRole = useCallback((role: StaffRole) => {
-    return staff.filter(s => s.role === role && s.status === 'Active');
-  }, [staff]);
+  const getStaffByRole = useCallback(
+    (role: StaffRole) => {
+      return staff.filter((s) => s.role === role && s.status === 'Active');
+    },
+    [staff]
+  );
 
-  const getUpcomingLessons = useCallback((days: number = 7) => {
-    const today = new Date();
-    const futureDate = new Date();
-    futureDate.setDate(today.getDate() + days);
+  const getUpcomingLessons = useCallback(
+    (days: number = 7) => {
+      const today = new Date();
+      const futureDate = new Date();
+      futureDate.setDate(today.getDate() + days);
 
-    return lessonPlans.filter(lp => {
-      const lessonDate = new Date(lp.scheduledDate);
-      return lessonDate >= today && lessonDate <= futureDate;
-    }).sort((a, b) => new Date(a.scheduledDate).getTime() - new Date(b.scheduledDate).getTime());
-  }, [lessonPlans]);
+      return lessonPlans
+        .filter((lp) => {
+          const lessonDate = new Date(lp.scheduledDate);
+          return lessonDate >= today && lessonDate <= futureDate;
+        })
+        .sort((a, b) => new Date(a.scheduledDate).getTime() - new Date(b.scheduledDate).getTime());
+    },
+    [lessonPlans]
+  );
 
   const getStudentsAtRisk = useCallback(() => {
-    return students.filter(s => {
+    return students.filter((s) => {
       if (s.status !== 'Active') return false;
 
       // Check attendance rate
@@ -700,8 +802,8 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
       if (attendanceRate < 85) return true;
 
       // Check progress (if any units are red/overdue)
-      const progress = studentProgress.filter(p => p.studentId === s.id);
-      const hasRedStatus = progress.some(p => p.ragStatus === 'Red' || p.status === 'Overdue');
+      const progress = studentProgress.filter((p) => p.studentId === s.id);
+      const hasRedStatus = progress.some((p) => p.ragStatus === 'Red' || p.status === 'Overdue');
       if (hasRedStatus) return true;
 
       return false;
@@ -711,34 +813,44 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
   // ============================================
   // Portfolio Calculated Values
   // ============================================
-  const getPortfolioByStudent = useCallback((studentId: string) => {
-    return portfolios.find(p => p.studentId === studentId);
-  }, [portfolios]);
+  const getPortfolioByStudent = useCallback(
+    (studentId: string) => {
+      return portfolios.find((p) => p.studentId === studentId);
+    },
+    [portfolios]
+  );
 
-  const getEvidenceByPortfolio = useCallback((portfolioId: string) => {
-    return portfolioEvidence.filter(e => e.portfolioId === portfolioId);
-  }, [portfolioEvidence]);
+  const getEvidenceByPortfolio = useCallback(
+    (portfolioId: string) => {
+      return portfolioEvidence.filter((e) => e.portfolioId === portfolioId);
+    },
+    [portfolioEvidence]
+  );
 
   const getPendingEvidence = useCallback(() => {
-    return portfolioEvidence.filter(e =>
-      e.status === 'Submitted' || e.status === 'Under Review'
-    );
+    return portfolioEvidence.filter((e) => e.status === 'Submitted' || e.status === 'Under Review');
   }, [portfolioEvidence]);
 
-  const getMyWorkQueue = useCallback((staffId: string) => {
-    return workAssignments.filter(w =>
-      w.assignedTo === staffId && w.status !== 'Completed'
-    ).sort((a, b) => {
-      const priorityOrder = { 'Urgent': 0, 'High': 1, 'Normal': 2, 'Low': 3 };
-      return priorityOrder[a.priority] - priorityOrder[b.priority];
-    });
-  }, [workAssignments]);
+  const getMyWorkQueue = useCallback(
+    (staffId: string) => {
+      return workAssignments
+        .filter((w) => w.assignedTo === staffId && w.status !== 'Completed')
+        .sort((a, b) => {
+          const priorityOrder = { Urgent: 0, High: 1, Normal: 2, Low: 3 };
+          return priorityOrder[a.priority] - priorityOrder[b.priority];
+        });
+    },
+    [workAssignments]
+  );
 
-  const getCommentsForItem = useCallback((contextType: string, contextId: string) => {
-    return comments.filter(c =>
-      c.contextType === contextType && c.contextId === contextId
-    ).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-  }, [comments]);
+  const getCommentsForItem = useCallback(
+    (contextType: string, contextId: string) => {
+      return comments
+        .filter((c) => c.contextType === contextType && c.contextId === contextId)
+        .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    },
+    [comments]
+  );
 
   const value: CollegeContextType = {
     // Data
@@ -829,17 +941,92 @@ export function CollegeProvider({ children }: { children: ReactNode }) {
     getCommentsForItem,
   };
 
-  return (
-    <CollegeContext.Provider value={value}>
-      {children}
-    </CollegeContext.Provider>
-  );
+  return <CollegeContext.Provider value={value}>{children}</CollegeContext.Provider>;
 }
 
 export function useCollege() {
   const context = useContext(CollegeContext);
   if (context === undefined) {
-    throw new Error('useCollege must be used within a CollegeProvider');
+    console.warn('useCollege called outside CollegeProvider — returning empty defaults');
+    return emptyCollegeContext;
   }
   return context;
 }
+
+// Default empty context so components outside CollegeProvider don't crash
+const noop = () => {};
+const emptyCollegeContext: CollegeContextType = {
+  staff: [],
+  students: [],
+  courses: [],
+  cohorts: [],
+  lessonPlans: [],
+  assessments: [],
+  attendance: [],
+  ilps: [],
+  epaRecords: [],
+  studentProgress: [],
+  teachingResources: [],
+  portfolios: [],
+  portfolioEvidence: [],
+  comments: [],
+  workAssignments: [],
+  addStaff: noop,
+  updateStaff: noop,
+  deleteStaff: noop,
+  addStudent: noop,
+  updateStudent: noop,
+  withdrawStudent: noop,
+  assignStudentToCohort: noop,
+  addCourse: noop,
+  updateCourse: noop,
+  addCohort: noop,
+  updateCohort: noop,
+  addLessonPlan: noop,
+  updateLessonPlan: noop,
+  approveLessonPlan: noop,
+  markLessonDelivered: noop,
+  addAssessment: noop,
+  updateAssessment: noop,
+  gradeAssessment: noop,
+  verifyAssessment: noop,
+  recordAttendance: noop,
+  bulkRecordAttendance: noop,
+  updateAttendance: noop,
+  addILP: noop,
+  updateILP: noop,
+  addILPTarget: noop,
+  updateILPTarget: noop,
+  addEPARecord: noop,
+  updateEPARecord: noop,
+  updateStudentProgress: noop,
+  addTeachingResource: noop,
+  updateTeachingResource: noop,
+  deleteTeachingResource: noop,
+  incrementResourceDownload: noop,
+  addPortfolio: noop,
+  updatePortfolio: noop,
+  addEvidence: noop,
+  updateEvidence: noop,
+  reviewEvidence: noop,
+  addComment: noop,
+  updateComment: noop,
+  resolveComment: noop,
+  addWorkAssignment: noop,
+  updateWorkAssignment: noop,
+  completeWorkAssignment: noop,
+  getStudentsByCohort: () => [],
+  getCohortAttendanceRate: () => 0,
+  getStudentAttendanceRate: () => 0,
+  getStudentProgressPercentage: () => 0,
+  getOverdueILPReviews: () => [],
+  getPendingAssessments: () => [],
+  getStaffByRole: () => [],
+  getUpcomingLessons: () => [],
+  getStudentsAtRisk: () => [],
+  getPortfolioByStudent: () => undefined,
+  getEvidenceByPortfolio: () => [],
+  getPendingEvidence: () => [],
+  getMyWorkQueue: () => [],
+  getCommentsForItem: () => [],
+};
